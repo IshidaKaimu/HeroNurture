@@ -24,7 +24,7 @@ public:
 
 protected:
 	bool	m_Shot;	 //’e‚ğ”ò‚Î‚·ƒtƒ‰ƒO.
-
 	RAY*	m_pRayY; //Y•ûŒü‚Ö”ò‚Î‚µ‚½ƒŒƒC
+
 };
 

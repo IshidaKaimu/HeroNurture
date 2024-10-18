@@ -19,11 +19,7 @@ public:
 	enum enSceneList
 	{
 		SceneSelect = 0,
-		Opening,
-		BossApp,
-		BossEvo,
-		Special,
-		BossDeath,
+		GameMain,
 		Max,
 		none = -1,
 	};
@@ -39,16 +35,16 @@ public:
 
 	void Initialize();
 
-    void Create();
+    void Create(CDirectX9& pDx9, CDirectX11& pDx11, HWND hwnd);
 
 	void Update();
-	void Draw(D3DXMATRIX& View, D3DXMATRIX& Proj, LIGHT& Light, CAMERA& Camera);
+	void Draw();
 
-	static void LoadCreate(enSceneList List);	//インスタンスの生成をする関数
+	void LoadCreate(enSceneList List);	//インスタンスの生成をする関数
 
 	void LoadScene() override;
 
-	void LoadData();
+	void Release();
 
 	static std::unique_ptr<CSceneBase> Create(enSceneList List);
 
@@ -80,10 +76,6 @@ private:
 	CSceneManager();
 	CSceneManager(const CSceneManager& rhs) = delete;
 	CSceneManager& operator = (const CSceneManager& rhs) = delete;
-
-	CAMERA m_Camera;
-
-
 private:
 	std::unique_ptr<CSceneBase> m_Scene;	//ユニークポインタ
 

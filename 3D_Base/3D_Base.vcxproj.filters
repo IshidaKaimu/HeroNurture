@@ -85,23 +85,11 @@
     <Filter Include="Source\Scene">
       <UniqueIdentifier>{92cc278b-1371-415d-88fc-a0fa8a726216}</UniqueIdentifier>
     </Filter>
-    <Filter Include="Source\Scene\Opening">
-      <UniqueIdentifier>{3585424c-1a7d-42b6-a933-0d051d24239b}</UniqueIdentifier>
-    </Filter>
-    <Filter Include="Source\Scene\SceneManager">
-      <UniqueIdentifier>{fd18dace-0b93-4d70-9468-108505adf14a}</UniqueIdentifier>
-    </Filter>
-    <Filter Include="Source\Scene\SceneBase">
-      <UniqueIdentifier>{5c428e17-418d-4226-860a-b9ee06c847f3}</UniqueIdentifier>
-    </Filter>
     <Filter Include="Source\Camera">
       <UniqueIdentifier>{95829519-432e-43ba-a1cc-472c144b15c6}</UniqueIdentifier>
     </Filter>
     <Filter Include="Source\SkinMesh\SkinMeshManager">
       <UniqueIdentifier>{0c787c5c-fa66-460c-b6af-7df4a6c4f397}</UniqueIdentifier>
-    </Filter>
-    <Filter Include="Source\Scene\CSceneSelect">
-      <UniqueIdentifier>{3dfcc147-20e9-4ec6-8bbf-ab8ded696e40}</UniqueIdentifier>
     </Filter>
     <Filter Include="Source\GameObject\UIObject\UIManager">
       <UniqueIdentifier>{ec235f14-2ed3-4180-b18e-5a5ed9ea7adf}</UniqueIdentifier>
@@ -115,23 +103,11 @@
     <Filter Include="Source\GameObject\SkinMeshObject\Kaito">
       <UniqueIdentifier>{8fd087d7-3938-41ad-a417-fa1865b3b25f}</UniqueIdentifier>
     </Filter>
-    <Filter Include="Source\Scene\BossEvolution">
-      <UniqueIdentifier>{18dc451f-e62e-4cee-8841-d2de6f81ed51}</UniqueIdentifier>
-    </Filter>
     <Filter Include="Source\GameObject\SkinMeshObject\FastBoss">
       <UniqueIdentifier>{6c396fae-47ea-498d-8fa6-40bd1c73e7b4}</UniqueIdentifier>
     </Filter>
-    <Filter Include="Source\Scene\BossAppearance">
-      <UniqueIdentifier>{a7a92cf5-4875-49c4-aa09-80c94a49165f}</UniqueIdentifier>
-    </Filter>
     <Filter Include="Source\GameObject\SkinMeshObject\BeEvoBoss">
       <UniqueIdentifier>{8a066060-8d0a-4a37-ab34-9b9f11937b9f}</UniqueIdentifier>
-    </Filter>
-    <Filter Include="Source\Scene\SpecialMove">
-      <UniqueIdentifier>{ceec5951-9e1e-48b3-84c9-50f4c09e93b5}</UniqueIdentifier>
-    </Filter>
-    <Filter Include="Source\Scene\BossDeath">
-      <UniqueIdentifier>{45a6f3b3-da2c-4a0c-af85-abd16d7c828f}</UniqueIdentifier>
     </Filter>
     <Filter Include="Source\Text">
       <UniqueIdentifier>{4034477c-61ee-4ba3-badc-563d8ea5e1b8}</UniqueIdentifier>
@@ -147,6 +123,18 @@
     </Filter>
     <Filter Include="Source\GameObject\StaticMeshObject\Sky">
       <UniqueIdentifier>{0e1acd3a-f7f9-42f6-a58f-de373bc69600}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Source\Scene\Title">
+      <UniqueIdentifier>{532eb94b-ce28-445d-8c80-805a7171e980}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Source\Scene\GameMain">
+      <UniqueIdentifier>{e9ede9f4-3b28-404e-8bb8-e611576de321}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Source\ImGui">
+      <UniqueIdentifier>{e5a2222c-e81d-4b0c-9f2f-55b2bbdb9331}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Source\ImGui\ImGuiManager">
+      <UniqueIdentifier>{ff442dd3-b360-401c-a5c8-18558e076fea}</UniqueIdentifier>
     </Filter>
   </ItemGroup>
   <ItemGroup>
@@ -167,9 +155,6 @@
     </ClCompile>
     <ClCompile Include="Source\CGameObject.cpp">
       <Filter>Source\GameObject</Filter>
-    </ClCompile>
-    <ClCompile Include="Source\CMain.cpp">
-      <Filter>Source\Main</Filter>
     </ClCompile>
     <ClCompile Include="Source\CSprite3D.cpp">
       <Filter>Source\Sprite3D</Filter>
@@ -240,18 +225,6 @@
     <ClCompile Include="Source\CMeshManager.cpp">
       <Filter>Source\StaticMesh</Filter>
     </ClCompile>
-    <ClCompile Include="Source\COpening.cpp">
-      <Filter>Source\Scene\Opening</Filter>
-    </ClCompile>
-    <ClCompile Include="Source\CBossAppearance.cpp">
-      <Filter>Source\Scene\BossAppearance</Filter>
-    </ClCompile>
-    <ClCompile Include="Source\CSceneManager.cpp">
-      <Filter>Source\Scene\SceneManager</Filter>
-    </ClCompile>
-    <ClCompile Include="Source\CSceneBase.cpp">
-      <Filter>Source\Scene\SceneBase</Filter>
-    </ClCompile>
     <ClCompile Include="Source\CCamera.cpp">
       <Filter>Source\Camera</Filter>
     </ClCompile>
@@ -260,9 +233,6 @@
     </ClCompile>
     <ClCompile Include="Source\CKaito.cpp">
       <Filter>Source\GameObject\SkinMeshObject\Kaito</Filter>
-    </ClCompile>
-    <ClCompile Include="Source\CSceneSelect.cpp">
-      <Filter>Source\Scene\CSceneSelect</Filter>
     </ClCompile>
     <ClCompile Include="Source\CUIManager.cpp">
       <Filter>Source\GameObject\UIObject\UIManager</Filter>
@@ -273,20 +243,11 @@
     <ClCompile Include="Source\CBoss.cpp">
       <Filter>Source\GameObject\SkinMeshObject\Boss</Filter>
     </ClCompile>
-    <ClCompile Include="Source\CBossEvolution.cpp">
-      <Filter>Source\Scene\BossEvolution</Filter>
-    </ClCompile>
     <ClCompile Include="Source\CFastBoss.cpp">
       <Filter>Source\GameObject\SkinMeshObject\FastBoss</Filter>
     </ClCompile>
     <ClCompile Include="Source\CBeEvoBoss.cpp">
       <Filter>Source\GameObject\SkinMeshObject\BeEvoBoss</Filter>
-    </ClCompile>
-    <ClCompile Include="Source\CSpecialMove.cpp">
-      <Filter>Source\Scene\SpecialMove</Filter>
-    </ClCompile>
-    <ClCompile Include="Source\CBossDeath.cpp">
-      <Filter>Source\Scene\BossDeath</Filter>
     </ClCompile>
     <ClCompile Include="Source\WriteText.cpp">
       <Filter>Source\Text\WriteText</Filter>
@@ -299,6 +260,45 @@
     </ClCompile>
     <ClCompile Include="Source\CSky.cpp">
       <Filter>Source\GameObject\StaticMeshObject\Sky</Filter>
+    </ClCompile>
+    <ClCompile Include="Source\CSceneBase.cpp">
+      <Filter>Source\Scene</Filter>
+    </ClCompile>
+    <ClCompile Include="Source\CSceneManager.cpp">
+      <Filter>Source\Scene</Filter>
+    </ClCompile>
+    <ClCompile Include="Source\CMain.cpp">
+      <Filter>Source\Main</Filter>
+    </ClCompile>
+    <ClCompile Include="Source\CSceneSelect.cpp">
+      <Filter>Source\Scene\Title</Filter>
+    </ClCompile>
+    <ClCompile Include="Source\CGameMain.cpp">
+      <Filter>Source\Scene\GameMain</Filter>
+    </ClCompile>
+    <ClCompile Include="Source\ImGui\imgui.cpp">
+      <Filter>Source\ImGui</Filter>
+    </ClCompile>
+    <ClCompile Include="Source\ImGui\imgui_demo.cpp">
+      <Filter>Source\ImGui</Filter>
+    </ClCompile>
+    <ClCompile Include="Source\ImGui\imgui_draw.cpp">
+      <Filter>Source\ImGui</Filter>
+    </ClCompile>
+    <ClCompile Include="Source\ImGui\imgui_impl_dx11.cpp">
+      <Filter>Source\ImGui</Filter>
+    </ClCompile>
+    <ClCompile Include="Source\ImGui\imgui_impl_win32.cpp">
+      <Filter>Source\ImGui</Filter>
+    </ClCompile>
+    <ClCompile Include="Source\ImGui\imgui_tables.cpp">
+      <Filter>Source\ImGui</Filter>
+    </ClCompile>
+    <ClCompile Include="Source\ImGui\imgui_widgets.cpp">
+      <Filter>Source\ImGui</Filter>
+    </ClCompile>
+    <ClCompile Include="Source\ImGuiManager.cpp">
+      <Filter>Source\ImGui\ImGuiManager</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>
@@ -322,9 +322,6 @@
     </ClInclude>
     <ClInclude Include="Source\CGameObject.h">
       <Filter>Source\GameObject</Filter>
-    </ClInclude>
-    <ClInclude Include="Source\CMain.h">
-      <Filter>Source\Main</Filter>
     </ClInclude>
     <ClInclude Include="Source\CSprite3D.h">
       <Filter>Source\Sprite3D</Filter>
@@ -395,18 +392,6 @@
     <ClInclude Include="Source\CMeshManager.h">
       <Filter>Source\StaticMesh</Filter>
     </ClInclude>
-    <ClInclude Include="Source\COpening.h">
-      <Filter>Source\Scene\Opening</Filter>
-    </ClInclude>
-    <ClInclude Include="Source\CBossAppearance.h">
-      <Filter>Source\Scene\BossAppearance</Filter>
-    </ClInclude>
-    <ClInclude Include="Source\CSceneManager.h">
-      <Filter>Source\Scene\SceneManager</Filter>
-    </ClInclude>
-    <ClInclude Include="Source\CSceneBase.h">
-      <Filter>Source\Scene\SceneBase</Filter>
-    </ClInclude>
     <ClInclude Include="Source\CCamera.h">
       <Filter>Source\Camera</Filter>
     </ClInclude>
@@ -415,9 +400,6 @@
     </ClInclude>
     <ClInclude Include="Source\CKaito.h">
       <Filter>Source\GameObject\SkinMeshObject\Kaito</Filter>
-    </ClInclude>
-    <ClInclude Include="Source\CSceneSelect.h">
-      <Filter>Source\Scene\CSceneSelect</Filter>
     </ClInclude>
     <ClInclude Include="Source\CUIManager.h">
       <Filter>Source\GameObject\UIObject\UIManager</Filter>
@@ -428,20 +410,11 @@
     <ClInclude Include="Source\CBoss.h">
       <Filter>Source\GameObject\SkinMeshObject\Boss</Filter>
     </ClInclude>
-    <ClInclude Include="Source\CBossEvolution.h">
-      <Filter>Source\Scene\BossEvolution</Filter>
-    </ClInclude>
     <ClInclude Include="Source\CFastBoss.h">
       <Filter>Source\GameObject\SkinMeshObject\FastBoss</Filter>
     </ClInclude>
     <ClInclude Include="Source\CBeEvoBoss.h">
       <Filter>Source\GameObject\SkinMeshObject\BeEvoBoss</Filter>
-    </ClInclude>
-    <ClInclude Include="Source\CSpecialMove.h">
-      <Filter>Source\Scene\SpecialMove</Filter>
-    </ClInclude>
-    <ClInclude Include="Source\CBossDeath.h">
-      <Filter>Source\Scene\BossDeath</Filter>
     </ClInclude>
     <ClInclude Include="Source\WriteText.h">
       <Filter>Source\Text\WriteText</Filter>
@@ -454,6 +427,48 @@
     </ClInclude>
     <ClInclude Include="Source\CSky.h">
       <Filter>Source\GameObject\StaticMeshObject\Sky</Filter>
+    </ClInclude>
+    <ClInclude Include="Source\CSceneBase.h">
+      <Filter>Source\Scene</Filter>
+    </ClInclude>
+    <ClInclude Include="Source\CSceneManager.h">
+      <Filter>Source\Scene</Filter>
+    </ClInclude>
+    <ClInclude Include="Source\CMain.h">
+      <Filter>Source\Main</Filter>
+    </ClInclude>
+    <ClInclude Include="Source\CSceneSelect.h">
+      <Filter>Source\Scene\Title</Filter>
+    </ClInclude>
+    <ClInclude Include="Source\CGameMain.h">
+      <Filter>Source\Scene\GameMain</Filter>
+    </ClInclude>
+    <ClInclude Include="Source\ImGui\imconfig.h">
+      <Filter>Source\ImGui</Filter>
+    </ClInclude>
+    <ClInclude Include="Source\ImGui\imgui.h">
+      <Filter>Source\ImGui</Filter>
+    </ClInclude>
+    <ClInclude Include="Source\ImGui\imgui_impl_dx11.h">
+      <Filter>Source\ImGui</Filter>
+    </ClInclude>
+    <ClInclude Include="Source\ImGui\imgui_impl_win32.h">
+      <Filter>Source\ImGui</Filter>
+    </ClInclude>
+    <ClInclude Include="Source\ImGui\imgui_internal.h">
+      <Filter>Source\ImGui</Filter>
+    </ClInclude>
+    <ClInclude Include="Source\ImGui\imstb_rectpack.h">
+      <Filter>Source\ImGui</Filter>
+    </ClInclude>
+    <ClInclude Include="Source\ImGui\imstb_textedit.h">
+      <Filter>Source\ImGui</Filter>
+    </ClInclude>
+    <ClInclude Include="Source\ImGui\imstb_truetype.h">
+      <Filter>Source\ImGui</Filter>
+    </ClInclude>
+    <ClInclude Include="Source\ImGuiManager.h">
+      <Filter>Source\ImGui\ImGuiManager</Filter>
     </ClInclude>
   </ItemGroup>
   <ItemGroup>
@@ -475,5 +490,10 @@
     <FxCompile Include="Data\Shader\Ray.hlsl">
       <Filter>Shader</Filter>
     </FxCompile>
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Source\ImGui\.editorconfig">
+      <Filter>Source\ImGui</Filter>
+    </None>
   </ItemGroup>
 </Project>

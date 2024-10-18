@@ -4,28 +4,46 @@
 class CCamera
 {
 public :
-	CCamera();
+	//インスタンス取得(唯一のアクセス経路).
+	static CCamera* GetInstance()
+	{
+		//唯一のインスタンス生成.
+		static CCamera s_Instance;
+		return &s_Instance;
+	}
+
 	~CCamera();
 
 	void Update();
-	void Camera(D3DXMATRIX& view, D3DXMATRIX& proj);
+	void Camera();
 
 	void ThirdPersonCamera(CAMERA* pCamera, const D3DXVECTOR3& TargetPos, float TargetRotY);
   
+	//プロジェクション関数
+	void Projection();
+
+	//位置情報の設定
 	void SetPos(D3DXVECTOR3 pos) { m_Camera.Position = pos; }
+	//注視点の設定
 	void SetLook(D3DXVECTOR3 Look) { m_Camera.Look = Look; }
 
-	void StartShake(float ampl, float fre, float duration, D3DXVECTOR3 origin);
+	//カメラ情報の取得
+	D3DXMATRIX  GetViewMatrix() { return m_mView; }
+	D3DXMATRIX  GetProjection() { return m_mProj; }
+	CAMERA	    GetCamera() { return m_Camera; }
 
-	D3DXVECTOR3 GetCameraPosition(D3DXVECTOR3 pos);
-
-	//カメラの揺れ関数
-	D3DXVECTOR3 ApplyShake( const D3DXVECTOR3& origin);
 
 	//カメラ情報.
 	CAMERA			m_Camera;
 
 private:
+	CCamera();
+	//コピーコンストラクタによるコピーを禁止できる
+	//「=delete」で関数の定義を削除できる
+	CCamera(const CCamera& rhs) = delete;
+	//代入演算子によるコピーを禁止する
+	//operator(オペレータ):演算子のオーバーロードで、演算の中身を拡張できる
+	CCamera& operator = (const CCamera& rhs) = delete;
 
 private:
 	D3DXMATRIX		m_mView;	//ビュー(カメラ)行列.

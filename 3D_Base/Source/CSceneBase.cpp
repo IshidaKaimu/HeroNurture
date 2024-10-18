@@ -14,15 +14,10 @@ CSceneBase::CSceneBase()
     , m_FadeTime(0)
     , m_FadeAlpha(1.0f)	//不透過に設定
     , m_FadeOutFlg(false)
-
-    , m_CPU(enCPUList::none)
 {
-
     m_pFade = new CUIObject();		//フェード
     m_pFade->AttachSprite(CUIManager::GetSprite(CUIManager::Fade));
     m_pFade->SetAlpha(m_FadeAlpha);
-
-
 }
 
 CSceneBase::~CSceneBase()
@@ -36,10 +31,14 @@ void CSceneBase::Initialize()
 {
 }
 
-void CSceneBase::Draw( D3DXMATRIX& View, D3DXMATRIX& Proj, LIGHT& Light, CAMERA& Camera )
+void CSceneBase::Draw()
 {
 	//描画
 	m_pFade->Draw();	//フェード
+}
+
+void CSceneBase::Releace()
+{
 }
 
 //フェードアウト

@@ -2,6 +2,15 @@
 #include "CDirectX9.h"
 #include "CDirectX11.h"
 #include "CGame.h"
+#include "CSceneManager.h"
+#include "CSoundManager.h"
+#include "CMeshManager.h"
+#include "CUIManager.h"
+#include "CSkinMeshManager.h"
+#ifdef _DEBUG
+#include "ImGuiManager.h"
+#endif // DEBUG
+
 
 //ウィンドウを画面中央で起動を有効にする.
 //#define ENABLE_WINDOWS_CENTERING
@@ -9,8 +18,8 @@
 //=================================================
 //	定数.
 //=================================================
-const TCHAR WND_TITLE[] = _T( "Event" );
-const TCHAR APP_NAME[]	= _T( "Event" );
+const TCHAR WND_TITLE[] = _T( "初めての3Dシューティング" );
+const TCHAR APP_NAME[]	= _T( "3DSTG" );
 
 
 /********************************************************************************
@@ -24,9 +33,8 @@ CMain::CMain()
 	: m_hWnd	( nullptr )
 	, m_pDx9	( nullptr )
 	, m_pDx11	( nullptr )
-	, m_pGame	( nullptr )
 {
-	m_pDx9 = new CDirectX9();
+	m_pDx9  = new CDirectX9();
 	m_pDx11 = new CDirectX11();
 }
 
@@ -36,7 +44,6 @@ CMain::CMain()
 //=================================================
 CMain::~CMain()
 {
-	SAFE_DELETE( m_pGame );
 	SAFE_DELETE( m_pDx11 );
 	SAFE_DELETE( m_pDx9 );
 
@@ -44,20 +51,45 @@ CMain::~CMain()
 }
 
 
+void CMain::Init()
+{
+	CSceneManager::GetInstance()->Initialize();
+}
+
 //更新処理.
 void CMain::Update()
 {
+#ifdef _DEBUG
+	//ImGuiの更新
+	CImGuiManager::ImGui_NewFrame();
+#endif // DEBUG
+
+
 	//更新処理.
-	m_pGame->Update();
+	CSceneManager::GetInstance()->Update();
+
 
 	//バックバッファをクリアにする.
 	m_pDx11->ClearBackBuffer();
 
+
 	//描画処理.
-	m_pGame->Draw();
-	
+	CSceneManager::GetInstance()->Draw();
+
+	////一番上に表示
+	//m_pDx11->SetDepth(false);
+	//CFadeManager::GetInstance()->Draw();
+	//m_pDx11->SetDepth(true);
+
+#ifdef _DEBUG
+	//ImGuiの描画
+	CImGuiManager::Render();
+#endif // DEBUG
+
+
 	//画面に表示.
 	m_pDx11->Present();
+
 }
 
 
@@ -65,21 +97,39 @@ void CMain::Update()
 HRESULT CMain::Create()
 {
 	//DirectX9構築.
-	if( FAILED( m_pDx9->Create( m_hWnd ) ) )
+	if (FAILED(m_pDx9->Create( m_hWnd ) ) )
 	{
 		return E_FAIL;
 	}
+
 	//DirectX11構築.
 	if( FAILED( m_pDx11->Create( m_hWnd ) ) )
 	{
 		return E_FAIL;
 	}
 
-	//ゲームクラスのインスタンス生成.
-	m_pGame = new CGame( *m_pDx9, *m_pDx11, m_hWnd );
+#ifdef _DEBUG
+	//ImGuiの初期化
+	CImGuiManager::Init(m_hWnd, *m_pDx11);
+#endif // DEBUG
+
+
+	//UIマネージャーのインスタンスを変数に代入
+	CUIManager* UIMng = CUIManager::GetInstance();
+
+	//メッシュマネージャーのインスタンスを変数に代入
+	CMeshManager* MMng = CMeshManager::GetInstance();
+
+	//スキンメッシュマネージャーのインスタンスを変数に代入
+	CSkinMeshManager* SMMng = CSkinMeshManager::GetInstance();
+
+	//画像データの読み込み
+	UIMng->Load(m_pDx11);
+	MMng->Load(m_pDx9, m_pDx11);
+	SMMng->Load(m_pDx9, m_pDx11);
 
 	//ゲームクラスの構築（Loadも含める）.
-	m_pGame->Create();
+	CSceneManager::GetInstance()->Create(*m_pDx9, *m_pDx11, m_hWnd);
 
 	return S_OK;
 }
@@ -87,8 +137,11 @@ HRESULT CMain::Create()
 //データロード処理.
 HRESULT CMain::LoadData()
 {
-	//データロード処理.
-	m_pGame->LoadData();
+	//サウンドデータの読み込み
+	if (CSoundManager::GetInstance()->Load(m_hWnd) == false) {
+		return E_FAIL;
+	}
+
 
 	return S_OK;
 }
@@ -97,12 +150,16 @@ HRESULT CMain::LoadData()
 //解放処理.
 void CMain::Release()
 {
+	CSceneManager::GetInstance()->Release();
+	
 	if( m_pDx11 != nullptr ){
 		m_pDx11->Release();
 	}
-	if( m_pDx9 != nullptr ){
+
+	if (m_pDx9 != nullptr) {
 		m_pDx9->Release();
 	}
+
 }
 
 
@@ -226,7 +283,6 @@ HRESULT CMain::InitWindow(
 	rectWindow.w = rect.right - rect.left;
 	rectWindow.h = rect.bottom - rect.top;
 
-
 	//ウィンドウの作成.
 	m_hWnd = CreateWindow(
 		APP_NAME,					//アプリ名.
@@ -250,12 +306,21 @@ HRESULT CMain::InitWindow(
 	return S_OK;
 }
 
+#ifdef _DEBUG
+extern IMGUI_IMPL_API LRESULT ImGui_ImplWin32_WndProcHandler(HWND hWnd, UINT msg, WPARAM wParam, LPARAM lParam);
+#endif // DEBUG
+
 
 //ウィンドウ関数（メッセージ毎の処理）.
 LRESULT CALLBACK CMain::MsgProc(
 	HWND hWnd, UINT uMsg,
 	WPARAM wParam, LPARAM lParam )
 {
+
+#ifdef _DEBUG
+	// ImGuiウィンドウの処理をする(ドラッグやスクロールなど).
+	ImGui_ImplWin32_WndProcHandler(hWnd, uMsg, wParam, lParam);
+#endif // DEBUG
 	switch( uMsg ) {
 	case WM_DESTROY://ウィンドウが破棄されたとき.
 		//アプリケーションの終了をWindowsに通知する.

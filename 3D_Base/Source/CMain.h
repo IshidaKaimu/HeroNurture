@@ -1,10 +1,10 @@
 #pragma once
 #include <Windows.h>
 
+
 //クラスの前方宣言.
 class CDirectX9;
 class CDirectX11;
-class CGame;
 
 /**************************************************
 *	メインクラス.
@@ -15,6 +15,7 @@ public:
 	CMain();	//コンストラクタ.
 	~CMain();	//デストラクタ.
 
+	void Init();
 	void Update();		//更新処理.
 	HRESULT Create();	//構築処理.
 	HRESULT LoadData();	//データロード処理.
@@ -35,7 +36,6 @@ private:
 
 private:
 	HWND			m_hWnd;	//ウィンドウハンドル.
-	CDirectX9*		m_pDx9;	//DirectX9セットアップクラス.
+	CDirectX9*		m_pDx9; //DirectX9セットアップクラス
 	CDirectX11*		m_pDx11;//DirectX11セットアップクラス.
-	CGame*			m_pGame;
 };

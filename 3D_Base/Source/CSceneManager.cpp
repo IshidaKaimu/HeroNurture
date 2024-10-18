@@ -1,11 +1,7 @@
 #include "CSceneManager.h"
-#include "COpening.h"
-#include "CBossAppearance.h"
 #include "CSceneSelect.h"
-#include "CBossEvolution.h"
-#include "CSpecialMove.h"
-#include "CBossDeath.h"
-
+#include "CGameMain.h"
+#include "ImGuiManager.h"
 CSceneManager::CSceneManager()
     : m_Scene       ()
     , m_hWnd        ()
@@ -20,30 +16,48 @@ CSceneManager::~CSceneManager()
 {
 }
 
-void CSceneManager::Create()
+//構築、データ読み込み
+void CSceneManager::Create(CDirectX9& pDx9, CDirectX11& pDx11, HWND hwnd)
 {
+    m_pDx9 = &pDx9;
+    m_pDx11 = &pDx11;
+    m_hWnd = hwnd;
+    
     //テキスト表示の準備
+    WriteText::GetInstance()->SetDx11(*m_pDx11);
     WriteText::GetInstance()->Init();
 
     m_Scene->Create();
+    m_Scene->LoadData();
 }
 
 void CSceneManager::Update()
-{    
+{        
+    ImGui::Begin(JAPANESE("シーン"));
+    if (ImGui::Button(JAPANESE("選択"))) { LoadCreate(enSceneList::SceneSelect); }
+    if (ImGui::Button(JAPANESE("メイン"))) { LoadCreate(enSceneList::GameMain); }
+    ImGui::End();
     m_Scene->Update();  //入ってるシーンの動作を行う   
 }
 
-void CSceneManager::Draw(D3DXMATRIX& View, D3DXMATRIX& Proj, LIGHT& Light, CAMERA& Camera)
+void CSceneManager::Draw()
 {
-    m_Scene->Draw(View, Proj, Light, Camera);       //入ってるシーンの描画を行う
+    m_Scene->Draw();       //入ってるシーンの描画を行う
+
     m_pDx11->SetDepth(false);
-    CSceneBase::Draw( View, Proj, Light, Camera );  //シーンベース
+    CSceneBase::Draw();  //シーンベース
     m_pDx11->SetDepth(true);
 }
 
 void CSceneManager::LoadCreate(enSceneList List)
 {
-    CSceneManager::GetInstance()->m_Scene = Create(List);
+    //一度破棄
+    m_Scene.release();
+
+    //現在のシーンのインスタンス生成とロード
+    m_Scene = Create(List);
+    m_Scene->Create();
+    m_Scene->LoadData();
 }
 
 void CSceneManager::LoadScene()
@@ -51,15 +65,14 @@ void CSceneManager::LoadScene()
     m_Scene->LoadScene();
 }
 
+void CSceneManager::Release()
+{
+    m_Scene->Releace();
+}
+
 void CSceneManager::Initialize()
 {
     m_Scene->Initialize();
-}
-
-void CSceneManager::LoadData()
-{
-    //初期化
-    m_Scene->LoadData();    //読み込み処理
 }
 
 std::unique_ptr<CSceneBase> CSceneManager::Create(enSceneList List)
@@ -68,11 +81,7 @@ std::unique_ptr<CSceneBase> CSceneManager::Create(enSceneList List)
     switch (List)
     {
     case CSceneManager::SceneSelect:    return std::make_unique<CSceneSelect>();
-    case CSceneManager::Opening:        return std::make_unique<COpening>();
-    case CSceneManager::BossApp:        return std::make_unique<CBossAppearance>();
-    case CSceneManager::BossEvo:        return std::make_unique<CBossEvolution>();
-    case CSceneManager::Special:        return std::make_unique<CSpecialMove>();
-    case CSceneManager::BossDeath:      return std::make_unique<CBossDeath>();
+    case CSceneManager::GameMain:       return std::make_unique<CGameMain>();
     case CSceneManager::Max:            return nullptr;
     case CSceneManager::none:           return nullptr;
     default:                            return nullptr;

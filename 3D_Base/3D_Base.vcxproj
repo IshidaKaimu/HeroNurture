@@ -85,6 +85,7 @@
       <PreprocessorDefinitions>WIN32;_DEBUG;_CONSOLE;%(PreprocessorDefinitions)</PreprocessorDefinitions>
       <ConformanceMode>true</ConformanceMode>
       <PrecompiledHeader>Use</PrecompiledHeader>
+      <AdditionalIncludeDirectories>Source;Source\Effekseer\include</AdditionalIncludeDirectories>
     </ClCompile>
     <Link>
       <SubSystem>Console</SubSystem>
@@ -100,6 +101,7 @@
       <PreprocessorDefinitions>WIN32;NDEBUG;_CONSOLE;%(PreprocessorDefinitions)</PreprocessorDefinitions>
       <ConformanceMode>true</ConformanceMode>
       <PrecompiledHeader>Use</PrecompiledHeader>
+      <AdditionalIncludeDirectories>Source;Source\Effekseer\include</AdditionalIncludeDirectories>
     </ClCompile>
     <Link>
       <SubSystem>Console</SubSystem>
@@ -116,7 +118,7 @@
       <ConformanceMode>true</ConformanceMode>
       <PrecompiledHeader>Use</PrecompiledHeader>
       <ForcedIncludeFiles>stdafx.h</ForcedIncludeFiles>
-      <AdditionalIncludeDirectories>Source\Effekseer\include</AdditionalIncludeDirectories>
+      <AdditionalIncludeDirectories>Source;Source\Effekseer\include</AdditionalIncludeDirectories>
       <RuntimeLibrary>MultiThreadedDebug</RuntimeLibrary>
     </ClCompile>
     <Link>
@@ -135,7 +137,7 @@
       <ConformanceMode>true</ConformanceMode>
       <PrecompiledHeader>Use</PrecompiledHeader>
       <ForcedIncludeFiles>stdafx.h</ForcedIncludeFiles>
-      <AdditionalIncludeDirectories>Source\Effekseer\include</AdditionalIncludeDirectories>
+      <AdditionalIncludeDirectories>Source;Source\Effekseer\include</AdditionalIncludeDirectories>
       <RuntimeLibrary>MultiThreaded</RuntimeLibrary>
     </ClCompile>
     <Link>
@@ -149,20 +151,18 @@
   <ItemGroup>
     <ClCompile Include="Source\CBeEvoBoss.cpp" />
     <ClCompile Include="Source\CBoss.cpp" />
-    <ClCompile Include="Source\CBossDeath.cpp" />
-    <ClCompile Include="Source\CBossEvolution.cpp" />
     <ClCompile Include="Source\CBoundingSphere.cpp" />
     <ClCompile Include="Source\CCamera.cpp" />
     <ClCompile Include="Source\CCharacter.cpp" />
     <ClCompile Include="Source\CEffect.cpp" />
-    <ClCompile Include="Source\CBossAppearance.cpp" />
     <ClCompile Include="Source\CEnemy.cpp" />
     <ClCompile Include="Source\CFastBoss.cpp" />
+    <ClCompile Include="Source\CGameMain.cpp" />
     <ClCompile Include="Source\CGround.cpp" />
     <ClCompile Include="Source\CKaito.cpp" />
     <ClCompile Include="Source\CKeyManager.cpp" />
+    <ClCompile Include="Source\CMain.cpp" />
     <ClCompile Include="Source\CMeshManager.cpp" />
-    <ClCompile Include="Source\COpening.cpp" />
     <ClCompile Include="Source\CRay.cpp" />
     <ClCompile Include="Source\CSceneBase.cpp" />
     <ClCompile Include="Source\CSceneManager.cpp" />
@@ -175,7 +175,6 @@
     <ClCompile Include="Source\CSky.cpp" />
     <ClCompile Include="Source\CSound.cpp" />
     <ClCompile Include="Source\CSoundManager.cpp" />
-    <ClCompile Include="Source\CSpecialMove.cpp" />
     <ClCompile Include="Source\CSpriteObject.cpp" />
     <ClCompile Include="Source\CDebugText.cpp" />
     <ClCompile Include="Source\CDirectX11.cpp">
@@ -186,7 +185,6 @@
     <ClCompile Include="Source\CExplosion.cpp" />
     <ClCompile Include="Source\CGame.cpp" />
     <ClCompile Include="Source\CGameObject.cpp" />
-    <ClCompile Include="Source\CMain.cpp" />
     <ClCompile Include="Source\CPlayer.cpp" />
     <ClCompile Include="Source\CSprite2D.cpp" />
     <ClCompile Include="Source\CSprite3D.cpp" />
@@ -197,6 +195,14 @@
     <ClCompile Include="Source\CUIObject.cpp" />
     <ClCompile Include="Source\CZako.cpp" />
     <ClCompile Include="Source\DirectWriteCustomFont.cpp" />
+    <ClCompile Include="Source\ImGuiManager.cpp" />
+    <ClCompile Include="Source\ImGui\imgui.cpp" />
+    <ClCompile Include="Source\ImGui\imgui_demo.cpp" />
+    <ClCompile Include="Source\ImGui\imgui_draw.cpp" />
+    <ClCompile Include="Source\ImGui\imgui_impl_dx11.cpp" />
+    <ClCompile Include="Source\ImGui\imgui_impl_win32.cpp" />
+    <ClCompile Include="Source\ImGui\imgui_tables.cpp" />
+    <ClCompile Include="Source\ImGui\imgui_widgets.cpp" />
     <ClCompile Include="Source\stdafx.cpp">
       <PrecompiledHeader Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">Create</PrecompiledHeader>
       <PrecompiledHeader Condition="'$(Configuration)|$(Platform)'=='Release|x64'">Create</PrecompiledHeader>
@@ -209,19 +215,17 @@
   <ItemGroup>
     <ClInclude Include="Source\CBeEvoBoss.h" />
     <ClInclude Include="Source\CBoss.h" />
-    <ClInclude Include="Source\CBossDeath.h" />
-    <ClInclude Include="Source\CBossEvolution.h" />
     <ClInclude Include="Source\CBoundingSphere.h" />
     <ClInclude Include="Source\CCamera.h" />
     <ClInclude Include="Source\CCharacter.h" />
     <ClInclude Include="Source\CEffect.h" />
-    <ClInclude Include="Source\CBossAppearance.h" />
     <ClInclude Include="Source\CEnemy.h" />
+    <ClInclude Include="Source\CGameMain.h" />
     <ClInclude Include="Source\CGround.h" />
     <ClInclude Include="Source\CKaito.h" />
     <ClInclude Include="Source\CKeyManager.h" />
+    <ClInclude Include="Source\CMain.h" />
     <ClInclude Include="Source\CMeshManager.h" />
-    <ClInclude Include="Source\COpening.h" />
     <ClInclude Include="Source\CRay.h" />
     <ClInclude Include="Source\CSceneBase.h" />
     <ClInclude Include="Source\CSceneManager.h" />
@@ -234,7 +238,6 @@
     <ClInclude Include="Source\CSky.h" />
     <ClInclude Include="Source\CSound.h" />
     <ClInclude Include="Source\CSoundManager.h" />
-    <ClInclude Include="Source\CSpecialMove.h" />
     <ClInclude Include="Source\CSpriteObject.h" />
     <ClInclude Include="Source\CDebugText.h" />
     <ClInclude Include="Source\CDirectX11.h" />
@@ -242,7 +245,6 @@
     <ClInclude Include="Source\CExplosion.h" />
     <ClInclude Include="Source\CGame.h" />
     <ClInclude Include="Source\CGameObject.h" />
-    <ClInclude Include="Source\CMain.h" />
     <ClInclude Include="Source\CPlayer.h" />
     <ClInclude Include="Source\CSprite2D.h" />
     <ClInclude Include="Source\CSprite3D.h" />
@@ -255,6 +257,15 @@
     <ClInclude Include="Source\CFastBoss.h" />
     <ClInclude Include="Source\DirectWriteCustomFont.h" />
     <ClInclude Include="Source\Global.h" />
+    <ClInclude Include="Source\ImGuiManager.h" />
+    <ClInclude Include="Source\ImGui\imconfig.h" />
+    <ClInclude Include="Source\ImGui\imgui.h" />
+    <ClInclude Include="Source\ImGui\imgui_impl_dx11.h" />
+    <ClInclude Include="Source\ImGui\imgui_impl_win32.h" />
+    <ClInclude Include="Source\ImGui\imgui_internal.h" />
+    <ClInclude Include="Source\ImGui\imstb_rectpack.h" />
+    <ClInclude Include="Source\ImGui\imstb_textedit.h" />
+    <ClInclude Include="Source\ImGui\imstb_truetype.h" />
     <ClInclude Include="Source\MyMacro.h" />
     <ClInclude Include="Source\stdafx.h" />
     <ClInclude Include="Source\WriteText.h" />
@@ -338,6 +349,9 @@
       <ShaderType Condition="'$(Configuration)|$(Platform)'=='Release|x64'">Vertex</ShaderType>
       <ShaderModel Condition="'$(Configuration)|$(Platform)'=='Release|x64'">5.0</ShaderModel>
     </FxCompile>
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Source\ImGui\.editorconfig" />
   </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />
   <ImportGroup Label="ExtensionTargets">

@@ -16,3 +16,6 @@
 		(p) = nullptr;			\
 	}							\
 }
+
+//ImGui@“ú–{Œê‘Î‰.
+#define JAPANESE(str) reinterpret_cast<const char*>(u8##str)

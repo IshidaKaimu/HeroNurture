@@ -4,55 +4,80 @@
 #include "CMeshManager.h"
 #include "CSoundManager.h"
 #include <cmath>
-
+#include <fstream>
+#include <iostream>
+#include "ImGuiManager.h"
 CSceneSelect::CSceneSelect()
     : m_pSky    ()
+    , m_pGround ()
     , m_Opening(false)
     , m_BossApp(false)
     , m_BossEvo(false)
     , m_Special(false)
     , m_Time   (-10.0f)
 {
-    Create();
-    LoadData();
+    CCamera::GetInstance()->SetPos(D3DXVECTOR3(0.0f, 1.0f, 0.0f));
+    CCamera::GetInstance()->SetLook(D3DXVECTOR3(0.0f, 0.0f, 4.0f));
+
+    //ライト情報
+    m_Light.vDirection = D3DXVECTOR3(0.0f, 1.0f, 0.0f); //ライト方向
 }
 
 CSceneSelect::~CSceneSelect()
 {
 }
 
+//構築関数
 void CSceneSelect::Create()
 {
     m_pSky = new CSky();
+    m_pGround = new CGround();
+
+    //ファイル読み込みのテスト
+    std::wfstream file("Data\\Status\\Test3.txt",std::ios::in);
+    
+    //ファイル
+    if (file.is_open())
+    {
+        while (std::getline(file, m_Line)) 
+        {
+            m_Lines.push_back(m_Line);
+        }
+        file.close();
+
+        m_Statuses = std::move(m_Lines);
+    }
 }
 
+//データ設定関数
 void CSceneSelect::LoadData()
 {
     //メッシュマネージャーのインスタンスを変数に代入
     CMeshManager* MMng = CMeshManager::GetInstance();
     m_pSky->AttachMesh(CMeshManager::GetMesh(CMeshManager::Sky));
+    m_pGround->AttachMesh(CMeshManager::GetMesh(CMeshManager::Ground));
 }
 
+//破棄関数
+void CSceneSelect::Releace()
+{
+    SAFE_DELETE(m_pSky);
+    SAFE_DELETE(m_pGround);
+}
+
+//更新関数
 void CSceneSelect::Update()
 {
+
+    
     //フェードイン処理
     if (!FadeIn()) { return; }
 
-    //各BGMの停止
-    CSoundManager::Stop(CSoundManager::BGM_Opening);    //オープニング
-    CSoundManager::Stop(CSoundManager::BGM_BossApe);    //ボス登場シーン
-    CSoundManager::Stop(CSoundManager::BGM_BossEvo);    //ボス進化シーン
-    CSoundManager::Stop(CSoundManager::BGM_Special);    //必殺技シーン
-    CSoundManager::Stop(CSoundManager::BGM_BossDeath);  //ボス撃破シーン
-
-    CSceneManager::GetInstance()->SetCameraPos(D3DXVECTOR3(0.0f, 1.0f, 0.0f));
-    CSceneManager::GetInstance()->SetCameraLook(D3DXVECTOR3(1.0f, 1.0f, 1.0f));
-
-
     CKeyManager::GetInstance()->Update();
 
-
-    
+    //D3DXVECTOR3 skyPos = m_pSky->GetPosition();
+    //ImGui::InputFloat3(JAPANESE("空座標"), skyPos);
+    //m_pSky->SetPosition(skyPos);
 
     //シーン遷移(仮)
     if (CKeyManager::GetInstance()->IsDown('1'))
@@ -61,75 +86,43 @@ void CSceneSelect::Update()
         m_SceneTransitionFlg = true;
         m_Opening = true;
     }
-    if (CKeyManager::GetInstance()->IsDown('2'))
-    {
-        //ボス登場シーンへ
-        m_SceneTransitionFlg = true;
-        m_BossApp = true;
-    }
-
-    if (CKeyManager::GetInstance()->IsDown('3'))
-    {
-        //ボス進化シーンへ
-        m_SceneTransitionFlg = true;
-        m_BossEvo = true;
-    }
-
-    if (CKeyManager::GetInstance()->IsDown('4'))
-    {
-        //必殺技シーンへ
-        m_SceneTransitionFlg = true;
-        m_Special = true;
-    }
-
-    if (CKeyManager::GetInstance()->IsDown('5'))
-    {
-        //ボス撃破シーンへ
-        m_SceneTransitionFlg = true;
-        m_BossDeath = true;
-    }
-
     //フェードアウト処理
     if (m_SceneTransitionFlg && FadeOut()) 
     {
         if (m_Opening == true) {
-            CSceneManager::GetInstance()->LoadCreate(CSceneManager::Opening);
-        }
-        else if(m_BossApp == true)
-        {
-            CSceneManager::GetInstance()->LoadCreate(CSceneManager::BossApp);
-        }
-        else if (m_BossEvo == true)
-        {
-            CSceneManager::GetInstance()->LoadCreate(CSceneManager::BossEvo);
-        }
-        else if (m_Special == true)
-        {
-            CSceneManager::GetInstance()->LoadCreate(CSceneManager::Special);
-        }
-        else if (m_BossDeath == true)
-        {
-            CSceneManager::GetInstance()->LoadCreate(CSceneManager::BossDeath);
+            CSceneManager::GetInstance()->LoadCreate(CSceneManager::GameMain);
         }
     }
 
 
 }
 
-void CSceneSelect::Draw(D3DXMATRIX& View, D3DXMATRIX& Proj, LIGHT& Light, CAMERA& Camera)
+//描画関数
+void CSceneSelect::Draw()
 {
+
+    CCamera::GetInstance()->Projection();
+    CCamera::GetInstance()->Update();
+    m_mProj = CCamera::GetInstance()->GetProjection();
+    m_mView = CCamera::GetInstance()->GetViewMatrix();
+
+
     if (m_Time <= 5.0f) {
         m_Time += 0.1f;
     }
 
-    m_pSky->Draw(View, Proj, Light, Camera);
+    //スカイボックスの描画
+    m_pSky->Draw(m_mView, m_mProj, m_Light, m_Camera);
+
+    //地面の描画
+    m_pGround->Draw(m_mView, m_mProj, m_Light, m_Camera);
 
     float x = Easing(m_Time);
-    WriteText::GetInstance()->Draw_Text(L"1 Opening", WriteText::Select, D3DXVECTOR2(x, 0));
-    WriteText::GetInstance()->Draw_Text(L"2 Boss Appearance", WriteText::Select, D3DXVECTOR2(x, 80));
-    WriteText::GetInstance()->Draw_Text(L"3 Boss Evolution", WriteText::Select, D3DXVECTOR2(x, 160));
-    WriteText::GetInstance()->Draw_Text(L"4 Special", WriteText::Select, D3DXVECTOR2(x, 240));
-    WriteText::GetInstance()->Draw_Text(L"5 Boss Destroy", WriteText::Select, D3DXVECTOR2(x, 320));
+
+    for (int i = 0; i < m_Statuses.size(); i++)
+    {
+        WriteText::GetInstance()->Draw_Text(m_Statuses[i], WriteText::Select, D3DXVECTOR2(x, 80 * i));
+    }
 
 }
 

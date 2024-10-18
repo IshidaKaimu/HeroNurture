@@ -31,7 +31,7 @@ public:
 	virtual void Initialize();
 
 	virtual void Update() {};
-	virtual void Draw(D3DXMATRIX& View, D3DXMATRIX& Proj, LIGHT& Light, CAMERA& Camera);
+	virtual void Draw();
 
 	virtual void Create() {};
 
@@ -39,6 +39,9 @@ public:
 
 	//シーン読み込み関数
 	virtual void LoadScene(){};
+
+	//破棄関数
+	virtual void Releace();
 
 
 protected:
@@ -50,9 +53,13 @@ protected:
 protected:
 	//カメラ情報.
 	CAMERA		m_Camera;	
+	//ライト情報
+	LIGHT       m_Light;
 	//行列.
 	D3DXMATRIX	m_mView;	//ビュー(カメラ)行列.
 	D3DXMATRIX	m_mProj;	//射影（プロジェクション）行列.
+
+
 
 	//シーン遷移用
 	bool        m_IsScene;  
@@ -62,10 +69,6 @@ protected:
     int         m_SelectNo;
 
 	float       m_AnimCnt;				//アニメーションカウント
-
-
-    //CPU
-    enCPUList   m_CPU;
 
     //UI
     CUIObject* m_pLogo;         //ロゴ

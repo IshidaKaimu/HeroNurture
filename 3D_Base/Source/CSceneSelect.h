@@ -4,6 +4,7 @@
 #include "CCamera.h"
 #include "CSky.h"
 #include "WriteText.h"
+#include "CGround.h"
 
 
 
@@ -12,6 +13,7 @@ class CSceneSelect
 	:public CSceneBase
 {
 public:
+	//シーン列挙型
 	enum enSelectScene
 	{
 		Opening,
@@ -23,18 +25,34 @@ public:
 	~CSceneSelect();
 
 
+	//構築関数
 	void Create() override;
-
+	//データ設定関数
 	void LoadData() override;
-
+	//破棄関数
+	void Releace() override;
+	//更新関数
 	void Update() override;
-	void Draw(D3DXMATRIX& View, D3DXMATRIX& Proj, LIGHT& Light, CAMERA& Camera) override;
-
+	//描画関数
+	void Draw() override;
+	//文字の動き
 	float Easing(float x);
 
 private:
 	//スカイボックス
 	CSky* m_pSky;
+
+	//地面
+	CGround* m_pGround;
+
+	//行格納用
+	std::vector<std::wstring> m_Lines;
+	std::wstring m_Line;
+
+	//文字列格納用
+	std::vector<std::wstring> m_Statuses;
+
+
 	//オープニングに移らせるフラグ
 	bool m_Opening;
 	//ボス出現シーンに移らせるフラグ
@@ -48,5 +66,7 @@ private:
 
 	//時間経過でかわるX
 	float m_Time;
+
+
 };
 
