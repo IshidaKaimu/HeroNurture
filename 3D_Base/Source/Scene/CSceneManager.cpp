@@ -54,10 +54,14 @@ void CSceneManager::LoadCreate(enSceneList List)
     //一度破棄
     m_Scene.release();
 
-    //現在のシーンのインスタンス生成とロード
     m_Scene = Create(List);
+    //各シーンの構築
     m_Scene->Create();
+    //各シーンのデータ読み込み
     m_Scene->LoadData();
+    //各シーンの初期化
+    m_Scene->Initialize();
+
 }
 
 void CSceneManager::LoadScene()

@@ -5,7 +5,7 @@
 #include "StaticMeshObject/Sky/CSky.h"
 #include "WriteText/WriteText.h"
 #include "StaticMeshObject/Ground/CGround.h"
-
+#include "SkinMeshObject/Player/CPlayer.h"
 
 
 //ゲームメインシーン
@@ -18,7 +18,8 @@ public:
 	CGameMain();
 	~CGameMain();
 
-
+	//初期化関数
+	void Initialize() override;
 	//構築関数
 	void Create() override;
 	//データ設定関数
@@ -29,8 +30,6 @@ public:
 	void Update() override;
 	//描画関数
 	void Draw() override;
-	//文字の動き
-	float Easing(float x);
 
 private:
 	//スカイボックス
@@ -38,6 +37,9 @@ private:
 
 	//地面
 	CGround* m_pGround;
+
+	//プレイヤー
+	CPlayer* m_pPlayer;
 
 	D3DXMATRIX	m_mView;	//ビュー(カメラ)行列.
 	D3DXMATRIX	m_mProj;	//射影（プロジェクション）行列.

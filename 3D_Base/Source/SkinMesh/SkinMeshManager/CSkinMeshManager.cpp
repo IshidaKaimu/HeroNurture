@@ -30,7 +30,7 @@ HRESULT CSkinMeshManager::Load(CDirectX9* pdx9, CDirectX11* pdx11)
 
 	SKMeshList SKMList[] =
 	{
-		{ SkinMeshList::Player,        _T("Data\\Mesh\\Skin\\Kaito\\Kaito_s.x") },
+		{ SkinMeshList::Player,        _T("Data\\Mesh\\Skin\\Yui\\Yui.x") },
 		{ SkinMeshList::Wooo,          _T("Data\\Mesh\\Skin\\wooo\\wooo.x") },
 		{ SkinMeshList::Boss,          _T("Data\\Mesh\\Skin\\Boss\\ultemate_s.x") },
 		{ SkinMeshList::FastBoss,      _T("Data\\Mesh\\Skin\\FastBoss\\a_s.x") },

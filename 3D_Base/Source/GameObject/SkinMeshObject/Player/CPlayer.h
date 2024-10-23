@@ -1,22 +1,24 @@
 #pragma once
-
-#include "StaticMeshObject/Character/CCharacter.h"
+#include "SkinMeshObject/CSkinMeshObject.h"
 
 /**************************************************
 *	プレイヤークラス.
 **/
 class CPlayer
-	: public CCharacter
+	: public CSkinMeshObject
 {
 public :
-	//パラメータ列挙型
-	enum enParamater
+	//パラメータ構造体
+	struct enParamater
 	{
-		Power,
-		Magic,
-		Speed,
-		HP,
-		max,
+		//ちから
+		int Power;
+		//魔力
+		int Magic;
+		//素早さ
+		int Speed;
+		//体力
+		int HP;
 	};
 
 public:
@@ -35,5 +37,7 @@ public:
 	
 
 protected:
+	//プレイヤーのパラメータ構造体
+	enParamater m_Paramater;
 
 };
