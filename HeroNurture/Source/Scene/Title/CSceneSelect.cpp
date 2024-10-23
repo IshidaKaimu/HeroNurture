@@ -4,9 +4,11 @@
 #include "StaticMesh/MeshManager/CMeshManager.h"
 #include "Sound/CSoundManager.h"
 #include <cmath>
-#include <fstream>
 #include <iostream>
 #include "ImGui/ImGuiManager/ImGuiManager.h"
+#include <fstream>
+
+//タイトルシーン
 CSceneSelect::CSceneSelect()
     : m_pSky    ()
     , m_pGround ()
@@ -33,20 +35,30 @@ void CSceneSelect::Create()
     m_pSky = new CSky();
     m_pGround = new CGround();
 
-    //ファイル読み込みのテスト
-    std::wfstream file("Data\\Status\\Test3.txt",std::ios::in);
-    
-    //ファイル
-    if (file.is_open())
-    {
-        while (std::getline(file, m_Line)) 
-        {
-            m_Lines.push_back(m_Line);
-        }
-        file.close();
+    //jsonファイルテスト
+    json m_json;
 
-        m_Statuses = std::move(m_Lines);
-    }
+    //     箱　　　中身　　aaaの中身
+    m_json["Name"] = "ABC";
+
+    ////アドレス渡しで省略
+    //json& temp = m_json["fff"];
+  
+
+    //ファイルの作成
+    string fileName = m_json["Name"];
+    string directory = ".json";
+    string fullpath;
+    fileName += directory;
+
+    //作成したファイルに内容を書き込む
+    ofstream writing_file;
+    writing_file.open(fileName, ios::out);
+
+    //writing_file.write()
+    //m_json.dump(); 改行的な奴
+    writing_file << m_json.dump(2) << endl;
+    writing_file.close();
 }
 
 //データ設定関数
@@ -80,7 +92,7 @@ void CSceneSelect::Update()
     //m_pSky->SetPosition(skyPos);
 
     //シーン遷移(仮)
-    if (CKeyManager::GetInstance()->IsDown('1'))
+    if (CKeyManager::GetInstance()->IsDown(VK_RETURN))
     {
         //オープニングシーンへ
         m_SceneTransitionFlg = true;

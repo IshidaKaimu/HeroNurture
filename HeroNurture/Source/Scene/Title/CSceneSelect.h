@@ -5,8 +5,10 @@
 #include "StaticMeshObject/Sky/CSky.h"
 #include "WriteText/WriteText.h"
 #include "StaticMeshObject/Ground/CGround.h"
+#include "json.hpp"
 
 
+using namespace nlohmann;
 
 //シーン選択シーン
 class CSceneSelect
