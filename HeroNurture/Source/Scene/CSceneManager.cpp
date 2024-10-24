@@ -1,5 +1,5 @@
 #include "CSceneManager.h"
-#include "Scene/Title/CSceneSelect.h"
+#include "Scene/Title/CTitle.h"
 #include "Scene/GameMain/CGameMain.h"
 #include "ImGui/ImGuiManager/ImGuiManager.h"
 CSceneManager::CSceneManager()
@@ -8,7 +8,7 @@ CSceneManager::CSceneManager()
     , m_pDx9        ( nullptr )
     , m_pDx11       ( nullptr )
 {
-    m_Scene = std::make_unique<CSceneSelect>();   //make_unique:インスタンスを生成して、使わなくなったら勝手に破棄してくれる
+    m_Scene = std::make_unique<CTitle>();   //make_unique:インスタンスを生成して、使わなくなったら勝手に破棄してくれる
 }
 
 
@@ -84,7 +84,7 @@ std::unique_ptr<CSceneBase> CSceneManager::Create(enSceneList List)
     //現在のシーンのインスタンスを返す
     switch (List)
     {
-    case CSceneManager::SceneSelect:    return std::make_unique<CSceneSelect>();
+    case CSceneManager::SceneSelect:    return std::make_unique<CTitle>();
     case CSceneManager::GameMain:       return std::make_unique<CGameMain>();
     case CSceneManager::Max:            return nullptr;
     case CSceneManager::none:           return nullptr;

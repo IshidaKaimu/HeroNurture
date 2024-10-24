@@ -257,7 +257,7 @@
     <ClInclude Include="Source\Scene\CSceneManager.h">
       <Filter>Source\Scene</Filter>
     </ClInclude>
-    <ClInclude Include="Source\Scene\Title\CSceneSelect.h">
+    <ClInclude Include="Source\Scene\Title\CTitle.h">
       <Filter>Source\Scene\Title</Filter>
     </ClInclude>
     <ClInclude Include="Source\Scene\GameMain\CGameMain.h">
@@ -317,6 +317,7 @@
     <ClInclude Include="Source\Sprite2D\CSprite2D.h">
       <Filter>Source\Sprite2D</Filter>
     </ClInclude>
+    <ClInclude Include="Source\Json\Json.h" />
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="Source\BoundingSphere\CBoundingSphere.cpp">
@@ -406,7 +407,7 @@
     <ClCompile Include="Source\Scene\CSceneManager.cpp">
       <Filter>Source\Scene</Filter>
     </ClCompile>
-    <ClCompile Include="Source\Scene\Title\CSceneSelect.cpp">
+    <ClCompile Include="Source\Scene\Title\CTitle.cpp">
       <Filter>Source\Scene\Title</Filter>
     </ClCompile>
     <ClCompile Include="Source\Scene\GameMain\CGameMain.cpp">
@@ -469,6 +470,7 @@
     <ClCompile Include="Source\Sprite2D\CSprite2D.cpp">
       <Filter>Source\Sprite2D</Filter>
     </ClCompile>
+    <ClCompile Include="Source\Json\Json.cpp" />
   </ItemGroup>
   <ItemGroup>
     <None Include="Source\ImGui\.editorconfig">

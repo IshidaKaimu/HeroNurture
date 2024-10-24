@@ -9,14 +9,12 @@
 #include <fstream>
 #include <sstream>
 
+
 CGameMain::CGameMain()
     : m_pSky()
     , m_pGround()
-    , m_Opening(false)
-    , m_BossApp(false)
-    , m_BossEvo(false)
-    , m_Special(false)
-    , m_Time(-10.0f)
+    , m_UserName()
+    , m_pPlayer()
 {
 }
 
@@ -45,6 +43,8 @@ void CGameMain::Create()
     m_pGround = new CGround();
     //プレイヤーのインスタンス生成
     m_pPlayer = new CPlayer();
+
+
 }
 
 //データ設定関数
@@ -63,6 +63,11 @@ void CGameMain::LoadData()
     m_pGround->AttachMesh(CMeshManager::GetMesh(CMeshManager::Ground));
     //プレイヤーのメッシュ設定
     m_pPlayer->AttachMesh(CSkinMeshManager::GetMesh(CSkinMeshManager::Player));
+    
+    //ユーザー名の設定
+    m_pPlayer->MakeData(m_UserName);
+    m_pPlayer->SetUserName(m_UserName);
+
 }
 
 //破棄関数
@@ -83,31 +88,30 @@ void CGameMain::Update()
     //フェードイン処理
     if (!FadeIn()) { return; }
 
-    
+#ifdef _DEBUG 
     ImGui::InputFloat3(JAPANESE("カメラ座標"), m_Camera.Position);
     ImGui::InputFloat3(JAPANESE("注視点"), m_Camera.Look);
     CCamera::GetInstance()->SetPos(m_Camera.Position);
     CCamera::GetInstance()->SetLook(m_Camera.Look);
+
+#endif
+
     
     m_pPlayer->Update();
 
     //シーン遷移(仮)
-    if (CKeyManager::GetInstance()->IsDown('1'))
+    if (CKeyManager::GetInstance()->IsDown(VK_RETURN))
     {
         //オープニングシーンへ
         m_SceneTransitionFlg = true;
-        m_Opening = true;
     }
 
     //フェードアウト処理
     if (m_SceneTransitionFlg && FadeOut())
     {
-        if (m_Opening == true) {
+      
             CSceneManager::GetInstance()->LoadCreate(CSceneManager::SceneSelect);
-        }
     }
-
-
 }
 
 //描画関数

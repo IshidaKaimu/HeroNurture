@@ -6,12 +6,13 @@
 #include "WriteText/WriteText.h"
 #include "StaticMeshObject/Ground/CGround.h"
 #include "json.hpp"
-
+#include "SkinMeshObject/Player/CPlayer.h"
+#include "Scene/GameMain/CGameMain.h"
 
 using namespace nlohmann;
 
 //シーン選択シーン
-class CSceneSelect
+class CTitle
 	:public CSceneBase
 {
 public:
@@ -23,22 +24,27 @@ public:
 	};
 
 public:
-	CSceneSelect();
-	~CSceneSelect();
+	CTitle();
+	~CTitle();
 
 
 	//構築関数
 	void Create() override;
+
+	void Releace() override;
+
 	//データ設定関数
 	void LoadData() override;
 	//破棄関数
-	void Releace() override;
 	//更新関数
 	void Update() override;
 	//描画関数
 	void Draw() override;
 	//文字の動き
 	float Easing(float x);
+
+	//アカウント名入力処理
+	void  InputName();
 
 private:
 	//スカイボックス
@@ -47,13 +53,14 @@ private:
 	//地面
 	CGround* m_pGround;
 
-	//行格納用
-	std::vector<std::wstring> m_Lines;
-	std::wstring m_Line;
+	//ゲームメイン
+	CGameMain* m_pGameMain;
 
-	//文字列格納用
-	std::vector<std::wstring> m_Statuses;
+	//ユーザー名入力
+	std::wstring m_UserName;
 
+	//プレイヤー
+	CPlayer* m_pPlayer;
 
 	//オープニングに移らせるフラグ
 	bool m_Opening;

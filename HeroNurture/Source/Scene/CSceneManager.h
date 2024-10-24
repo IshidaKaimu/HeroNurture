@@ -6,7 +6,7 @@
 
 class COpening;
 class CAppearance;
-class CSceneSelect;
+class CTitle;
 class CBossEvolution;
 class CSpecialMove;
 class CBossDeath;
