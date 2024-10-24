@@ -27,7 +27,7 @@ namespace FontList
 {
     const std::wstring FontPath[] =
     {
-        L"Data\\Font\\NikkyouSans-mLKax.ttf",
+        L"Data\\Font\\Corporate-Mincho-ver3.otf",
     };
 }
 

@@ -16,7 +16,7 @@
 #include "SkinMeshObject/Zako/CZako.h"
 #include "Ray/CRay.h"
 #include "Camera/CCamera.h"
-#include "Scene/Title/CSceneSelect.h"
+#include "Scene/Title/CTitle.h"
 
 #include <vector> //‰Â•Ï’·”z—ñ
 
