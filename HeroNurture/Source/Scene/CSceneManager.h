@@ -40,8 +40,10 @@ public:
 	void Update();
 	void Draw();
 
-	void LoadCreate(enSceneList List);	//インスタンスの生成をする関数
+	//各シーンの構築、データ読み込み
+	void LoadCreate(enSceneList List);	
 
+	//シーンの
 	void LoadScene() override;
 
 	void Release();
