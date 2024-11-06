@@ -53,7 +53,7 @@ void CSceneManager::LoadCreate(enSceneList List)
 {
     //一度破棄
     m_Scene.release();
-
+    //シーンマネージャーでの構築
     m_Scene = Create(List);
     //各シーンの構築
     m_Scene->Create();

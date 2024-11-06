@@ -12,9 +12,11 @@ class CPlayer
 	: public CSkinMeshObject
 {
 public :
-	//パラメータ構造体
+	//ステータス構造体
 	struct enParamater
 	{
+		//ユーザー名
+		std::string Username;
 		//筋力
 		int Power;
 		//魔力
