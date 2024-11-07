@@ -1,4 +1,4 @@
-#include "Json.h"
+#include "CJson.h"
 
 CJson::CJson()
 {
@@ -12,7 +12,7 @@ CJson::~CJson()
 bool CJson::CreateOrLoad(const std::string& filepath)
 {
     //ファイルがあればロード、なければ作成
-    std::ifstream file(filepath);
+    std::ifstream file(filepath + ".json");
 
     //存在しない場合
     if (!file.is_open())
@@ -34,7 +34,7 @@ bool CJson::CreateOrLoad(const std::string& filepath)
 //ファイルの保存
 bool CJson::Save(const std::string& filepath)
 {
-    std::ofstream file(filepath);
+    std::ofstream file(filepath + ".json" );
 
     //開けなければfalseを返す
     if (!file.is_open())
@@ -45,6 +45,29 @@ bool CJson::Save(const std::string& filepath)
     {
         //Jsonファイルを保存
         file << JsonData;
+        file.close();
+    }
+
+    return true;
+}
+
+//アカウント用ファイルの作成
+bool CJson::CreateOrLoadAcount(const std::string& filepath)
+{
+    //ファイルがあればロード、なければ作成
+    std::ifstream file( "Data\\Acount\\" + filepath + ".json");
+
+    //存在しない場合
+    if (!file.is_open())
+    {
+        //空のJsonを作成、保存
+        JsonData = json::object();
+        return Save("Data\\Acount\\" + filepath);
+    }
+    else
+    {
+        //ロード
+        file >> JsonData;
         file.close();
     }
 

@@ -142,6 +142,9 @@
     <Filter Include="Source\DebugText">
       <UniqueIdentifier>{43e6252f-90dc-4cce-8052-a9bd132b0449}</UniqueIdentifier>
     </Filter>
+    <Filter Include="Source\Scene\Nature">
+      <UniqueIdentifier>{d867fb6c-af48-4816-97a5-07cfb4695c49}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
     <FxCompile Include="Data\Shader\Sprite3D.hlsl">
@@ -317,7 +320,12 @@
     <ClInclude Include="Source\Sprite2D\CSprite2D.h">
       <Filter>Source\Sprite2D</Filter>
     </ClInclude>
-    <ClInclude Include="Source\Json\Json.h" />
+    <ClInclude Include="Source\CJson.h">
+      <Filter>Source</Filter>
+    </ClInclude>
+    <ClInclude Include="Source\CNatureScene.h">
+      <Filter>Source\Scene\Nature</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="Source\BoundingSphere\CBoundingSphere.cpp">
@@ -470,7 +478,12 @@
     <ClCompile Include="Source\Sprite2D\CSprite2D.cpp">
       <Filter>Source\Sprite2D</Filter>
     </ClCompile>
-    <ClCompile Include="Source\Json\Json.cpp" />
+    <ClCompile Include="Source\CJson.cpp">
+      <Filter>Source</Filter>
+    </ClCompile>
+    <ClCompile Include="Source\CNatureScene.cpp">
+      <Filter>Source\Scene\Nature</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <None Include="Source\ImGui\.editorconfig">

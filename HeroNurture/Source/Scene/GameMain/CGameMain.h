@@ -48,9 +48,5 @@ private:
 	//プレイヤー
 	CPlayer* m_pPlayer;
 
-	D3DXMATRIX	m_mView;	//ビュー(カメラ)行列.
-	D3DXMATRIX	m_mProj;	//射影（プロジェクション）行列.
-
-
 };
 

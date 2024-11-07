@@ -4,10 +4,8 @@
 #include "StaticMesh/MeshManager/CMeshManager.h"
 #include "Sound/CSoundManager.h"
 #include <cmath>
-#include <iostream>
 #include "ImGui/ImGuiManager/ImGuiManager.h"
-#include <fstream>
-#include <codecvt>
+#include "CJson.h"
 
 //タイトルシーン
 CTitle::CTitle()
@@ -36,10 +34,15 @@ CTitle::~CTitle()
 //構築関数
 void CTitle::Create()
 {
+    //スカイボックスクラス
     m_pSky = new CSky();
+    //地面クラス
     m_pGround = new CGround();
-    m_pPlayer = new CPlayer();
-    m_pGameMain = new CGameMain();
+    //プレイヤークラス
+    m_pPlayer = std::make_unique<CPlayer>();
+    //jsonクラス
+    m_pJson = std::make_unique<CJson>();
+
 }
 
 //データ設定関数
@@ -56,14 +59,11 @@ void CTitle::Releace()
 {
     SAFE_DELETE(m_pSky);
     SAFE_DELETE(m_pGround);
-    SAFE_DELETE(m_pGameMain);
 }
 
 //更新関数
 void CTitle::Update()
-{
-
-    
+{   
     //フェードイン処理
     if (!FadeIn()) { return; }
 
@@ -84,12 +84,12 @@ void CTitle::Update()
             //ユーザーネームが登録されていたら
             if (!m_UserName.empty()) 
             {
-                m_pGameMain->SetUserName(m_UserName);
+                //あればロード、なければ作成する関数
+                m_pJson->CreateOrLoadAcount( WstringToString(m_UserName));
+                //名前をプレイヤーに渡す
+                m_pPlayer->SetUserName( WstringToString(m_UserName) );
+                //シーンのロード
                 CSceneManager::GetInstance()->LoadCreate(CSceneManager::GameMain);
-            }
-            else
-            {
-                std::wcerr << L"ユーザーネームが設定されていません。" << std::endl;
             }
         }
     }
@@ -159,4 +159,26 @@ void CTitle::InputName()
             m_UserName.pop_back();
         }
     }
+}
+
+//wstringをstringに変換
+std::string CTitle::WstringToString(std::wstring owstring)
+{
+    //wstringからSJIS
+    int iBufferSize = 
+        WideCharToMultiByte( CP_OEMCP, 0, owstring.c_str(), -1, (char * )NULL, 0, NULL, NULL );
+
+    //バッファの取得
+    CHAR* cpMultiByte = new CHAR[ iBufferSize ];
+
+    //wstringからSJIS
+    WideCharToMultiByte(CP_OEMCP, 0, owstring.c_str(), -1, cpMultiByte, iBufferSize, NULL, NULL);
+
+    //stringの生成
+    std::string oRet( cpMultiByte, cpMultiByte + iBufferSize -1 );
+
+    //バッファの破棄
+    delete [] cpMultiByte;
+
+    return (oRet);
 }

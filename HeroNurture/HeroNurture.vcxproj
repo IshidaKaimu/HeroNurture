@@ -232,6 +232,8 @@
   <ItemGroup>
     <ClCompile Include="Source\BoundingSphere\CBoundingSphere.cpp" />
     <ClCompile Include="Source\Camera\CCamera.cpp" />
+    <ClCompile Include="Source\CJson.cpp" />
+    <ClCompile Include="Source\CNatureScene.cpp" />
     <ClCompile Include="Source\DebugText\CDebugText.cpp" />
     <ClCompile Include="Source\DirectX\CDirectX11.cpp" />
     <ClCompile Include="Source\DirectX\CDirectX9.cpp" />
@@ -258,7 +260,6 @@
     <ClCompile Include="Source\ImGui\imgui_impl_win32.cpp" />
     <ClCompile Include="Source\ImGui\imgui_tables.cpp" />
     <ClCompile Include="Source\ImGui\imgui_widgets.cpp" />
-    <ClCompile Include="Source\Json\Json.cpp" />
     <ClCompile Include="Source\KeyManager\CKeyManager.cpp" />
     <ClCompile Include="Source\Main\CMain.cpp" />
     <ClCompile Include="Source\Ray\CRay.cpp" />
@@ -288,6 +289,7 @@
   <ItemGroup>
     <ClInclude Include="Source\BoundingSphere\CBoundingSphere.h" />
     <ClInclude Include="Source\Camera\CCamera.h" />
+    <ClInclude Include="Source\CNatureScene.h" />
     <ClInclude Include="Source\DebugText\CDebugText.h" />
     <ClInclude Include="Source\DirectX\CDirectX11.h" />
     <ClInclude Include="Source\DirectX\CDirectX9.h" />
@@ -316,7 +318,6 @@
     <ClInclude Include="Source\ImGui\imstb_rectpack.h" />
     <ClInclude Include="Source\ImGui\imstb_textedit.h" />
     <ClInclude Include="Source\ImGui\imstb_truetype.h" />
-    <ClInclude Include="Source\Json\Json.h" />
     <ClInclude Include="Source\KeyManager\CKeyManager.h" />
     <ClInclude Include="Source\Main\CMain.h" />
     <ClInclude Include="Source\Ray\CRay.h" />
@@ -338,6 +339,7 @@
     <ClInclude Include="Source\TextWrite\DirectWriteCustomFont\DirectWriteCustomFont.h" />
     <ClInclude Include="Source\TextWrite\Text\CText.h" />
     <ClInclude Include="Source\TextWrite\WriteText\WriteText.h" />
+    <ClInclude Include="Source\CJson.h" />
   </ItemGroup>
   <ItemGroup>
     <None Include="Source\ImGui\.editorconfig" />

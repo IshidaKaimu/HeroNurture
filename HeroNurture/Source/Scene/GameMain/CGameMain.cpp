@@ -65,8 +65,6 @@ void CGameMain::LoadData()
     m_pPlayer->AttachMesh(CSkinMeshManager::GetMesh(CSkinMeshManager::Player));
     
     //ƒ†[ƒU[–¼‚ÌÝ’è
-    m_pPlayer->MakeData(m_UserName);
-    m_pPlayer->SetUserName(m_UserName);
 
 }
 

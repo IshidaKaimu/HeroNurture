@@ -1,15 +1,15 @@
 #pragma once
-#include "Scene/CSceneBase.h"
-#include "SkinMeshObject/Kaito/CKaito.h"
-#include "Camera/CCamera.h"
-#include "StaticMeshObject/Sky/CSky.h"
-#include "WriteText/WriteText.h"
-#include "StaticMeshObject/Ground/CGround.h"
-#include "json.hpp"
-#include "SkinMeshObject/Player/CPlayer.h"
-#include "Scene/GameMain/CGameMain.h"
+#include "Scene/CSceneBase.h"				//シーンベースクラス
+#include "Camera/CCamera.h"					//カメラクラス
+#include "StaticMeshObject/Sky/CSky.h"		//スカイボックスクラス
+#include "WriteText/WriteText.h"			//テキスト描画クラス
+#include "StaticMeshObject/Ground/CGround.h"//地面クラス
+#include "SkinMeshObject/Player/CPlayer.h"	//プレイヤークラス
+#include <memory>
+#include <Windows.h>
 
-using namespace nlohmann;
+//jsonクラス
+class CJson;
 
 //シーン選択シーン
 class CTitle
@@ -31,20 +31,29 @@ public:
 	//構築関数
 	void Create() override;
 
+	//破棄関数
 	void Releace() override;
 
 	//データ設定関数
 	void LoadData() override;
-	//破棄関数
+
 	//更新関数
 	void Update() override;
+
 	//描画関数
 	void Draw() override;
+
+
+public:
+
 	//文字の動き
 	float Easing(float x);
 
 	//アカウント名入力処理
 	void  InputName();
+
+	//wstringからstringへの変換
+	std::string WstringToString(std::wstring owstring);
 
 private:
 	//スカイボックス
@@ -53,15 +62,16 @@ private:
 	//地面
 	CGround* m_pGround;
 
-	//ゲームメイン
-	CGameMain* m_pGameMain;
-
 	//ユーザー名入力
 	std::wstring m_UserName;
 
-	//プレイヤー
-	CPlayer* m_pPlayer;
+	//Jsonクラス
+	std::unique_ptr<CJson> m_pJson;
 
+	//プレイヤー
+	std::unique_ptr<CPlayer> m_pPlayer;
+
+	//---------フラグ-------------
 	//オープニングに移らせるフラグ
 	bool m_Opening;
 	//ボス出現シーンに移らせるフラグ

@@ -1,6 +1,7 @@
 #pragma once
 #include "SkinMeshObject/CSkinMeshObject.h"
 #include "json.hpp"
+#include "CJson.h"
 
 //json関係使うのに必要な名前空間を定義
 using namespace nlohmann;
@@ -13,10 +14,8 @@ class CPlayer
 {
 public :
 	//ステータス構造体
-	struct enParamater
+	struct enStatus
 	{
-		//ユーザー名
-		std::string Username;
 		//筋力
 		int Power;
 		//魔力
@@ -26,6 +25,7 @@ public :
 		//体力
 		int HP;
 	};
+
 public:
 	CPlayer();
 	virtual ~CPlayer() override;
@@ -33,29 +33,41 @@ public:
 
 	//更新処理
 	virtual void Update() override;
+
 	//描画処理
 	virtual void Draw(D3DXMATRIX& View, D3DXMATRIX& Proj,
 		LIGHT& Light, CAMERA& Camera) override;
 
+
+
+public:
+
 	//ユーザーネームの設定
-	void SetUserName(std::wstring& name) { m_UserName = name; }
+	void SetUserName(const std::string& name) { m_UserName = name; }
 
-	//データ読み込み関数
-	void SetData(std::wstring& name);
+	//ファイルデータ読み込み
+	void Fromjson(const json& j);
 
-	//データ作成関数
-	void MakeData(std::wstring& name);
+	//ファイルデータ保存関数
+	void Tojson(json& j);
 
-	//ステータス書き込み関数
-	void WriteData(std::wstring name,int power,int magic, int speed,int hp);
+	//ステータスセット関数
+	bool LoadStatus(const std::string& name);
+
+	//ステータス保存関数
+	bool SaveStatus(const std::string& name);
+
 
 
 protected:
 	//プレイヤーのパラメータ構造体
-	enParamater m_Para;
+	enStatus m_Para;
+
+	//jsonクラス
+	std::unique_ptr<CJson> m_pJson;
 
 	//ユーザーネーム
-	std::wstring m_UserName;
+	std::string m_UserName;
 
 	//ステータスファイル
 	json Status;
