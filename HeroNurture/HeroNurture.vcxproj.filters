@@ -145,6 +145,9 @@
     <Filter Include="Source\Scene\Nature">
       <UniqueIdentifier>{d867fb6c-af48-4816-97a5-07cfb4695c49}</UniqueIdentifier>
     </Filter>
+    <Filter Include="Source\Camera\CameraManager">
+      <UniqueIdentifier>{8a2014e0-b2fc-43bf-bc9a-be6f3f21c6bc}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
     <FxCompile Include="Data\Shader\Sprite3D.hlsl">
@@ -179,13 +182,13 @@
     <ClInclude Include="Source\GameObject\SkinMeshObject\CSkinMeshObject.h">
       <Filter>Source\GameObject\SkinMeshObject</Filter>
     </ClInclude>
-    <ClInclude Include="Source\GameObject\SkinMeshObject\Kaito\CKaito.h">
+    <ClInclude Include="Source\GameObject\SkinMeshObject\Hero\Kaito\CKaito.h">
       <Filter>Source\GameObject\SkinMeshObject\Kaito</Filter>
     </ClInclude>
-    <ClInclude Include="Source\GameObject\SkinMeshObject\Zako\CZako.h">
+    <ClInclude Include="Source\GameObject\SkinMeshObject\Hero\Zako\CZako.h">
       <Filter>Source\GameObject\SkinMeshObject\Zako</Filter>
     </ClInclude>
-    <ClInclude Include="Source\GameObject\SkinMeshObject\Player\CPlayer.h">
+    <ClInclude Include="Source\GameObject\SkinMeshObject\Hero\CHeroBase.h">
       <Filter>Source\GameObject\SkinMeshObject\Player</Filter>
     </ClInclude>
     <ClInclude Include="Source\GameObject\StaticMeshObject\CStaticMeshObject.h">
@@ -196,9 +199,6 @@
     </ClInclude>
     <ClInclude Include="Source\GameObject\StaticMeshObject\Ground\CGround.h">
       <Filter>Source\GameObject\StaticMeshObject\Ground</Filter>
-    </ClInclude>
-    <ClInclude Include="Source\GameObject\StaticMeshObject\Shot\CShot.h">
-      <Filter>Source\GameObject\StaticMeshObject\Shot</Filter>
     </ClInclude>
     <ClInclude Include="Source\GameObject\UIObject\CUIObject.h">
       <Filter>Source\GameObject\UIObject</Filter>
@@ -323,9 +323,12 @@
     <ClInclude Include="Source\CJson.h">
       <Filter>Source</Filter>
     </ClInclude>
-    <ClInclude Include="Source\CNatureScene.h">
+    <ClInclude Include="Source\Scene\Nature\CNatureScene.h">
       <Filter>Source\Scene\Nature</Filter>
     </ClInclude>
+    <ClInclude Include="Source\Singleton\CSingleton.h" />
+    <ClInclude Include="Source\Camera\CameraManager\CCameraManager.h" />
+    <ClInclude Include="Source\GameObject\SkinMeshObject\Hero\CHeroManager.h" />
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="Source\BoundingSphere\CBoundingSphere.cpp">
@@ -340,13 +343,13 @@
     <ClCompile Include="Source\GameObject\SkinMeshObject\CSkinMeshObject.cpp">
       <Filter>Source\GameObject\SkinMeshObject</Filter>
     </ClCompile>
-    <ClCompile Include="Source\GameObject\SkinMeshObject\Kaito\CKaito.cpp">
+    <ClCompile Include="Source\GameObject\SkinMeshObject\Hero\Kaito\CKaito.cpp">
       <Filter>Source\GameObject\SkinMeshObject\Kaito</Filter>
     </ClCompile>
-    <ClCompile Include="Source\GameObject\SkinMeshObject\Zako\CZako.cpp">
+    <ClCompile Include="Source\GameObject\SkinMeshObject\Hero\Zako\CZako.cpp">
       <Filter>Source\GameObject\SkinMeshObject\Zako</Filter>
     </ClCompile>
-    <ClCompile Include="Source\GameObject\SkinMeshObject\Player\CPlayer.cpp">
+    <ClCompile Include="Source\GameObject\SkinMeshObject\Hero\CHeroBase.cpp">
       <Filter>Source\GameObject\SkinMeshObject\Player</Filter>
     </ClCompile>
     <ClCompile Include="Source\GameObject\StaticMeshObject\CStaticMeshObject.cpp">
@@ -357,9 +360,6 @@
     </ClCompile>
     <ClCompile Include="Source\GameObject\StaticMeshObject\Ground\CGround.cpp">
       <Filter>Source\GameObject\StaticMeshObject\Ground</Filter>
-    </ClCompile>
-    <ClCompile Include="Source\GameObject\StaticMeshObject\Shot\CShot.cpp">
-      <Filter>Source\GameObject\StaticMeshObject\Shot</Filter>
     </ClCompile>
     <ClCompile Include="Source\GameObject\UIObject\CUIObject.cpp">
       <Filter>Source\GameObject\UIObject</Filter>
@@ -481,9 +481,11 @@
     <ClCompile Include="Source\CJson.cpp">
       <Filter>Source</Filter>
     </ClCompile>
-    <ClCompile Include="Source\CNatureScene.cpp">
+    <ClCompile Include="Source\Scene\Nature\CNatureScene.cpp">
       <Filter>Source\Scene\Nature</Filter>
     </ClCompile>
+    <ClCompile Include="Source\Camera\CameraManager\CCameraManager.cpp" />
+    <ClCompile Include="Source\GameObject\SkinMeshObject\Hero\CHeroManager.cpp" />
   </ItemGroup>
   <ItemGroup>
     <None Include="Source\ImGui\.editorconfig">

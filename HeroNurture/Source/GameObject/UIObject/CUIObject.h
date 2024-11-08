@@ -40,8 +40,7 @@ public:
 protected:
 	//CGameObjectÇ©ÇÁoverrideÇµÇΩä÷êî.
 	//final Ç±ÇÍà»ç~ÇÕoverrideÇ≥ÇπÇ»Ç¢.
-	void Draw( D3DXMATRIX& View, D3DXMATRIX& Proj,
-		LIGHT& Light, CAMERA& Camera ) override final;
+	void Draw( LIGHT& Light ) override final;
 
 protected:
 	CSprite2D*	m_pSprite;

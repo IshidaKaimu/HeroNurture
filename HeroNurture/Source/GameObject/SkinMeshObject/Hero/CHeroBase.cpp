@@ -1,4 +1,4 @@
-#include "CPlayer.h"
+#include "CHeroBase.h"
 #include "Sound/CSoundManager.h"
 #include "ImGui/ImGuiManager/ImGuiManager.h"
 #include "KeyManager/CKeyManager.h"
@@ -6,18 +6,18 @@
 #include <codecvt>
 
 
-CPlayer::CPlayer()	
+CHeroBase::CHeroBase()	
 {
 	SetScale(0.1f, 0.1f, 0.1f);
 	m_pJson = std::make_unique<CJson>();
 	LoadStatus(m_UserName);
 }
 
-CPlayer::~CPlayer()
+CHeroBase::~CHeroBase()
 {
 }
 
-void CPlayer::Update()
+void CHeroBase::Update()
 {
 
 	CKeyManager::GetInstance()->Update();
@@ -36,16 +36,18 @@ void CPlayer::Update()
 
 }
 
-void CPlayer::Draw(
-	D3DXMATRIX& View, D3DXMATRIX& Proj,
-	LIGHT& Light, CAMERA& Camera )
+void CHeroBase::Draw( LIGHT& Light )
 {
-	CSkinMeshObject::Draw( View, Proj, Light, Camera );
+	CSkinMeshObject::Draw( Light );
+}
+
+void CHeroBase::Animation()
+{
 }
 
 
 //データ読み込み関数
-void CPlayer::Fromjson(const json& j)
+void CHeroBase::Fromjson(const json& j)
 {
 	if (!m_UserName.empty()) {
 		j.at("Power").get_to(m_Para.Power);
@@ -57,7 +59,7 @@ void CPlayer::Fromjson(const json& j)
 
 
 //データ保存関数
-void CPlayer::Tojson(json& j)
+void CHeroBase::Tojson(json& j)
 {
 	j["Power"]    = m_Para.Power;
 	j["Magic"]    = m_Para.Magic;
@@ -66,7 +68,7 @@ void CPlayer::Tojson(json& j)
 }
 
 //ステータスセット関数
-bool CPlayer::LoadStatus(const string& name)
+bool CHeroBase::LoadStatus(const string& name)
 {
 	//読み込むファイル名の指定
 	std::ifstream Ifile(name + ".json");
@@ -84,7 +86,7 @@ bool CPlayer::LoadStatus(const string& name)
 	return true;
 }
 
-bool CPlayer::SaveStatus(const string& name)
+bool CHeroBase::SaveStatus(const string& name)
 {
 	//書き込むファイル名の指定
 	std::ofstream Ofile(name + ".json");

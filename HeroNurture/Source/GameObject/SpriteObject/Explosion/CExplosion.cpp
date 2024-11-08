@@ -40,14 +40,13 @@ void CExplosion::Update()
 #endif
 }
 
-void CExplosion::Draw(
-	D3DXMATRIX& View, D3DXMATRIX& Proj )
+void CExplosion::Draw()
 {
 	m_pSprite->SetPatternNo( m_PatternNo.x, m_PatternNo.y );
 
 	m_pSprite->SetBillboard( true );
 
-	CSpriteObject::Draw( View, Proj );
+	CSpriteObject::Draw();
 
 	m_pSprite->SetBillboard( false );
 }

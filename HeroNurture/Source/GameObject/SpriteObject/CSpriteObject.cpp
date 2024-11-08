@@ -1,4 +1,5 @@
 #include "CSpriteObject.h"
+#include "Camera\CameraManager\CCameraManager.h"
 
 CSpriteObject::CSpriteObject()
 	: m_pSprite		( nullptr )
@@ -17,8 +18,7 @@ void CSpriteObject::Update()
 	}
 }
 
-void CSpriteObject::Draw(
-	D3DXMATRIX& View, D3DXMATRIX& Proj )
+void CSpriteObject::Draw()
 {
 	if( m_pSprite == nullptr ){
 		return;
@@ -29,13 +29,9 @@ void CSpriteObject::Draw(
 	m_pSprite->SetRotation( m_vRotation );
 	m_pSprite->SetScale( m_vScale );
 
-	//レンダリング.
-	m_pSprite->Render( View, Proj );
-}
+	//カメラ情報の取得
+	CAMERA camera = CCameraManager::GetInstance().GetCamera();
 
-void CSpriteObject::Draw(
-	D3DXMATRIX& View, D3DXMATRIX& Proj,
-	LIGHT& Light, CAMERA& Camera )
-{
-	Draw( View, Proj );
+	//レンダリング.
+	m_pSprite->Render( camera.View, camera.Proj );
 }

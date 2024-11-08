@@ -12,7 +12,7 @@ public:
 	virtual ~CExplosion() override;
 
 	virtual void Update() override;
-	virtual void Draw( D3DXMATRIX& View, D3DXMATRIX& Proj ) override;
+	virtual void Draw() override;
 
 	void ResetAnimation(){
 		m_PatternNo.x = 0;

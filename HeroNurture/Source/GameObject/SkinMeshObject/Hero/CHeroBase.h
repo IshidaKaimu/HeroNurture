@@ -1,5 +1,5 @@
 #pragma once
-#include "SkinMeshObject/CSkinMeshObject.h"
+#include "SkinMeshObject\CSkinMeshObject.h"
 #include "json.hpp"
 #include "CJson.h"
 
@@ -7,9 +7,10 @@
 using namespace nlohmann;
 
 /**************************************************
-*	プレイヤークラス.
+*	ヒーロー基底クラス.
 **/
-class CPlayer
+
+class CHeroBase
 	: public CSkinMeshObject
 {
 public :
@@ -26,19 +27,35 @@ public :
 		int HP;
 	};
 
+	//キャラクターリスト構造体
+	enum enCharacterList : unsigned char
+	{
+		Yui,
+		Kaito,
+
+		max,
+	};
+
+
 public:
-	CPlayer();
-	virtual ~CPlayer() override;
+	CHeroBase();
+	virtual ~CHeroBase() override;
 
+	//初期化関数
+	//ベースなので何もしない
+	virtual void Initialize() = 0;
 
-	//更新処理
-	virtual void Update() override;
+	//データ読み込み関数
+	virtual void LoadData() = 0;
 
-	//描画処理
-	virtual void Draw(D3DXMATRIX& View, D3DXMATRIX& Proj,
-		LIGHT& Light, CAMERA& Camera) override;
+	//更新関数
+	virtual void Update();
 
+	//描画関数
+	virtual void Draw( LIGHT& light );
 
+	//アニメーション関数
+	virtual void Animation() = 0;
 
 public:
 
@@ -56,8 +73,6 @@ public:
 
 	//ステータス保存関数
 	bool SaveStatus(const std::string& name);
-
-
 
 protected:
 	//プレイヤーのパラメータ構造体

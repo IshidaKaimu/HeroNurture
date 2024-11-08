@@ -31,6 +31,19 @@ void CSceneManager::Create(CDirectX9& pDx9, CDirectX11& pDx11, HWND hwnd)
     m_Scene->LoadData();
 }
 
+//破棄関数
+void CSceneManager::Release()
+{
+    m_Scene->Releace();
+}
+
+//初期化関数
+void CSceneManager::Initialize()
+{
+    m_Scene->Initialize();
+}
+
+//更新関数
 void CSceneManager::Update()
 {        
     ImGui::Begin(JAPANESE("シーン"));
@@ -40,6 +53,7 @@ void CSceneManager::Update()
     m_Scene->Update();  //入ってるシーンの動作を行う   
 }
 
+//描画関数
 void CSceneManager::Draw()
 {
     m_Scene->Draw();       //入ってるシーンの描画を行う
@@ -67,16 +81,6 @@ void CSceneManager::LoadCreate(enSceneList List)
 void CSceneManager::LoadScene()
 {
     m_Scene->LoadScene();
-}
-
-void CSceneManager::Release()
-{
-    m_Scene->Releace();
-}
-
-void CSceneManager::Initialize()
-{
-    m_Scene->Initialize();
 }
 
 std::unique_ptr<CSceneBase> CSceneManager::Create(enSceneList List)

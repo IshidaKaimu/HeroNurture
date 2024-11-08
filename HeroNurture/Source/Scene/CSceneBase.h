@@ -4,14 +4,6 @@
 #include "Sprite2D/CSprite2D.h"
 #include "UIObject/CUIObject.h"
 
-//CPU列挙型
-enum class enCPUList
-{
-    Kicker = 0, //キッカー
-    Keeper,     //キーパー
-    none = -1,
-};
-
 //==============================//
 //		シーンベースクラス		//
 //==============================//
@@ -51,15 +43,8 @@ protected:
     bool FadeIn();
 
 protected:
-	//カメラ情報.
-	CAMERA		m_Camera;	
 	//ライト情報
 	LIGHT       m_Light;
-	//行列.
-	D3DXMATRIX	m_mView;	//ビュー(カメラ)行列.
-	D3DXMATRIX	m_mProj;	//射影（プロジェクション）行列.
-
-
 
 	//シーン遷移用
 	bool        m_IsScene;  

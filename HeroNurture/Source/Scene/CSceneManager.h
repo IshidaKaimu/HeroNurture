@@ -32,12 +32,18 @@ public:
 
 	~CSceneManager() ;
 
-
-	void Initialize();
-
+	//構築関数
     void Create(CDirectX9& pDx9, CDirectX11& pDx11, HWND hwnd);
 
+	void Release();
+
+	//初期化関数
+	void Initialize();
+
+	//更新関数
 	void Update();
+	
+	//描画関数
 	void Draw();
 
 	//各シーンの構築、データ読み込み
@@ -46,21 +52,7 @@ public:
 	//シーンの
 	void LoadScene() override;
 
-	void Release();
-
 	static std::unique_ptr<CSceneBase> Create(enSceneList List);
-
-
-	//カメラ関連のセッターとゲッター
-	static D3DXVECTOR3 GetCameraPos() { return CSceneManager::GetInstance()->m_Camera.Position; };	//位置を取得
-	static D3DXVECTOR3 GetCameraLook() { return CSceneManager::GetInstance()->m_Camera.Look; };		//注視点を取得
-	static void SetCameraPos(D3DXVECTOR3 pos)		{ CSceneManager::GetInstance()->m_Camera.Position = pos; };	//位置
-	static void SetCameraLook(D3DXVECTOR3 Look)	{ CSceneManager::GetInstance()->m_Camera.Look = Look; };		//注視点
-
-	//x,y,Z軸のカメラセット
-	static void SetCameraPosX(float x) { CSceneManager::GetInstance()->m_Camera.Position.x = x; }
-	static void SetCameraPosY(float y) { CSceneManager::GetInstance()->m_Camera.Position.y = y; }
-	static void SetCameraPosZ(float z) { CSceneManager::GetInstance()->m_Camera.Position.z = z; }
 
     //---ゲッター,セッター---
     //DirectX9

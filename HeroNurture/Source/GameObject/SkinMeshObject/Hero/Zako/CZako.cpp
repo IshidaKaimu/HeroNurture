@@ -62,8 +62,8 @@ void CZako::Update()
 
 }
 
-void CZako::Draw(D3DXMATRIX& View, D3DXMATRIX& Proj, LIGHT& Light, CAMERA& Camera)
+void CZako::Draw( LIGHT& Light )
 {
 	m_pMesh->SetAnimSpeed( m_AnimSpeed );
-    CSkinMeshObject::Draw( View, Proj, Light,Camera );
+    CSkinMeshObject::Draw( Light );
 }

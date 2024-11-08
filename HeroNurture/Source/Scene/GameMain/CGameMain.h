@@ -13,29 +13,33 @@ class CGameMain
 	:public CSceneBase
 {
 public:
-
-public:
 	CGameMain();
 	~CGameMain();
 
+	//構築関数
+	void Create()	  override;
+	//破棄関数
+	void Releace()	  override;
+	//データ設定関数
+	void LoadData()	  override;
 	//初期化関数
 	void Initialize() override;
-	//構築関数
-	void Create() override;
-	//データ設定関数
-	void LoadData() override;
-	//破棄関数
-	void Releace() override;
 	//更新関数
-	void Update() override;
+	void Update()     override;
 	//描画関数
-	void Draw() override;
+	void Draw()		  override;
 
+
+public:
 	//アカウント名取得
 	void SetUserName(std::wstring name) { m_UserName = name; }
 
 
 private:
+
+	//カメラマネージャ
+	CCameraManager* m_pCamera;
+
 	//スカイボックス
 	CSky* m_pSky;
 
@@ -48,5 +52,7 @@ private:
 	//プレイヤー
 	CPlayer* m_pPlayer;
 
+	//デバッグ用
+	D3DXVECTOR3 CamPos;
+	D3DXVECTOR3 CamLook;	
 };
-

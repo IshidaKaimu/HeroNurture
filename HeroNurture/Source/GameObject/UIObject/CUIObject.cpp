@@ -36,9 +36,7 @@ void CUIObject::Draw()
 	m_pSprite->Render();
 }
 
-void CUIObject::Draw(
-	D3DXMATRIX& View, D3DXMATRIX& Proj,
-	LIGHT& Light, CAMERA& Camera )
+void CUIObject::Draw( LIGHT& Light )
 {
 	Draw();
 }

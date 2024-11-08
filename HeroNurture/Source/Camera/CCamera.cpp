@@ -3,14 +3,6 @@
 
 CCamera::CCamera()
 	: m_Camera	()
-	, m_mView	()
-	, m_mProj	()
-	, m_ShakeAmp()
-	, m_ShakeFre()
-	, m_ShakeDuration()
-	, m_ShakeTime()
-	, m_Origin  ()
-	, m_IsShaking(false)
 {
 }
 
@@ -42,22 +34,27 @@ void CCamera::Update()
 		m_Camera.Position.z -= add_value;
 	}
 
+	//プロジェクションの計算
+	Projection();
+
+	//カメラ変換
 	Camera();
 }
 
 void CCamera::Camera()
 {
-		D3DXVECTOR3 cam_pos		= m_Camera.Position;
-		D3DXVECTOR3 cam_look	= m_Camera.Look;
 		D3DXVECTOR3	vUpVec(0.0f, 1.0f, 0.0f);	//上方（ベクトル）.
 
 		//ビュー（カメラ）変換.
 		D3DXMatrixLookAtLH(		//LH(Left Hand)
-			&m_mView,	//(out)ビュー計算結果.
-			&cam_pos, &cam_look, &vUpVec);
+			&m_Camera.View,		//(out)ビュー計算結果.
+			&m_Camera.Position, //位置情報
+			&m_Camera.Look,		//注視点
+			&vUpVec);			//上方ベクトル
 
 }
 
+//3人称カメラ
 void CCamera::ThirdPersonCamera(CAMERA* pCamera, const D3DXVECTOR3& TargetPos, float TargetRotY)
 {
 	//Z軸ベクトル
@@ -90,6 +87,15 @@ void CCamera::ThirdPersonCamera(CAMERA* pCamera, const D3DXVECTOR3& TargetPos, f
 
 }
 
+//初期化関数
+void CCamera::Initialize()
+{
+	//初期カメラ座標の設定
+	SetPos(0.0f, 4.0f, -9.0f);
+	//注視点の設定
+	SetLook(0.0f, 4.0f, 3.0f);
+}
+
 void CCamera::Projection()
 {
 	//y方向の視野角。数値を大きくしたら視野が狭くなる.
@@ -101,11 +107,11 @@ void CCamera::Projection()
 
 	//プロジェクション（射影）変換.
 	D3DXMatrixPerspectiveFovLH(
-		&m_mProj,		//(out)プロジェクション計算結果.
-		fov_y,		//視野角（FOV：Field of View）.
-		aspect,		//アスペクト.
-		near_z,		//近いビュー平面のz値.
-		far_z);		//遠いビュー平面のz値.
+		&m_Camera.Proj,		//(out)プロジェクション計算結果.
+		fov_y,				//視野角（FOV：Field of View）.
+		aspect,				//アスペクト.
+		near_z,				//近いビュー平面のz値.
+		far_z);				//遠いビュー平面のz値.
 }
 
 

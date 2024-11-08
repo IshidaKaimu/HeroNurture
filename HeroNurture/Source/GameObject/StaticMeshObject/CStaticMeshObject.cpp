@@ -20,9 +20,7 @@ void CStaticMeshObject::Update()
 	}
 }
 
-void CStaticMeshObject::Draw(
-	D3DXMATRIX& View, D3DXMATRIX& Proj,
-	LIGHT& Light, CAMERA& Camera )
+void CStaticMeshObject::Draw( LIGHT& Light )
 {
 	if( m_pMesh == nullptr ){
 		return;
@@ -34,7 +32,7 @@ void CStaticMeshObject::Draw(
 	m_pMesh->SetScale( m_vScale );
 
 	//ƒŒƒ“ƒ_ƒŠƒ“ƒO.
-	m_pMesh->Render( View, Proj, Light, Camera.Position );
+	m_pMesh->Render(Light);
 
 
 }

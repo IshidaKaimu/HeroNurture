@@ -44,10 +44,10 @@ void CKaito::Update()
 
 }
 
-void CKaito::Draw(D3DXMATRIX& View, D3DXMATRIX& Proj, LIGHT& Light, CAMERA& Camera)
+void CKaito::Draw( LIGHT& Light )
 {
 	m_pMesh->SetAnimSpeed(m_AnimSpeed);
-	CSkinMeshObject::Draw(View, Proj, Light, Camera);
+	CSkinMeshObject::Draw( Light );
 }
 
 bool CKaito::SceneChange()

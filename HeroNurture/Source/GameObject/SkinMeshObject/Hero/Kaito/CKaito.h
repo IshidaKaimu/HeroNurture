@@ -1,6 +1,7 @@
 #pragma once
 #pragma once
 #include "SkinMeshObject/CSkinMeshObject.h"
+#include "SkinMeshObject/Hero/CHero.h"
 
 constexpr float KAITO_SPEED = 0.05f;
 
@@ -8,7 +9,7 @@ constexpr float KAITO_SPEED = 0.05f;
 *カイトクラス
 **/
 class CKaito
-	:public CSkinMeshObject
+	:public CHeroBase
 {
 public:
 	CKaito();
@@ -16,8 +17,7 @@ public:
 
 
 	virtual void Update() override;
-	virtual void Draw(D3DXMATRIX& View, D3DXMATRIX& Proj,
-		LIGHT& Light, CAMERA& Camera) override;
+	virtual void Draw( LIGHT& Light ) override;
 
 	void SetAnimSpeed(double speed) { m_AnimSpeed = speed; }
 

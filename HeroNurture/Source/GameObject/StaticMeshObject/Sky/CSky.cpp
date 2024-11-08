@@ -15,8 +15,8 @@ void CSky::Update()
 	CStaticMeshObject::Update();
 }
 
-void CSky::Draw(D3DXMATRIX& View, D3DXMATRIX& Proj, LIGHT& Light, CAMERA& Camera)
+void CSky::Draw( LIGHT& Light )
 {
-	CStaticMeshObject::Draw(View, Proj, Light, Camera);
+	CStaticMeshObject::Draw( Light );
 }
 

@@ -4,6 +4,9 @@
 #include "SkinMesh/CSkinMesh.h"
 #include "BoundingSphere/CBoundingSphere.h"
 
+//----前方宣言----
+class CCameraManager;
+
 /************************************************************
 *	スキンメッシュオブジェクトクラス.
 **/
@@ -16,8 +19,7 @@ public:
 
 	//CGameObjectで純粋仮想関数の宣言がされてるのでこちらで定義を書く.
 	virtual void Update() override;
-	virtual void Draw(D3DXMATRIX& View, D3DXMATRIX& Proj,
-		LIGHT& Light, CAMERA& Camera) override;
+	virtual void Draw( LIGHT& Light ) override;
 
 	//メッシュを接続する.
 	void AttachMesh(CSkinMesh& pMesh);

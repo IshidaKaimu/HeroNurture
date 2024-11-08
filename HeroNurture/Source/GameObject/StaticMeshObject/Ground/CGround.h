@@ -14,6 +14,8 @@ public:
 
 	virtual void Update() override;
 
+	virtual void Draw( LIGHT& Light ) override;
+
 	//ƒvƒŒƒCƒ„[‚ğİ’è
 	void SetPlayer(CCharacter& pPlayer) { m_pPlayer = &pPlayer; }
 

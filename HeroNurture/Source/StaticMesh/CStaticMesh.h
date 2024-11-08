@@ -113,8 +113,7 @@ public:
 	void Release();
 
 	//レンダリング用.
-	void Render(D3DXMATRIX& mView, D3DXMATRIX& mProj,
-		LIGHT& Light, D3DXVECTOR3& CamPos);
+	void Render(LIGHT& Light);
 
 	//座標情報を設定.
 	void SetPosition( const D3DXVECTOR3& Pos ) { m_Position = Pos; }
@@ -168,6 +167,10 @@ private:
 
 	//レンダリング関数(クラス内でのみ使用する).
 	void RenderMesh( D3DXMATRIX& mWorld, D3DXMATRIX& mView, D3DXMATRIX& mProj );
+
+	//コンスタントバッファにデータを渡す
+	void DataToConstantBuffer(D3DXVECTOR3& campos);
+
 
 private:
 	//Dx9.

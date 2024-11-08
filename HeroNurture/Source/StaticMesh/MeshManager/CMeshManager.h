@@ -2,9 +2,8 @@
 #include "StaticMesh/CStaticMesh.h"
 #include "Sprite3D/CSprite3D.h"
 #include "StaticMeshObject/Character/CCharacter.h"
-#include "SkinMeshObject/Player/CPlayer.h"
+#include "SkinMeshObject/Hero/CHero.h"
 #include "StaticMeshObject/Ground/CGround.h"
-#include "StaticMeshObject/Shot/CShot.h"
 
 class CMeshManager
 {

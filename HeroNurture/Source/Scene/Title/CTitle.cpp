@@ -1,15 +1,16 @@
 #include "CTitle.h"
-#include "Scene/CSceneManager.h"
-#include "KeyManager/CKeyManager.h"
-#include "StaticMesh/MeshManager/CMeshManager.h"
-#include "Sound/CSoundManager.h"
+#include "Scene\CSceneManager.h"
+#include "KeyManager\CKeyManager.h"
+#include "StaticMesh\MeshManager\CMeshManager.h"
+#include "Sound\CSoundManager.h"
 #include <cmath>
-#include "ImGui/ImGuiManager/ImGuiManager.h"
+#include "ImGui\ImGuiManager\ImGuiManager.h"
 #include "CJson.h"
 
 //タイトルシーン
 CTitle::CTitle()
-    : m_pSky    ()
+    : m_pCamera ( &CCameraManager::GetInstance() )
+    , m_pSky    ()
     , m_pGround ()
     , m_Opening(false)
     , m_BossApp(false)
@@ -18,11 +19,6 @@ CTitle::CTitle()
     , m_Time   (-10.0f)
     , m_pPlayer()
 {
-    //カメラ位置初期設定
-    CCamera::GetInstance()->SetPos(D3DXVECTOR3(0.0f, 1.0f, 0.0f));
-    //カメラ注視点初期設定
-    CCamera::GetInstance()->SetLook(D3DXVECTOR3(0.0f, 0.0f, 4.0f));
-
     //ライト情報
     m_Light.vDirection = D3DXVECTOR3(0.0f, 1.0f, 0.0f); //ライト方向
 }
@@ -42,8 +38,16 @@ void CTitle::Create()
     m_pPlayer = std::make_unique<CPlayer>();
     //jsonクラス
     m_pJson = std::make_unique<CJson>();
-
 }
+
+//破棄関数
+void CTitle::Releace()
+{
+    SAFE_DELETE(m_pSky);
+    SAFE_DELETE(m_pGround);
+    m_pCamera = nullptr;
+}
+
 
 //データ設定関数
 void CTitle::LoadData()
@@ -52,14 +56,16 @@ void CTitle::LoadData()
     CMeshManager* MMng = CMeshManager::GetInstance();
     m_pSky->AttachMesh(CMeshManager::GetMesh(CMeshManager::Sky));
     m_pGround->AttachMesh(CMeshManager::GetMesh(CMeshManager::Ground));
+
+    Initialize();
 }
 
-//破棄関数
-void CTitle::Releace()
+void CTitle::Initialize()
 {
-    SAFE_DELETE(m_pSky);
-    SAFE_DELETE(m_pGround);
+    //カメラの初期化
+    m_pCamera->Initialize();
 }
+
 
 //更新関数
 void CTitle::Update()
@@ -100,22 +106,18 @@ void CTitle::Update()
 //描画関数
 void CTitle::Draw()
 {
-
-    CCamera::GetInstance()->Projection();
-    CCamera::GetInstance()->Update();
-    m_mProj = CCamera::GetInstance()->GetProjection();
-    m_mView = CCamera::GetInstance()->GetViewMatrix();
-
-
     if (m_Time <= 5.0f) {
         m_Time += 0.1f;
     }
 
+    //カメラの動作
+    m_pCamera->CameraUpdate();
+
     //スカイボックスの描画
-    m_pSky->Draw(m_mView, m_mProj, m_Light, m_Camera);
+    m_pSky->Draw( m_Light );
 
     //地面の描画
-    m_pGround->Draw(m_mView, m_mProj, m_Light, m_Camera);
+    m_pGround->Draw( m_Light );
 
     //文字の入力
     WriteText::GetInstance()->Draw_Text(m_UserName, WriteText::Select, D3DXVECTOR2(0.0f, 0.0f));

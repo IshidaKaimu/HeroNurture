@@ -1,12 +1,8 @@
 #include "CSceneBase.h"
-#include "Sprite2D/UIManager/CUIManager.h"
+#include "Sprite2D\UIManager\CUIManager.h"
 
 CSceneBase::CSceneBase()
-    : m_Camera()
-
-    , m_mView()
-    , m_mProj()
-    , m_IsScene(true)
+    : m_IsScene(true)
 
     , m_SelectNo()
 

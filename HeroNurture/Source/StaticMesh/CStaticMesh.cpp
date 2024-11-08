@@ -1,6 +1,7 @@
 #include "CStaticMesh.h"
 #include "CDirectX9.h"
 #include "CDirectX11.h"
+#include "Camera\CameraManager\CCameraManager.h"
 
 #include <stdlib.h>	//マルチバイト文字→Unicode文字変換で必要.
 #include <locale.h>
@@ -611,13 +612,14 @@ HRESULT CStaticMesh::CreateConstantBuffer()
 //レンダリング用.
 //※DirectX内のレンダリング関数.
 //  最終的に画面に出力するのは別クラスのレンダリング関数がやる.
-void CStaticMesh::Render(
-	D3DXMATRIX& mView, D3DXMATRIX& mProj,
-	LIGHT& Light, D3DXVECTOR3& CamPos)
+void CStaticMesh::Render(LIGHT& Light)
 {
 	//ワールド行列、スケール行列、回転行列、平行移動行列.
 	D3DXMATRIX mWorld, mScale, mRot, mTran;
 	D3DXMATRIX mYaw, mPitch, mRoll;
+
+	//カメラ情報の取得
+	CAMERA camera = CCameraManager::GetInstance().GetCamera();
 
 	//拡大縮小行列作成.
 	D3DXMatrixScaling(
@@ -658,7 +660,7 @@ void CStaticMesh::Render(
 		CBUFFER_PER_FRAME cb;
 
 		//カメラ位置.
-		cb.CameraPos = D3DXVECTOR4( CamPos.x, CamPos.y, CamPos.z, 0.0f );
+		cb.CameraPos = D3DXVECTOR4( camera.Position.x, camera.Position.y, camera.Position.z, 0.0f );
 
 		//----- ライト情報 -----.
 		//ライト方向.
@@ -684,7 +686,7 @@ void CStaticMesh::Render(
 
 
 	//メッシュのレンダリング.
-	RenderMesh( mWorld, mView, mProj );
+	RenderMesh( mWorld, camera.View, camera.Proj );
 }
 
 //レンダリング関数(クラス内でのみ使用する).
@@ -790,3 +792,4 @@ void CStaticMesh::RenderMesh(
 			m_pMaterials[m_AttrID[No]].dwNumFace * 3, 0, 0 );
 	}
 }
+

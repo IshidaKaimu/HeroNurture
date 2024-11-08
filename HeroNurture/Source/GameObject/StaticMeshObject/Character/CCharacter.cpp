@@ -1,8 +1,7 @@
 #include "CCharacter.h"
 
 CCharacter::CCharacter()
-	: m_Shot	( false )
-	, m_pRayY   ( nullptr )
+	: m_pRayY   ( nullptr )
 {
 	m_pRayY = new RAY();
 	m_pRayY->Axis = D3DXVECTOR3(0.0f, -1.0f, 0.0f);//‰ºŒü‚«‚ÌŽ²
@@ -19,9 +18,7 @@ void CCharacter::Update()
 	CStaticMeshObject::Update();
 }
 
-void CCharacter::Draw(
-	D3DXMATRIX& View, D3DXMATRIX& Proj,
-	LIGHT& Light, CAMERA& Camera )
+void CCharacter::Draw( LIGHT& Light )
 {
-	CStaticMeshObject::Draw( View, Proj, Light, Camera );
+	CStaticMeshObject::Draw( Light );
 }

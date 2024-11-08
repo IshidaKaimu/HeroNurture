@@ -1,7 +1,7 @@
 #pragma once
 #include "Sprite2D/CSprite2D.h"
 #include "CDirectX11.h"
-#include "SkinMeshObject/Player/CPlayer.h"
+#include "SkinMeshObject/Hero/CHero.h"
 
 class CUIManager
 {
