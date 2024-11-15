@@ -235,6 +235,7 @@
     <ClCompile Include="Source\Camera\CCamera.cpp" />
     <ClCompile Include="Source\CJson.cpp" />
     <ClCompile Include="Source\GameObject\SkinMeshObject\Hero\CHeroManager.cpp" />
+    <ClCompile Include="Source\GameObject\SkinMeshObject\Hero\Yui\CYui.cpp" />
     <ClCompile Include="Source\Scene\Nature\CNatureScene.cpp" />
     <ClCompile Include="Source\DebugText\CDebugText.cpp" />
     <ClCompile Include="Source\DirectX\CDirectX11.cpp" />
@@ -292,6 +293,7 @@
     <ClInclude Include="Source\Camera\CameraManager\CCameraManager.h" />
     <ClInclude Include="Source\Camera\CCamera.h" />
     <ClInclude Include="Source\GameObject\SkinMeshObject\Hero\CHeroManager.h" />
+    <ClInclude Include="Source\GameObject\SkinMeshObject\Hero\Yui\CYui.h" />
     <ClInclude Include="Source\Scene\Nature\CNatureScene.h" />
     <ClInclude Include="Source\DebugText\CDebugText.h" />
     <ClInclude Include="Source\DirectX\CDirectX11.h" />

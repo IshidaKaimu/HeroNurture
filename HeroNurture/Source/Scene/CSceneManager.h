@@ -4,12 +4,8 @@
 #include "CDirectX9.h"
 #include <memory>
 
-class COpening;
-class CAppearance;
 class CTitle;
-class CBossEvolution;
-class CSpecialMove;
-class CBossDeath;
+class CNatureScene;
 
 class CSceneManager
 	: public CSceneBase
@@ -20,6 +16,7 @@ public:
 	{
 		SceneSelect = 0,
 		GameMain,
+		Nature,
 		Max,
 		none = -1,
 	};

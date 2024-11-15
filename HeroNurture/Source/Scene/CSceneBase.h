@@ -18,15 +18,19 @@ public:
 	CSceneBase();
 	virtual ~CSceneBase();
 
-	//初期化処理
-
+	//初期化関数
 	virtual void Initialize();
 
+	//更新関数
 	virtual void Update() {};
+
+	//描画関数
 	virtual void Draw();
 
+	//構築関数
 	virtual void Create() {};
 
+	//データ読み込み関数
 	virtual void  LoadData() {};
 
 	//シーン読み込み関数

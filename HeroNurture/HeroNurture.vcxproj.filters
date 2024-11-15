@@ -329,6 +329,7 @@
     <ClInclude Include="Source\Singleton\CSingleton.h" />
     <ClInclude Include="Source\Camera\CameraManager\CCameraManager.h" />
     <ClInclude Include="Source\GameObject\SkinMeshObject\Hero\CHeroManager.h" />
+    <ClInclude Include="Source\GameObject\SkinMeshObject\Hero\Yui\CYui.h" />
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="Source\BoundingSphere\CBoundingSphere.cpp">
@@ -486,6 +487,7 @@
     </ClCompile>
     <ClCompile Include="Source\Camera\CameraManager\CCameraManager.cpp" />
     <ClCompile Include="Source\GameObject\SkinMeshObject\Hero\CHeroManager.cpp" />
+    <ClCompile Include="Source\GameObject\SkinMeshObject\Hero\Yui\CYui.cpp" />
   </ItemGroup>
   <ItemGroup>
     <None Include="Source\ImGui\.editorconfig">

@@ -3,6 +3,9 @@
 #include "json.hpp"
 #include "CJson.h"
 
+class CYui;
+class CKaito;
+
 //json関係使うのに必要な名前空間を定義
 using namespace nlohmann;
 
@@ -43,10 +46,10 @@ public:
 
 	//初期化関数
 	//ベースなので何もしない
-	virtual void Initialize() = 0;
+	virtual void Initialize() {};
 
 	//データ読み込み関数
-	virtual void LoadData() = 0;
+	virtual void LoadData() {};
 
 	//更新関数
 	virtual void Update();
@@ -55,7 +58,7 @@ public:
 	virtual void Draw( LIGHT& light );
 
 	//アニメーション関数
-	virtual void Animation() = 0;
+	virtual void Animation();
 
 public:
 

@@ -4,7 +4,7 @@
 #include "StaticMeshObject\Sky\CSky.h"			//スカイボックスクラス
 #include "WriteText\WriteText.h"				//テキスト描画クラス
 #include "StaticMeshObject\Ground\CGround.h"	//地面クラス
-#include "SkinMeshObject\Player\CPlayer.h"		//プレイヤークラス
+#include "SkinMeshObject\Hero\CHeroManager.h"		//プレイヤークラス
 #include <memory>
 #include <Windows.h>
 
@@ -62,7 +62,7 @@ private:
 	std::unique_ptr<CJson> m_pJson;
 
 	//プレイヤー
-	std::unique_ptr<CPlayer> m_pPlayer;
+	std::unique_ptr<CHeroManager> m_pHero;
 
 	//---------フラグ-------------
 	//オープニングに移らせるフラグ

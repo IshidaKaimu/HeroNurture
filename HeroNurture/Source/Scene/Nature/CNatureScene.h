@@ -1,7 +1,10 @@
 #pragma once
-#include "SkinMeshObject/Hero/CHeroManager.h"
-#include "Scene/CSceneBase.h"
+#include "SkinMeshObject\Hero\CHeroManager.h"
+#include "Scene\CSceneBase.h"
+#include "StaticMeshObject\Sky\CSky.h"
+#include "StaticMeshObject\Ground\CGround.h"
 #include <memory>
+
 //----------------
 //育成シーンクラス
 //----------------
@@ -26,10 +29,16 @@ public:
 	void Draw()		  override;
 
 public:
-	//ヒーロークラス
-	CHeroManager* m_pHero;
-
 	//カメラマネージャクラス
 	CCameraManager* m_pCamera;
+
+	//----オブジェクトクラス----
+	//スタティックメッシュ
+	//地面クラス
+	CGround*		m_pGround;
+	//スカイボックスクラス
+	CSky*			m_pSky;
+
+
 };
 

@@ -2,7 +2,7 @@
 #include "StaticMesh/CStaticMesh.h"
 #include "Sprite3D/CSprite3D.h"
 #include "StaticMeshObject/Character/CCharacter.h"
-#include "SkinMeshObject/Hero/CHero.h"
+#include "SkinMeshObject/Hero/CHeroBase.h"
 #include "StaticMeshObject/Ground/CGround.h"
 
 class CMeshManager

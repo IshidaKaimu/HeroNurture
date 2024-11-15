@@ -1,11 +1,10 @@
 #pragma once
 #include "Scene/CSceneBase.h"
-#include "SkinMeshObject/Kaito/CKaito.h"
 #include "Camera/CCamera.h"
 #include "StaticMeshObject/Sky/CSky.h"
 #include "WriteText/WriteText.h"
 #include "StaticMeshObject/Ground/CGround.h"
-#include "SkinMeshObject/Player/CPlayer.h"
+#include "SkinMeshObject/Hero/CHeroBase.h"
 #include "json.hpp"
 
 //ゲームメインシーン
@@ -48,9 +47,6 @@ private:
 
 	//ユーザー名
 	std::wstring m_UserName;
-
-	//プレイヤー
-	CPlayer* m_pPlayer;
 
 	//デバッグ用
 	D3DXVECTOR3 CamPos;

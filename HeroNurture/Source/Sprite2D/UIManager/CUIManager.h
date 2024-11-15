@@ -1,7 +1,7 @@
 #pragma once
 #include "Sprite2D/CSprite2D.h"
 #include "CDirectX11.h"
-#include "SkinMeshObject/Hero/CHero.h"
+#include "SkinMeshObject/Hero/CHeroBase.h"
 
 class CUIManager
 {
@@ -41,7 +41,7 @@ private:
 
 	CSprite2D* m_pSprite2D[UIList::Max];
 
-	CPlayer* m_pPlayer;
+	CHeroBase* m_pHero;
 };
 
 //UIÉTÉCÉYíËêî

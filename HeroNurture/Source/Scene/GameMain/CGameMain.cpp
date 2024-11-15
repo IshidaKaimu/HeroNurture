@@ -6,6 +6,7 @@
 #include "Sound\CSoundManager.h"
 #include "ImGui\ImGuiManager\ImGuiManager.h"
 #include "Camera\CameraManager\CCameraManager.h"
+#include "SkinMeshObject\Hero\CHeroManager.h"
 #include <cmath>
 #include <fstream>
 #include <sstream>
@@ -16,7 +17,6 @@ CGameMain::CGameMain()
     , m_pSky    ()
     , m_pGround ()
     , m_UserName()
-    , m_pPlayer ()
 {
 }
 
@@ -32,10 +32,6 @@ void CGameMain::Create()
     m_pSky    = new CSky();
     //地面のインスタンス生成
     m_pGround = new CGround();
-    //プレイヤーのインスタンス生成
-    m_pPlayer = new CPlayer();
-
-
 }
 
 //データ設定関数
@@ -51,8 +47,6 @@ void CGameMain::LoadData()
     m_pSky->AttachMesh(CMeshManager::GetMesh(CMeshManager::Sky));
     //地面のメッシュ設定
     m_pGround->AttachMesh(CMeshManager::GetMesh(CMeshManager::Ground));
-    //プレイヤーのメッシュ設定
-    m_pPlayer->AttachMesh(CSkinMeshManager::GetMesh(CSkinMeshManager::Yui));
     
 }
 
@@ -61,14 +55,11 @@ void CGameMain::Releace()
 {
     SAFE_DELETE(m_pSky);
     SAFE_DELETE(m_pGround);
-    SAFE_DELETE(m_pPlayer);
 }
 
 //初期化関数
 void CGameMain::Initialize()
 {
-    //プレイヤーの座標情報を変数に代入
-    D3DXVECTOR3 PPos = m_pPlayer->GetPosition();
 
     //初期カメラ座標の設定
     m_pCamera->Initialize();
@@ -83,12 +74,11 @@ void CGameMain::Initialize()
 //更新関数
 void CGameMain::Update()
 {
-    //プレイヤーの座標情報を変数に代入
-    D3DXVECTOR3 PPos = m_pPlayer->GetPosition();
-
 
     //フェードイン処理
     if (!FadeIn()) { return; }
+
+    CKeyManager::GetInstance()->Update();
 
 #ifdef DEBUG 
 
@@ -98,9 +88,6 @@ void CGameMain::Update()
     m_pCamera->SetLook(CamLook);
 
 #endif
-
-    
-    m_pPlayer->Update();
 
     //シーン遷移(仮)
     if (CKeyManager::GetInstance()->IsDown(VK_RETURN))
@@ -112,8 +99,8 @@ void CGameMain::Update()
     //フェードアウト処理
     if (m_SceneTransitionFlg && FadeOut())
     {
-      
-            CSceneManager::GetInstance()->LoadCreate(CSceneManager::SceneSelect);
+        CHeroManager::GetInstance().SelectHero(CHeroManager::Kaito);
+       CSceneManager::GetInstance()->LoadCreate(CSceneManager::Nature);
     }
 }
 
@@ -123,9 +110,6 @@ void CGameMain::Draw()
     //カメラの動作
     m_pCamera->CameraUpdate();
     
-    //プレイヤーの描画
-    m_pPlayer->Draw( m_Light );
-
     //空の描画
     m_pSky->Draw( m_Light );
 

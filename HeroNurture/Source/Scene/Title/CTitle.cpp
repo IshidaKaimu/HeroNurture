@@ -10,6 +10,7 @@
 //タイトルシーン
 CTitle::CTitle()
     : m_pCamera ( &CCameraManager::GetInstance() )
+    , m_pHero()
     , m_pSky    ()
     , m_pGround ()
     , m_Opening(false)
@@ -17,7 +18,6 @@ CTitle::CTitle()
     , m_BossEvo(false)
     , m_Special(false)
     , m_Time   (-10.0f)
-    , m_pPlayer()
 {
     //ライト情報
     m_Light.vDirection = D3DXVECTOR3(0.0f, 1.0f, 0.0f); //ライト方向
@@ -34,8 +34,6 @@ void CTitle::Create()
     m_pSky = new CSky();
     //地面クラス
     m_pGround = new CGround();
-    //プレイヤークラス
-    m_pPlayer = std::make_unique<CPlayer>();
     //jsonクラス
     m_pJson = std::make_unique<CJson>();
 }
@@ -93,7 +91,7 @@ void CTitle::Update()
                 //あればロード、なければ作成する関数
                 m_pJson->CreateOrLoadAcount( WstringToString(m_UserName));
                 //名前をプレイヤーに渡す
-                m_pPlayer->SetUserName( WstringToString(m_UserName) );
+                m_pHero->SetUserName( WstringToString(m_UserName) );
                 //シーンのロード
                 CSceneManager::GetInstance()->LoadCreate(CSceneManager::GameMain);
             }

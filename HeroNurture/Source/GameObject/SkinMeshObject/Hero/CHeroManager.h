@@ -8,6 +8,17 @@ class CHeroManager
 	, public CSingleton<CHeroManager>
 {
 public:
+	//ヒーローリスト列挙型
+	enum enHeroList :char
+	{
+		Yui,
+		Kaito,
+        Max,
+	};
+
+public:
+	//フレンド宣言でアクセス権を与える.
+	friend class CSingleton<CHeroManager>;
 	~CHeroManager();
 
 	//初期化関数
@@ -25,11 +36,26 @@ public:
 	//アニメーション関数
 	void Animation();
 
+	//各ヒーロークラスの構築
+	static std::unique_ptr<CHeroBase>Create(enHeroList list);
+
+	//----ゲッター・セッター----
+	//ヒーロー設定関数
+	void SetHero(enHeroList list);
+	//ヒーロー選択関数
+	void SelectHero(enHeroList list) { m_HeroList = list; }
+	//選択したヒーロー取得
+	enHeroList GetSelectHero() { return m_HeroList; }
+
 private:
 	CHeroManager();
 
 private:
 	//ヒーローベースクラス
 	std::unique_ptr<CHeroBase> m_Hero;
+
+	//ヒーローリスト
+	enHeroList m_HeroList;
+
 };
 

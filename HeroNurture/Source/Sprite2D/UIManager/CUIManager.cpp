@@ -1,14 +1,8 @@
 #include "CUIManager.h"
-
-
-
 CUIManager::CUIManager()
 	: m_pSprite2D()
-	, m_pPlayer(nullptr)
 
 {
-	//インスタンス作成
-	m_pPlayer = new CPlayer();
 }
 
 CUIManager::~CUIManager()
@@ -18,7 +12,6 @@ CUIManager::~CUIManager()
 	}
 
 	//インスタンス破棄
-	SAFE_DELETE(m_pPlayer);
 	m_pDx11 = nullptr;
 }
 
@@ -35,42 +28,6 @@ HRESULT CUIManager::Load(CDirectX11* Dx11)
 		CSprite2D::SPRITE_STATE Ss;
 	};
 
-# if 0
-	//パワーゲージスプライトの構造体
-	CSprite2D::SPRITE_STATE SSPG =
-	{ 64.0f, 320.0f, 64.0f, 320.0f, 64.0f, 320.0f };
-	//パワーゲージスプライトの読み込み
-	m_pSprite2D[UIList::PG]->Init(*m_pDx11,
-		_T("Data\\Texture\\PowerGage.png"), SSPG);
-
-	//パワーゲージフレームスプライトの構造体
-	CSprite2D::SPRITE_STATE SSPGF =
-	{ 64.0f, 320.0f, 64.0f, 320.0f, 64.0f, 320.0f };
-	//パワーゲージフレームスプライトの読み込み
-	m_pSprite2D[UIList::PGF]->Init(*m_pDx11,
-		_T("Data\\Texture\\PowerGageFrame.png"), SSPGF);
-
-	//〇スプライトの構造体
-	CSprite2D::SPRITE_STATE SSo =
-	{ 32.0f, 32.0f, 32.0f, 32.0f, 32.0f, 32.0f };
-	//〇の読み込み
-	m_pSprite2D[UIList::o]->Init(*m_pDx11,
-		_T("Data\\Texture\\o.png"), SSo);
-
-	//×スプライトの構造体
-	CSprite2D::SPRITE_STATE SSx =
-	{ 32.0f, 32.0f, 32.0f, 32.0f, 32.0f, 32.0f };
-	//×の読み込み
-	m_pSprite2D[UIList::x]->Init(*m_pDx11,
-		_T("Data\\Texture\\x.png"), SSx);
-
-	//-スプライトの構造体
-	CSprite2D::SPRITE_STATE SS_ =
-	{ 32.0f, 32.0f, 32.0f, 32.0f, 32.0f, 32.0f };
-	//-の読み込み
-	m_pSprite2D[UIList::_]->Init(*m_pDx11,
-		_T("Data\\Texture\\-.png"), SS_);
-#else 1
 	Sprite2DList SList[] =
 
 	{                                                                //表示サイズ      //元画像サイズ  //1コマ当たりの表示サイズ
@@ -88,7 +45,6 @@ HRESULT CUIManager::Load(CDirectX11* Dx11)
 		}
 	}
 
-#endif
 	return S_OK;
 }
 

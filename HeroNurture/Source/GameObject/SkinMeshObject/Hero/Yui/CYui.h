@@ -1,20 +1,20 @@
 #pragma once
 #pragma once
+#pragma once
 #include "SkinMeshObject/CSkinMeshObject.h"
 #include "SkinMeshObject/Hero/CHeroBase.h"
 
-constexpr float KAITO_SPEED = 0.05f;
+constexpr float YUI_SPEED = 0.05f;
 
 /*****************************************
-*カイトクラス
+*ユイクラス
 **/
-class CKaito
+class CYui
 	:public CHeroBase
 {
 public:
-	CKaito();
-	virtual ~CKaito() override;
-
+	CYui();
+	virtual ~CYui()			override;
 
 	//初期化関数
 	void Initialize();
@@ -31,10 +31,9 @@ public:
 	//アニメーション関数
 	void Animation();
 
+private:
+	//アニメーションスピードの設定
 	void SetAnimSpeed(double speed) { m_AnimSpeed = speed; }
-
-	//場面切り替え
-	bool SceneChange();
 
 	//アニメーション切り替えフラグ立てる
 	void AnimChange();

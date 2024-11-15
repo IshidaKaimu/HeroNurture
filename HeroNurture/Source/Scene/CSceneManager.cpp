@@ -1,5 +1,6 @@
 #include "CSceneManager.h"
 #include "Scene/Title/CTitle.h"
+#include "Scene/Nature/CNatureScene.h"
 #include "Scene/GameMain/CGameMain.h"
 #include "ImGui/ImGuiManager/ImGuiManager.h"
 CSceneManager::CSceneManager()
@@ -49,6 +50,7 @@ void CSceneManager::Update()
     ImGui::Begin(JAPANESE("シーン"));
     if (ImGui::Button(JAPANESE("選択"))) { LoadCreate(enSceneList::SceneSelect); }
     if (ImGui::Button(JAPANESE("メイン"))) { LoadCreate(enSceneList::GameMain); }
+    if (ImGui::Button(JAPANESE("育成"))) { LoadCreate(enSceneList::Nature); }
     ImGui::End();
     m_Scene->Update();  //入ってるシーンの動作を行う   
 }
@@ -90,6 +92,7 @@ std::unique_ptr<CSceneBase> CSceneManager::Create(enSceneList List)
     {
     case CSceneManager::SceneSelect:    return std::make_unique<CTitle>();
     case CSceneManager::GameMain:       return std::make_unique<CGameMain>();
+    case CSceneManager::Nature:       return std::make_unique<CNatureScene>();
     case CSceneManager::Max:            return nullptr;
     case CSceneManager::none:           return nullptr;
     default:                            return nullptr;

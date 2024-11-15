@@ -1,9 +1,11 @@
 #include "CHeroManager.h"
+#include "SkinMeshObject\Hero\Yui\CYui.h"
+#include "SkinMeshObject\Hero\Kaito\CKaito.h"
 
 CHeroManager::CHeroManager()
     :m_Hero ()
 {
-    m_Hero = std::make_unique<CHeroBase>();
+    m_Hero = std::make_unique<CYui>();
 }
 
 CHeroManager::~CHeroManager()
@@ -42,4 +44,25 @@ void CHeroManager::Draw( LIGHT& light )
 void CHeroManager::Animation()
 {
     m_Hero->Animation();
+}
+
+//ヒーロー設定関数
+void CHeroManager::SetHero(enHeroList list)
+{
+    //ヒーローを設定
+    m_Hero = Create(list);
+}
+
+//各ヒーロークラスのインスタンス生成
+std::unique_ptr<CHeroBase> CHeroManager::Create(enHeroList list)
+{
+    switch (list)
+    {
+    case CHeroManager::Yui:     return std::make_unique<CYui>();
+    case CHeroManager::Kaito:   return std::make_unique<CKaito>();
+    case CHeroManager::Max:     return nullptr;
+    default:                    return nullptr;
+
+    }
+
 }
