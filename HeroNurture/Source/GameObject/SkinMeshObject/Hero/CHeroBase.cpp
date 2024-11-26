@@ -104,3 +104,10 @@ bool CHeroBase::SaveStatus(const string& name)
 	return true;
 }
 
+//ステータス上昇関数
+void CHeroBase::UpStatus(float sta, float inc)
+{
+	//ステータスを上昇させる
+	sta += inc;
+}
+

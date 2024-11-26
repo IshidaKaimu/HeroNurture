@@ -77,6 +77,9 @@ public:
 	//ステータス保存関数
 	bool SaveStatus(const std::string& name);
 
+	//ステータス上昇関数
+	void UpStatus( float sta, float inc );
+
 protected:
 	//プレイヤーのパラメータ構造体
 	enStatus m_Para;

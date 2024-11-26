@@ -1,6 +1,6 @@
 #include "CYui.h"
-#include "Effect/CEffect.h"
-#include "Sound/CSoundManager.h"
+#include "Effect\CEffect.h"
+#include "Sound\CSoundManager.h"
 #include "SkinMesh\SkinMeshManager\CSkinMeshManager.h"
 
 CYui::CYui()
@@ -8,7 +8,9 @@ CYui::CYui()
 	, m_Run()
 	, m_AnimChange()
 	, m_EffPosZ(1.0f)
+
 {
+	SetScale(0.1f, 0.1f, 0.1f);
 }
 
 CYui::~CYui()
@@ -18,6 +20,13 @@ CYui::~CYui()
 //初期化関数
 void CYui::Initialize()
 {
+	//アニメーションスピードの設定
+	m_AnimSpeed = 0.01f;
+	//初めのアニメーションの設定
+	m_AnimNo = 3;
+	//登場アニメーション
+	m_pMesh->ChangeAnimSet(m_AnimNo, m_pAnimCtrl);
+
 }
 
 //データ読み込み関数
@@ -30,23 +39,6 @@ void CYui::LoadData()
 //更新関数
 void CYui::Update()
 {
-
-	//--------------------------
-	//スキンメッシュ
-	//--------------------------
-
-	//Kaito
-	//アニメーション番号メモ
-	//0:待機
-	//1:走り
-	//2:斬る(右上から右下)
-	//3:斬る(左下から右上に)
-	//4:斬り下ろす
-	//5:回避
-	//6:手つき出す
-	//7:ダメージ
-	//8:死亡
-
 }
 
 //描画関数
@@ -59,14 +51,13 @@ void CYui::Draw(LIGHT& Light)
 //アニメーション関数
 void CYui::Animation()
 {
-	if (GetAsyncKeyState('N') & 0x8000)
+	if (m_AnimNo == 3)
 	{
-		m_AnimNo = 2;	//登場アニメーションへ
-		m_AnimTime = 0; //アニメーション経過時間初期化
-		//登場アニメーション
-		m_pMesh->ChangeAnimSet(m_AnimNo, m_pAnimCtrl);
+
 	}
 
+	//アニメーションの経過時間を加算		
+	m_AnimTime += m_pMesh->GetAnimSpeed();
 }
 
 void CYui::AnimChange()

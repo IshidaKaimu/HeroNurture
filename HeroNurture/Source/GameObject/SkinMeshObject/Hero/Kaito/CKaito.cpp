@@ -8,15 +8,25 @@ CKaito::CKaito()
 	, m_Run			()
 	, m_AnimChange	()
 	, m_EffPosZ		(1.0f)
+
 {
+	SetScale(0.75f, 0.75f, 0.75f);
+	SetPosition(0.0f, 0.0f, 1.2f);
 }
 
 CKaito::~CKaito()
 {
 }
 
+//初期化関数
 void CKaito::Initialize()
 {
+	//アニメーションスピードの設定
+	m_AnimSpeed = 0.01f;
+	//待機アニメーション
+	m_AnimNo = 0;	
+	//アニメーションを設定
+	m_pMesh->ChangeAnimSet(m_AnimNo, m_pAnimCtrl);
 }
 
 void CKaito::LoadData()
@@ -54,10 +64,15 @@ void CKaito::Draw( LIGHT& Light )
 
 void CKaito::Animation()
 {
-    m_AnimNo = 2;	//登場アニメーションへ
-    //登場アニメーション
-    m_pMesh->ChangeAnimSet(m_AnimNo, m_pAnimCtrl);
+	if (m_AnimNo == 0)
+	{
+		
+	}
+
+	//アニメーションの経過時間を加算
+	m_AnimTime += m_pMesh->GetAnimSpeed();
 }
+
 
 bool CKaito::SceneChange()
 {

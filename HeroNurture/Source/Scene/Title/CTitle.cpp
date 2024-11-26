@@ -88,10 +88,6 @@ void CTitle::Update()
             //ユーザーネームが登録されていたら
             if (!m_UserName.empty()) 
             {
-                //あればロード、なければ作成する関数
-                m_pJson->CreateOrLoadAcount( WstringToString(m_UserName));
-                //名前をプレイヤーに渡す
-                m_pHero->SetUserName( WstringToString(m_UserName) );
                 //シーンのロード
                 CSceneManager::GetInstance()->LoadCreate(CSceneManager::GameMain);
             }

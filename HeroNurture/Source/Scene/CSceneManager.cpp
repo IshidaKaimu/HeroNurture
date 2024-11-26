@@ -1,7 +1,7 @@
 #include "CSceneManager.h"
 #include "Scene/Title/CTitle.h"
 #include "Scene/Nature/CNatureScene.h"
-#include "Scene/GameMain/CGameMain.h"
+#include "Scene/HeroSelect/CHeroSelect.h"
 #include "ImGui/ImGuiManager/ImGuiManager.h"
 CSceneManager::CSceneManager()
     : m_Scene       ()
@@ -91,7 +91,7 @@ std::unique_ptr<CSceneBase> CSceneManager::Create(enSceneList List)
     switch (List)
     {
     case CSceneManager::SceneSelect:    return std::make_unique<CTitle>();
-    case CSceneManager::GameMain:       return std::make_unique<CGameMain>();
+    case CSceneManager::GameMain:       return std::make_unique<CHeroSelect>();
     case CSceneManager::Nature:       return std::make_unique<CNatureScene>();
     case CSceneManager::Max:            return nullptr;
     case CSceneManager::none:           return nullptr;

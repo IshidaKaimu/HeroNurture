@@ -1,10 +1,6 @@
 #pragma once
-#pragma once
-#pragma once
 #include "SkinMeshObject/CSkinMeshObject.h"
 #include "SkinMeshObject/Hero/CHeroBase.h"
-
-constexpr float YUI_SPEED = 0.05f;
 
 /*****************************************
 *ƒ†ƒCƒNƒ‰ƒX

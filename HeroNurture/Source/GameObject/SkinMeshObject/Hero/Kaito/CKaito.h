@@ -3,8 +3,6 @@
 #include "SkinMeshObject/CSkinMeshObject.h"
 #include "SkinMeshObject/Hero/CHeroBase.h"
 
-constexpr float KAITO_SPEED = 0.05f;
-
 /*****************************************
 *カイトクラス
 **/

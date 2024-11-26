@@ -7,13 +7,26 @@
 #include "SkinMeshObject/Hero/CHeroBase.h"
 #include "json.hpp"
 
-//ゲームメインシーン
-class CGameMain
+//前方宣言
+//----各ヒーローのクラス
+class CYui;
+class CKaito;
+
+//----各ヒーローのカメラ配置・注視点----
+//ユイ
+static const D3DXVECTOR3 CAMPOS_YUI  = { 0.0f, 5.2f, -2.8f };
+static const D3DXVECTOR3 CAMLOOK_YUI = { 0.0f, 6.2f,  3.0f };
+////カイト
+//static const D3DXVECTOR3 CAMPOS_KAITO  = { 0.0f, 5.0f, -4.0f };
+//static const D3DXVECTOR3 CAMLOOK_KAITO = { 0.0f, 5.0f,  3.0f };
+
+//ヒーローセレクトシーン
+class CHeroSelect
 	:public CSceneBase
 {
 public:
-	CGameMain();
-	~CGameMain();
+	CHeroSelect();
+	~CHeroSelect();
 
 	//構築関数
 	void Create()	  override;
@@ -33,7 +46,6 @@ public:
 	//アカウント名取得
 	void SetUserName(std::wstring name) { m_UserName = name; }
 
-
 private:
 
 	//カメラマネージャ
@@ -51,4 +63,16 @@ private:
 	//デバッグ用
 	D3DXVECTOR3 CamPos;
 	D3DXVECTOR3 CamLook;	
+
+    //----各ヒーロークラス----
+	//ユイ
+	CYui*	m_pYui;
+	//カイト
+	CKaito* m_pKaito;
+
+
+	//選択肢用番号
+	int m_SelectNo;
+
+
 };
