@@ -27,7 +27,7 @@ public :
 		//素早さ
 		int Speed;
 		//体力
-		int HP;
+		int Hp;
 	};
 
 	//キャラクターリスト構造体
@@ -77,8 +77,15 @@ public:
 	//ステータス保存関数
 	bool SaveStatus(const std::string& name);
 
-	//ステータス上昇関数
-	void UpStatus( float sta, float inc );
+	//----ステータス上昇関数----
+	//筋力
+	void PowerUp(float power ) { m_Para.Power += power; }
+	//魔力
+	void MagicPowerUp(float magic ) { m_Para.Magic += magic; }
+	//素早さ
+	void SpeedUp(float speed) { m_Para.Speed += speed; }
+	//体力
+	void HpUp(float hp) { m_Para.Hp += hp; }
 
 protected:
 	//プレイヤーのパラメータ構造体

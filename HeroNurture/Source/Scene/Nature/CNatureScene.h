@@ -5,6 +5,10 @@
 #include "StaticMeshObject\Ground\CGround.h"
 #include <memory>
 
+//----前方宣言----
+class WriteText;
+
+
 //----------------
 //育成シーンクラス
 //----------------
@@ -27,6 +31,10 @@ public:
 	void Update()     override;
 	//描画関数
 	void Draw()		  override;
+
+private:
+	//テキストの描画
+	void TextDraw();
 
 public:
 	//カメラマネージャクラス

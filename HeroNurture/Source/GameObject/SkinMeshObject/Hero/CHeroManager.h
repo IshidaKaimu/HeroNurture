@@ -39,6 +39,10 @@ public:
 	//各ヒーロークラスの構築
 	static std::unique_ptr<CHeroBase>Create(enHeroList list);
 
+	//ステータス上昇関数
+	void UpStatus(float sta, float inc);
+
+
 	//----ゲッター・セッター----
 	//ヒーロー設定関数
 	void SetHero(enHeroList list);

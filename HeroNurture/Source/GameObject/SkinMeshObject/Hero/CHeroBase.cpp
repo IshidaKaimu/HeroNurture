@@ -8,7 +8,6 @@
 
 CHeroBase::CHeroBase()	
 {
-	SetScale(0.1f, 0.1f, 0.1f);
 	m_pJson = std::make_unique<CJson>();
 	LoadStatus(m_UserName);
 }
@@ -26,7 +25,7 @@ void CHeroBase::Update()
 	ImGui::InputInt(JAPANESE("筋力"), &m_Para.Power);	
 	ImGui::InputInt(JAPANESE("魔力"), &m_Para.Magic);	
 	ImGui::InputInt(JAPANESE("素早さ"), &m_Para.Speed);	
-	ImGui::InputInt(JAPANESE("体力"), &m_Para.HP);	
+	ImGui::InputInt(JAPANESE("体力"), &m_Para.Hp);	
 	if (ImGui::Button(JAPANESE("保存")))
 	{
 		m_pJson->Save(m_UserName);
@@ -53,7 +52,7 @@ void CHeroBase::Fromjson(const json& j)
 		j.at("Power").get_to(m_Para.Power);
 		j.at("Magic").get_to(m_Para.Magic);
 		j.at("Speed").get_to(m_Para.Speed);
-		j.at("HP").get_to(m_Para.HP);
+		j.at("HP").get_to(m_Para.Hp);
 	}
 }
 
@@ -64,7 +63,7 @@ void CHeroBase::Tojson(json& j)
 	j["Power"]    = m_Para.Power;
 	j["Magic"]    = m_Para.Magic;
 	j["Speed"]    = m_Para.Speed;
-	j["HP"]		  = m_Para.HP;
+	j["HP"]		  = m_Para.Hp;
 }
 
 //ステータスセット関数
@@ -104,10 +103,4 @@ bool CHeroBase::SaveStatus(const string& name)
 	return true;
 }
 
-//ステータス上昇関数
-void CHeroBase::UpStatus(float sta, float inc)
-{
-	//ステータスを上昇させる
-	sta += inc;
-}
 

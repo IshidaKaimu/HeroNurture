@@ -66,3 +66,5 @@ std::unique_ptr<CHeroBase> CHeroManager::Create(enHeroList list)
     }
 
 }
+
+

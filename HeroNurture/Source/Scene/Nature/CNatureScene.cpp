@@ -4,6 +4,7 @@
 #include "Camera\CameraManager\CCameraManager.h"
 #include "SkinMeshObject\Hero\CHeroManager.h"
 #include "StaticMesh\MeshManager\CMeshManager.h"
+#include "WriteText\WriteText.h"
 
 CNatureScene::CNatureScene()
     : m_pCamera( &CCameraManager::GetInstance() )
@@ -17,8 +18,8 @@ CNatureScene::~CNatureScene()
 //構築関数
 void CNatureScene::Create()
 {
-
     //----インスタンス生成----
+ 
     //セットされたヒーローのクラスのインスタンス生成
     switch (CHeroManager::GetInstance().GetSelectHero())
     {
@@ -72,8 +73,9 @@ void CNatureScene::Initialize()
     CHeroManager::GetInstance().Initialize();
 
     //ライト情報
+    //位置
     m_Light.Position = D3DXVECTOR3(0.0f, 1.0f, 0.0f);
-
+    //向き
     m_Light.vDirection = D3DXVECTOR3(0.0f, 1.0f, 0.0f); //ライト方向
 
 }
@@ -105,4 +107,8 @@ void CNatureScene::Draw()
     //地面クラスの描画
     m_pGround->Draw( m_Light );
 
+}
+
+void CNatureScene::TextDraw()
+{
 }
