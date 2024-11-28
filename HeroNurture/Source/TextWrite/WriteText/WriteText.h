@@ -11,6 +11,7 @@ public:
         Normal = 0,     //初期設定
         Select,         //選択肢
         Name,           //名前
+        Turn,           //ターン数
 
 
         Max,    //最大値
@@ -61,9 +62,10 @@ private:
     FONTDATA m_FontData[enFontType::Max] =  //入力用
     {
         //サイズ、太さ、色、名
-        { 30, DWRITE_FONT_WEIGHT_NORMAL, D2D1::ColorF(D2D1::ColorF::Black), 0 }, //初期値
-        { 60, DWRITE_FONT_WEIGHT_NORMAL, D2D1::ColorF(D2D1::ColorF::White), 0 }, //選択肢
-        { 30, DWRITE_FONT_WEIGHT_NORMAL, D2D1::ColorF(D2D1::ColorF::Black), 0 }, //選択肢内説明
+        { 60, DWRITE_FONT_WEIGHT_NORMAL, D2D1::ColorF(D2D1::ColorF::Black), 0 },     //初期値
+        { 60, DWRITE_FONT_WEIGHT_NORMAL, D2D1::ColorF(D2D1::ColorF::White), 0 },     //選択肢
+        { 30, DWRITE_FONT_WEIGHT_NORMAL, D2D1::ColorF(D2D1::ColorF::Black), 0 },     //選択肢内説明
+        { 80, DWRITE_FONT_WEIGHT_NORMAL, D2D1::ColorF(D2D1::ColorF::LightBlue), 0 }, //ターン数
 
     };
 };

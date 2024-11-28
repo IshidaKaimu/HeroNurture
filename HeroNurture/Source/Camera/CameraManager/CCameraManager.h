@@ -18,9 +18,6 @@ public:
 	//カメラの更新
 	void CameraUpdate();
 
-	//カメラ初期化処理
-	void Initialize() { m_pCamera->Initialize(); };
-
 	//カメラ情報の取得
 	CAMERA GetCamera() { return GetInstance().m_pCamera.get()->GetCamera(); }
 

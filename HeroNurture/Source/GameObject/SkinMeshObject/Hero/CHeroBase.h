@@ -1,13 +1,10 @@
 #pragma once
 #include "SkinMeshObject\CSkinMeshObject.h"
 #include "json.hpp"
-#include "CJson.h"
+#include "Json\CJson.h"
 
-class CYui;
-class CKaito;
-
-//json関係使うのに必要な名前空間を定義
-using namespace nlohmann;
+//Json使用に必要な名前空間の格納
+using json = nlohmann::json;
 
 /**************************************************
 *	ヒーロー基底クラス.
@@ -49,7 +46,7 @@ public:
 	virtual void Initialize() {};
 
 	//データ読み込み関数
-	virtual void LoadData() {};
+	virtual void LoadData(const json& jsondata) {};
 
 	//更新関数
 	virtual void Update();
@@ -62,30 +59,19 @@ public:
 
 public:
 
-	//ユーザーネームの設定
-	void SetUserName(const std::string& name) { m_UserName = name; }
-
-	//ファイルデータ読み込み
-	void Fromjson(const json& j);
-
-	//ファイルデータ保存関数
-	void Tojson(json& j);
-
-	//ステータスセット関数
-	bool LoadStatus(const std::string& name);
-
-	//ステータス保存関数
-	bool SaveStatus(const std::string& name);
-
 	//----ステータス上昇関数----
 	//筋力
-	void PowerUp(float power ) { m_Para.Power += power; }
+	void PowerUp(int power )	    { m_Para.Power += power; }
 	//魔力
-	void MagicPowerUp(float magic ) { m_Para.Magic += magic; }
+	void MagicUp(int magic )	    { m_Para.Magic += magic; }
 	//素早さ
-	void SpeedUp(float speed) { m_Para.Speed += speed; }
+	void SpeedUp(int speed)         { m_Para.Speed += speed; }
 	//体力
-	void HpUp(float hp) { m_Para.Hp += hp; }
+	void HpUp(int hp)		        { m_Para.Hp += hp; }
+
+	//----ゲッター・セッター----
+	//現在のステータス取得
+	enStatus GetStatus() { return m_Para; }
 
 protected:
 	//プレイヤーのパラメータ構造体

@@ -320,7 +320,7 @@
     <ClInclude Include="Source\Sprite2D\CSprite2D.h">
       <Filter>Source\Sprite2D</Filter>
     </ClInclude>
-    <ClInclude Include="Source\CJson.h">
+    <ClInclude Include="Source\Json\CJson.h">
       <Filter>Source</Filter>
     </ClInclude>
     <ClInclude Include="Source\Scene\Nature\CNatureScene.h">
@@ -479,7 +479,7 @@
     <ClCompile Include="Source\Sprite2D\CSprite2D.cpp">
       <Filter>Source\Sprite2D</Filter>
     </ClCompile>
-    <ClCompile Include="Source\CJson.cpp">
+    <ClCompile Include="Source\Json\CJson.cpp">
       <Filter>Source</Filter>
     </ClCompile>
     <ClCompile Include="Source\Scene\Nature\CNatureScene.cpp">

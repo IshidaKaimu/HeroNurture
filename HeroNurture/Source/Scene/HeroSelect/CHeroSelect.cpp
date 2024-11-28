@@ -19,7 +19,6 @@ CHeroSelect::CHeroSelect()
     , m_pSky    ()
     , m_pGround ()
     , m_UserName()
-    , m_SelectNo()
 {
 }
 
@@ -31,8 +30,6 @@ CHeroSelect::~CHeroSelect()
 //構築関数
 void CHeroSelect::Create()
 {
-   //----インスタンス生成----
-
    //----ヒーロークラスのインスタンス生成----
    //ユイ
     m_pYui = new CYui();
@@ -83,13 +80,15 @@ void CHeroSelect::Releace()
 void CHeroSelect::Initialize()
 {
 
-    //初期カメラ座標の設定
-    m_pCamera->Initialize();
-
 #ifdef DEBUG
     CamPos  = D3DXVECTOR3(0.0f, 4.0f, -9.0f);
     CamLook = D3DXVECTOR3(0.0f, 4.0f, 3.0f);
 #endif
+
+    //カメラ位置の設定
+    m_pCamera->SetPos(CAMPOS);
+    //カメラの注視点の設定
+    m_pCamera->SetLook(CAMLOOK);
 
     //ライト情報
     m_Light.Position = D3DXVECTOR3(0.0f, 1.0f, 0.0f);
@@ -198,15 +197,11 @@ void CHeroSelect::Draw()
     case 0:
         //ユイ
         m_pYui->Animation();
-        m_pCamera->SetPos(CAMPOS_YUI);
-        m_pCamera->SetLook(CAMLOOK_YUI);
         m_pYui->Draw(m_Light);
         break;
     case 1:
         //カイト
         m_pKaito->Animation();
-        m_pCamera->SetPos(CAMPOS_YUI);
-        m_pCamera->SetLook(CAMLOOK_YUI);
         m_pKaito->Draw(m_Light);
         break;
     default:

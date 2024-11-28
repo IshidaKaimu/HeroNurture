@@ -2,13 +2,14 @@
 #include "Sprite2D\UIManager\CUIManager.h"
 
 CSceneBase::CSceneBase()
-    : m_IsScene(true)
-
-    , m_SelectNo()
-
-    , m_pFade(nullptr)
-    , m_FadeTime(0)
-    , m_FadeAlpha(1.0f)	//不透過に設定
+    : m_Light     ()
+    , m_CamPos    ()
+    , m_CamLook   ()
+    , m_IsScene   (true)
+    , m_SelectNo  ()
+    , m_pFade     (nullptr)
+    , m_FadeTime  (0)
+    , m_FadeAlpha (1.0f)	//不透過に設定
     , m_FadeOutFlg(false)
 {
     m_pFade = new CUIObject();		//フェード

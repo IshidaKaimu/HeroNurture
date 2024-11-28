@@ -23,9 +23,6 @@ public :
 
 	void ThirdPersonCamera(CAMERA* pCamera, const D3DXVECTOR3& TargetPos, float TargetRotY);
   
-	//初期化関数
-	void Initialize();
-
 	//プロジェクション関数
 	void Projection();
 

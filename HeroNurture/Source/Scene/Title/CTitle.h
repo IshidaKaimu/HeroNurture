@@ -64,7 +64,7 @@ private:
 	//プレイヤー
 	std::unique_ptr<CHeroManager> m_pHero;
 
-	//---------フラグ-------------
+	//----フラグ----
 	//オープニングに移らせるフラグ
 	bool m_Opening;
 	//ボス出現シーンに移らせるフラグ

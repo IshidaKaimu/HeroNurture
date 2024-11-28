@@ -233,7 +233,7 @@
     <ClCompile Include="Source\BoundingSphere\CBoundingSphere.cpp" />
     <ClCompile Include="Source\Camera\CameraManager\CCameraManager.cpp" />
     <ClCompile Include="Source\Camera\CCamera.cpp" />
-    <ClCompile Include="Source\CJson.cpp" />
+    <ClCompile Include="Source\Json\CJson.cpp" />
     <ClCompile Include="Source\GameObject\SkinMeshObject\Hero\CHeroManager.cpp" />
     <ClCompile Include="Source\GameObject\SkinMeshObject\Hero\Yui\CYui.cpp" />
     <ClCompile Include="Source\Scene\Nature\CNatureScene.cpp" />
@@ -344,7 +344,7 @@
     <ClInclude Include="Source\TextWrite\DirectWriteCustomFont\DirectWriteCustomFont.h" />
     <ClInclude Include="Source\TextWrite\Text\CText.h" />
     <ClInclude Include="Source\TextWrite\WriteText\WriteText.h" />
-    <ClInclude Include="Source\CJson.h" />
+    <ClInclude Include="Source\Json\CJson.h" />
   </ItemGroup>
   <ItemGroup>
     <None Include="Source\ImGui\.editorconfig" />

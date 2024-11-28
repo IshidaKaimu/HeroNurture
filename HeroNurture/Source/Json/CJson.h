@@ -16,16 +16,13 @@ public:
 	CJson();
 	~CJson();
 
-	//ファイルを作成/開く
-	bool CreateOrLoad(const std::string& filepath);
+	//ファイルを作成/書き込み
+	void CreateOrWrite( const std::string& hierarchy, json& jsondata );
 
-	//ファイルの保存
-	bool Save(const std::string& filepath);
-
-	//アカウント用ファイルの作成/開く
-	bool CreateOrLoadAcount(const std::string& filepath);
-
+	//ファイルの読み込み
+	bool Load( json& jsondata,const std::string& filename );
 
 private:
-	json JsonData;
+	//jsonファイルのデータ
+	json m_JsonData;
 };

@@ -50,21 +50,29 @@ protected:
 	//ライト情報
 	LIGHT       m_Light;
 
+	//デバッグ用カメラ情報
+	//位置
+	D3DXVECTOR3 m_CamPos;
+	//注視点
+	D3DXVECTOR3	m_CamLook;
+
+	//----シーン遷移関連フラグ----
 	//シーン遷移用
 	bool        m_IsScene;  
     //シーン遷移フラグ
     bool        m_SceneTransitionFlg;
-    //選択中番号
+   
+	//選択中番号
     int         m_SelectNo;
 
-	float       m_AnimCnt;				//アニメーションカウント
+	//アニメーションカウント
+	float       m_AnimCnt;				
 
-    //UI
-    CUIObject* m_pLogo;         //ロゴ
-    CUIObject* m_pBlueFrame;    //選択中青枠
+	//残りターン数
+	int         m_Turn;
 
 private:
-	//フェード	
+	//----フェード----	
     static constexpr float FADESPEED = 0.05f;	//フェードスピード
 	CUIObject*	m_pFade;
 	int			m_FadeTime;		        //シーン切り替え用のタイマー	

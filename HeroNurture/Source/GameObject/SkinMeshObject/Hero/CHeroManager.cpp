@@ -20,10 +20,10 @@ void CHeroManager::Initialize()
 }
 
 //データ読み込み関数
-void CHeroManager::LoadData()
+void CHeroManager::LoadData( const json& jsondata )
 {
     //各ヒーロークラスのデータ読み込み
-    m_Hero->LoadData();
+    m_Hero->LoadData( jsondata );
 }
 
 //更新関数

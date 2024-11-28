@@ -5,7 +5,7 @@
 #include "Sound\CSoundManager.h"
 #include <cmath>
 #include "ImGui\ImGuiManager\ImGuiManager.h"
-#include "CJson.h"
+#include "Json\CJson.h"
 
 //タイトルシーン
 CTitle::CTitle()
@@ -60,8 +60,6 @@ void CTitle::LoadData()
 
 void CTitle::Initialize()
 {
-    //カメラの初期化
-    m_pCamera->Initialize();
 }
 
 

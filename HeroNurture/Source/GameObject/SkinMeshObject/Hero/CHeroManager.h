@@ -25,7 +25,7 @@ public:
 	void Initialize() override;
 
 	//データ読み込み関数
-	void LoadData() override;
+	void LoadData(const json& jsondata) override;
 
 	//更新関数
 	void Update() override;
@@ -39,10 +39,6 @@ public:
 	//各ヒーロークラスの構築
 	static std::unique_ptr<CHeroBase>Create(enHeroList list);
 
-	//ステータス上昇関数
-	void UpStatus(float sta, float inc);
-
-
 	//----ゲッター・セッター----
 	//ヒーロー設定関数
 	void SetHero(enHeroList list);
@@ -50,6 +46,8 @@ public:
 	void SelectHero(enHeroList list) { m_HeroList = list; }
 	//選択したヒーロー取得
 	enHeroList GetSelectHero() { return m_HeroList; }
+	//現在のステータス取得
+	enStatus GetStatus() { return m_Hero->GetStatus(); }
 
 private:
 	CHeroManager();

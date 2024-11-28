@@ -87,15 +87,6 @@ void CCamera::ThirdPersonCamera(CAMERA* pCamera, const D3DXVECTOR3& TargetPos, f
 
 }
 
-//初期化関数
-void CCamera::Initialize()
-{
-	//初期カメラ座標の設定
-	SetPos(0.0f, 4.0f, -9.0f);
-	//注視点の設定
-	SetLook(0.0f, 4.0f, 3.0f);
-}
-
 void CCamera::Projection()
 {
 	//y方向の視野角。数値を大きくしたら視野が狭くなる.

@@ -10,19 +10,19 @@ class CYui
 {
 public:
 	CYui();
-	virtual ~CYui()			override;
+	virtual ~CYui()	override;
 
 	//初期化関数
-	void Initialize();
+	void Initialize() override;
 
 	//データ読み込み関数
-	void LoadData();
+	void LoadData( const json& jsondata ) override;
 
 	//更新関数
-	void Update();
+	void Update() override;
 
 	//描画関数
-	void Draw(LIGHT& light);
+	void Draw(LIGHT& light) override;
 
 	//アニメーション関数
 	void Animation();
