@@ -13,7 +13,7 @@ public:
 
 
 	virtual void Update() override;
-	virtual void Draw( LIGHT& Light ) override;
+	virtual void Draw() override;
 
 	void SetAnimSpeed( double speed ){ m_AnimSpeed = speed; }
 

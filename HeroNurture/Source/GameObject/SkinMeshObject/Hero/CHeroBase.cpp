@@ -15,18 +15,39 @@ CHeroBase::~CHeroBase()
 {
 }
 
+//更新関数
 void CHeroBase::Update()
 {
 	CKeyManager::GetInstance()->Update();
 }
 
-void CHeroBase::Draw( LIGHT& Light )
+//描画関数
+void CHeroBase::Draw()
 {
-	CSkinMeshObject::Draw( Light );
+	CSkinMeshObject::Draw();
 }
 
+//アニメーション関数
 void CHeroBase::Animation()
 {
+}
+
+//各ヒーローの初期パラメータの取得
+void CHeroBase::LoadParam( const json& jsondata, const std::string& heroname )
+{
+	//各パラメータの代入
+	for (const auto& hero : jsondata)
+	{
+		if ( hero["Name"] == heroname )
+		{
+			m_Para.Power = hero["Paramater"]["Power"];
+			m_Para.Magic = hero["Paramater"]["Magic"];
+			m_Para.Speed = hero["Paramater"]["Speed"];
+			m_Para.Hp    = hero["Paramater"]["Hp"];
+			return;
+		}
+	}
+
 }
 
 

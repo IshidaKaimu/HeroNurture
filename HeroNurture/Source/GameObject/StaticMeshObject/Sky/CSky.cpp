@@ -15,8 +15,8 @@ void CSky::Update()
 	CStaticMeshObject::Update();
 }
 
-void CSky::Draw( LIGHT& Light )
+void CSky::Draw()
 {
-	CStaticMeshObject::Draw( Light );
+	CStaticMeshObject::Draw();
 }
 

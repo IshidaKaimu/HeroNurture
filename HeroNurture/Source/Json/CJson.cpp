@@ -24,6 +24,7 @@ void CJson::CreateOrWrite( const std::string& hierarchy, json& jsondata)
     writing_file.open(FilePath, std::ios::out );
     writing_file << jsondata.dump(true) << std::endl;
     writing_file.close();
+
 }
 
 //ƒtƒ@ƒCƒ‹‚Ì“Ç‚Ýž‚Ý

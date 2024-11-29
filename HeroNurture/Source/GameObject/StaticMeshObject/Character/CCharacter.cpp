@@ -18,7 +18,7 @@ void CCharacter::Update()
 	CStaticMeshObject::Update();
 }
 
-void CCharacter::Draw( LIGHT& Light )
+void CCharacter::Draw()
 {
-	CStaticMeshObject::Draw( Light );
+	CStaticMeshObject::Draw();
 }

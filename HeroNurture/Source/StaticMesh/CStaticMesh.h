@@ -113,7 +113,7 @@ public:
 	void Release();
 
 	//レンダリング用.
-	void Render(LIGHT& Light);
+	void Render();
 
 	//座標情報を設定.
 	void SetPosition( const D3DXVECTOR3& Pos ) { m_Position = Pos; }

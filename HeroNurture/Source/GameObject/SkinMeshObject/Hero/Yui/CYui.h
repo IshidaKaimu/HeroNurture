@@ -22,7 +22,7 @@ public:
 	void Update() override;
 
 	//描画関数
-	void Draw(LIGHT& light) override;
+	void Draw() override;
 
 	//アニメーション関数
 	void Animation();

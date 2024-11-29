@@ -1,5 +1,4 @@
 #pragma once
-
 #include "CGameObject.h"
 #include "StaticMesh/CStaticMesh.h"
 #include "BoundingSphere/CBoundingSphere.h"
@@ -17,7 +16,7 @@ public:
 
 	//CGameObjectで純粋仮想関数の宣言がされてるのでこちらで定義を書く.
 	virtual void Update() override;
-	virtual void Draw( LIGHT& Light ) override;
+	virtual void Draw() override;
 
 	//メッシュを接続する.
 	void AttachMesh( CStaticMesh& pMesh ){

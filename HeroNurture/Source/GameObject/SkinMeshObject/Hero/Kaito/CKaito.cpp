@@ -35,12 +35,8 @@ void CKaito::LoadData( const json& jsondata )
 	//メッシュデータの読み込み
 	AttachMesh(CSkinMeshManager::GetMesh(CSkinMeshManager::Kaito));
 
-	//各パラメータの代入
-	m_Para.Power = jsondata["Paramater"]["Power"];
-	m_Para.Magic = jsondata["Paramater"]["Magic"];
-	m_Para.Speed = jsondata["Paramater"]["Speed"];
-	m_Para.Hp    = jsondata["Paramater"]["Hp"];
-
+	//パラメータの読み込み
+	LoadParam(jsondata, "Kaito");
 }
 
 //更新関数
@@ -66,10 +62,10 @@ void CKaito::Update()
 }
 
 //描画関数
-void CKaito::Draw( LIGHT& Light )
+void CKaito::Draw()
 {
 	m_pMesh->SetAnimSpeed(m_AnimSpeed);
-	CSkinMeshObject::Draw( Light );
+	CSkinMeshObject::Draw();
 }
 
 //アニメーション関数

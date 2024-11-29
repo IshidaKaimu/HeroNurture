@@ -183,10 +183,10 @@ void CHeroSelect::Draw()
     m_pCamera->CameraUpdate();
     
     //空の描画
-    m_pSky->Draw( m_Light );
+    m_pSky->Draw();
 
     //地面の描画
-    m_pGround->Draw( m_Light );
+    m_pGround->Draw();
 
     //ヒーローマネージャのインスタンスを変数に代入
     CHeroManager* Hero = &CHeroManager::GetInstance();
@@ -197,12 +197,12 @@ void CHeroSelect::Draw()
     case 0:
         //ユイ
         m_pYui->Animation();
-        m_pYui->Draw(m_Light);
+        m_pYui->Draw();
         break;
     case 1:
         //カイト
         m_pKaito->Animation();
-        m_pKaito->Draw(m_Light);
+        m_pKaito->Draw();
         break;
     default:
         break;

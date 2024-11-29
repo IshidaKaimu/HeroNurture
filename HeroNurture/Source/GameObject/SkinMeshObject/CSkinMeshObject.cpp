@@ -1,5 +1,6 @@
 #include "CSkinMeshObject.h"
 #include "Camera\CameraManager\CCameraManager.h"
+#include "Light\LightManager\CLightManager.h"
 
 CSkinMeshObject::CSkinMeshObject()
 	: m_pMesh    ( nullptr )
@@ -22,7 +23,7 @@ void CSkinMeshObject::Update()
 	}
 }
 
-void CSkinMeshObject::Draw( LIGHT& Light )
+void CSkinMeshObject::Draw()
 {
 	if (m_pMesh == nullptr) {
 		return;
@@ -33,10 +34,13 @@ void CSkinMeshObject::Draw( LIGHT& Light )
 	m_pMesh->SetRotation(m_vRotation);
 	m_pMesh->SetScale(m_vScale);
 
+	//カメラ情報を取得
 	CAMERA camera = CCameraManager::GetInstance().GetCamera();
+	//ライト情報を取得
+	LIGHT  light = CLightManager::GetInstance().GetLight();
 
 	//レンダリング.
-	m_pMesh->Render(camera.View, camera.Proj, Light, camera.Position, m_pAnimCtrl );
+	m_pMesh->Render(camera.View, camera.Proj, light, camera.Position, m_pAnimCtrl);
 }
 
 //メッシュを接続する

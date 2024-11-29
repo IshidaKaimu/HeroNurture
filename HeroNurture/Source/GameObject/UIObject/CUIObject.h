@@ -36,12 +36,6 @@ public:
 	//アルファ値を設定する
 	void SetAlpha(float value) { m_pSprite->SetAlpha(value); }
 
-
-protected:
-	//CGameObjectからoverrideした関数.
-	//final これ以降はoverrideさせない.
-	void Draw( LIGHT& Light ) override final;
-
 protected:
 	CSprite2D*	m_pSprite;
 	POINTS		m_PatternNo;	//パターン番号(マス目).

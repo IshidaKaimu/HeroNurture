@@ -106,10 +106,10 @@ void CTitle::Draw()
     m_pCamera->CameraUpdate();
 
     //スカイボックスの描画
-    m_pSky->Draw( m_Light );
+    m_pSky->Draw();
 
     //地面の描画
-    m_pGround->Draw( m_Light );
+    m_pGround->Draw();
 
     //文字の入力
     WriteText::GetInstance()->Draw_Text(m_UserName, WriteText::Select, D3DXVECTOR2(0.0f, 0.0f));

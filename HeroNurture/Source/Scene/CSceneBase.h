@@ -68,9 +68,6 @@ protected:
 	//アニメーションカウント
 	float       m_AnimCnt;				
 
-	//残りターン数
-	int         m_Turn;
-
 private:
 	//----フェード----	
     static constexpr float FADESPEED = 0.05f;	//フェードスピード

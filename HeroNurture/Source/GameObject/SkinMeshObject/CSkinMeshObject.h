@@ -6,6 +6,7 @@
 
 //----前方宣言----
 class CCameraManager;
+class CLightManager;
 
 /************************************************************
 *	スキンメッシュオブジェクトクラス.
@@ -19,7 +20,7 @@ public:
 
 	//CGameObjectで純粋仮想関数の宣言がされてるのでこちらで定義を書く.
 	virtual void Update() override;
-	virtual void Draw( LIGHT& Light ) override;
+	virtual void Draw() override;
 
 	//メッシュを接続する.
 	void AttachMesh(CSkinMesh& pMesh);

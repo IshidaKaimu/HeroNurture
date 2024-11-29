@@ -17,7 +17,7 @@ void CGround::Update()
 	CStaticMeshObject::Update();
 }
 
-void CGround::Draw(LIGHT& Light)
+void CGround::Draw()
 {
-	CStaticMeshObject::Draw( Light );
+	CStaticMeshObject::Draw();
 }

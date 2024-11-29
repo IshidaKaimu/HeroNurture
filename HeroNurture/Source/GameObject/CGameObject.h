@@ -13,7 +13,7 @@ public:
 	//virtual 型 関数名 = 0; 純粋仮想関数.
 	//子クラスに処理をお任せするので、ここでは名前だけ宣言して定義は書かない.
 	virtual void Update() = 0;
-	virtual void Draw(LIGHT& Light) = 0;
+	virtual void Draw() = 0;
 
 	//座標設定関数.
 	void SetPosition( float x, float y, float z ){
@@ -56,7 +56,6 @@ public:
 	const D3DXVECTOR3& GetScale() const {
 		return m_vScale;
 	}
-
 
 protected://protectedは子クラスのみアクセス可能.
 	D3DXVECTOR3	m_vPosition;

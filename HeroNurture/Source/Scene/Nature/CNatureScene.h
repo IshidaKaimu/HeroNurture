@@ -22,6 +22,9 @@ const D3DXVECTOR3 CAMERALOOK_YUI = { 0.0, 5.0, 0.0 };
 const D3DXVECTOR3 CAMERAPOS_KAITO  =  { 0.0, 5.0, -4.5 };
 const D3DXVECTOR3 CAMERALOOK_KAITO =  { 0.0, 5.0, 0.0 };
 
+//育成ターン数
+constexpr int MAX_TURN = 5;
+
 //ヒーロー名構造体
 struct HeroName
 {
@@ -61,6 +64,9 @@ public:
 	//残りターン数の描画
 	void DrawRemainingTurn();
 
+	//パラメータの描画
+	void DrawParam();
+
 public:
 	//カメラマネージャクラス
 	CCameraManager* m_pCamera;
@@ -71,18 +77,36 @@ public:
 	//jsonクラス
 	std::unique_ptr<CJson> m_pJson;
 
-	//jsonデータ保存用
-	json m_JsonData;
-
 	//名前構造体
 	HeroName m_Name;
 
 	//----オブジェクトクラス----
 	//スタティックメッシュ
 	//地面クラス
-	CGround*		m_pGround;
+	std::unique_ptr<CGround>		m_pGround;
 	//スカイボックスクラス
-	CSky*			m_pSky;
+	std::unique_ptr<CSky>			m_pSky;
+	
+	//UI
+	//各パラメータ表示
+	//筋力
+	CUIObject* m_pPowerParam;
+	//魔力
+	CUIObject* m_pMagicParam;
+	//素早さ
+	CUIObject* m_pSpeedParam;
+	//体力
+	CUIObject* m_pHpParam;
+
+
+	//----json関連----
+    //キャラクターデータ格納用
+	json m_CharaData;
+	//パラメータデータ格納用
+	json m_ParamData;
+
+	//残りターン数
+	int         m_Turn;
 
 
 };

@@ -12,7 +12,7 @@ public:
 	virtual ~CCharacter();
 
 	virtual void Update() override;
-	virtual void Draw( LIGHT& Light ) override;
+	virtual void Draw() override;
 
 	//Y²•ûŒü‚ÖL‚Î‚µ‚½ƒŒƒC‚ğæ“¾
 	RAY GetRayY() const { return *m_pRayY; }

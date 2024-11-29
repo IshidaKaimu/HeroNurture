@@ -9,8 +9,12 @@ public:
 	//UIリスト
 	enum UIList
 	{
-		Fade,		//シーン遷移時に使うフェード用の画像
-		WhiteFade,  //ごまかしに使う白フェード用画像
+		Fade,		 //シーン遷移時に使うフェード用の画像
+		WhiteFade,	 //白フェード用画像
+		PowerParam,  //筋力パラメータ表示用画像
+		SpeedParam,  //素早さパラメータ表示用画像
+		MagicParam,  //魔力パラメータ表示用画像
+		HpParam,     //体力パラメータ表示用画像
 
 		Max,
 	};
@@ -44,5 +48,3 @@ private:
 	CHeroBase* m_pHero;
 };
 
-//UIサイズ定数
-static const D3DXVECTOR2 TEXTBOXSIZE = { 641.0f, 97.0f };    //テキストボックス

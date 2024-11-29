@@ -34,10 +34,10 @@ void CHeroManager::Update()
 }
 
 //描画関数
-void CHeroManager::Draw( LIGHT& light )
+void CHeroManager::Draw()
 {
     //各ヒーロークラスの更新関数
-    m_Hero->Draw( light );
+    m_Hero->Draw();
 }
 
 //アニメーション関数

@@ -62,8 +62,8 @@ void CZako::Update()
 
 }
 
-void CZako::Draw( LIGHT& Light )
+void CZako::Draw()
 {
 	m_pMesh->SetAnimSpeed( m_AnimSpeed );
-    CSkinMeshObject::Draw( Light );
+    CSkinMeshObject::Draw();
 }

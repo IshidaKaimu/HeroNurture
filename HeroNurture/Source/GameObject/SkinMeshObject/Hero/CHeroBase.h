@@ -52,26 +52,31 @@ public:
 	virtual void Update();
 
 	//描画関数
-	virtual void Draw( LIGHT& light );
+	virtual void Draw();
 
 	//アニメーション関数
 	virtual void Animation();
 
 public:
-
-	//----ステータス上昇関数----
-	//筋力
-	void PowerUp(int power )	    { m_Para.Power += power; }
-	//魔力
-	void MagicUp(int magic )	    { m_Para.Magic += magic; }
-	//素早さ
-	void SpeedUp(int speed)         { m_Para.Speed += speed; }
-	//体力
-	void HpUp(int hp)		        { m_Para.Hp += hp; }
-
 	//----ゲッター・セッター----
 	//現在のステータス取得
 	enStatus GetStatus() { return m_Para; }
+
+protected :
+
+	//----ステータス上昇関数----
+    //筋力
+	void PowerUp(int power) { m_Para.Power += power; }
+	//魔力
+	void MagicUp(int magic) { m_Para.Magic += magic; }
+	//素早さ
+	void SpeedUp(int speed) { m_Para.Speed += speed; }
+	//体力
+	void HpUp(int hp) { m_Para.Hp += hp; }
+	
+	//----json関連----
+	//各ヒーローの初期パラメータ取得
+	void LoadParam( const json& jsondata , const std::string& heroname );
 
 protected:
 	//プレイヤーのパラメータ構造体

@@ -20,7 +20,7 @@ void CStaticMeshObject::Update()
 	}
 }
 
-void CStaticMeshObject::Draw( LIGHT& Light )
+void CStaticMeshObject::Draw()
 {
 	if( m_pMesh == nullptr ){
 		return;
@@ -32,7 +32,7 @@ void CStaticMeshObject::Draw( LIGHT& Light )
 	m_pMesh->SetScale( m_vScale );
 
 	//ƒŒƒ“ƒ_ƒŠƒ“ƒO.
-	m_pMesh->Render(Light);
+	m_pMesh->Render();
 
 
 }

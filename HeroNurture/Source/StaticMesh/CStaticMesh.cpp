@@ -2,6 +2,7 @@
 #include "CDirectX9.h"
 #include "CDirectX11.h"
 #include "Camera\CameraManager\CCameraManager.h"
+#include "Light\LightManager\CLightManager.h"
 
 #include <stdlib.h>	//マルチバイト文字→Unicode文字変換で必要.
 #include <locale.h>
@@ -612,7 +613,7 @@ HRESULT CStaticMesh::CreateConstantBuffer()
 //レンダリング用.
 //※DirectX内のレンダリング関数.
 //  最終的に画面に出力するのは別クラスのレンダリング関数がやる.
-void CStaticMesh::Render(LIGHT& Light)
+void CStaticMesh::Render()
 {
 	//ワールド行列、スケール行列、回転行列、平行移動行列.
 	D3DXMATRIX mWorld, mScale, mRot, mTran;
@@ -620,6 +621,8 @@ void CStaticMesh::Render(LIGHT& Light)
 
 	//カメラ情報の取得
 	CAMERA camera = CCameraManager::GetInstance().GetCamera();
+	//ライト情報の取得
+	LIGHT  light = CLightManager::GetInstance().GetLight();
 
 	//拡大縮小行列作成.
 	D3DXMatrixScaling(
@@ -665,7 +668,7 @@ void CStaticMesh::Render(LIGHT& Light)
 		//----- ライト情報 -----.
 		//ライト方向.
 		cb.vLightDir = D3DXVECTOR4(
-			Light.vDirection.x, Light.vDirection.y, Light.vDirection.z, 0.0f );
+			light.vDirection.x, light.vDirection.y, light.vDirection.z, 0.0f );
 		//ライト方向の正規化(ノーマライズ）.
 		// ※モデルからライトへ向かう方向. ディレクショナルライトで重要な要素.
 		D3DXVec4Normalize( &cb.vLightDir, &cb.vLightDir );

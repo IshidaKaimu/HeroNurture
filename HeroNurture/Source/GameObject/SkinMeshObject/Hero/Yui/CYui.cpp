@@ -34,14 +34,9 @@ void CYui::LoadData( const json& jsondata )
 {
 	//メッシュデータの読み込み
 	AttachMesh(CSkinMeshManager::GetMesh(CSkinMeshManager::Yui));
-	
-	//各パラメータの代入
-	m_Para.Power = jsondata["Paramater"]["Power"];
-	m_Para.Magic = jsondata["Paramater"]["Magic"];
-	m_Para.Speed = jsondata["Paramater"]["Speed"];
-	m_Para.Hp    = jsondata["Paramater"]["Hp"];
 
-
+	//パラメータの読み込み
+	LoadParam(jsondata, "Yui");
 }
 
 //更新関数
@@ -50,10 +45,10 @@ void CYui::Update()
 }
 
 //描画関数
-void CYui::Draw(LIGHT& Light)
+void CYui::Draw()
 {
 	m_pMesh->SetAnimSpeed(m_AnimSpeed);
-	CSkinMeshObject::Draw(Light);
+	CSkinMeshObject::Draw();
 }
 
 //アニメーション関数

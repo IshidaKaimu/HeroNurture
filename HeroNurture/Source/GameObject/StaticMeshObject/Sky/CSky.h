@@ -13,7 +13,7 @@ public:
 	virtual ~CSky();
 
 	virtual void Update() override;
-	virtual void Draw(LIGHT& Light) override;
+	virtual void Draw() override;
 
 protected:
 };

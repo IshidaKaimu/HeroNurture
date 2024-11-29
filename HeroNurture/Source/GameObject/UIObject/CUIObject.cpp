@@ -11,6 +11,7 @@ CUIObject::~CUIObject()
 	DetachSprite();
 }
 
+//更新関数
 void CUIObject::Update()
 {
 	if( m_pSprite == nullptr ){
@@ -18,6 +19,7 @@ void CUIObject::Update()
 	}
 }
 
+//描画関数
 void CUIObject::Draw()
 {
 	if( m_pSprite == nullptr ){
@@ -35,9 +37,3 @@ void CUIObject::Draw()
 	//レンダリング.
 	m_pSprite->Render();
 }
-
-void CUIObject::Draw( LIGHT& Light )
-{
-	Draw();
-}
-

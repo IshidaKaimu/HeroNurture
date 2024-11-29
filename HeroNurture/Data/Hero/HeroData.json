@@ -1,0 +1,20 @@
+[
+ {
+  "Name": "Yui",
+  "Paramater": {
+    "Hp": 150,
+    "Magic": 60,
+    "Power": 30,
+    "Speed": 90
+  }
+ },
+ {
+   "Name": "Kaito",
+   "Paramater": {
+    "Hp": 200,
+    "Magic": 40,
+    "Power": 90,
+    "Speed": 40
+    }
+ }
+]
