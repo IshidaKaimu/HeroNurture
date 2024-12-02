@@ -9,7 +9,6 @@ using json = nlohmann::json;
 /**************************************************
 *	ヒーロー基底クラス.
 **/
-
 class CHeroBase
 	: public CSkinMeshObject
 {
@@ -32,10 +31,8 @@ public :
 	{
 		Yui,
 		Kaito,
-
 		max,
 	};
-
 
 public:
 	CHeroBase();
@@ -58,29 +55,57 @@ public:
 	virtual void Animation();
 
 public:
-	//----ゲッター・セッター----
-	//現在のステータス取得
-	enStatus GetStatus() { return m_Para; }
-
-protected :
-
 	//----ステータス上昇関数----
     //筋力
-	void PowerUp(int power) { m_Para.Power += power; }
+	void PowerUp(int power) 
+	{
+		m_Param.Power += power; 
+		//上昇量描画用の値
+		m_PowerUpValue = power;
+	};
 	//魔力
-	void MagicUp(int magic) { m_Para.Magic += magic; }
+	void MagicUp(int magic) 
+	{
+		m_Param.Magic += magic; 
+		//上昇量描画用の値
+		m_MagicUpValue = magic;
+	}
 	//素早さ
-	void SpeedUp(int speed) { m_Para.Speed += speed; }
+	void SpeedUp(int speed) 
+	{
+		m_Param.Speed += speed;
+		//上昇量描画用の値
+		m_SpeedUpValue = speed;
+	}
 	//体力
-	void HpUp(int hp) { m_Para.Hp += hp; }
-	
+	void HpUp(int hp)
+	{ 
+		m_Param.Hp += hp; 
+		//上昇量描画用の値
+		m_HpUpValue = hp;
+	}
+
+	//----ゲッター・セッター----
+	//現在のパラメータ取得
+	enStatus GetParam()   { return  m_Param; }
+	//上昇量の取得
+	//筋力
+	int GetPowerUpValue() { return m_PowerUpValue; }
+	//魔力
+	int GetMagicUpValue() { return m_MagicUpValue; }
+	//素早さ
+	int GetSpeedUpValue() { return m_SpeedUpValue; }
+	//体力
+	int GetHpUpValue()    { return m_HpUpValue; }
+
+protected :	
 	//----json関連----
 	//各ヒーローの初期パラメータ取得
 	void LoadParam( const json& jsondata , const std::string& heroname );
 
 protected:
 	//プレイヤーのパラメータ構造体
-	enStatus m_Para;
+	enStatus m_Param;
 
 	//jsonクラス
 	std::unique_ptr<CJson> m_pJson;
@@ -88,8 +113,16 @@ protected:
 	//ユーザーネーム
 	std::string m_UserName;
 
-	//ステータスファイル
-	json Status;
+private:
+	//----ステータス上昇値----
+	//筋力
+	int m_PowerUpValue;
+	//魔力
+	int m_MagicUpValue;
+	//素早さ
+	int m_SpeedUpValue;
+	//体力
+	int m_HpUpValue;
 
 
 };

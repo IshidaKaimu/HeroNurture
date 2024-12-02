@@ -1,8 +1,9 @@
 #include "CSceneManager.h"
-#include "Scene/Title/CTitle.h"
-#include "Scene/Nature/CNatureScene.h"
-#include "Scene/HeroSelect/CHeroSelect.h"
-#include "ImGui/ImGuiManager/ImGuiManager.h"
+#include "Scene\Title\CTitle.h"
+#include "Scene\Nature\CNatureScene.h"
+#include "Scene\HeroSelect\CHeroSelect.h"
+#include "Scene\Traning\CTraning.h"
+#include "ImGui\ImGuiManager\ImGuiManager.h"
 CSceneManager::CSceneManager()
     : m_Scene       ()
     , m_hWnd        ()
@@ -51,6 +52,7 @@ void CSceneManager::Update()
     if (ImGui::Button(JAPANESE("選択"))) { LoadCreate(enSceneList::SceneSelect); }
     if (ImGui::Button(JAPANESE("メイン"))) { LoadCreate(enSceneList::GameMain); }
     if (ImGui::Button(JAPANESE("育成"))) { LoadCreate(enSceneList::Nature); }
+    if (ImGui::Button(JAPANESE("修行"))) { LoadCreate(enSceneList::Training); }
     ImGui::End();
     m_Scene->Update();  //入ってるシーンの動作を行う   
 }
@@ -65,6 +67,7 @@ void CSceneManager::Draw()
     m_pDx11->SetDepth(true);
 }
 
+//構築・データ読み込み関数
 void CSceneManager::LoadCreate(enSceneList List)
 {
     //一度破棄
@@ -80,11 +83,7 @@ void CSceneManager::LoadCreate(enSceneList List)
 
 }
 
-void CSceneManager::LoadScene()
-{
-    m_Scene->LoadScene();
-}
-
+//構築関数
 std::unique_ptr<CSceneBase> CSceneManager::Create(enSceneList List)
 {
     //現在のシーンのインスタンスを返す
@@ -92,7 +91,8 @@ std::unique_ptr<CSceneBase> CSceneManager::Create(enSceneList List)
     {
     case CSceneManager::SceneSelect:    return std::make_unique<CTitle>();
     case CSceneManager::GameMain:       return std::make_unique<CHeroSelect>();
-    case CSceneManager::Nature:       return std::make_unique<CNatureScene>();
+    case CSceneManager::Nature:         return std::make_unique<CNatureScene>();
+    case CSceneManager::Training:        return std::make_unique<CTraning>();
     case CSceneManager::Max:            return nullptr;
     case CSceneManager::none:           return nullptr;
     default:                            return nullptr;

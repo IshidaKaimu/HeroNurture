@@ -6,6 +6,7 @@
 #include "StaticMesh\MeshManager\CMeshManager.h"
 #include "Sprite2D\UIManager\CUIManager.h"
 #include "Scene\CSceneManager.h"
+#include "KeyManager\CKeyManager.h"
 #include "WriteText\WriteText.h"
 #include "Json\CJson.h"
 
@@ -17,7 +18,6 @@ CNatureScene::CNatureScene()
     , m_Name     ()
     , m_pGround  ()
     , m_pSky     ()
-    , m_CharaData()
     , m_ParamData()
     , m_Turn     ()
 {
@@ -31,33 +31,32 @@ CNatureScene::~CNatureScene()
 void CNatureScene::Create()
 {
     //----インスタンス生成----
- 
-    //----セットされたヒーローのクラスのインスタンス生成----
+    //セットされたヒーローのクラスのインスタンス生成
     switch (m_pHero->GetSelectHero())
     {
     case CHeroManager::Yui:
         //ユイ
         m_pHero->SetHero(CHeroManager::Yui);
         //ファイルの作成、読み込み
-        CreateHeroData(m_Name.Yui);
+        LoadHeroData(m_Name.Yui);
         break;
     case CHeroManager::Kaito:
         //カイト
         m_pHero->SetHero(CHeroManager::Kaito);
         //ファイルの作成、読み込み
-        CreateHeroData(m_Name.Kaito);
+        LoadHeroData(m_Name.Kaito);
         break;
     default:
         break;
     }
     
-    //----スタティックメッシュ----
+    //スタティックメッシュオブジェクト
     //地面
     m_pGround = std::make_unique<CGround>();
     //スカイボックス
     m_pSky    = std::make_unique<CSky>();
 
-    //----UI----
+    //UIオブジェクト
     //各種パラメータ
     //筋力
     m_pPowerParam = new CUIObject();
@@ -67,9 +66,6 @@ void CNatureScene::Create()
     m_pSpeedParam = new CUIObject();
     //体力
     m_pHpParam    = new CUIObject();
-
-
-
 }
 
 //破棄関数
@@ -87,8 +83,9 @@ void CNatureScene::Releace()
 void CNatureScene::LoadData()
 {   
     //セットされたヒーローのクラスのデータ読み込み
-    CHeroManager::GetInstance().LoadData(m_ParamData);
-
+    if (!CSceneManager::GetInstance()->GetIsDataLoaded()) {
+        CHeroManager::GetInstance().LoadData(m_ParamData);
+    }
     //地面
     m_pGround->AttachMesh(CMeshManager::GetMesh(CMeshManager::Ground));
 
@@ -101,14 +98,15 @@ void CNatureScene::LoadData()
     m_pSpeedParam->AttachSprite(CUIManager::GetSprite(CUIManager::SpeedParam));
     //体力
     m_pHpParam->AttachSprite(CUIManager::GetSprite(CUIManager::HpParam));
-
 }
 
 //初期化関数
 void CNatureScene::Initialize()
 {
     //セットされたヒーローのクラスの初期化
-    m_pHero->Initialize();
+    if (!CSceneManager::GetInstance()->GetIsDataLoaded()) {
+        m_pHero->Initialize();
+    }
 
     //各ヒーローのカメラ位置、カメラの注視点の設定
     switch (m_pHero->GetSelectHero())
@@ -134,13 +132,20 @@ void CNatureScene::Initialize()
     m_Light.vDirection = D3DXVECTOR3(0.0f, 1.0f, 0.0f); //ライト方向
 
     //育成残りターン数の初期化
-    m_Turn = MAX_TURN;
+    if (m_IsDataLoaded == false) 
+    {
+        m_Turn = MAX_TURN;
+    }
 
-    //----各種パラメータのUIの設定----
+    //----各種パラメータUIの初期設定----
     //筋力
-    m_pPowerParam->SetPosition(300.0f,300.0f,0.0f);
-    m_pPowerParam->SetScale(1.0f,1.0f,1.0f);
-    m_pPowerParam->SetAlpha(1.0f);
+    ParamInit(m_pPowerParam, 1);
+    //魔力
+    ParamInit(m_pMagicParam, 2);
+    //素早さ
+    ParamInit(m_pSpeedParam, 3);
+    //体力
+    ParamInit(m_pHpParam, 4);
 
 }
 
@@ -157,7 +162,33 @@ void CNatureScene::Update()
     //セットされたヒーローのクラスのアニメーション
     m_pHero->Animation();
 
+    //キーマネージャーの更新処理
+    CKeyManager::GetInstance()->Update();
 
+    //ステータス上昇処理
+    if (CKeyManager::GetInstance()->IsDown('P'))
+    {
+        m_SceneTransitionFlg = true;
+    }
+    if (m_SceneTransitionFlg && FadeOut())
+    {
+        m_pHero->PowerUp(30);
+        //ヒーローごとのパラメータ情報の書き込み
+        switch (m_pHero->GetSelectHero())
+        {
+        case CHeroManager::Yui:
+            //ユイ
+            WriteParam("Yui");
+            break;
+        case CHeroManager::Kaito:
+            //カイト
+            WriteParam("Kaito");
+            break;
+        default:
+            break;
+        }
+        CSceneManager::GetInstance()->LoadCreate(CSceneManager::Training);
+    }
 
 #ifdef DEBUG 
     ImGui::Begin(JAPANESE("カメラ"));
@@ -171,10 +202,10 @@ void CNatureScene::Update()
 #ifdef _DEBUG 
 
     ImGui::Begin(JAPANESE("パラメータ"));
-    ImGui::Text(JAPANESE("筋力:%d"), m_pHero->GetStatus().Power);
-    ImGui::Text(JAPANESE("魔力:%d"), m_pHero->GetStatus().Magic);
-    ImGui::Text(JAPANESE("素早さ:%d"), m_pHero->GetStatus().Speed);
-    ImGui::Text(JAPANESE("体力:%d"), m_pHero->GetStatus().Hp);
+    ImGui::Text(JAPANESE("筋力:%d"),   m_pHero->GetParam().Power);
+    ImGui::Text(JAPANESE("魔力:%d"),   m_pHero->GetParam().Magic);
+    ImGui::Text(JAPANESE("素早さ:%d"), m_pHero->GetParam().Speed);
+    ImGui::Text(JAPANESE("体力:%d"),   m_pHero->GetParam().Hp);
     ImGui::End();
 
 #endif
@@ -199,20 +230,47 @@ void CNatureScene::Draw()
 
     //各パラメータUIの描画
     DrawParam();
-
 }
 
 //各ヒーローのデータ読み込み
-void CNatureScene::CreateHeroData( const std::string& heroname )
+void CNatureScene::LoadHeroData( const std::string& heroname )
 {
     //ファイル名と階層を結合
-    std::string FilePath = "Data\\Hero\\HeroData";
+    std::string InitFilePath = "Data\\Hero\\HeroData";
+    std::string ParamFilePath = "Data\\Hero\\HeroData";
 
     //jsonに保存されたデータの読み込み
-    if (!m_pJson->Load(m_ParamData, FilePath))
+    //読み込み回数に応じて読み込むファイルを変える
+    if (!CSceneManager::GetInstance()->GetIsDataLoaded()) 
     {
-        return;
+        //初回の読み込み時
+        if (!m_pJson->Load(m_ParamData, InitFilePath))
+        {
+            return;
+        }
     }
+    else
+    {
+        //2度目以降の読み込み時
+        if (!m_pJson->Load(m_ParamData, ParamFilePath))
+        {
+            return;
+        }
+    }
+}
+
+//パラメータ情報の書き込み
+void CNatureScene::WriteParam( const std::string& heroname )
+{
+    //書き込む情報の格納
+    m_ParamWriter["Name"] = heroname;
+    m_ParamWriter["Paramater"]["Power"] = m_pHero->GetParam().Power;
+    m_ParamWriter["Paramater"]["Magic"] = m_pHero->GetParam().Magic;
+    m_ParamWriter["Paramater"]["Speed"] = m_pHero->GetParam().Speed;
+    m_ParamWriter["Paramater"]["HP"] = m_pHero->GetParam().Hp;
+
+    //ファイルに書き込み
+    m_pJson->CreateOrWrite( "Data\\Hero\\Paramater\\",m_ParamWriter);
 }
 
 //残りターン数の描画
@@ -230,18 +288,33 @@ void CNatureScene::DrawRemainingTurn()
     Text->Draw_Text(L"ターン",WriteText::Normal, D3DXVECTOR2(160.0, -20.0));
 }
 
+//各種パラメータ設定
+void CNatureScene::ParamInit(CUIObject* param, int no)
+{
+    //位置
+    param->SetPosition(PARAM_POSX * no, PARAM_POSY, 0.0f);
+    //拡縮
+    param->SetScale(0.3f, 0.3f, 0.3f);
+    //α値
+    param->SetAlpha(1.0f);
+}
+
 //各種パラメータの描画
 void CNatureScene::DrawParam()
 {
+    //テキスト描画クラスのインスタンスを変数に代入
+    WriteText* Text = WriteText::GetInstance();
     //----各種パラメータのUI描画----
     //筋力
     m_pPowerParam->Draw();
+    Text->Draw_Text(std::to_wstring(m_pHero->GetParam().Power), WriteText::Normal, D3DXVECTOR2(PARAMVALUE_POSX * 1.0f, PARAM_POSY));
     //魔力
     m_pMagicParam->Draw();
+    Text->Draw_Text(std::to_wstring(m_pHero->GetParam().Magic), WriteText::Normal, D3DXVECTOR2(PARAMVALUE_POSX * 2.0f, PARAM_POSY));
     //素早さ
     m_pSpeedParam->Draw();
+    Text->Draw_Text(std::to_wstring(m_pHero->GetParam().Speed), WriteText::Normal, D3DXVECTOR2(PARAMVALUE_POSX * 3.0f, PARAM_POSY));
     //体力
     m_pHpParam->Draw();
+    Text->Draw_Text(std::to_wstring(m_pHero->GetParam().Hp), WriteText::Normal, D3DXVECTOR2(PARAMVALUE_POSX * 4.0f, PARAM_POSY));
 }
-
-

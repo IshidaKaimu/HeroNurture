@@ -23,19 +23,32 @@ CSceneBase::~CSceneBase()
 	SAFE_DELETE( m_pFade );		//フェード
 }
 
-
+//初期化関数
 void CSceneBase::Initialize()
 {
 }
 
+//更新関数
+void CSceneBase::Update()
+{
+}
+
+//描画関数
 void CSceneBase::Draw()
 {
 	//描画
 	m_pFade->Draw();	//フェード
 }
 
+//破棄関数
 void CSceneBase::Releace()
 {
+}
+
+//ロード回数制限フラグの操作
+void CSceneBase::IsDataLoaded(bool loaded)
+{
+    m_IsDataLoaded = loaded;
 }
 
 //フェードアウト

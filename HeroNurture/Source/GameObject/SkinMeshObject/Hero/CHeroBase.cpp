@@ -1,12 +1,14 @@
 #include "CHeroBase.h"
 #include "Sound/CSoundManager.h"
 #include "ImGui/ImGuiManager/ImGuiManager.h"
-#include "KeyManager/CKeyManager.h"
 #include <fstream>
 #include <codecvt>
 
 
 CHeroBase::CHeroBase()	
+	: m_Param          ()
+	, m_pJson          ()
+	, m_UserName       ()
 {
 	m_pJson = std::make_unique<CJson>();
 }
@@ -18,7 +20,6 @@ CHeroBase::~CHeroBase()
 //更新関数
 void CHeroBase::Update()
 {
-	CKeyManager::GetInstance()->Update();
 }
 
 //描画関数
@@ -32,6 +33,7 @@ void CHeroBase::Animation()
 {
 }
 
+
 //各ヒーローの初期パラメータの取得
 void CHeroBase::LoadParam( const json& jsondata, const std::string& heroname )
 {
@@ -40,10 +42,10 @@ void CHeroBase::LoadParam( const json& jsondata, const std::string& heroname )
 	{
 		if ( hero["Name"] == heroname )
 		{
-			m_Para.Power = hero["Paramater"]["Power"];
-			m_Para.Magic = hero["Paramater"]["Magic"];
-			m_Para.Speed = hero["Paramater"]["Speed"];
-			m_Para.Hp    = hero["Paramater"]["Hp"];
+			m_Param.Power = hero["Paramater"]["Power"];
+			m_Param.Magic = hero["Paramater"]["Magic"];
+			m_Param.Speed = hero["Paramater"]["Speed"];
+			m_Param.Hp    = hero["Paramater"]["Hp"];
 			return;
 		}
 	}

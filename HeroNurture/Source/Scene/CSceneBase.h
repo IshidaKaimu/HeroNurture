@@ -1,8 +1,9 @@
 #pragma once
 #include <Windows.h>
-#include "Sprite3D/CSprite3D.h"
-#include "Sprite2D/CSprite2D.h"
-#include "UIObject/CUIObject.h"
+#include "Sprite3D\CSprite3D.h"
+#include "Sprite2D\CSprite2D.h"
+#include "UIObject\CUIObject.h"
+
 
 //==============================//
 //		シーンベースクラス		//
@@ -22,7 +23,7 @@ public:
 	virtual void Initialize();
 
 	//更新関数
-	virtual void Update() {};
+	virtual void Update();
 
 	//描画関数
 	virtual void Draw();
@@ -33,12 +34,16 @@ public:
 	//データ読み込み関数
 	virtual void  LoadData() {};
 
-	//シーン読み込み関数
-	virtual void LoadScene(){};
-
 	//破棄関数
 	virtual void Releace();
 
+public:
+	//読み込み回数制限フラグの操作
+	void IsDataLoaded(bool loaded);
+
+	//----ゲッター・セッター----
+	//読み込み回数制限フラグの取得
+	bool GetIsDataLoaded() { return m_IsDataLoaded; }
 
 protected:
     //フェードアウト
@@ -50,17 +55,19 @@ protected:
 	//ライト情報
 	LIGHT       m_Light;
 
-	//デバッグ用カメラ情報
+	//----デバッグ用カメラ情報----
 	//位置
 	D3DXVECTOR3 m_CamPos;
 	//注視点
 	D3DXVECTOR3	m_CamLook;
 
-	//----シーン遷移関連フラグ----
+	//----フラグ----
 	//シーン遷移用
 	bool        m_IsScene;  
     //シーン遷移フラグ
     bool        m_SceneTransitionFlg;
+	//データ読み込みが初回かのフラグ
+	bool       m_IsDataLoaded;
    
 	//選択中番号
     int         m_SelectNo;

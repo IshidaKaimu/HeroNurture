@@ -22,6 +22,12 @@ const D3DXVECTOR3 CAMERALOOK_YUI = { 0.0, 5.0, 0.0 };
 const D3DXVECTOR3 CAMERAPOS_KAITO  =  { 0.0, 5.0, -4.5 };
 const D3DXVECTOR3 CAMERALOOK_KAITO =  { 0.0, 5.0, 0.0 };
 
+//パラメータUI情報
+//アイコン・パラメータ名
+constexpr float PARAM_POSX = 225.0f;
+constexpr float PARAM_POSY = 450.0f;
+//数値
+constexpr float PARAMVALUE_POSX = 230.0f;
 //育成ターン数
 constexpr int MAX_TURN = 5;
 
@@ -59,10 +65,16 @@ public:
 
 public:
 	//各ヒーロー用ファイルの作成・読み込み
-	void CreateHeroData( const std::string& heroname );
+	void LoadHeroData( const std::string& heroname );
+
+	//パラメータ情報の書き込み
+	void WriteParam( const std::string& heroname );
 
 	//残りターン数の描画
 	void DrawRemainingTurn();
+
+	//パラメータUIの設定
+	void ParamInit(CUIObject* param, int no);
 
 	//パラメータの描画
 	void DrawParam();
@@ -83,9 +95,9 @@ public:
 	//----オブジェクトクラス----
 	//スタティックメッシュ
 	//地面クラス
-	std::unique_ptr<CGround>		m_pGround;
+	std::unique_ptr<CGround> m_pGround;
 	//スカイボックスクラス
-	std::unique_ptr<CSky>			m_pSky;
+	std::unique_ptr<CSky>	 m_pSky;
 	
 	//UI
 	//各パラメータ表示
@@ -98,16 +110,14 @@ public:
 	//体力
 	CUIObject* m_pHpParam;
 
-
 	//----json関連----
-    //キャラクターデータ格納用
-	json m_CharaData;
+    //パラメータ情報の書き込み用
+	json m_ParamWriter;
 	//パラメータデータ格納用
 	json m_ParamData;
 
 	//残りターン数
 	int         m_Turn;
-
 
 };
 
