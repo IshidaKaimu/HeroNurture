@@ -45,12 +45,6 @@ void CSceneBase::Releace()
 {
 }
 
-//ロード回数制限フラグの操作
-void CSceneBase::IsDataLoaded(bool loaded)
-{
-    m_IsDataLoaded = loaded;
-}
-
 //フェードアウト
 bool CSceneBase::FadeOut()
 {

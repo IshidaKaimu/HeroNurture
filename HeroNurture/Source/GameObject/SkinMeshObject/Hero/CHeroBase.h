@@ -43,7 +43,10 @@ public:
 	virtual void Initialize() {};
 
 	//データ読み込み関数
-	virtual void LoadData(const json& jsondata) {};
+	virtual void LoadMeshData() {};
+
+	//パラメータ情報読み込み
+	virtual void LoadParamData(const json& jsondata) {};
 
 	//更新関数
 	virtual void Update();
@@ -102,6 +105,8 @@ protected :
 	//----json関連----
 	//各ヒーローの初期パラメータ取得
 	void LoadParam( const json& jsondata , const std::string& heroname );
+	//各ヒーローのパラメータ更新
+	void UpdateParam( const json& jsondata, const std::string& heroname );
 
 protected:
 	//プレイヤーのパラメータ構造体

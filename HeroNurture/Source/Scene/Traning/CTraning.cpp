@@ -53,13 +53,14 @@ void CTraning::Update()
    }  
    if (m_SceneTransitionFlg && FadeOut())
    {
-       CSceneManager::GetInstance()->IsDataLoaded(true);
+       CSceneManager::GetInstance()->SetIsDataLoaded(true);
        CSceneManager::GetInstance()->LoadCreate(CSceneManager::Nature);
    }
 }
 //描画関数
 void CTraning::Draw()
 {
+    //上昇量テキストの描画(仮)
     DrawUpText();
 }
 

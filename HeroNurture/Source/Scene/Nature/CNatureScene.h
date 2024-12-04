@@ -28,8 +28,6 @@ constexpr float PARAM_POSX = 225.0f;
 constexpr float PARAM_POSY = 450.0f;
 //数値
 constexpr float PARAMVALUE_POSX = 230.0f;
-//育成ターン数
-constexpr int MAX_TURN = 5;
 
 //ヒーロー名構造体
 struct HeroName
@@ -70,14 +68,14 @@ public:
 	//パラメータ情報の書き込み
 	void WriteParam( const std::string& heroname );
 
-	//残りターン数の描画
-	void DrawRemainingTurn();
-
 	//パラメータUIの設定
 	void ParamInit(CUIObject* param, int no);
 
 	//パラメータの描画
 	void DrawParam();
+
+	//残りターン数の描画
+	void DrawRemainingTurn();
 
 public:
 	//カメラマネージャクラス
@@ -115,9 +113,6 @@ public:
 	json m_ParamWriter;
 	//パラメータデータ格納用
 	json m_ParamData;
-
-	//残りターン数
-	int         m_Turn;
 
 };
 

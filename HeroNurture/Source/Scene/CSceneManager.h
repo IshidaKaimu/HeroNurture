@@ -10,6 +10,9 @@ class CHeroSelect;
 class CNatureScene;
 class CTraning;
 
+//育成ターン数
+constexpr int MAX_TURN = 5;
+
 class CSceneManager
 	: public CSceneBase
 {
@@ -53,8 +56,15 @@ public:
 	//シーン構築関数
 	static std::unique_ptr<CSceneBase> Create(enSceneList List);
 
+public:
 	//読み込み回数制限フラグの操作
-	void IsDataLoaded(bool loaded) { m_Scene->IsDataLoaded(loaded); }
+	void SetIsDataLoaded(bool loaded) { m_IsDataLoaded = loaded; }
+
+	//ターン数の経過
+	void TurnProgress() { m_Turn--; }
+
+	//ターン数の初期化
+	void InitTurn() { m_Turn = MAX_TURN; }
 
     //---ゲッター・セッター---
     //DirectX9
@@ -67,8 +77,9 @@ public:
     HWND GetWnd() { return m_hWnd; }
     void SetWnd(HWND m_wnd) { m_hWnd = m_wnd; }
 	//読み込み回数制限フラグの取得
-	bool GetIsDataLoaded() { return m_Scene->GetIsDataLoaded(); }
-
+	bool GetIsDataLoaded() { return m_IsDataLoaded; }
+	//残りターン数の取得
+	int GetRemainingTurn() { return m_Turn; }
 
 private:
 	CSceneManager();
@@ -80,5 +91,13 @@ private:
     HWND        m_hWnd;    //ウィンドウハンドル
     CDirectX9*  m_pDx9;	   //DirectX9
     CDirectX11* m_pDx11;   //DirectX11
+
+	//残りターン数
+	int        m_Turn;
+
+	//----フラグ----
+	//データ読み込みが初回かどうかのフラグ
+	bool       m_IsDataLoaded;
+
 
 };

@@ -2,6 +2,7 @@
 #include "Effect\CEffect.h"
 #include "Sound\CSoundManager.h"
 #include "SkinMesh\SkinMeshManager\CSkinMeshManager.h"
+#include "Scene\CSceneManager.h"
 
 CKaito::CKaito()
 	: m_BonePos		()
@@ -29,14 +30,25 @@ void CKaito::Initialize()
 	m_pMesh->ChangeAnimSet(m_AnimNo, m_pAnimCtrl);
 }
 
-//データ読み込み関数
-void CKaito::LoadData( const json& jsondata )
+//メッシュデータ読み込み関数
+void CKaito::LoadMeshData()
 {
 	//メッシュデータの読み込み
 	AttachMesh(CSkinMeshManager::GetMesh(CSkinMeshManager::Kaito));
-
-	//パラメータの読み込み
-	LoadParam(jsondata, "Kaito");
+}
+//パラメータ情報の読み込み
+void CKaito::LoadParamData(const json& jsondata)
+{
+	if (!CSceneManager::GetInstance()->GetIsDataLoaded())
+	{
+		//パラメータの読み込み
+		LoadParam(jsondata, "Kaito");
+	}
+	else
+	{
+		//パラメータの更新
+		UpdateParam(jsondata, "Kaito");
+	}
 }
 
 //更新関数

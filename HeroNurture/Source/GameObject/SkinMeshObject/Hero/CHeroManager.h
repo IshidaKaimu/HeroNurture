@@ -25,7 +25,10 @@ public:
 	void Initialize() override;
 
 	//データ読み込み関数
-	void LoadData(const json& jsondata) override;
+	void LoadMeshData() override;
+
+	//パラメータ情報の読み込み
+	void LoadParamData(const json& jsondata) override;
 
 	//更新関数
 	void Update() override;

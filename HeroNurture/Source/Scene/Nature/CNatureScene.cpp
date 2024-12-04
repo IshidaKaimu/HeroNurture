@@ -19,7 +19,6 @@ CNatureScene::CNatureScene()
     , m_pGround  ()
     , m_pSky     ()
     , m_ParamData()
-    , m_Turn     ()
 {
 }
 
@@ -82,10 +81,11 @@ void CNatureScene::Releace()
 //データ読み込み関数
 void CNatureScene::LoadData()
 {   
-    //セットされたヒーローのクラスのデータ読み込み
-    if (!CSceneManager::GetInstance()->GetIsDataLoaded()) {
-        CHeroManager::GetInstance().LoadData(m_ParamData);
-    }
+    //セットされたヒーローのクラスのメッシュデータの読み込み
+    CHeroManager::GetInstance().LoadMeshData();
+
+    CHeroManager::GetInstance().LoadParamData(m_ParamData);
+
     //地面
     m_pGround->AttachMesh(CMeshManager::GetMesh(CMeshManager::Ground));
 
@@ -104,9 +104,7 @@ void CNatureScene::LoadData()
 void CNatureScene::Initialize()
 {
     //セットされたヒーローのクラスの初期化
-    if (!CSceneManager::GetInstance()->GetIsDataLoaded()) {
-        m_pHero->Initialize();
-    }
+    m_pHero->Initialize();
 
     //各ヒーローのカメラ位置、カメラの注視点の設定
     switch (m_pHero->GetSelectHero())
@@ -130,13 +128,7 @@ void CNatureScene::Initialize()
     m_Light.Position   = D3DXVECTOR3(0.0f, 1.0f, 0.0f);
     //向き
     m_Light.vDirection = D3DXVECTOR3(0.0f, 1.0f, 0.0f); //ライト方向
-
-    //育成残りターン数の初期化
-    if (m_IsDataLoaded == false) 
-    {
-        m_Turn = MAX_TURN;
-    }
-
+   
     //----各種パラメータUIの初期設定----
     //筋力
     ParamInit(m_pPowerParam, 1);
@@ -235,27 +227,23 @@ void CNatureScene::Draw()
 //各ヒーローのデータ読み込み
 void CNatureScene::LoadHeroData( const std::string& heroname )
 {
-    //ファイル名と階層を結合
+    //読み込むファイルのパス
+    //初回の読み込み時に読み込む初期ステータスファイル
     std::string InitFilePath = "Data\\Hero\\HeroData";
-    std::string ParamFilePath = "Data\\Hero\\HeroData";
+    //パラメータ情報更新時に読み込むファイル
+    std::string ParamFilePath = "Data\\Hero\\Paramater\\" + heroname;
 
     //jsonに保存されたデータの読み込み
     //読み込み回数に応じて読み込むファイルを変える
     if (!CSceneManager::GetInstance()->GetIsDataLoaded()) 
     {
         //初回の読み込み時
-        if (!m_pJson->Load(m_ParamData, InitFilePath))
-        {
-            return;
-        }
+        if (!m_pJson->Load(m_ParamData, InitFilePath)) { return; }
     }
     else
     {
         //2度目以降の読み込み時
-        if (!m_pJson->Load(m_ParamData, ParamFilePath))
-        {
-            return;
-        }
+        if (!m_pJson->Load(m_ParamData, ParamFilePath)) { return; }
     }
 }
 
@@ -267,26 +255,12 @@ void CNatureScene::WriteParam( const std::string& heroname )
     m_ParamWriter["Paramater"]["Power"] = m_pHero->GetParam().Power;
     m_ParamWriter["Paramater"]["Magic"] = m_pHero->GetParam().Magic;
     m_ParamWriter["Paramater"]["Speed"] = m_pHero->GetParam().Speed;
-    m_ParamWriter["Paramater"]["HP"] = m_pHero->GetParam().Hp;
+    m_ParamWriter["Paramater"]["Hp"] = m_pHero->GetParam().Hp;
 
     //ファイルに書き込み
     m_pJson->CreateOrWrite( "Data\\Hero\\Paramater\\",m_ParamWriter);
 }
 
-//残りターン数の描画
-void CNatureScene::DrawRemainingTurn()
-{
-    //整数をwstring型に変換
-    std::wstring Turn = std::to_wstring(m_Turn);
-
-    //テキスト描画クラスのインスタンスを変数に代入
-    WriteText* Text =  WriteText::GetInstance();
-
-    //残りターン数の描画
-    Text->Draw_Text(L"残り",WriteText::Normal, D3DXVECTOR2(0.0, -20.0));
-    Text->Draw_Text(Turn,WriteText::Turn, D3DXVECTOR2(110.0, -30.0));
-    Text->Draw_Text(L"ターン",WriteText::Normal, D3DXVECTOR2(160.0, -20.0));
-}
 
 //各種パラメータ設定
 void CNatureScene::ParamInit(CUIObject* param, int no)
@@ -317,4 +291,19 @@ void CNatureScene::DrawParam()
     //体力
     m_pHpParam->Draw();
     Text->Draw_Text(std::to_wstring(m_pHero->GetParam().Hp), WriteText::Normal, D3DXVECTOR2(PARAMVALUE_POSX * 4.0f, PARAM_POSY));
+}
+
+//残りターン数の描画
+void CNatureScene::DrawRemainingTurn()
+{
+    //整数をwstring型に変換
+    std::wstring Turn = std::to_wstring(CSceneManager::GetInstance()->GetRemainingTurn());
+
+    //テキスト描画クラスのインスタンスを変数に代入
+    WriteText* Text = WriteText::GetInstance();
+
+    //残りターン数の描画
+    Text->Draw_Text(L"残り", WriteText::Normal, D3DXVECTOR2(0.0, -20.0));
+    Text->Draw_Text(Turn, WriteText::Turn, D3DXVECTOR2(110.0, -30.0));
+    Text->Draw_Text(L"ターン", WriteText::Normal, D3DXVECTOR2(160.0, -20.0));
 }

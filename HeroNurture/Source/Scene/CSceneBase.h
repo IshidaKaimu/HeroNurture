@@ -37,14 +37,6 @@ public:
 	//破棄関数
 	virtual void Releace();
 
-public:
-	//読み込み回数制限フラグの操作
-	void IsDataLoaded(bool loaded);
-
-	//----ゲッター・セッター----
-	//読み込み回数制限フラグの取得
-	bool GetIsDataLoaded() { return m_IsDataLoaded; }
-
 protected:
     //フェードアウト
     bool FadeOut();
@@ -66,9 +58,7 @@ protected:
 	bool        m_IsScene;  
     //シーン遷移フラグ
     bool        m_SceneTransitionFlg;
-	//データ読み込みが初回かのフラグ
-	bool       m_IsDataLoaded;
-   
+
 	//選択中番号
     int         m_SelectNo;
 

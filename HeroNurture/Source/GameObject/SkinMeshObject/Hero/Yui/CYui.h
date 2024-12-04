@@ -1,6 +1,9 @@
 #pragma once
-#include "SkinMeshObject/CSkinMeshObject.h"
-#include "SkinMeshObject/Hero/CHeroBase.h"
+#include "SkinMeshObject\CSkinMeshObject.h"
+#include "SkinMeshObject\Hero\CHeroBase.h"
+
+//----前方宣言----
+class CSceneManager;
 
 /*****************************************
 *ユイクラス
@@ -16,7 +19,10 @@ public:
 	void Initialize() override;
 
 	//データ読み込み関数
-	void LoadData( const json& jsondata ) override;
+	void LoadMeshData() override;
+
+	//パラメータ情報読み込み
+    void LoadParamData(const json& jsondata) override;
 
 	//更新関数
 	void Update() override;

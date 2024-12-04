@@ -20,10 +20,16 @@ void CHeroManager::Initialize()
 }
 
 //データ読み込み関数
-void CHeroManager::LoadData( const json& jsondata )
+void CHeroManager::LoadMeshData()
 {
     //各ヒーロークラスのデータ読み込み
-    m_Hero->LoadData( jsondata );
+    m_Hero->LoadMeshData();
+}
+
+//パラメータ情報の読み込み
+void CHeroManager::LoadParamData(const json& jsondata)
+{
+    m_Hero->LoadParamData(jsondata);
 }
 
 //更新関数

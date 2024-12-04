@@ -2,6 +2,7 @@
 #include "Effect\CEffect.h"
 #include "Sound\CSoundManager.h"
 #include "SkinMesh\SkinMeshManager\CSkinMeshManager.h"
+#include "Scene\CSceneManager.h"
 
 CYui::CYui()
 	: m_BonePos()
@@ -26,17 +27,28 @@ void CYui::Initialize()
 	m_AnimNo = 3;
 	//登場アニメーション
 	m_pMesh->ChangeAnimSet(m_AnimNo, m_pAnimCtrl);
-
 }
 
-//データ読み込み関数
-void CYui::LoadData( const json& jsondata )
+//メッシュデータ読み込み関数
+void CYui::LoadMeshData()
 {
 	//メッシュデータの読み込み
 	AttachMesh(CSkinMeshManager::GetMesh(CSkinMeshManager::Yui));
+}
 
-	//パラメータの読み込み
-	LoadParam(jsondata, "Yui");
+//パラメータ情報の読み込み
+void CYui::LoadParamData(const json& jsondata)
+{
+	if (!CSceneManager::GetInstance()->GetIsDataLoaded()) 
+	{
+		//パラメータの読み込み
+		LoadParam(jsondata, "Yui");
+	}
+	else
+	{
+		//パラメータの更新
+		UpdateParam(jsondata, "Yui");
+	}
 }
 
 //更新関数
@@ -54,11 +66,6 @@ void CYui::Draw()
 //アニメーション関数
 void CYui::Animation()
 {
-	if (m_AnimNo == 3)
-	{
-
-	}
-
 	//アニメーションの経過時間を加算		
 	m_AnimTime += m_pMesh->GetAnimSpeed();
 }

@@ -26,7 +26,6 @@ CHeroSelect::~CHeroSelect()
 {
 }
 
-
 //ç\ízä÷êî
 void CHeroSelect::Create()
 {
