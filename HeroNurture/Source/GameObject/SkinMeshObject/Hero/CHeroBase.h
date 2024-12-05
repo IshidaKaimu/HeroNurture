@@ -6,28 +6,46 @@
 //Json使用に必要な名前空間の格納
 using json = nlohmann::json;
 
-/**************************************************
-*	ヒーロー基底クラス.
-**/
+//トレーニング時上昇値の基礎
+constexpr float INCREASE_VALUE = 20.0f;
+
+//=====================================
+//ヒーロー基底クラス
+//制作者：石田櫂夢
+//=====================================
+
 class CHeroBase
 	: public CSkinMeshObject
 {
 public :
-	//ステータス構造体
-	struct enStatus
+	//パラメータ構造体
+	struct enParam
 	{
 		//筋力
-		int Power;
+		float Power;
 		//魔力
-		int Magic;
+		float Magic;
 		//素早さ
-		int Speed;
+		float Speed;
 		//体力
-		int Hp;
+		float Hp;
+	};
+
+	//適正率構造体
+	struct enAppropriate
+	{
+		//筋力
+		float PowerApp;
+		//魔力
+		float MagicApp;
+		//素早さ
+		float SpeedApp;
+		//体力
+		float HpApp;
 	};
 
 	//キャラクターリスト構造体
-	enum enCharacterList : unsigned char
+	enum enCharacterList : char
 	{
 		Yui,
 		Kaito,
@@ -58,59 +76,86 @@ public:
 	virtual void Animation();
 
 public:
-	//----ステータス上昇関数----
+	// =======================
+	// ステータス上昇関数
+	// =======================		
+	//----トレーニングによる上昇----
+	//筋力
+	void PowerUp();
+	//魔力
+	void MagicUp();
+	//素早さ
+	void SpeedUp();
+	//体力
+	void HpUp();
+
+	//----イベントによる上昇----
     //筋力
-	void PowerUp(int power) 
+	void PowerUpEvent(float power) 
 	{
 		m_Param.Power += power; 
 		//上昇量描画用の値
 		m_PowerUpValue = power;
 	};
 	//魔力
-	void MagicUp(int magic) 
+	void MagicUpEvent(float magic) 
 	{
 		m_Param.Magic += magic; 
 		//上昇量描画用の値
 		m_MagicUpValue = magic;
 	}
 	//素早さ
-	void SpeedUp(int speed) 
+	void SpeedUpEvent(float speed) 
 	{
 		m_Param.Speed += speed;
 		//上昇量描画用の値
 		m_SpeedUpValue = speed;
 	}
 	//体力
-	void HpUp(int hp)
+	void HpUpEvent(float hp)
 	{ 
 		m_Param.Hp += hp; 
 		//上昇量描画用の値
 		m_HpUpValue = hp;
 	}
 
-	//----ゲッター・セッター----
+	// =======================
+	// ゲッター・セッター
+	// =======================		
 	//現在のパラメータ取得
-	enStatus GetParam()   { return  m_Param; }
-	//上昇量の取得
+	enParam GetParam()      { return  m_Param; }
+	//キャラごとの適正率取得
+	enAppropriate GetApp()  { return  m_App; }
+
+	//更新前のパラメータ
+	enParam GetBeforeParam() { return m_BeforeParam; }
+	void SetBeforeParam(enParam before) { m_BeforeParam = before; }
+
+	//上昇量
 	//筋力
-	int GetPowerUpValue() { return m_PowerUpValue; }
+	float GetPowerUpValue() { return m_PowerUpValue; }
 	//魔力
-	int GetMagicUpValue() { return m_MagicUpValue; }
+	float GetMagicUpValue() { return m_MagicUpValue; }
 	//素早さ
-	int GetSpeedUpValue() { return m_SpeedUpValue; }
+	float GetSpeedUpValue() { return m_SpeedUpValue; }
 	//体力
-	int GetHpUpValue()    { return m_HpUpValue; }
+	float GetHpUpValue()    { return m_HpUpValue; }
 
 protected :	
-	//----json関連----
+	// =======================
+	// jsonファイル関連
+	// =======================		
 	//各ヒーローの初期パラメータ取得
 	void LoadParam( const json& jsondata , const std::string& heroname );
 	//各ヒーローのパラメータ更新
 	void UpdateParam( const json& jsondata, const std::string& heroname );
 
 protected:
-	//プレイヤーのパラメータ構造体
-	enStatus m_Param;
+	//ヒーローのパラメータ構造体
+	enParam m_Param;
+
+	//ヒーローの適正率構造体
+	enAppropriate m_App;
 
 	//jsonクラス
 	std::unique_ptr<CJson> m_pJson;
@@ -119,15 +164,16 @@ protected:
 	std::string m_UserName;
 
 private:
+	//パラメータ更新前のパラメータ情報
+	enParam m_BeforeParam;
+
 	//----ステータス上昇値----
 	//筋力
-	int m_PowerUpValue;
+	float m_PowerUpValue;
 	//魔力
-	int m_MagicUpValue;
+	float m_MagicUpValue;
 	//素早さ
-	int m_SpeedUpValue;
+	float m_SpeedUpValue;
 	//体力
-	int m_HpUpValue;
-
-
+	float m_HpUpValue;
 };

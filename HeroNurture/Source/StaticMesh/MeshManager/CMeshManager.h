@@ -1,4 +1,4 @@
-#pragma once
+﻿#pragma once
 #include "StaticMesh/CStaticMesh.h"
 #include "Sprite3D/CSprite3D.h"
 #include "StaticMeshObject/Character/CCharacter.h"

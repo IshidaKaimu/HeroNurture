@@ -9,6 +9,7 @@
 //----前方宣言----
 class WriteText;
 class CJson;
+class CSceneManager;
 
 //Json使用に必要な名前空間の格納
 using json = nlohmann::json;
@@ -38,9 +39,10 @@ struct HeroName
 	std::string Kaito = "Kaito";
 };
 
-//----------------
+//=====================================
 //育成シーンクラス
-//----------------
+//制作者：石田櫂夢
+//=====================================
 class CNatureScene
 	:public CSceneBase
 {
@@ -65,12 +67,16 @@ public:
 	//各ヒーロー用ファイルの作成・読み込み
 	void LoadHeroData( const std::string& heroname );
 
-	//パラメータ情報の書き込み
-	void WriteParam( const std::string& heroname );
+	//トレーニング選択処理
+	void SelectTraning();
 
-	//パラメータUIの設定
+	//----パラメータ関連----
+	//ヒーローのごとのパラメータ情報の書き込み
+	void SaveParam();
+	//パラメータ情報の書き込み(SaveParam関数で使う)
+	void WriteParam(const std::string& heroname);
+	//パラメータUIの初期設定
 	void ParamInit(CUIObject* param, int no);
-
 	//パラメータの描画
 	void DrawParam();
 
@@ -90,7 +96,9 @@ public:
 	//名前構造体
 	HeroName m_Name;
 
-	//----オブジェクトクラス----
+	// =======================
+	// オブジェクトクラス
+	// =======================		
 	//スタティックメッシュ
 	//地面クラス
 	std::unique_ptr<CGround> m_pGround;
@@ -108,8 +116,10 @@ public:
 	//体力
 	CUIObject* m_pHpParam;
 
-	//----json関連----
-    //パラメータ情報の書き込み用
+	// =======================
+	// json関連
+	// =======================		
+	//パラメータ情報の書き込み用
 	json m_ParamWriter;
 	//パラメータデータ格納用
 	json m_ParamData;

@@ -46,4 +46,5 @@ private:
 	std::unique_ptr<CSky> m_pSky;
 	//’n–Ê
 	std::unique_ptr<CGround> m_pGround;
+
 };

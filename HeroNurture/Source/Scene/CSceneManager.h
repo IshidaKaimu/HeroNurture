@@ -13,20 +13,25 @@ class CTraning;
 //育成ターン数
 constexpr int MAX_TURN = 5;
 
+//=====================================
+//シーンマネージャークラス
+//制作者：石田櫂夢
+//=====================================
 class CSceneManager
 	: public CSceneBase
 {
 public:
 	//シーンリスト列挙型
-	enum enSceneList
+	enum enSceneList :char
 	{
-		SceneSelect = 0,
-		GameMain,
+		Title,
+		HeroSelect,
 		Nature,
 		Training,
-		Max,
-		none = -1,
+		Max_S,
+		none,
 	};
+
 
 public:
 	static CSceneManager* GetInstance() {
@@ -39,6 +44,7 @@ public:
 	//構築関数
     void Create(CDirectX9& pDx9, CDirectX11& pDx11, HWND hwnd);
 
+	//破棄関数
 	void Release();
 
 	//初期化関数
@@ -76,9 +82,9 @@ public:
     //ウィンドウハンドル
     HWND GetWnd() { return m_hWnd; }
     void SetWnd(HWND m_wnd) { m_hWnd = m_wnd; }
-	//読み込み回数制限フラグの取得
+	//読み込み回数制限フラグ
 	bool GetIsDataLoaded() { return m_IsDataLoaded; }
-	//残りターン数の取得
+	//ターン数
 	int GetRemainingTurn() { return m_Turn; }
 
 private:
@@ -86,11 +92,14 @@ private:
 	CSceneManager(const CSceneManager& rhs) = delete;
 	CSceneManager& operator = (const CSceneManager& rhs) = delete;
 private:
-	std::unique_ptr<CSceneBase> m_Scene;	//ユニークポインタ
-
-    HWND        m_hWnd;    //ウィンドウハンドル
-    CDirectX9*  m_pDx9;	   //DirectX9
-    CDirectX11* m_pDx11;   //DirectX11
+	//ユニークポインタ
+	std::unique_ptr<CSceneBase> m_Scene;	
+	//ウィンドウハンドル
+    HWND        m_hWnd;
+	//DirectX9
+    CDirectX9*  m_pDx9;
+	//DirectX11
+    CDirectX11* m_pDx11;  
 
 	//残りターン数
 	int        m_Turn;

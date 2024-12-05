@@ -1,0 +1,15 @@
+{
+ "Appropriate": {
+  "Hp": 0.0,
+  "Magic": 10.0,
+  "Power": 20.0,
+  "Speed": 0.0
+ },
+ "Name": "Kaito",
+ "Parameter": {
+  "Hp": 220.0,
+  "Magic": 84.0,
+  "Power": 144.0,
+  "Speed": 80.0
+ }
+}

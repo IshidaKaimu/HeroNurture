@@ -1,20 +1,32 @@
 [
  {
   "Name": "Yui",
-  "Paramater": {
-    "Hp": 150,
-    "Magic": 60,
-    "Power": 30,
-    "Speed": 90
+  "Parameter": {
+    "Hp": 150.0,
+    "Magic": 60.0,
+    "Power": 30.0,
+    "Speed": 90.0
+  },
+    "Appropriate": {
+    "Hp": 0.0,
+    "Magic": 10.0,
+    "Power": 0.0,
+    "Speed": 20.0
   }
  },
  {
    "Name": "Kaito",
-   "Paramater": {
-    "Hp": 200,
-    "Magic": 40,
-    "Power": 90,
-    "Speed": 40
-    }
+   "Parameter": {
+    "Hp": 200.0,
+    "Magic": 40.0,
+    "Power": 90.0,
+    "Speed": 40.0
+    },
+    "Appropriate": {
+    "Hp": 0.0,
+    "Magic": 10.0,
+    "Power": 20.0,
+    "Speed": 0.0
+  }
  }
 ]

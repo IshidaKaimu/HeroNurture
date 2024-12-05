@@ -16,7 +16,7 @@ class CKaito;
 static const D3DXVECTOR3 CAMPOS  = { 0.0f, 5.2f, -2.8f };
 static const D3DXVECTOR3 CAMLOOK = { 0.0f, 6.2f,  3.0f };
 
-//ヒーローセレクトシーン
+
 class CHeroSelect
 	:public CSceneBase
 {

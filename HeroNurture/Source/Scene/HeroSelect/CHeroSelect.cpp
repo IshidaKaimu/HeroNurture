@@ -111,7 +111,7 @@ void CHeroSelect::Update()
     if (!FadeIn()) { return; }
 
     //キーマネージャのインスタンスを変数に代入
-    CKeyManager* Key = CKeyManager::GetInstance();
+    CKeyManager* KeyMng = CKeyManager::GetInstance();
 
     //ヒーローマネージャのインスタンスを変数に代入
     CHeroManager* Hero = &CHeroManager::GetInstance();
@@ -120,13 +120,13 @@ void CHeroSelect::Update()
     CKeyManager::GetInstance()->Update();
 
     //カーソルの移動
-    if (Key->IsDown(VK_RIGHT))
+    if (KeyMng->IsDown(VK_RIGHT))
     {
         //キー入力で選択を進める
         if (m_SelectNo < CHeroBase::enCharacterList::max-1) { m_SelectNo++; }
         else { m_SelectNo = 0; }
     }
-    else if (Key->IsDown(VK_LEFT))
+    else if (KeyMng->IsDown(VK_LEFT))
     {
         if (m_SelectNo > 0) { m_SelectNo--; }
         else { m_SelectNo = 1; }
@@ -147,15 +147,12 @@ void CHeroSelect::Update()
     ImGui::End();
 #endif
 
-
-
     //シーン遷移(仮)
     if (CKeyManager::GetInstance()->IsDown(VK_RETURN))
     {
         //オープニングシーンへ
         m_SceneTransitionFlg = true;
     }
-
 
     //フェードアウト処理
     if (m_SceneTransitionFlg && FadeOut())

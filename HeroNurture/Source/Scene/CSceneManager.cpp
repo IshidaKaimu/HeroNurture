@@ -49,8 +49,8 @@ void CSceneManager::Initialize()
 void CSceneManager::Update()
 {        
     ImGui::Begin(JAPANESE("シーン"));
-    if (ImGui::Button(JAPANESE("選択"))) { LoadCreate(enSceneList::SceneSelect); }
-    if (ImGui::Button(JAPANESE("メイン"))) { LoadCreate(enSceneList::GameMain); }
+    if (ImGui::Button(JAPANESE("タイトル"))) { LoadCreate(enSceneList::Title); }
+    if (ImGui::Button(JAPANESE("ヒーロー選択"))) { LoadCreate(enSceneList::HeroSelect); }
     if (ImGui::Button(JAPANESE("育成"))) { LoadCreate(enSceneList::Nature); }
     if (ImGui::Button(JAPANESE("修行"))) { LoadCreate(enSceneList::Training); }
     ImGui::End();
@@ -89,11 +89,11 @@ std::unique_ptr<CSceneBase> CSceneManager::Create(enSceneList List)
     //現在のシーンのインスタンスを返す
     switch (List)
     {
-    case CSceneManager::SceneSelect:    return std::make_unique<CTitle>();
-    case CSceneManager::GameMain:       return std::make_unique<CHeroSelect>();
+    case CSceneManager::Title:          return std::make_unique<CTitle>();
+    case CSceneManager::HeroSelect:     return std::make_unique<CHeroSelect>();
     case CSceneManager::Nature:         return std::make_unique<CNatureScene>();
-    case CSceneManager::Training:        return std::make_unique<CTraning>();
-    case CSceneManager::Max:            return nullptr;
+    case CSceneManager::Training:       return std::make_unique<CTraning>();
+    case CSceneManager::Max_S:          return nullptr;
     case CSceneManager::none:           return nullptr;
     default:                            return nullptr;
     }

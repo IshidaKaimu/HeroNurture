@@ -70,5 +70,7 @@ void CTraning::DrawUpText()
     //テキスト描画クラスのインスタンスを変数に代入
     WriteText* Text = WriteText::GetInstance();
 
-    Text->Draw_Text(L"筋力が" + std::to_wstring( CHeroManager::GetInstance().GetPowerUpValue() ), WriteText::Normal, D3DXVECTOR2(0.0f, 0.0f));
+    //ヒーローマネージャーのインスタンスを変数に代入
+    CHeroManager* Hero = &CHeroManager::GetInstance();
+
 }

@@ -1,4 +1,4 @@
-#include "WriteText.h"
+﻿#include "WriteText.h"
 #include "Scene/CSceneManager.h"
 
 WriteText::WriteText()

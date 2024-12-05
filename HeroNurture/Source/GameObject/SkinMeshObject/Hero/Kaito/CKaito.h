@@ -3,9 +3,11 @@
 #include "SkinMeshObject/CSkinMeshObject.h"
 #include "SkinMeshObject/Hero/CHeroBase.h"
 
-/*****************************************
-*カイトクラス
-**/
+//=====================================
+//カイトクラス
+//制作者：石田櫂夢
+//=====================================
+
 class CKaito
 	:public CHeroBase
 {

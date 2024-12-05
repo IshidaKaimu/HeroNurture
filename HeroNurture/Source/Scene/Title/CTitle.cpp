@@ -87,7 +87,7 @@ void CTitle::Update()
             if (!m_UserName.empty()) 
             {
                 //シーンのロード
-                CSceneManager::GetInstance()->LoadCreate(CSceneManager::GameMain);
+                CSceneManager::GetInstance()->LoadCreate(CSceneManager::HeroSelect);
             }
         }
     }
@@ -118,7 +118,7 @@ void CTitle::Draw()
 //イージング
 float CTitle::Easing(float x)
 {
-    const float c1 = 1.70158;
+    const float c1 = 1.70158f;
     const float c3 = c1 + 1.0f;
 
     return c3 * x * x * x - c1 * x * x;
