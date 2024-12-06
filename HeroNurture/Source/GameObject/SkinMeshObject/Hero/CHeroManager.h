@@ -46,14 +46,20 @@ public:
 	//描画関数
 	void Draw() override;
 
-	//アニメーション関数
-	void Animation();
+	// =======================
+	// 各シーンごとのアニメーション
+	// =======================
+    //ヒーロー選択シーン 
+	void SelectAnimation() override;
+	//育成シーン
+	void NatureAnimation(int no) override;
 
 	//各ヒーロークラスの構築
 	static std::unique_ptr<CHeroBase>Create(enHeroList list);
 
-	//----パラメータ関連関数----
-	//パラメータ上昇
+	// =======================
+	// 各パラメータ上昇関数
+	// =======================
 	//筋力
 	void PowerUp() { m_Hero->PowerUp(); }
 	//魔力
@@ -63,7 +69,9 @@ public:
 	//体力
 	void HpUp() { m_Hero->HpUp(); }
 
-	//----ゲッター・セッター----
+	// =======================
+	// ゲッター・セッター関数
+	// =======================
 	//ヒーロー設定関数
 	void SetHero(enHeroList list);
 	//ヒーロー選択関数
@@ -77,15 +85,6 @@ public:
 	//更新前のパラメータ
 	enParam GetBeforeParam() { return m_Hero->GetBeforeParam(); }
 	void SetBeforeParam(enParam before) { m_Hero->SetBeforeParam(before); }
-	//パラメータ上昇量取得
-	//筋力
-	float GetPowerUpValue() { return m_Hero->GetPowerUpValue(); }
-	//魔力
-	float GetMagicValue() { return m_Hero->GetMagicUpValue(); }
-	//素早さ
-	float GetSpeedUpValue() { return m_Hero->GetSpeedUpValue(); }
-	//体力
-	float GetHpUpValue() { return m_Hero->GetHpUpValue(); }
 	//トレーニング
 	enTraningList GetTraining() { return m_Traning; }
 	void SetTraning(enTraningList traning) { m_Traning = traning; }

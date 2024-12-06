@@ -24,6 +24,7 @@ CSprite2D::CSprite2D()
 	, m_SpriteState		()
 	, m_PatternNo		()
 	, m_PatternMax		()
+	, m_DisplaySize		()
 {
 }
 

@@ -215,9 +215,6 @@
     <ClInclude Include="Source\DirectX\CDirectX11.h">
       <Filter>Source\DirectX\DirectX11</Filter>
     </ClInclude>
-    <ClInclude Include="Source\Game\CGame.h">
-      <Filter>Source\Game</Filter>
-    </ClInclude>
     <ClInclude Include="Source\Global\Global.h">
       <Filter>Source\Global</Filter>
     </ClInclude>
@@ -332,6 +329,7 @@
     <ClInclude Include="Source\GameObject\SkinMeshObject\Hero\Yui\CYui.h" />
     <ClInclude Include="Source\Light\LightManager\CLightManager.h" />
     <ClInclude Include="Source\Scene\Traning\CTraning.h" />
+    <ClInclude Include="Source\Utility\CUtility.h" />
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="Source\BoundingSphere\CBoundingSphere.cpp">
@@ -378,9 +376,6 @@
     </ClCompile>
     <ClCompile Include="Source\DirectX\CDirectX11.cpp">
       <Filter>Source\DirectX\DirectX11</Filter>
-    </ClCompile>
-    <ClCompile Include="Source\Game\CGame.cpp">
-      <Filter>Source\Game</Filter>
     </ClCompile>
     <ClCompile Include="Source\ImGui\ImGuiManager\ImGuiManager.cpp">
       <Filter>Source\ImGui\ImGuiManager</Filter>
@@ -492,6 +487,7 @@
     <ClCompile Include="Source\GameObject\SkinMeshObject\Hero\Yui\CYui.cpp" />
     <ClCompile Include="Source\Light\LightManager\CLightManager.cpp" />
     <ClCompile Include="Source\Scene\Traning\CTraning.cpp" />
+    <ClCompile Include="Source\Utility\CUtility.cpp" />
   </ItemGroup>
   <ItemGroup>
     <None Include="Source\ImGui\.editorconfig">

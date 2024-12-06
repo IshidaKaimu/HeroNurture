@@ -12,6 +12,8 @@ public:
 	CGround();
 	virtual ~CGround();
 
+	virtual void LoadData();
+
 	virtual void Update() override;
 
 	virtual void Draw() override;

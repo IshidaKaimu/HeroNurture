@@ -87,7 +87,7 @@ void CNatureScene::LoadData()
     CHeroManager::GetInstance().LoadParamData(m_ParamData);
 
     //地面
-    m_pGround->AttachMesh(CMeshManager::GetMesh(CMeshManager::Ground));
+    m_pGround->LoadData();
 
     //各パラメータのUIのスプライト設定
     //筋力
@@ -157,9 +157,6 @@ void CNatureScene::Update()
     //セットされたヒーローのクラスの更新
     m_pHero->Update();
 
-    //セットされたヒーローのクラスのアニメーション
-    m_pHero->Animation();
-
     //キーマネージャのインスタンスを変数に代入
     CKeyManager* KeyMng = CKeyManager::GetInstance();
 
@@ -182,6 +179,10 @@ void CNatureScene::Update()
         if (m_SelectNo > 0) { m_SelectNo--; }
         else { m_SelectNo = 1; }
     }
+
+    //セットされたヒーローのクラスのアニメーション
+    m_pHero->NatureAnimation(m_SelectNo);
+
 
     //トレーニングの決定
     if (KeyMng->IsDown(VK_RETURN))
@@ -208,10 +209,10 @@ void CNatureScene::Update()
 
 #ifdef _DEBUG 
     ImGui::Begin(JAPANESE("パラメータ"));
-    ImGui::Text(JAPANESE("筋力:%d"),   m_pHero->GetParam().Power);
-    ImGui::Text(JAPANESE("魔力:%d"),   m_pHero->GetParam().Magic);
-    ImGui::Text(JAPANESE("素早さ:%d"), m_pHero->GetParam().Speed);
-    ImGui::Text(JAPANESE("体力:%d"),   m_pHero->GetParam().Hp);
+    ImGui::Text(JAPANESE("筋力:%f"),   m_pHero->GetParam().Power);
+    ImGui::Text(JAPANESE("魔力:%f"),   m_pHero->GetParam().Magic);
+    ImGui::Text(JAPANESE("素早さ:%f"), m_pHero->GetParam().Speed);
+    ImGui::Text(JAPANESE("体力:%f"),   m_pHero->GetParam().Hp);
     ImGui::End();
 
     ImGui::Begin(JAPANESE("トレーニング選択状況"));
@@ -275,13 +276,16 @@ void CNatureScene::SelectTraning()
     CSceneManager* SceneMng = CSceneManager::GetInstance();
 
     //更新前のパラメータを保存
-    HeroMng->SetBeforeParam(m_pHero->GetParam());
+     HeroMng->SetBeforeParam(m_pHero->GetParam());
 
     //それぞれのパラメータの増加
     switch (HeroMng->GetTraining())
     {
     //筋力
-    case::CHeroManager::PowerTraining: m_pHero->PowerUp(); break;
+    case::CHeroManager::PowerTraining: 
+        m_pHero->PowerUp();
+        m_pHero->SpeedUp();
+        break;
     //魔力
     case::CHeroManager::MagicTraining: m_pHero->MagicUp(); break;
     //素早さ

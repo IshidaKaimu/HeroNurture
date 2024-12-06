@@ -254,7 +254,6 @@
     <ClCompile Include="Source\GameObject\StaticMeshObject\Ground\CGround.cpp" />
     <ClCompile Include="Source\GameObject\StaticMeshObject\Sky\CSky.cpp" />
     <ClCompile Include="Source\GameObject\UIObject\CUIObject.cpp" />
-    <ClCompile Include="Source\Game\CGame.cpp" />
     <ClCompile Include="Source\ImGui\imgui.cpp" />
     <ClCompile Include="Source\ImGui\ImGuiManager\ImGuiManager.cpp" />
     <ClCompile Include="Source\ImGui\imgui_demo.cpp" />
@@ -288,6 +287,7 @@
     <ClCompile Include="Source\TextWrite\DirectWriteCustomFont\DirectWriteCustomFont.cpp" />
     <ClCompile Include="Source\TextWrite\Text\CText.cpp" />
     <ClCompile Include="Source\TextWrite\WriteText\WriteText.cpp" />
+    <ClCompile Include="Source\Utility\CUtility.cpp" />
     <ClCompile Include="Source\WinMain\WinMain.cpp" />
   </ItemGroup>
   <ItemGroup>
@@ -314,7 +314,6 @@
     <ClInclude Include="Source\GameObject\StaticMeshObject\Ground\CGround.h" />
     <ClInclude Include="Source\GameObject\StaticMeshObject\Sky\CSky.h" />
     <ClInclude Include="Source\GameObject\UIObject\CUIObject.h" />
-    <ClInclude Include="Source\Game\CGame.h" />
     <ClInclude Include="Source\Global\Global.h" />
     <ClInclude Include="Source\ImGui\imconfig.h" />
     <ClInclude Include="Source\ImGui\imgui.h" />
@@ -349,6 +348,7 @@
     <ClInclude Include="Source\TextWrite\Text\CText.h" />
     <ClInclude Include="Source\TextWrite\WriteText\WriteText.h" />
     <ClInclude Include="Source\Json\CJson.h" />
+    <ClInclude Include="Source\Utility\CUtility.h" />
   </ItemGroup>
   <ItemGroup>
     <None Include="Source\ImGui\.editorconfig" />

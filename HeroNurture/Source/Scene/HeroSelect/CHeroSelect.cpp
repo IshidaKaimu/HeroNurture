@@ -192,12 +192,12 @@ void CHeroSelect::Draw()
     {
     case 0:
         //ユイ
-        m_pYui->Animation();
+        m_pYui->SelectAnimation();
         m_pYui->Draw();
         break;
     case 1:
         //カイト
-        m_pKaito->Animation();
+        m_pKaito->SelectAnimation();
         m_pKaito->Draw();
         break;
     default:

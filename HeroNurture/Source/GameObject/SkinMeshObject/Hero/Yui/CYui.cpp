@@ -63,8 +63,13 @@ void CYui::Draw()
 	CSkinMeshObject::Draw();
 }
 
-//アニメーション関数
-void CYui::Animation()
+//ヒーロー選択シーンのアニメーション
+void CYui::SelectAnimation()
+{
+}
+
+//育成シーンのアニメーション
+void CYui::NatureAnimation(int no)
 {
 	//アニメーションの経過時間を加算		
 	m_AnimTime += m_pMesh->GetAnimSpeed();

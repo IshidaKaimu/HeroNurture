@@ -9,6 +9,7 @@ CHeroBase::CHeroBase()
 	: m_Param          ()
 	, m_pJson          ()
 	, m_UserName       ()
+	, m_Stamina		   ( 100.0f )
 {
 	m_pJson = std::make_unique<CJson>();
 }
@@ -28,10 +29,6 @@ void CHeroBase::Draw()
 	CSkinMeshObject::Draw();
 }
 
-//アニメーション関数
-void CHeroBase::Animation()
-{
-}
 
 //筋力上昇
 void CHeroBase::PowerUp()

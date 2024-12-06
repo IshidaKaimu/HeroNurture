@@ -1,4 +1,5 @@
 #include "CSky.h"
+#include "StaticMesh\MeshManager\CMeshManager.h"
 
 CSky::CSky()
 {
@@ -10,11 +11,19 @@ CSky::~CSky()
 {
 }
 
+//メッシュデータ設定関数
+void CSky::LoadData()
+{
+	AttachMesh(CMeshManager::GetMesh(CMeshManager::Sky));
+}
+
+//更新関数
 void CSky::Update()
 {
 	CStaticMeshObject::Update();
 }
 
+//描画
 void CSky::Draw()
 {
 	CStaticMeshObject::Draw();

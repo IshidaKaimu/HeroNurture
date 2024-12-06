@@ -80,18 +80,17 @@ void CKaito::Draw()
 	CSkinMeshObject::Draw();
 }
 
-//アニメーション関数
-void CKaito::Animation()
+//ヒーロー選択シーンのアニメーション
+void CKaito::SelectAnimation()
 {
-	if (m_AnimNo == 0)
-	{
-		
-	}
+}
 
+//育成シーンのアニメーション
+void CKaito::NatureAnimation(int no)
+{
 	//アニメーションの経過時間を加算
 	m_AnimTime += m_pMesh->GetAnimSpeed();
 }
-
 
 bool CKaito::SceneChange()
 {

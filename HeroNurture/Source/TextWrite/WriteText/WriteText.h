@@ -12,7 +12,7 @@ public:
         Select,         //選択肢
         Name,           //名前
         Turn,           //ターン数
-
+        Inc,            //上昇値
 
         Max,    //最大値
     };
@@ -66,7 +66,7 @@ private:
         { 60, DWRITE_FONT_WEIGHT_NORMAL, D2D1::ColorF(D2D1::ColorF::White), 0 },     //選択肢
         { 30, DWRITE_FONT_WEIGHT_NORMAL, D2D1::ColorF(D2D1::ColorF::Black), 0 },     //選択肢内説明
         { 80, DWRITE_FONT_WEIGHT_NORMAL, D2D1::ColorF(D2D1::ColorF::LightBlue), 0 }, //ターン数
-
+        { 60, DWRITE_FONT_WEIGHT_NORMAL, D2D1::ColorF(D2D1::ColorF::Orange), 0 }, //ターン数
     };
 };
 

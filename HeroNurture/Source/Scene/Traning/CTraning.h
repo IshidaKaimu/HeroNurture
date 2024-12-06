@@ -10,7 +10,26 @@
 //----前方宣言----
 class CHeroManager;
 
-//トレーニングシーン
+//----定数宣言----
+//パラメータの種類のテキストの位置
+const D3DXVECTOR2 PARAMTEXT_OFFSET = { 0.0f,300.0f };
+//値テキストの位置
+const D3DXVECTOR2 VALUETEXT_OFFSET = { 195.0f,300.0f };
+
+//========================
+//上昇したパラメータのリスト
+//テキストの描画順処理に使う
+//=======================
+struct IncParam
+{
+	std::wstring ParamName;	//パラメータの種類
+	int IncValue;			//上昇量
+};
+
+//=====================================
+//トレーニングシーンクラス
+//制作者：石田櫂夢
+//=====================================
 class CTraning
 	:public CSceneBase
 {
@@ -32,6 +51,10 @@ public:
 	void Draw()		  override;
 
 public:
+	//パラメータが上昇していたら配列にテキストを追加する処理
+	void AddText();
+	//配列に既に追加している情報ではないかの確認
+	bool AlreadyAddCheck( std::wstring paramname );
 	//上昇量テキストの描画
 	void DrawUpText();
 
@@ -46,5 +69,12 @@ private:
 	std::unique_ptr<CSky> m_pSky;
 	//地面
 	std::unique_ptr<CGround> m_pGround;
+
+	//----vector配列----
+	//テキストの描画順処理に使う配列
+	std::vector<IncParam> m_ParamInc;
+
+	//テキスト番号※表示順制御
+	int m_TextNo;
 
 };

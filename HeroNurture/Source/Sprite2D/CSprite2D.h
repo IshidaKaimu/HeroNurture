@@ -117,19 +117,21 @@ private:
 
 	ID3D11Buffer*			m_pVertexBuffer;	//頂点バッファ.
 
-	ID3D11ShaderResourceView*	m_pTexture;			//テクスチャ.
-	ID3D11SamplerState*			m_pSampleLinear;	//サンプラ:テクスチャに各種フィルタをかける.
+	ID3D11ShaderResourceView*	m_pTexture;		//テクスチャ.
+	ID3D11SamplerState*			m_pSampleLinear;//サンプラ:テクスチャに各種フィルタをかける.
 
 	D3DXVECTOR3		m_vPosition;	//座標.
 	D3DXVECTOR3		m_vRotation;	//回転
 	D3DXVECTOR3		m_vScale;		//拡縮.
 
-	D3DXVECTOR2		m_UV;		//テクスチャUV座標.
+	D3DXVECTOR2		m_UV;			//テクスチャUV座標.
 
-	float			m_Alpha;	//α値(0:透明、1:完全不透明).
+	float			m_Alpha;		//α値(0:透明、1:完全不透明).
 
 	SPRITE_STATE	m_SpriteState;	//スプライト情報.
 	POINTS			m_PatternNo;	//パターン番号(マス目).
 	POINTS			m_PatternMax;	//最大パターン(マスの最大値).
+
+	D3DXVECTOR2     m_DisplaySize;	//表示幅、高さ
 
 };

@@ -46,10 +46,16 @@ void CHeroManager::Draw()
     m_Hero->Draw();
 }
 
-//アニメーション関数
-void CHeroManager::Animation()
+//ヒーロー選択シーンのアニメーション
+void CHeroManager::SelectAnimation()
 {
-    m_Hero->Animation();
+    m_Hero->SelectAnimation();
+}
+
+//育成シーンのアニメーション
+void CHeroManager::NatureAnimation(int no)
+{
+    m_Hero->NatureAnimation(no);
 }
 
 //ヒーロー設定関数
@@ -58,6 +64,7 @@ void CHeroManager::SetHero(enHeroList list)
     //ヒーローを設定
     m_Hero = Create(list);
 }
+
 
 //各ヒーロークラスのインスタンス生成
 std::unique_ptr<CHeroBase> CHeroManager::Create(enHeroList list)
@@ -70,7 +77,6 @@ std::unique_ptr<CHeroBase> CHeroManager::Create(enHeroList list)
     default:                    return nullptr;
 
     }
-
 }
 
 

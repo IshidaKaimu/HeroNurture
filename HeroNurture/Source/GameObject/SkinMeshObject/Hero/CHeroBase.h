@@ -72,8 +72,13 @@ public:
 	//描画関数
 	virtual void Draw();
 
-	//アニメーション関数
-	virtual void Animation();
+	// =======================
+	// シーンごとのアニメーション関数
+	// =======================		
+	//ヒーロー選択シーン
+	virtual void SelectAnimation() {};
+	//育成シーン
+	virtual void NatureAnimation(int no) {};
 
 public:
 	// =======================
@@ -91,59 +96,30 @@ public:
 
 	//----イベントによる上昇----
     //筋力
-	void PowerUpEvent(float power) 
-	{
-		m_Param.Power += power; 
-		//上昇量描画用の値
-		m_PowerUpValue = power;
-	};
+	void PowerUpEvent(float power) { m_Param.Power += power; };
 	//魔力
-	void MagicUpEvent(float magic) 
-	{
-		m_Param.Magic += magic; 
-		//上昇量描画用の値
-		m_MagicUpValue = magic;
-	}
+	void MagicUpEvent(float magic) { m_Param.Magic += magic; }
 	//素早さ
-	void SpeedUpEvent(float speed) 
-	{
-		m_Param.Speed += speed;
-		//上昇量描画用の値
-		m_SpeedUpValue = speed;
-	}
+	void SpeedUpEvent(float speed) { m_Param.Speed += speed; }
 	//体力
-	void HpUpEvent(float hp)
-	{ 
-		m_Param.Hp += hp; 
-		//上昇量描画用の値
-		m_HpUpValue = hp;
-	}
+	void HpUpEvent(float hp){ m_Param.Hp += hp; }
 
 	// =======================
-	// ゲッター・セッター
+	// ゲッター・セッター関数
 	// =======================		
-	//現在のパラメータ取得
+	//現在のパラメータ
 	enParam GetParam()      { return  m_Param; }
-	//キャラごとの適正率取得
+	//キャラごとの適正率
 	enAppropriate GetApp()  { return  m_App; }
-
 	//更新前のパラメータ
 	enParam GetBeforeParam() { return m_BeforeParam; }
 	void SetBeforeParam(enParam before) { m_BeforeParam = before; }
-
-	//上昇量
-	//筋力
-	float GetPowerUpValue() { return m_PowerUpValue; }
-	//魔力
-	float GetMagicUpValue() { return m_MagicUpValue; }
-	//素早さ
-	float GetSpeedUpValue() { return m_SpeedUpValue; }
-	//体力
-	float GetHpUpValue()    { return m_HpUpValue; }
+	//現在のスタミナ量
+	float GetStamina() { return m_Stamina; }
 
 protected :	
 	// =======================
-	// jsonファイル関連
+	// jsonファイル関連関数
 	// =======================		
 	//各ヒーローの初期パラメータ取得
 	void LoadParam( const json& jsondata , const std::string& heroname );
@@ -163,17 +139,11 @@ protected:
 	//ユーザーネーム
 	std::string m_UserName;
 
+	//スタミナ
+	//どのヒーローでも共通
+	float m_Stamina;
+
 private:
 	//パラメータ更新前のパラメータ情報
 	enParam m_BeforeParam;
-
-	//----ステータス上昇値----
-	//筋力
-	float m_PowerUpValue;
-	//魔力
-	float m_MagicUpValue;
-	//素早さ
-	float m_SpeedUpValue;
-	//体力
-	float m_HpUpValue;
 };

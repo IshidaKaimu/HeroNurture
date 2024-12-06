@@ -55,7 +55,8 @@ private:
 	HRESULT CreateDeviceAndSwapChain(
 		HWND hWnd, UINT uFPS, UINT uWidth, UINT uHeight );
 
-	//バックバッファ作成:カラー用レンダーターゲットビュー作成.
+	//
+	// 作成:カラー用レンダーターゲットビュー作成.
 	HRESULT CreateColorBackBufferRTV();
 
 	//バックバッファ作成:デプスステンシル用レンダーターゲットビュー作成.

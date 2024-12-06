@@ -1,7 +1,7 @@
 #pragma once
 #pragma once
-#include "SkinMeshObject/CSkinMeshObject.h"
-#include "SkinMeshObject/Hero/CHeroBase.h"
+#include "SkinMeshObject\CSkinMeshObject.h"
+#include "SkinMeshObject\Hero\CHeroBase.h"
 
 //=====================================
 //カイトクラス
@@ -31,8 +31,13 @@ public:
 	//描画関数
 	void Draw() override;
 
-	//アニメーション関数
-	void Animation() override;
+	// =======================
+	// 各シーンごとのアニメーション
+	// =======================
+	//ヒーロー選択シーン
+	virtual void SelectAnimation() override;
+	// 育成シーン		
+	void NatureAnimation(int no) override;
 
 	void SetAnimSpeed(double speed) { m_AnimSpeed = speed; }
 

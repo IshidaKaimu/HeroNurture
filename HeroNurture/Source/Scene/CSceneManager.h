@@ -32,7 +32,6 @@ public:
 		none,
 	};
 
-
 public:
 	static CSceneManager* GetInstance() {
 		static CSceneManager s_Instance;
