@@ -71,6 +71,9 @@ public:
 	//ターン数の初期化
 	void InitTurn() { m_Turn = MAX_TURN; }
 
+	//スタミナゲージの幅の初期化
+	void InitStaminaWidth() { m_StaminaWidth = 1.0f; }
+
     //---ゲッター・セッター---
     //DirectX9
     CDirectX9* GetDx9() { return m_pDx9; }
@@ -85,6 +88,9 @@ public:
 	bool GetIsDataLoaded() { return m_IsDataLoaded; }
 	//ターン数
 	int GetRemainingTurn() { return m_Turn; }
+	//スタミナゲージの幅
+	float GetStaminaWidth() { return m_StaminaWidth; }
+	void  SetStaminaWidth(float width) { m_StaminaWidth = width; }
 
 private:
 	CSceneManager();
@@ -107,5 +113,7 @@ private:
 	//データ読み込みが初回かどうかのフラグ
 	bool       m_IsDataLoaded;
 
+	//ゲージの幅
+	float      m_StaminaWidth;
 
 };

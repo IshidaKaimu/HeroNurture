@@ -3,7 +3,11 @@
 #include "SkinMeshObject\Hero\Kaito\CKaito.h"
 
 CHeroManager::CHeroManager()
-    :m_Hero ()
+    : m_Hero         ()
+    , m_HeroList     ()
+    , m_Traning      ()
+    , m_Stamina      ()
+    , m_AfterStamina ()
 {
     m_Hero = std::make_unique<CYui>();
 }
@@ -56,6 +60,14 @@ void CHeroManager::SelectAnimation()
 void CHeroManager::NatureAnimation(int no)
 {
     m_Hero->NatureAnimation(no);
+}
+
+//スタミナの減少関数
+void CHeroManager::ReduceStamina()
+{
+    m_Stamina -= REDUSE_STAMINA;
+    //減少後のスタミナを保存
+    m_AfterStamina = m_Stamina;
 }
 
 //ヒーロー設定関数

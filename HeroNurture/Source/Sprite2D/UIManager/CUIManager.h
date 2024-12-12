@@ -15,6 +15,7 @@ public:
 		SpeedParam,  //素早さパラメータ表示用画像
 		MagicParam,  //魔力パラメータ表示用画像
 		HpParam,     //体力パラメータ表示用画像
+		StaminaGage, //スタミナゲージ表示用画像
 
 		Max,
 	};

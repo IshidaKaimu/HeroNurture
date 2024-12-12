@@ -9,7 +9,6 @@ CHeroBase::CHeroBase()
 	: m_Param          ()
 	, m_pJson          ()
 	, m_UserName       ()
-	, m_Stamina		   ( 100.0f )
 {
 	m_pJson = std::make_unique<CJson>();
 }
@@ -31,28 +30,28 @@ void CHeroBase::Draw()
 
 
 //ãÿóÕè„è∏
-void CHeroBase::PowerUp()
+void CHeroBase::PowerUp( float stamina )
 {
 	float AppBonus = INCREASE_VALUE * (1.0 + (m_App.PowerApp / 100.0));
 	m_Param.Power += AppBonus;
 }
 
 //ñÇóÕè„è∏
-void CHeroBase::MagicUp()
+void CHeroBase::MagicUp( float stamina )
 {
 	float AppBonus = INCREASE_VALUE * (1.0 + (m_App.MagicApp / 100.0));
 	m_Param.Magic += AppBonus;
 }
 
 //ëfëÅÇ≥è„è∏
-void CHeroBase::SpeedUp()
+void CHeroBase::SpeedUp( float stamina )
 {
 	float AppBonus = INCREASE_VALUE * (1.0 + (m_App.SpeedApp / 100.0));
 	m_Param.Speed += AppBonus;
 }
 
 //ëÃóÕè„è∏
-void CHeroBase::HpUp()
+void CHeroBase::HpUp( float stamina )
 {
 	float AppBonus = INCREASE_VALUE * (1.0 + (m_App.HpApp / 100.0));
 	m_Param.Hp += AppBonus;

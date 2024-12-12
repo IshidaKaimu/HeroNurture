@@ -1,5 +1,6 @@
 #include "CSprite2D.h"
 #include "CDirectX11.h"
+#include "stdafx\stdafx.h"
 
 //シェーダファイル名（ディレクトリも含む）.
 const TCHAR SHADER_NAME[] = _T( "Data\\Shader\\Sprite2D.hlsl" );
@@ -53,6 +54,10 @@ HRESULT CSprite2D::Init(
 	m_pContext11 = m_pDx11->GetContext();	//実態は別のところにある.他とも共有している.
 
 	m_SpriteState = pSs;
+
+	//画像の幅、高さ
+	m_DisplaySize.x = pSs.Base.w;
+	m_DisplaySize.y = pSs.Base.h;
 
 	//シェーダ作成.
 	if( FAILED( CreateShader() ))
@@ -388,6 +393,10 @@ void CSprite2D::Render()
 		//ビューポートの幅、高さを渡す.
 		cb.fViewPortWidth = static_cast<float>( WND_W );
 		cb.fViewPortHeight= static_cast<float>( WND_H );
+
+		//ゲージの幅、高さをセット
+		cb.DisplayWidth = m_DisplaySize.x;
+		cb.DisplayHeight = m_DisplaySize.y;
 
 		memcpy_s(pData.pData, pData.RowPitch,
 			(void*)( &cb ), sizeof( cb ) );

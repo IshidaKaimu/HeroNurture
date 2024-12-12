@@ -35,7 +35,8 @@ HRESULT CUIManager::Load(CDirectX11* Dx11)
 		{UIList::PowerParam,	_T("Data\\Texture\\Power.png")		    ,{ 504.0f, 337.0f, 504.0f, 337.0f, 504.0, 337.0f,}},
 		{UIList::SpeedParam,	_T("Data\\Texture\\Speed.png")		    ,{ 504.0f, 342.0f, 504.0f, 342.0f, 504.0f, 342.0f,}},
 		{UIList::MagicParam,	_T("Data\\Texture\\Magic.png")		    ,{ 508.0f, 339.0f, 508.0f, 339.0f, 508.0f, 339.0f,}},
-		{UIList::HpParam,	    _T("Data\\Texture\\Hart.png")		    ,{ 501.0f, 337.0f, 501.0f, 337.0f, 501.0f, 337.0f}}
+		{UIList::HpParam,	    _T("Data\\Texture\\Hart.png")		    ,{ 501.0f, 337.0f, 501.0f, 337.0f, 501.0f, 337.0f,}},
+		{UIList::StaminaGage,	_T("Data\\Texture\\Stamina.png")		,{ 602.0f, 54.0f,  602.0f, 54.0f,  602.0f, 54.0f}}
 	};
 
 	int list_max = sizeof(SList) / sizeof(SList[0]);

@@ -1,7 +1,6 @@
 #include "CMain.h"
 #include "CDirectX9.h"
 #include "CDirectX11.h"
-#include "Game/CGame.h"
 #include "Scene/CSceneManager.h"
 #include "Sound/CSoundManager.h"
 #include "StaticMesh/MeshManager/CMeshManager.h"

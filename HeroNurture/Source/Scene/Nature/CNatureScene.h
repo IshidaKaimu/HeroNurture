@@ -14,8 +14,10 @@ class CSceneManager;
 //Json使用に必要な名前空間の格納
 using json = nlohmann::json;
 
-//----定数宣言----
-//各ヒーローごとのカメラ位置/注視点
+// =======================
+// 定数宣言
+// =======================		
+//----各ヒーローごとのカメラ位置/注視点---
 //ユイ
 const D3DXVECTOR3 CAMERAPOS_YUI  = { 0.0, 5.0, -6.0 };
 const D3DXVECTOR3 CAMERALOOK_YUI = { 0.0, 5.0, 0.0 };
@@ -23,12 +25,16 @@ const D3DXVECTOR3 CAMERALOOK_YUI = { 0.0, 5.0, 0.0 };
 const D3DXVECTOR3 CAMERAPOS_KAITO  =  { 0.0, 5.0, -4.5 };
 const D3DXVECTOR3 CAMERALOOK_KAITO =  { 0.0, 5.0, 0.0 };
 
-//パラメータUI情報
+//----パラメータUI情報----
 //アイコン・パラメータ名
 constexpr float PARAM_POSX = 225.0f;
 constexpr float PARAM_POSY = 450.0f;
 //数値
 constexpr float PARAMVALUE_POSX = 230.0f;
+
+//----スタミナゲージ----
+//スタミナの最大値
+constexpr float STAMINA_MAX = 100.0f;
 
 //ヒーロー名構造体
 struct HeroName
@@ -63,6 +69,20 @@ public:
 	//描画関数
 	void Draw()		  override;
 
+
+protected:
+	// =======================
+    // 育成関連のシーンで固定するUI関連の関数
+    // =======================		
+    //インスタンス生成
+	void CreateNatureUI( std::unique_ptr<CUIObject>& gage );
+	//データのロード
+	void LoadNatureUI( std::unique_ptr<CUIObject>& gage );
+	//初期化
+	void InitNatureUI( std::unique_ptr<CUIObject>& gage );
+	//描画
+	virtual void DrawNatureUI( std::unique_ptr<CUIObject>& gage );
+
 public:
 	//各ヒーロー用ファイルの作成・読み込み
 	void LoadHeroData( const std::string& heroname );
@@ -70,18 +90,23 @@ public:
 	//トレーニング選択処理
 	void SelectTraning();
 
-	//----パラメータ関連----
+	// =======================
+	// パラメータ関連関数
+	// =======================		
 	//ヒーローのごとのパラメータ情報の書き込み
 	void SaveParam();
 	//パラメータ情報の書き込み(SaveParam関数で使う)
-	void WriteParam(const std::string& heroname);
+	void WriteParam( const std::string& heroname );
 	//パラメータUIの初期設定
-	void ParamInit(CUIObject* param, int no);
+	void ParamInit( std::unique_ptr<CUIObject>& param, int no );
 	//パラメータの描画
 	void DrawParam();
 
 	//残りターン数の描画
 	void DrawRemainingTurn();
+
+	//ゲージアニメーション
+	void GageAnim();
 
 public:
 	//カメラマネージャクラス
@@ -106,15 +131,18 @@ public:
 	std::unique_ptr<CSky>	 m_pSky;
 	
 	//UI
-	//各パラメータ表示
+	//----各パラメータ----
 	//筋力
-	CUIObject* m_pPowerParam;
+	std::unique_ptr<CUIObject> m_pPowerParam;
 	//魔力
-	CUIObject* m_pMagicParam;
+	std::unique_ptr<CUIObject> m_pMagicParam;
 	//素早さ
-	CUIObject* m_pSpeedParam;
+	std::unique_ptr<CUIObject> m_pSpeedParam;
 	//体力
-	CUIObject* m_pHpParam;
+	std::unique_ptr<CUIObject> m_pHpParam;
+	//----スタミナゲージ----
+	//ゲージ
+	std::unique_ptr<CUIObject> m_pStaminaGage;
 
 	// =======================
 	// json関連

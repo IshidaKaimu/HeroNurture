@@ -11,6 +11,7 @@ CSceneBase::CSceneBase()
     , m_FadeTime  (0)
     , m_FadeAlpha (1.0f)	//不透過に設定
     , m_FadeOutFlg(false)
+    , m_GageWidth ()
 {
     m_pFade = new CUIObject();		//フェード
     m_pFade->AttachSprite(CUIManager::GetSprite(CUIManager::Fade));

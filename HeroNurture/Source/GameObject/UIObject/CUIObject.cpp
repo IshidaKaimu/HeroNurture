@@ -3,6 +3,7 @@
 CUIObject::CUIObject()
 	: m_pSprite		( nullptr )
 	, m_PatternNo	()
+	, m_DisplaySize ()
 {
 }
 
@@ -30,6 +31,9 @@ void CUIObject::Draw()
 	m_pSprite->SetPosition( m_vPosition );
 	m_pSprite->SetRotation( m_vRotation );
 	m_pSprite->SetScale( m_vScale );
+
+	//UIの幅、高さ
+	m_pSprite->SetDisplay( m_DisplaySize.x, m_DisplaySize.y );
 
 	//パターン番号を設定.
 	m_pSprite->SetPatternNo( m_PatternNo.x, m_PatternNo.y );

@@ -26,6 +26,10 @@ void CTraning::Create()
     m_pSky = make_unique<CSky>();
     //地面
     m_pGround = make_unique<CGround>();
+
+    //育成関連のシーンで共通するUIのインスタンス生成
+    CNatureScene::CreateNatureUI(m_pStaminaGage);
+
 }
 //破棄関数
 void CTraning::Releace()
@@ -34,11 +38,17 @@ void CTraning::Releace()
 //データ読み込み関数
 void CTraning::LoadData()
 {
+    //地面のメッシュデータ設定
     m_pGround->LoadData();
+
+    //育成関連のシーンで共通するUIのスプライトデータ設定
+    CNatureScene::LoadNatureUI(m_pStaminaGage);
 }
 //初期化関数
 void CTraning::Initialize()
 {
+    //育成関連のシーンで共通するUI
+    CNatureScene::InitNatureUI(m_pStaminaGage);
 }
 
 //更新関数
@@ -64,6 +74,7 @@ void CTraning::Update()
    ImGui::Text(JAPANESE("m_TextNo:%d"), m_TextNo);
    ImGui::Text(JAPANESE("m_TextNo:%d"), m_ParamInc.size());
    ImGui::Text(JAPANESE("m_Stamina:%f"),CHeroManager::GetInstance().GetStamina());
+   ImGui::Text(JAPANESE("スタミナゲージの幅:%f"),CSceneManager::GetInstance()->GetStaminaWidth());
    ImGui::End();
 #endif
 
@@ -75,7 +86,6 @@ void CTraning::Update()
 
    if (m_SceneTransitionFlg && FadeOut())
    {
-       CSceneManager::GetInstance()->SetIsDataLoaded(true);
        CSceneManager::GetInstance()->LoadCreate(CSceneManager::Nature);
    }
 }
@@ -85,6 +95,9 @@ void CTraning::Draw()
     m_pGround->Draw();
     //上昇量テキストの描画(仮)
     DrawUpText();
+
+    //育成関連のシーンで共通して表示するUI
+    CNatureScene::DrawNatureUI(m_pStaminaGage);
 }
 
 //配列にテキストを追加する関数

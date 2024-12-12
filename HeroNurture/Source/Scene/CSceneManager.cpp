@@ -9,6 +9,7 @@ CSceneManager::CSceneManager()
     , m_hWnd        ()
     , m_pDx9        ( nullptr )
     , m_pDx11       ( nullptr )
+    , m_StaminaWidth()
 {
     m_Scene = std::make_unique<CTitle>();   //make_unique:インスタンスを生成して、使わなくなったら勝手に破棄してくれる
 }

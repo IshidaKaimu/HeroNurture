@@ -6,8 +6,13 @@
 //Json使用に必要な名前空間の格納
 using json = nlohmann::json;
 
-//トレーニング時上昇値の基礎
+// =======================
+// 定数宣言
+// =======================
+//----トレーニング関連----		
+//トレーニングの基本上昇値
 constexpr float INCREASE_VALUE = 20.0f;
+
 
 //=====================================
 //ヒーロー基底クラス
@@ -86,14 +91,13 @@ public:
 	// =======================		
 	//----トレーニングによる上昇----
 	//筋力
-	void PowerUp();
+	void PowerUp( float stamina );
 	//魔力
-	void MagicUp();
+	void MagicUp( float stamina );
 	//素早さ
-	void SpeedUp();
+	void SpeedUp( float stamina );
 	//体力
-	void HpUp();
-
+	void HpUp( float stamina );
 	//----イベントによる上昇----
     //筋力
 	void PowerUpEvent(float power) { m_Param.Power += power; };
@@ -114,8 +118,6 @@ public:
 	//更新前のパラメータ
 	enParam GetBeforeParam() { return m_BeforeParam; }
 	void SetBeforeParam(enParam before) { m_BeforeParam = before; }
-	//現在のスタミナ量
-	float GetStamina() { return m_Stamina; }
 
 protected :	
 	// =======================
@@ -138,10 +140,6 @@ protected:
 
 	//ユーザーネーム
 	std::string m_UserName;
-
-	//スタミナ
-	//どのヒーローでも共通
-	float m_Stamina;
 
 private:
 	//パラメータ更新前のパラメータ情報

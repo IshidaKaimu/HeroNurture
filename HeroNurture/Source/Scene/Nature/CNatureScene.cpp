@@ -12,13 +12,19 @@
 
 
 CNatureScene::CNatureScene()
-    : m_pCamera  ( &CCameraManager::GetInstance() )
-    , m_pHero    ( &CHeroManager::GetInstance() )
-    , m_pJson    ()
-    , m_Name     ()
-    , m_pGround  ()
-    , m_pSky     ()
-    , m_ParamData()
+    : m_pCamera     ( &CCameraManager::GetInstance() )
+    , m_pHero       ( &CHeroManager::GetInstance() )
+    , m_pJson       ()
+    , m_Name        ()
+    , m_pGround     ()
+    , m_pSky        ()
+    , m_pPowerParam ()
+    , m_pMagicParam ()
+    , m_pSpeedParam ()
+    , m_pHpParam    ()
+    , m_pStaminaGage()
+    , m_ParamWriter ()
+    , m_ParamData   ()
 {
 }
 
@@ -56,15 +62,18 @@ void CNatureScene::Create()
     m_pSky    = std::make_unique<CSky>();
 
     //UIオブジェクト
-    //各種パラメータ
+    //----各パラメータ----
     //筋力
-    m_pPowerParam = new CUIObject();
+    m_pPowerParam = std::make_unique<CUIObject>();
     //魔力
-    m_pMagicParam = new CUIObject();
+    m_pMagicParam = std::make_unique<CUIObject>();
     //素早さ
-    m_pSpeedParam = new CUIObject();
+    m_pSpeedParam = std::make_unique<CUIObject>();
     //体力
-    m_pHpParam    = new CUIObject();
+    m_pHpParam    = std::make_unique<CUIObject>();
+    
+    //育成関連のシーンで共通して表示するUIのインスタンス生成
+    CreateNatureUI(m_pStaminaGage);
 }
 
 //破棄関数
@@ -86,10 +95,10 @@ void CNatureScene::LoadData()
 
     CHeroManager::GetInstance().LoadParamData(m_ParamData);
 
-    //地面
+    //地面のメッシュデータ設定
     m_pGround->LoadData();
 
-    //各パラメータのUIのスプライト設定
+    //----各パラメータのUIのスプライト設定----
     //筋力
     m_pPowerParam->AttachSprite(CUIManager::GetSprite(CUIManager::PowerParam));
     //魔力
@@ -98,6 +107,11 @@ void CNatureScene::LoadData()
     m_pSpeedParam->AttachSprite(CUIManager::GetSprite(CUIManager::SpeedParam));
     //体力
     m_pHpParam->AttachSprite(CUIManager::GetSprite(CUIManager::HpParam));
+
+    //スタミナゲージのUIのスプライト設定
+    m_pStaminaGage->AttachSprite(CUIManager::GetSprite(CUIManager::StaminaGage));
+    
+
 }
 
 //初期化関数
@@ -123,11 +137,6 @@ void CNatureScene::Initialize()
         break;
     }
 
-    //ターン数の初期化
-    if (!CSceneManager::GetInstance()->GetIsDataLoaded())
-    {
-        CSceneManager::GetInstance()->InitTurn();
-    }
 
     //----ライト情報----
     //位置
@@ -145,8 +154,9 @@ void CNatureScene::Initialize()
     //体力
     ParamInit(m_pHpParam, 4);
 
+    //育成関連のシーンで共通のUIの初期化
+    InitNatureUI(m_pStaminaGage);
 }
-
 
 //更新関数
 void CNatureScene::Update()
@@ -190,10 +200,10 @@ void CNatureScene::Update()
         //選択肢の位置に応じたトレーニングをセット
         switch (m_SelectNo)
         {
-        case 0:  Hero->SetTraning(CHeroManager::PowerTraining); break;
-        case 1:  Hero->SetTraning(CHeroManager::MagicTraining); break;
-        case 2:  Hero->SetTraning(CHeroManager::SpeedTraining); break;
-        case 3:  Hero->SetTraning(CHeroManager::HpTraining); break;
+        case 0:  m_pHero->SetTraning(CHeroManager::PowerTraining); break;
+        case 1:  m_pHero->SetTraning(CHeroManager::MagicTraining); break;
+        case 2:  m_pHero->SetTraning(CHeroManager::SpeedTraining); break;
+        case 3:  m_pHero->SetTraning(CHeroManager::HpTraining); break;
         }
         //パラメータ処理
         SelectTraning();
@@ -213,6 +223,8 @@ void CNatureScene::Update()
     ImGui::Text(JAPANESE("魔力:%f"),   m_pHero->GetParam().Magic);
     ImGui::Text(JAPANESE("素早さ:%f"), m_pHero->GetParam().Speed);
     ImGui::Text(JAPANESE("体力:%f"),   m_pHero->GetParam().Hp);
+    ImGui::Text(JAPANESE("スタミナ:%f"), m_pHero->GetStamina());
+    ImGui::Text(JAPANESE("スタミナの幅:%f"), CSceneManager::GetInstance()->GetStaminaWidth());
     ImGui::End();
 
     ImGui::Begin(JAPANESE("トレーニング選択状況"));
@@ -236,11 +248,67 @@ void CNatureScene::Draw()
     //地面クラスの描画
     m_pGround->Draw();
 
-    //残りターン数の描画
-    DrawRemainingTurn();
+    //育成関連シーンで共通のUIの描画
+    DrawNatureUI( m_pStaminaGage );
 
     //各パラメータUIの描画
     DrawParam();
+}
+
+// =======================
+// 育成関連のシーンで固定するUI関連の関数
+// =======================		
+//インスタンス生成
+void CNatureScene::CreateNatureUI(std::unique_ptr<CUIObject>& gage)
+{
+    //スタミナゲージ
+    gage = std::make_unique<CUIObject>();
+}
+//スプライトデータの読み込み
+void CNatureScene::LoadNatureUI(std::unique_ptr<CUIObject>& gage)
+{
+    //スタミナゲージ
+    gage->AttachSprite(CUIManager::GetSprite(CUIManager::StaminaGage));
+}
+//初期化
+void CNatureScene::InitNatureUI(std::unique_ptr<CUIObject>& gage)
+{
+    //読み込みが初回であるなら
+    if (!CSceneManager::GetInstance()->GetIsDataLoaded())
+    {
+        //ターン数・HPの値の初期化
+        //ターン数
+        CSceneManager::GetInstance()->InitTurn();
+        //スタミナゲージの幅
+        CSceneManager::GetInstance()->InitStaminaWidth();
+        //幅の初期化
+        gage->SetDisplay(CSceneManager::GetInstance()->GetStaminaWidth(),0.0f);
+        //スタミナの初期化
+        m_pHero->InitStamina();
+    }
+    else
+    {
+        //スタミナに減少後の値をセット
+        m_pHero->SetStamina(m_pHero->GetAfterStamina());
+        //現在のスタミナ幅を取得し、設定する
+        m_pStaminaGage->SetWidth(CSceneManager::GetInstance()->GetStaminaWidth());
+    }
+
+    //拡縮
+    gage->SetScale(1.0f, 1.0f, 1.0f);
+    //位置
+    gage->SetPosition(350.0f, 0.0f, 0.0f);
+}
+//描画
+void CNatureScene::DrawNatureUI(std::unique_ptr<CUIObject>& gage)
+{
+    //スタミナゲージ
+    gage->Draw();
+    //スタミナゲージのアニメーション
+    GageAnim();
+
+    //残りターン数の描画
+    DrawRemainingTurn();
 }
 
 //各ヒーローのデータ読み込み
@@ -269,36 +337,38 @@ void CNatureScene::LoadHeroData( const std::string& heroname )
 //トレーニング選択処理
 void CNatureScene::SelectTraning()
 {
-    //ヒーローマネージャのインスタンスを変数に代入
-    CHeroManager* HeroMng = &CHeroManager::GetInstance();
 
     //シーンマネージャのインスタンスを変数に代入
     CSceneManager* SceneMng = CSceneManager::GetInstance();
 
     //更新前のパラメータを保存
-     HeroMng->SetBeforeParam(m_pHero->GetParam());
+     m_pHero->SetBeforeParam(m_pHero->GetParam());
 
     //それぞれのパラメータの増加
-    switch (HeroMng->GetTraining())
+    switch (m_pHero->GetTraining())
     {
     //筋力
-    case::CHeroManager::PowerTraining: 
-        m_pHero->PowerUp();
-        m_pHero->SpeedUp();
-        break;
+    case::CHeroManager::PowerTraining: m_pHero->PowerUp(m_pHero->GetStamina()); break;
     //魔力
-    case::CHeroManager::MagicTraining: m_pHero->MagicUp(); break;
+    case::CHeroManager::MagicTraining: m_pHero->MagicUp(m_pHero->GetStamina()); break;
     //素早さ
-    case::CHeroManager::SpeedTraining: m_pHero->SpeedUp(); break;
+    case::CHeroManager::SpeedTraining: m_pHero->SpeedUp(m_pHero->GetStamina()); break;
     //体力
-    case::CHeroManager::HpTraining: m_pHero->HpUp(); break;
+    case::CHeroManager::HpTraining: m_pHero->HpUp(m_pHero->GetStamina()); break;
     }
+
+    //スタミナの減少
+    m_pHero->ReduceStamina();
 
     //更新後パラメータの保存
     SaveParam();
 
     //ターン経過処理
     SceneMng->TurnProgress();
+
+    //初回のみ読み込むものを読み込まなくする
+    CSceneManager::GetInstance()->SetIsDataLoaded(true);
+
     SceneMng->LoadCreate(CSceneManager::Training);
 }
 
@@ -343,7 +413,7 @@ void CNatureScene::WriteParam(const std::string& heroname)
 
 
 //各種パラメータUI初期設定
-void CNatureScene::ParamInit(CUIObject* param, int no)
+void CNatureScene::ParamInit(std::unique_ptr<CUIObject>& param, int no)
 {
     //位置
     param->SetPosition(PARAM_POSX * no, PARAM_POSY, 0.0f);
@@ -351,6 +421,8 @@ void CNatureScene::ParamInit(CUIObject* param, int no)
     param->SetScale(0.3f, 0.3f, 0.3f);
     //α値
     param->SetAlpha(1.0f);
+    //幅、高さ
+    param->SetDisplay(1.0f, 1.0f);
 }
 
 //各種パラメータの描画
@@ -373,7 +445,6 @@ void CNatureScene::DrawParam()
     Text->Draw_Text(std::to_wstring(static_cast<int>(m_pHero->GetParam().Hp)), WriteText::Normal, D3DXVECTOR2(PARAMVALUE_POSX * 4.0f, PARAM_POSY));
 }
 
-
 //残りターン数の描画
 void CNatureScene::DrawRemainingTurn()
 {
@@ -387,4 +458,30 @@ void CNatureScene::DrawRemainingTurn()
     Text->Draw_Text(L"残り", WriteText::Normal, D3DXVECTOR2(0.0, -20.0));
     Text->Draw_Text(Turn, WriteText::Turn, D3DXVECTOR2(110.0, -30.0));
     Text->Draw_Text(L"ターン", WriteText::Normal, D3DXVECTOR2(160.0, -20.0));
+}
+
+
+//スタミナゲージのアニメーション
+void CNatureScene::GageAnim()
+{
+    //ゲージ幅の確認
+    float GageScale = 1.0f * m_pHero->GetStamina() / STAMINA_MAX;
+
+    //高ければ
+    if (GageScale < m_GageWidth)
+    {
+        m_GageWidth -= 0.01f;
+    }
+    //低ければ
+    if (GageScale > m_GageWidth)
+    {
+        m_GageWidth += 0.01f;
+    }
+
+    //現在のゲージ幅をシーンマネージャの変数に代入
+    CSceneManager::GetInstance()->SetStaminaWidth(m_GageWidth);
+
+    //スタミナゲージの幅高さを設定
+    m_pStaminaGage->SetDisplay(m_GageWidth, 1.0f);
+
 }

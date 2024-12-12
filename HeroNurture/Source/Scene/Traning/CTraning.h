@@ -5,6 +5,7 @@
 #include "WriteText\WriteText.h"
 #include "StaticMeshObject\Ground\CGround.h"
 #include "SkinMeshObject\Hero\CHeroBase.h"
+#include "Scene\Nature\CNatureScene.h"
 #include "json.hpp"
 
 //----‘O•ûéŒ¾----
@@ -31,7 +32,7 @@ struct IncParam
 //§ìÒFÎ“cŸD–²
 //=====================================
 class CTraning
-	:public CSceneBase
+	:public CNatureScene
 {
 public:
 	CTraning();

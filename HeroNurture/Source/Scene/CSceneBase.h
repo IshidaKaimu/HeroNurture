@@ -3,7 +3,7 @@
 #include "Sprite3D\CSprite3D.h"
 #include "Sprite2D\CSprite2D.h"
 #include "UIObject\CUIObject.h"
-
+#include <memory>
 
 //=====================================
 //シーン基底クラス
@@ -63,7 +63,10 @@ protected:
     int         m_SelectNo;
 
 	//アニメーションカウント
-	float       m_AnimCnt;				
+	float       m_AnimCnt;		
+
+	//ゲージ幅
+	float       m_GageWidth;
 
 private:
 	//----フェード----	

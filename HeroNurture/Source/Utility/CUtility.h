@@ -1,6 +1,6 @@
 #pragma once
 #include "Singleton\CSingleton.h"
-
+#include "UIObject\CUIObject.h"
 //=====================================
 //汎用クラス
 //制作者：石田櫂夢

@@ -16,6 +16,8 @@ cbuffer per_mesh : register( b0 )	//レジスタ番号.
 	float4	g_UV		: packoffset( c5 );	//UV座標（xyしか使わない）.
 	float	g_ViewPortW	: packoffset( c6 );	//ビューポート幅.
 	float	g_ViewPortH	: packoffset( c7 );	//ビューポート高さ.
+	float   g_DisplayW  : packoffset( c8 ); //UI幅.
+	float   g_DisplayH  : packoffset( c9 ); //UI高さ.
 };
 
 //頂点シェーダの出力パラメータ.
@@ -54,8 +56,20 @@ float4 PS_Main( VS_OUTPUT input ) : SV_Target
 {
 	float4 color = g_Texture.Sample( g_samLinear, input.UV );//色を返す.
 
+	//UIの幅
+	if (g_DisplayW < input.UV.x)
+	{
+		color.a = 0.0f;
+	}
+	
+	//UIの高さ
+	if (g_DisplayH < input.UV.y)
+	{
+		color.a = 0.0f;
+	}
+	
 	//プログラム制御のα値を設定する.
-    color.a *= g_Color.a;
+		color.a *= g_Color.a;
 
-	return color;
-}
+		return color;
+	}

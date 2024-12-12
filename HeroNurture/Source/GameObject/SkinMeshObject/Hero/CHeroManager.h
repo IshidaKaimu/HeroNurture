@@ -3,6 +3,12 @@
 #include "Singleton\CSingleton.h"
 #include <memory>
 
+//----スタミナゲージ関連----
+//スタミナの最大値
+constexpr float MAX_STAMINA = 100.0f;
+//スタミナの基本減少値
+constexpr float REDUSE_STAMINA = 25.0f;
+
 class CHeroManager
 	: public CHeroBase
 	, public CSingleton<CHeroManager>
@@ -61,13 +67,21 @@ public:
 	// 各パラメータ上昇関数
 	// =======================
 	//筋力
-	void PowerUp() { m_Hero->PowerUp(); }
+	void PowerUp(float stamina) { m_Hero->PowerUp(stamina); }
 	//魔力
-	void MagicUp() { m_Hero->MagicUp(); }
-	//素早さ								   
-	void SpeedUp() { m_Hero->SpeedUp(); }
+	void MagicUp(float stamina) { m_Hero->MagicUp(stamina); }
+	//素早さ
+	void SpeedUp(float stamina) { m_Hero->SpeedUp(stamina); }
 	//体力
-	void HpUp() { m_Hero->HpUp(); }
+	void HpUp(float stamina) { m_Hero->HpUp(stamina); }
+
+	// =======================
+	// スタミナゲージ関連関数
+	// =======================	
+	//スタミナの初期化
+	void InitStamina() { m_Stamina = MAX_STAMINA; }
+	//スタミナの減少
+	void ReduceStamina();
 
 	// =======================
 	// ゲッター・セッター関数
@@ -85,6 +99,11 @@ public:
 	//更新前のパラメータ
 	enParam GetBeforeParam() { return m_Hero->GetBeforeParam(); }
 	void SetBeforeParam(enParam before) { m_Hero->SetBeforeParam(before); }
+	//スタミナ
+	float GetStamina() { return m_Stamina; }
+	void  SetStamina(float stamina) { m_Stamina = stamina; }
+	//減少後のスタミナ
+	float GetAfterStamina() { return m_AfterStamina; }
 	//トレーニング
 	enTraningList GetTraining() { return m_Traning; }
 	void SetTraning(enTraningList traning) { m_Traning = traning; }
@@ -103,6 +122,13 @@ private:
 
 	//トレーニングリスト
 	enTraningList m_Traning;
+
+	//スタミナ
+    //どのヒーローでも共通
+	float m_Stamina;
+	//減少後のスタミナ
+	float m_AfterStamina;
+
 
 };
 

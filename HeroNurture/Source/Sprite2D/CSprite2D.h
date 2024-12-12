@@ -42,6 +42,8 @@ public:
 		ALIGN16	D3DXVECTOR4	vUV;		//UV座標（x,yのみ使用）.
 		ALIGN16 float fViewPortWidth;	//ビューポート幅.
 		ALIGN16 float fViewPortHeight;	//ビューポート高さ.
+		ALIGN16 float DisplayWidth;		//画像幅.
+		ALIGN16 float DisplayHeight;	//画像高さ.
 	};
 	//頂点の構造体.
 	struct VERTEX
@@ -104,6 +106,18 @@ public:
 	}
 	//最大パターン数(マス目)を取得.
 	POINTS GetPatternMax() const { return m_PatternMax; }
+
+	//UIの幅、高さの設定
+	//両方
+	void SetDisplay(float w, float h)
+	{
+		m_DisplaySize.x = w;
+		m_DisplaySize.y = h;
+	}
+	//幅
+	void SetWidth(float w) { m_DisplaySize.x = w; }
+	//高さ
+	void SetHight(float h) { m_DisplaySize.y = h; }
 
 private:
 	CDirectX11*				m_pDx11;

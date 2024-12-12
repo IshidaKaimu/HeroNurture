@@ -1,8 +1,8 @@
 #pragma once
 
 #include "CGameObject.h"
-
 #include "Sprite2D/CSprite2D.h"
+#include "Global\Global.h"
 
 /************************************************************
 *	UIオブジェクトクラス.
@@ -33,10 +33,34 @@ public:
 		m_PatternNo.y = y;
 	}
 
+	//UIの幅、高さを設定
+	void SetDisplay(float w, float h)
+	{
+		m_DisplaySize.x = w;
+		m_DisplaySize.y = h;
+	}
+	//UIの幅を設定
+	void SetWidth(float w)
+	{
+		m_DisplaySize.x = w;
+	}
+	//UIの高さを設定
+	void SetHeight(float h)
+	{
+		m_DisplaySize.y = h;
+	}
+
+	//ディスプレイサイズ取得
+	D3DXVECTOR2 GetDisplay()
+	{
+		return m_DisplaySize;
+	}
+
 	//アルファ値を設定する
 	void SetAlpha(float value) { m_pSprite->SetAlpha(value); }
 
 protected:
-	CSprite2D*	m_pSprite;
+	CSprite2D*	m_pSprite;		//スプライト2Dクラス
 	POINTS		m_PatternNo;	//パターン番号(マス目).
+	D3DXVECTOR2 m_DisplaySize;	//UIの幅、高さ
 };
