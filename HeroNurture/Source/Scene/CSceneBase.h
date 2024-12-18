@@ -11,7 +11,6 @@
 //=====================================
 class CSceneBase
 {
-public:
 	//フェードの最大時間
 	static constexpr int	FADE_TIME = FPS;	//約1秒間
 	static constexpr bool	DEBUG_FLG = false;	//デバッグフラグ
@@ -64,10 +63,6 @@ protected:
 
 	//アニメーションカウント
 	float       m_AnimCnt;		
-
-	//ゲージ幅
-	float       m_GageWidth;
-
 private:
 	//----フェード----	
     static constexpr float FADESPEED = 0.05f;	//フェードスピード

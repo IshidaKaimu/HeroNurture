@@ -8,14 +8,22 @@
 #include "Scene\Nature\CNatureScene.h"
 #include "json.hpp"
 
-//----前方宣言----
+//========================
+//前方宣言
+//=======================
 class CHeroManager;
 
-//----定数宣言----
-//パラメータの種類のテキストの位置
-const D3DXVECTOR2 PARAMTEXT_OFFSET = { 0.0f,300.0f };
-//値テキストの位置
-const D3DXVECTOR2 VALUETEXT_OFFSET = { 195.0f,300.0f };
+//========================
+//定数宣言
+//=======================
+//----テキストの位置----
+//パラメータの種類
+const D3DXVECTOR2 PARAMTEXT_OFFSET  = { 0.0f,600.0f };
+//値
+const D3DXVECTOR2 VALUETEXT_OFFSET  = { 195.0f,600.0f };
+//トレーニング結果
+const D3DXVECTOR2 RESULTTEXT_OFFSET = { 500.0f,100.0f };
+
 
 //========================
 //上昇したパラメータのリスト
@@ -23,8 +31,9 @@ const D3DXVECTOR2 VALUETEXT_OFFSET = { 195.0f,300.0f };
 //=======================
 struct IncParam
 {
-	std::wstring ParamName;	//パラメータの種類
-	int IncValue;			//上昇量
+	std::wstring ParamName;		 //パラメータの種類
+	int IncValue;				 //上昇量
+	std::wstring ParamChangeText;//上昇または減少のテキスト
 };
 
 //=====================================
@@ -55,9 +64,11 @@ public:
 	//パラメータが上昇していたら配列にテキストを追加する処理
 	void AddText();
 	//配列に既に追加している情報ではないかの確認
-	bool AlreadyAddCheck( std::wstring paramname );
-	//上昇量テキストの描画
-	void DrawUpText();
+	bool AlreadyAddCheck(std::wstring paramname);
+	//トレーニング結果テキストの描画
+	void DrawTraningText();
+	//パラメータ変化の描画処理
+	void DrawParamChange(const IncParam& param);
 
 private:
 

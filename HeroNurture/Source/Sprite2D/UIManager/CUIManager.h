@@ -16,6 +16,7 @@ public:
 		MagicParam,  //魔力パラメータ表示用画像
 		HpParam,     //体力パラメータ表示用画像
 		StaminaGage, //スタミナゲージ表示用画像
+		StaminaBack, //スタミナゲージ背景用画像
 
 		Max,
 	};

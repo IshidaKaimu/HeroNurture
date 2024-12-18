@@ -9,6 +9,8 @@ CHeroBase::CHeroBase()
 	: m_Param          ()
 	, m_pJson          ()
 	, m_UserName       ()
+	, m_Correction	   (1.0)
+	, m_Failure		   (false)
 {
 	m_pJson = std::make_unique<CJson>();
 }
@@ -32,29 +34,73 @@ void CHeroBase::Draw()
 //筋力上昇
 void CHeroBase::PowerUp( float stamina )
 {
-	float AppBonus = INCREASE_VALUE * (1.0 + (m_App.PowerApp / 100.0));
-	m_Param.Power += AppBonus;
+	//スタミナ量による補正処理
+	CorrectionByStamina(stamina);
+
+	//この乱数で成功するかを決める
+	int Succes = CUtility::GenerateRandomValue(0,100);
+
+	//失敗率の値よりも大きければ
+	if (Succes >= FailureRate(stamina)) {
+		float AppBonus = INCREASE_VALUE * (1.0 + (m_App.PowerApp / 100.0));
+		m_Param.Power += AppBonus * m_Correction;
+	}
+	else
+	{
+		m_Failure = true;
+	}
 }
 
 //魔力上昇
 void CHeroBase::MagicUp( float stamina )
 {
-	float AppBonus = INCREASE_VALUE * (1.0 + (m_App.MagicApp / 100.0));
-	m_Param.Magic += AppBonus;
+	//スタミナ量による補正処理
+	CorrectionByStamina(stamina);
+
+	//この乱数で成功するかを決める
+	int Succes = CUtility::GenerateRandomValue(0, 100);
+	
+	//失敗率の値よりも大きければ
+	if (Succes >= FailureRate(stamina)) {
+		float AppBonus = INCREASE_VALUE * (1.0 + (m_App.MagicApp / 100.0));
+		m_Param.Magic += AppBonus * m_Correction;
+	}
+	else
+	{
+		m_Failure = true;
+	}
 }
 
 //素早さ上昇
 void CHeroBase::SpeedUp( float stamina )
 {
-	float AppBonus = INCREASE_VALUE * (1.0 + (m_App.SpeedApp / 100.0));
-	m_Param.Speed += AppBonus;
+	//スタミナ量による補正処理
+	CorrectionByStamina(stamina);
+	
+	//この乱数で成功するかを決める
+	int Succes = CUtility::GenerateRandomValue(0, 100);
+	//失敗率の値よりも大きければ
+	if (Succes >= FailureRate(stamina)) {
+		float AppBonus = INCREASE_VALUE * (1.0 + (m_App.SpeedApp / 100.0));
+		m_Param.Speed += AppBonus * m_Correction;
+	}
+	else
+	{
+		m_Failure = true;
+	}
 }
 
 //体力上昇
 void CHeroBase::HpUp( float stamina )
 {
+	//スタミナ量による補正処理
+	CorrectionByStamina(stamina);
+
+	//この乱数で成功するかを決める
+	int Succes = CUtility::GenerateRandomValue(0, 100);
+
 	float AppBonus = INCREASE_VALUE * (1.0 + (m_App.HpApp / 100.0));
-	m_Param.Hp += AppBonus;
+	m_Param.Hp += AppBonus * m_Correction;
 }
 
 //各ヒーローの初期パラメータの取得
@@ -99,6 +145,29 @@ void CHeroBase::UpdateParam(const json& jsondata, const std::string& heroname)
 
 		return;
 	}
+}
+
+//スタミナ量による補正処理
+void CHeroBase::CorrectionByStamina(float stamina)
+{
+	if (stamina <= 0.5 * MAX_STAMINA)
+	{
+		m_Correction = m_Correction * 0.8;
+	}
+	else
+	{
+		m_Correction = 1.0f;
+	}
+}
+
+//失敗率を返す関数
+int CHeroBase::FailureRate(float stamina)
+{
+	if (stamina <= 0) return 99;
+	if (stamina <= 30) return 75;
+	if (stamina <= 50) return 50;
+	if (stamina <= 80) return 20;
+	return 0;
 }
 
 

@@ -2,6 +2,7 @@
 #include "SkinMeshObject\CSkinMeshObject.h"
 #include "json.hpp"
 #include "Json\CJson.h"
+#include "Utility\CUtility.h"
 
 //Json使用に必要な名前空間の格納
 using json = nlohmann::json;
@@ -12,6 +13,13 @@ using json = nlohmann::json;
 //----トレーニング関連----		
 //トレーニングの基本上昇値
 constexpr float INCREASE_VALUE = 20.0f;
+//----スタミナゲージ関連----
+//スタミナの最大値
+constexpr float MAX_STAMINA = 100.0f;
+//スタミナの基本減少量
+constexpr float REDUSE_STAMINA = 25.0f;
+//スタミナの基本回復量
+constexpr float RECOVERY_STAMINA = 25.0f;
 
 
 //=====================================
@@ -118,15 +126,27 @@ public:
 	//更新前のパラメータ
 	enParam GetBeforeParam() { return m_BeforeParam; }
 	void SetBeforeParam(enParam before) { m_BeforeParam = before; }
+	//トレーニング失敗フラグ
+	bool GetFailure() { return m_Failure; }
+	void SetFailure(bool failure) { m_Failure = failure; }
 
 protected :	
 	// =======================
 	// jsonファイル関連関数
 	// =======================		
 	//各ヒーローの初期パラメータ取得
-	void LoadParam( const json& jsondata , const std::string& heroname );
+	void LoadParam(const json& jsondata , const std::string& heroname);
 	//各ヒーローのパラメータ更新
-	void UpdateParam( const json& jsondata, const std::string& heroname );
+	void UpdateParam(const json& jsondata, const std::string& heroname);
+
+private:
+	// =======================
+	// 残りスタミナ量関連関数
+	// =======================		
+	//残りスタミナ量による補正処理
+	void CorrectionByStamina(float stamina);
+	//失敗率
+	int FailureRate(float stamina);
 
 protected:
 	//ヒーローのパラメータ構造体
@@ -144,4 +164,11 @@ protected:
 private:
 	//パラメータ更新前のパラメータ情報
 	enParam m_BeforeParam;
+
+	//残りスタミナによる補正
+	float m_Correction;
+
+	//トレーニングが失敗した際に立てるフラグ
+	bool m_Failure;
+
 };

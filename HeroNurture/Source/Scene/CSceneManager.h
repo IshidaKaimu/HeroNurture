@@ -28,6 +28,7 @@ public:
 		HeroSelect,
 		Nature,
 		Training,
+		Battle,
 		Max_S,
 		none,
 	};
@@ -72,7 +73,7 @@ public:
 	void InitTurn() { m_Turn = MAX_TURN; }
 
 	//スタミナゲージの幅の初期化
-	void InitStaminaWidth() { m_StaminaWidth = 1.0f; }
+	void InitStaminaWidth() { m_GageWidth = 1.0f; }
 
     //---ゲッター・セッター---
     //DirectX9
@@ -89,8 +90,11 @@ public:
 	//ターン数
 	int GetRemainingTurn() { return m_Turn; }
 	//スタミナゲージの幅
-	float GetStaminaWidth() { return m_StaminaWidth; }
-	void  SetStaminaWidth(float width) { m_StaminaWidth = width; }
+	float GetStaminaWidth() { return m_GageWidth; }
+	void  SetStaminaWidth(float width) { m_GageWidth = width; }
+	//休息フラグ
+	bool GetRestFlag() { return m_Rest; }
+	void SetRestFlag(bool rest) { m_Rest = rest; }
 
 private:
 	CSceneManager();
@@ -109,11 +113,16 @@ private:
 	//残りターン数
 	int        m_Turn;
 
-	//----フラグ----
+	// =======================
+	// フラグ
+	// =======================		
+	//休息を選択したかのフラグ
+	bool m_Rest;
 	//データ読み込みが初回かどうかのフラグ
-	bool       m_IsDataLoaded;
+	bool m_IsDataLoaded;
 
-	//ゲージの幅
-	float      m_StaminaWidth;
+
+	//スタミナゲージの幅
+	float m_GageWidth;
 
 };

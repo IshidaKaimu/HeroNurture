@@ -7,6 +7,7 @@ CHeroManager::CHeroManager()
     , m_HeroList     ()
     , m_Traning      ()
     , m_Stamina      ()
+    , m_BeforeStamina()
     , m_AfterStamina ()
 {
     m_Hero = std::make_unique<CYui>();
@@ -68,6 +69,21 @@ void CHeroManager::ReduceStamina()
     m_Stamina -= REDUSE_STAMINA;
     //減少後のスタミナを保存
     m_AfterStamina = m_Stamina;
+}
+
+//スタミナの回復処理
+void CHeroManager::StaminaRecovery()
+{
+    if (m_Stamina < 100.0f) {
+        m_Stamina += RECOVERY_STAMINA;
+    }
+    else
+    {
+        m_Stamina += 0;
+    }
+    //回復後のスタミナを保存
+    m_AfterStamina = m_Stamina;
+
 }
 
 //ヒーロー設定関数

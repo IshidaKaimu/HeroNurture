@@ -2,13 +2,6 @@
 #include "SkinMeshObject\Hero\CHeroBase.h"
 #include "Singleton\CSingleton.h"
 #include <memory>
-
-//----スタミナゲージ関連----
-//スタミナの最大値
-constexpr float MAX_STAMINA = 100.0f;
-//スタミナの基本減少値
-constexpr float REDUSE_STAMINA = 25.0f;
-
 class CHeroManager
 	: public CHeroBase
 	, public CSingleton<CHeroManager>
@@ -29,6 +22,7 @@ public:
 		MagicTraining,
 		SpeedTraining,
 		HpTraining,
+		Rest,
 		Max_T,
 	};
 
@@ -82,6 +76,8 @@ public:
 	void InitStamina() { m_Stamina = MAX_STAMINA; }
 	//スタミナの減少
 	void ReduceStamina();
+	//スタミナの回復
+	void StaminaRecovery();
 
 	// =======================
 	// ゲッター・セッター関数
@@ -90,11 +86,11 @@ public:
 	void SetHero(enHeroList list);
 	//ヒーロー選択関数
 	void SelectHero(enHeroList list) { m_HeroList = list; }
-	//選択したヒーロー取得
+	//選択したヒーロー
 	enHeroList GetSelectHero() { return m_HeroList; }
-	//現在のパラメータ取得
+	//現在のパラメータ
 	enParam GetParam() { return m_Hero->GetParam(); }	
-	//キャラごとの適正率取得
+	//キャラごとの適正率
 	enAppropriate GetApp() { return m_Hero->GetApp(); }
 	//更新前のパラメータ
 	enParam GetBeforeParam() { return m_Hero->GetBeforeParam(); }
@@ -102,12 +98,16 @@ public:
 	//スタミナ
 	float GetStamina() { return m_Stamina; }
 	void  SetStamina(float stamina) { m_Stamina = stamina; }
-	//減少後のスタミナ
+	//変化前のスタミナ
+	float GetBeforeStamina() { return m_BeforeStamina; }
+	void SetBeforeStamina(float before) { m_BeforeStamina = before; }
+	//変化後のスタミナ
 	float GetAfterStamina() { return m_AfterStamina; }
 	//トレーニング
 	enTraningList GetTraining() { return m_Traning; }
 	void SetTraning(enTraningList traning) { m_Traning = traning; }
-
+	//トレーニングに失敗したかのフラグ
+	bool GetFailure() { return m_Hero->GetFailure(); }
 
 private:
 	//他からアクセスすることがないように
@@ -126,7 +126,10 @@ private:
 	//スタミナ
     //どのヒーローでも共通
 	float m_Stamina;
-	//減少後のスタミナ
+
+	//変化前のスタミナ
+	float m_BeforeStamina;
+	//変化後のスタミナ
 	float m_AfterStamina;
 
 

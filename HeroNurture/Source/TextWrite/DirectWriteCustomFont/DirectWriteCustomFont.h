@@ -28,6 +28,7 @@ namespace FontList
     const std::wstring FontPath[] =
     {
         L"Data\\Font\\Corporate-Mincho-ver3.otf",
+        L"Data\\Font\\Togalite-Bold.otf",
     };
 }
 

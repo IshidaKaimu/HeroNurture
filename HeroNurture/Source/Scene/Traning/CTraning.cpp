@@ -6,7 +6,7 @@
 #include "SkinMeshObject\Hero\CHeroManager.h"
 
 CTraning::CTraning()
-    : m_pCamera (&CCameraManager::GetInstance())
+    : m_pCamera ( &CCameraManager::GetInstance() )
     , m_pSky    ()
     , m_pGround ()
     , m_TextNo  ()
@@ -28,7 +28,7 @@ void CTraning::Create()
     m_pGround = make_unique<CGround>();
 
     //育成関連のシーンで共通するUIのインスタンス生成
-    CNatureScene::CreateNatureUI(m_pStaminaGage);
+    CNatureScene::CreateNatureUI(m_pStaminaGage,m_pStaminaBack);
 
 }
 //破棄関数
@@ -42,13 +42,13 @@ void CTraning::LoadData()
     m_pGround->LoadData();
 
     //育成関連のシーンで共通するUIのスプライトデータ設定
-    CNatureScene::LoadNatureUI(m_pStaminaGage);
+    CNatureScene::LoadNatureUI(m_pStaminaGage,m_pStaminaBack);
 }
 //初期化関数
 void CTraning::Initialize()
 {
     //育成関連のシーンで共通するUI
-    CNatureScene::InitNatureUI(m_pStaminaGage);
+    CNatureScene::InitNatureUI(m_pStaminaGage,m_pStaminaBack);
 }
 
 //更新関数
@@ -59,6 +59,9 @@ void CTraning::Update()
 
    //キーマネージャーの更新処理
    CKeyManager::GetInstance()->Update();
+
+   //シーンマネージャークラス
+   CSceneManager* SceneMng = CSceneManager::GetInstance();
 
    //テキストの描画を進める
    if (CKeyManager::GetInstance()->IsDown(VK_RETURN) && m_ParamInc.size())
@@ -79,13 +82,29 @@ void CTraning::Update()
 #endif
 
    //テキストの描画が全て終わり次第シーン遷移
-   if (m_TextNo >= m_ParamInc.size() && !m_SceneTransitionFlg)
+   //トレーニングが成功していれば
+   if (!CHeroManager::GetInstance().GetFailure())
    {
-       m_SceneTransitionFlg = true;
+       if (m_TextNo >= m_ParamInc.size() && !m_SceneTransitionFlg)
+       {
+           m_SceneTransitionFlg = true;
+       }
+   }
+   else
+   {
+       //失敗した場合エンターキーで遷移
+       if (CKeyManager::GetInstance()->IsDown(VK_RETURN))
+       {
+           m_SceneTransitionFlg = true;
+       }
    }
 
+   //フェードが終わり次第シーン遷移
    if (m_SceneTransitionFlg && FadeOut())
    {
+       //休息フラグが立っていたら降ろす
+       if (SceneMng->GetRestFlag()) { SceneMng->SetRestFlag(false); }
+
        CSceneManager::GetInstance()->LoadCreate(CSceneManager::Nature);
    }
 }
@@ -94,10 +113,10 @@ void CTraning::Draw()
 {
     m_pGround->Draw();
     //上昇量テキストの描画(仮)
-    DrawUpText();
+    DrawTraningText();
 
     //育成関連のシーンで共通して表示するUI
-    CNatureScene::DrawNatureUI(m_pStaminaGage);
+    CNatureScene::DrawNatureUI(m_pStaminaGage,m_pStaminaBack);
 }
 
 //配列にテキストを追加する関数
@@ -108,22 +127,34 @@ void CTraning::AddText()
     //ヒーローマネージャーのインスタンスを変数に代入
     CHeroManager* Hero = &CHeroManager::GetInstance();
 
-    //----それぞれのパラメータが上昇していた場合の条件文----
+    //----それぞれのパラメータが変化していた場合の条件文と上昇量・減少量の計算----
     //筋力
-    bool IsPowerUp = Hero->GetBeforeParam().Power < Hero->GetParam().Power;
+    bool IsPowerUp = Hero->GetBeforeParam().Power < Hero->GetParam().Power;             //上昇
+    bool IsPowerDown = Hero->GetBeforeParam().Power > Hero->GetParam().Power;           //減少
+    float PowerInc = std::abs(Hero->GetParam().Power - Hero->GetBeforeParam().Power);   //上昇量
     //魔力
-    bool IsMagicUp = Hero->GetBeforeParam().Magic < Hero->GetParam().Magic;
+    bool IsMagicUp = Hero->GetBeforeParam().Magic < Hero->GetParam().Magic;             //上昇
+    bool IsMagicDown = Hero->GetBeforeParam().Magic > Hero->GetParam().Magic;           //減少
+    float MagicInc = std::abs(Hero->GetParam().Magic - Hero->GetBeforeParam().Magic);   //上昇量
     //素早さ
-    bool IsSpeedUp = Hero->GetBeforeParam().Speed < Hero->GetParam().Speed;
+    bool IsSpeedUp = Hero->GetBeforeParam().Speed < Hero->GetParam().Speed;             //上昇
+    bool IsSpeedDown = Hero->GetBeforeParam().Speed > Hero->GetParam().Speed;           //減少
+    float SpeedInc = std::abs(Hero->GetParam().Speed - Hero->GetBeforeParam().Speed);   //上昇量
     //体力
-    bool IsHpUp = Hero->GetBeforeParam().Hp < Hero->GetParam().Hp;
+    bool IsHpUp = Hero->GetBeforeParam().Hp < Hero->GetParam().Hp;             //上昇
+    bool IsHpDown = Hero->GetBeforeParam().Hp > Hero->GetParam().Hp;           //減少
+    float HpInc = std::abs(Hero->GetParam().Hp - Hero->GetBeforeParam().Hp);   //上昇量
+    //スタミナ
+    bool IsRecoveryStamina = Hero->GetBeforeStamina() <= Hero->GetStamina();
+    bool IsReduceStamina = Hero->GetBeforeStamina() >= Hero->GetStamina();
+    float StaminaInc = std::abs(Hero->GetStamina() - Hero->GetBeforeStamina());
 
-    //条件を満たしていれば構造体配列に格納                                   パラメータ名,上昇量
-    if (IsPowerUp && !AlreadyAddCheck(L"筋力が"))   { m_ParamInc.push_back({L"筋力が",static_cast<int>(Hero->GetParam().Power - Hero->GetBeforeParam().Power)}); }
-    if (IsMagicUp && !AlreadyAddCheck(L"魔力が"))   { m_ParamInc.push_back({ L"魔力が",static_cast<int>(Hero->GetParam().Magic - Hero->GetBeforeParam().Magic) }); }
-    if (IsSpeedUp && !AlreadyAddCheck(L"素早さが")) { m_ParamInc.push_back({ L"素早さが",static_cast<int>(Hero->GetParam().Speed - Hero->GetBeforeParam().Speed) }); }
-    if (IsHpUp    && !AlreadyAddCheck(L"体力が"))   { m_ParamInc.push_back({ L"体力が",static_cast<int>(Hero->GetParam().Hp - Hero->GetBeforeParam().Hp) }); }
-
+    //条件を満たしていれば構造体配列に格納                                   　　　　　　　　　　　パラメータ名,上昇量
+    if ((IsPowerUp || IsPowerDown) && !AlreadyAddCheck(L"筋力が")) { m_ParamInc.push_back({ L"筋力が",static_cast<int>(PowerInc), IsPowerUp ? L"上昇した" : L"減少した"}); }
+    if ((IsMagicUp || IsMagicDown) && !AlreadyAddCheck(L"魔力が")) { m_ParamInc.push_back({ L"魔力が",static_cast<int>(MagicInc), IsMagicUp ? L"上昇した" : L"減少した" }); }
+    if ((IsSpeedUp || IsSpeedDown) && !AlreadyAddCheck(L"素早さが")) { m_ParamInc.push_back({ L"素早さが",static_cast<int>(SpeedInc), IsSpeedUp ? L"上昇した" : L"減少した" }); }
+    if ((IsHpUp || IsHpDown) && !AlreadyAddCheck(L"体力が")) { m_ParamInc.push_back({ L"体力が",static_cast<int>(HpInc), IsHpUp ? L"上昇した" : L"減少した" }); }
+    if ((IsRecoveryStamina || IsReduceStamina) && !AlreadyAddCheck(L"スタミナが")) { m_ParamInc.push_back({ L"スタミナが",static_cast<int>(StaminaInc), IsRecoveryStamina ? L"回復した" : L"減少した" }); }
 }
 
 //配列に追加済みでないか調べる関数
@@ -140,34 +171,94 @@ bool CTraning::AlreadyAddCheck(std::wstring paramname)
     return false;
 }
 
-//上昇量テキストの描画
-void CTraning::DrawUpText()
+//トレーニング結果テキストの描画
+void CTraning::DrawTraningText()
 {
-    //テキスト描画クラスのインスタンスを変数に代入
+
+    //----クラスのインスタンスを変数に代入----
+    //テキスト描画クラス
     WriteText* Text = WriteText::GetInstance();
-    //ヒーローマネージャーのインスタンスを変数に代入
+    //ヒーローマネージャークラス
     CHeroManager* Hero = &CHeroManager::GetInstance();
+    //シーンマネージャークラス
+    CSceneManager* SceneMng = CSceneManager::GetInstance();
 
-    //「上昇した!」テキスト
-    std::wstring UpText = L"上昇した！";
+    //----テキストを変数に代入----
+    //失敗したか同課によって返すテキストを変える
+    std::wstring ResultText = Hero->GetFailure() ? L"失敗..." : L"成功!!";
 
+    //トレーニングが失敗したかの条件文
+    bool Failure = Hero->GetFailure();
+    //休息が選択されていたかの条件文
+    bool Rest = SceneMng->GetRestFlag();
+
+    //休憩が選択されていない場合
+    if (!Rest)
+    {
+        //トレーニング成功
+        if (!Failure)
+        {
+            //「成功!!」のテキスト描画
+            Text->Draw_Text(ResultText, WriteText::Success, RESULTTEXT_OFFSET);
+        }
+        else
+        {
+            //「失敗...」のテキスト描画
+            Text->Draw_Text(ResultText, WriteText::Failure, RESULTTEXT_OFFSET);
+        }
+    }
+
+    //テキスト番号が配列を超えていなければ
+    if (m_TextNo < m_ParamInc.size())
+    {
+        DrawParamChange(m_ParamInc[m_TextNo]);
+    }
+}
+
+//パラメータ変化の描画処理
+void CTraning::DrawParamChange(const IncParam& param)
+{
+    //----クラスのインスタンスを変数に代入----
+    //テキスト描画クラス
+    WriteText* Text = WriteText::GetInstance();
+
+    //描画位置の設定
     //テキストの描画位置を設定
-    //1行文の高さ
-    D3DXVECTOR2 TextOffset = { 0.0f, 60.0f };
     //初期位置
     D3DXVECTOR2 InitOffset = PARAMTEXT_OFFSET;
     //数値テキストの位置
     D3DXVECTOR2 ValueOffset = VALUETEXT_OFFSET;
 
-    if (m_TextNo < m_ParamInc.size())
-    {
-        const auto& Increase = m_ParamInc[m_TextNo];
-        
-        //素早さの時のみ位置をずらす
-        if (Increase.ParamName == L"素早さが") { ValueOffset.x += 30.0f; }
+    //素早さ、スタミナの場合の調整
+    if (param.ParamName == L"素早さが") { ValueOffset.x += 30.0f; }
+    else if (param.ParamName == L"スタミナが") { ValueOffset.x += 40.0f; }
 
-        Text->Draw_Text(Increase.ParamName, WriteText::Normal, InitOffset);
-        Text->Draw_Text(std::to_wstring(Increase.IncValue) + L"上昇した！", WriteText::Inc, ValueOffset);
+
+    //上昇したか減少したかによって文字の色を変更する
+    if (param.IncValue != 0) 
+    {
+        //パラメータの名前と変化の描画
+        Text->Draw_Text(param.ParamName, WriteText::Normal, InitOffset);
+
+        //パラメータが上昇、またはスタミナが回復していた場合
+        if (param.ParamChangeText == L"上昇した" || param.ParamChangeText == L"回復した")
+        {
+            Text->Draw_Text(std::to_wstring(param.IncValue) + param.ParamChangeText, WriteText::Inc, ValueOffset);
+        }
+        else
+        {
+            Text->Draw_Text(std::to_wstring(param.IncValue) + param.ParamChangeText, WriteText::Dec, ValueOffset);
+        }
+    }
+    else 
+    {
+        //スタミナがすでに満タンで上昇しなかった場合
+        if (param.ParamName == L"スタミナが")
+        {
+            //パラメータの名前と変化の描画
+            Text->Draw_Text(L"スタミナは", WriteText::Normal, InitOffset);
+            Text->Draw_Text(L"すでに満タンだった", WriteText::Inc, ValueOffset);
+        }
     }
 }
 

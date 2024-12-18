@@ -1,5 +1,5 @@
 #include "CText.h"
-#include "DirectWriteCustomFont/DirectWriteCustomFont.h"
+#include "DirectWriteCustomFont\DirectWriteCustomFont.h"
 
 CText::CText()
     : m_pDx9()

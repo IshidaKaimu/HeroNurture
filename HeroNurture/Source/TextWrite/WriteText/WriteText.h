@@ -13,6 +13,21 @@ public:
         Name,           //名前
         Turn,           //ターン数
         Inc,            //上昇値
+        Dec,            //減少値
+        S_Small,        //Sランク(小)
+        A_Small,        //Aランク(小)
+        B_Small,        //Bランク(小)
+        C_Small,        //Cランク(小)
+        D_Small,        //Dランク(小)
+        E_Small,        //Dランク(小)
+        S_Big,          //Sランク(大)
+        A_Big,          //Aランク(大)
+        B_Big,          //Bランク(大)
+        C_Big,          //Cランク(大)
+        D_Big,          //Dランク(大)
+        E_Big,          //Eランク(大)
+        Success,        //トレーニング結果(成功)
+        Failure,        //トレーニング結果(失敗)
 
         Max,    //最大値
     };
@@ -62,11 +77,26 @@ private:
     FONTDATA m_FontData[enFontType::Max] =  //入力用
     {
         //サイズ、太さ、色、名
-        { 60, DWRITE_FONT_WEIGHT_NORMAL, D2D1::ColorF(D2D1::ColorF::Black), 0 },     //初期値
-        { 60, DWRITE_FONT_WEIGHT_NORMAL, D2D1::ColorF(D2D1::ColorF::White), 0 },     //選択肢
-        { 30, DWRITE_FONT_WEIGHT_NORMAL, D2D1::ColorF(D2D1::ColorF::Black), 0 },     //選択肢内説明
-        { 80, DWRITE_FONT_WEIGHT_NORMAL, D2D1::ColorF(D2D1::ColorF::LightBlue), 0 }, //ターン数
-        { 60, DWRITE_FONT_WEIGHT_NORMAL, D2D1::ColorF(D2D1::ColorF::Orange), 0 }, //ターン数
+        { 60, DWRITE_FONT_WEIGHT_NORMAL, D2D1::ColorF(D2D1::ColorF::Black), 0 },        //初期値
+        { 60, DWRITE_FONT_WEIGHT_NORMAL, D2D1::ColorF(D2D1::ColorF::White), 0 },        //選択肢
+        { 30, DWRITE_FONT_WEIGHT_NORMAL, D2D1::ColorF(D2D1::ColorF::Black), 0 },        //選択肢内説明
+        { 80, DWRITE_FONT_WEIGHT_NORMAL, D2D1::ColorF(D2D1::ColorF::LightBlue), 0 },    //ターン数
+        { 60, DWRITE_FONT_WEIGHT_NORMAL, D2D1::ColorF(D2D1::ColorF::Orange), 0 },       //上昇値
+        { 60, DWRITE_FONT_WEIGHT_NORMAL, D2D1::ColorF(D2D1::ColorF::DarkBlue), 0 },     //減少値
+        { 60, DWRITE_FONT_WEIGHT_NORMAL, D2D1::ColorF(D2D1::ColorF::Gold), 0 },         //Sランク(小)
+        { 60, DWRITE_FONT_WEIGHT_NORMAL, D2D1::ColorF(D2D1::ColorF::PaleVioletRed), 0 },//Aランク(小)
+        { 60, DWRITE_FONT_WEIGHT_NORMAL, D2D1::ColorF(D2D1::ColorF::Pink), 0 },         //Bランク(小)
+        { 60, DWRITE_FONT_WEIGHT_NORMAL, D2D1::ColorF(D2D1::ColorF::LightGreen), 0 },   //Cランク(小)
+        { 60, DWRITE_FONT_WEIGHT_NORMAL, D2D1::ColorF(D2D1::ColorF::LightBlue), 0 },    //Dランク(小)
+        { 60, DWRITE_FONT_WEIGHT_NORMAL, D2D1::ColorF(D2D1::ColorF::Gray), 0 },         //Eランク(小)
+        { 90, DWRITE_FONT_WEIGHT_NORMAL, D2D1::ColorF(D2D1::ColorF::Gold), 0 },         //Sランク(大)
+        { 90, DWRITE_FONT_WEIGHT_NORMAL, D2D1::ColorF(D2D1::ColorF::PaleVioletRed), 0 },//Aランク(大)
+        { 90, DWRITE_FONT_WEIGHT_NORMAL, D2D1::ColorF(D2D1::ColorF::Pink), 0 },         //Bランク(大)
+        { 90, DWRITE_FONT_WEIGHT_NORMAL, D2D1::ColorF(D2D1::ColorF::LightGreen), 0 },   //Cランク(大)
+        { 90, DWRITE_FONT_WEIGHT_NORMAL, D2D1::ColorF(D2D1::ColorF::LightBlue), 0 },    //Dランク(大)
+        { 90, DWRITE_FONT_WEIGHT_NORMAL, D2D1::ColorF(D2D1::ColorF::Gray), 0 },         //Eランク(大)
+        { 100, DWRITE_FONT_WEIGHT_NORMAL, D2D1::ColorF(D2D1::ColorF::Orange), 1 },      //トレーニング結果(成功)
+        { 100, DWRITE_FONT_WEIGHT_NORMAL, D2D1::ColorF(D2D1::ColorF::DarkBlue), 1 },    //トレーニング結果(失敗)
     };
 };
 

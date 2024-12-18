@@ -15,6 +15,8 @@ public:
         : refCount_(0), factory_(factory), fontFilePaths_(fontFilePaths), currentFileIndex_(-1)
     {
         factory_->AddRef();
+        //”jŠü‚·‚é‚½‚ß‚ÉQÆ”‰ÁZ
+        AddRef();
     }
 
     ~CustomFontFileEnumerator()

@@ -10,6 +10,7 @@
 class WriteText;
 class CJson;
 class CSceneManager;
+class CUtility;
 
 //Json使用に必要な名前空間の格納
 using json = nlohmann::json;
@@ -30,7 +31,8 @@ const D3DXVECTOR3 CAMERALOOK_KAITO =  { 0.0, 5.0, 0.0 };
 constexpr float PARAM_POSX = 225.0f;
 constexpr float PARAM_POSY = 450.0f;
 //数値
-constexpr float PARAMVALUE_POSX = 230.0f;
+constexpr float PARAMVALUE_POSX = 235.0f;
+constexpr float PARAMVALUE_POSY = 455.0f;
 
 //----スタミナゲージ----
 //スタミナの最大値
@@ -69,23 +71,25 @@ public:
 	//描画関数
 	void Draw()		  override;
 
+	//デバッグ用関数
+	void Debug();
 
 protected:
 	// =======================
     // 育成関連のシーンで固定するUI関連の関数
     // =======================		
     //インスタンス生成
-	void CreateNatureUI( std::unique_ptr<CUIObject>& gage );
+	void CreateNatureUI(std::unique_ptr<CUIObject>& gage, std::unique_ptr<CUIObject>& back);
 	//データのロード
-	void LoadNatureUI( std::unique_ptr<CUIObject>& gage );
+	void LoadNatureUI(std::unique_ptr<CUIObject>& gage, std::unique_ptr<CUIObject>& back);
 	//初期化
-	void InitNatureUI( std::unique_ptr<CUIObject>& gage );
+	void InitNatureUI(std::unique_ptr<CUIObject>& gage, std::unique_ptr<CUIObject>& back);
 	//描画
-	virtual void DrawNatureUI( std::unique_ptr<CUIObject>& gage );
+	void DrawNatureUI(std::unique_ptr<CUIObject>& gage, std::unique_ptr<CUIObject>& back);
 
 public:
 	//各ヒーロー用ファイルの作成・読み込み
-	void LoadHeroData( const std::string& heroname );
+	void LoadHeroData(const std::string& heroname);
 
 	//トレーニング選択処理
 	void SelectTraning();
@@ -96,17 +100,25 @@ public:
 	//ヒーローのごとのパラメータ情報の書き込み
 	void SaveParam();
 	//パラメータ情報の書き込み(SaveParam関数で使う)
-	void WriteParam( const std::string& heroname );
+	void WriteParam(const std::string& heroname);
 	//パラメータUIの初期設定
-	void ParamInit( std::unique_ptr<CUIObject>& param, int no );
+	void ParamInit(std::unique_ptr<CUIObject>& param, int no);
 	//パラメータの描画
 	void DrawParam();
+
+	//パラメータの値の桁数による描画位置の補正
+	D3DXVECTOR2 PosCorrection(float value, float x, float y);
 
 	//残りターン数の描画
 	void DrawRemainingTurn();
 
 	//ゲージアニメーション
 	void GageAnim();
+
+	// =======================
+	// ゲッター・セッター関数
+	// =======================
+
 
 public:
 	//カメラマネージャクラス
@@ -143,6 +155,10 @@ public:
 	//----スタミナゲージ----
 	//ゲージ
 	std::unique_ptr<CUIObject> m_pStaminaGage;
+	//ゲージ背景
+	std::unique_ptr<CUIObject> m_pStaminaBack;
+	//スタミナゲージの幅
+	float m_GageWidth;
 
 	// =======================
 	// json関連
@@ -151,6 +167,8 @@ public:
 	json m_ParamWriter;
 	//パラメータデータ格納用
 	json m_ParamData;
+
+
 
 };
 
