@@ -5,13 +5,14 @@
 #include <memory>
 
 //----前方宣言---
-class CTitle;
+class CTitleScene;
 class CHeroSelect;
 class CNatureScene;
-class CTraning;
+class CTraningScene;
+class CTraningResult;
 
 //育成ターン数
-constexpr int MAX_TURN = 5;
+constexpr int MAX_TURN = 10;
 
 //=====================================
 //シーンマネージャークラス
@@ -24,10 +25,11 @@ public:
 	//シーンリスト列挙型
 	enum enSceneList :char
 	{
-		Title,
+		Login,
 		HeroSelect,
 		Nature,
 		Training,
+		TrainingResult,
 		Battle,
 		Max_S,
 		none,

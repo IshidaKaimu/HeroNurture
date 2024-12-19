@@ -66,7 +66,13 @@ void CHeroManager::NatureAnimation(int no)
 //スタミナの減少関数
 void CHeroManager::ReduceStamina()
 {
-    m_Stamina -= REDUSE_STAMINA;
+    if (m_Stamina > 0.0f) {
+        m_Stamina -= REDUSE_STAMINA;
+    }
+    else
+    {
+        m_Stamina -= 0.0f;
+    }
     //減少後のスタミナを保存
     m_AfterStamina = m_Stamina;
 }
@@ -79,7 +85,7 @@ void CHeroManager::StaminaRecovery()
     }
     else
     {
-        m_Stamina += 0;
+        m_Stamina += 0.0f;
     }
     //回復後のスタミナを保存
     m_AfterStamina = m_Stamina;

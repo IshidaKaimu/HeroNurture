@@ -257,7 +257,7 @@
     <ClInclude Include="Source\Scene\CSceneManager.h">
       <Filter>Source\Scene</Filter>
     </ClInclude>
-    <ClInclude Include="Source\Scene\Title\CTitle.h">
+    <ClInclude Include="Source\Scene\Login\CLoginScene.h">
       <Filter>Source\Scene\Title</Filter>
     </ClInclude>
     <ClInclude Include="Source\Scene\HeroSelect\CHeroSelect.h">
@@ -328,8 +328,9 @@
     <ClInclude Include="Source\GameObject\SkinMeshObject\Hero\CHeroManager.h" />
     <ClInclude Include="Source\GameObject\SkinMeshObject\Hero\Yui\CYui.h" />
     <ClInclude Include="Source\Light\LightManager\CLightManager.h" />
-    <ClInclude Include="Source\Scene\Traning\CTraning.h" />
+    <ClInclude Include="Source\Scene\Traning\CTraningScene.h" />
     <ClInclude Include="Source\Utility\CUtility.h" />
+    <ClInclude Include="Source\Scene\TraningResult\CTraningResultScene.h" />
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="Source\BoundingSphere\CBoundingSphere.cpp">
@@ -413,7 +414,7 @@
     <ClCompile Include="Source\Scene\CSceneManager.cpp">
       <Filter>Source\Scene</Filter>
     </ClCompile>
-    <ClCompile Include="Source\Scene\Title\CTitle.cpp">
+    <ClCompile Include="Source\Scene\Login\CLoginScene.cpp">
       <Filter>Source\Scene\Title</Filter>
     </ClCompile>
     <ClCompile Include="Source\Scene\HeroSelect\CHeroSelect.cpp">
@@ -486,8 +487,9 @@
     <ClCompile Include="Source\GameObject\SkinMeshObject\Hero\CHeroManager.cpp" />
     <ClCompile Include="Source\GameObject\SkinMeshObject\Hero\Yui\CYui.cpp" />
     <ClCompile Include="Source\Light\LightManager\CLightManager.cpp" />
-    <ClCompile Include="Source\Scene\Traning\CTraning.cpp" />
+    <ClCompile Include="Source\Scene\Traning\CTraningScene.cpp" />
     <ClCompile Include="Source\Utility\CUtility.cpp" />
+    <ClCompile Include="Source\Scene\TraningResult\CTraningResultScene.cpp" />
   </ItemGroup>
   <ItemGroup>
     <None Include="Source\ImGui\.editorconfig">

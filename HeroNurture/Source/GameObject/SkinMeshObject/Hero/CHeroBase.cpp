@@ -36,19 +36,8 @@ void CHeroBase::PowerUp( float stamina )
 {
 	//スタミナ量による補正処理
 	CorrectionByStamina(stamina);
-
-	//この乱数で成功するかを決める
-	int Succes = CUtility::GenerateRandomValue(0,100);
-
-	//失敗率の値よりも大きければ
-	if (Succes >= FailureRate(stamina)) {
-		float AppBonus = INCREASE_VALUE * (1.0 + (m_App.PowerApp / 100.0));
-		m_Param.Power += AppBonus * m_Correction;
-	}
-	else
-	{
-		m_Failure = true;
-	}
+	//トレーニング結果
+	TraningResult(stamina, m_App.PowerApp, m_Param.Power);
 }
 
 //魔力上昇
@@ -56,19 +45,8 @@ void CHeroBase::MagicUp( float stamina )
 {
 	//スタミナ量による補正処理
 	CorrectionByStamina(stamina);
-
-	//この乱数で成功するかを決める
-	int Succes = CUtility::GenerateRandomValue(0, 100);
-	
-	//失敗率の値よりも大きければ
-	if (Succes >= FailureRate(stamina)) {
-		float AppBonus = INCREASE_VALUE * (1.0 + (m_App.MagicApp / 100.0));
-		m_Param.Magic += AppBonus * m_Correction;
-	}
-	else
-	{
-		m_Failure = true;
-	}
+	//トレーニング結果
+	TraningResult(stamina, m_App.MagicApp, m_Param.Magic);
 }
 
 //素早さ上昇
@@ -76,18 +54,8 @@ void CHeroBase::SpeedUp( float stamina )
 {
 	//スタミナ量による補正処理
 	CorrectionByStamina(stamina);
-	
-	//この乱数で成功するかを決める
-	int Succes = CUtility::GenerateRandomValue(0, 100);
-	//失敗率の値よりも大きければ
-	if (Succes >= FailureRate(stamina)) {
-		float AppBonus = INCREASE_VALUE * (1.0 + (m_App.SpeedApp / 100.0));
-		m_Param.Speed += AppBonus * m_Correction;
-	}
-	else
-	{
-		m_Failure = true;
-	}
+	//トレーニング結果
+	TraningResult(stamina, m_App.SpeedApp, m_Param.Speed);
 }
 
 //体力上昇
@@ -95,12 +63,8 @@ void CHeroBase::HpUp( float stamina )
 {
 	//スタミナ量による補正処理
 	CorrectionByStamina(stamina);
-
-	//この乱数で成功するかを決める
-	int Succes = CUtility::GenerateRandomValue(0, 100);
-
-	float AppBonus = INCREASE_VALUE * (1.0 + (m_App.HpApp / 100.0));
-	m_Param.Hp += AppBonus * m_Correction;
+	//トレーニング結果
+	TraningResult(stamina, m_App.HpApp, m_Param.Hp);
 }
 
 //各ヒーローの初期パラメータの取得
@@ -168,6 +132,22 @@ int CHeroBase::FailureRate(float stamina)
 	if (stamina <= 50) return 50;
 	if (stamina <= 80) return 20;
 	return 0;
+}
+
+//トレーニング結果
+void CHeroBase::TraningResult(float stamina, float app, float& param)
+{
+	//この乱数で成功するかを決める
+	int Succes = CUtility::GenerateRandomValue(0, 100);
+
+	if (Succes >= FailureRate(stamina)) {
+		float AppBonus = INCREASE_VALUE * ( 1.0 + ( app / 100.0 ) );
+		param += AppBonus * m_Correction;
+	}
+	else
+	{
+		m_Failure = true;
+	}
 }
 
 

@@ -24,7 +24,6 @@ constexpr float RECOVERY_STAMINA = 25.0f;
 
 //=====================================
 //ヒーロー基底クラス
-//制作者：石田櫂夢
 //=====================================
 
 class CHeroBase
@@ -130,6 +129,7 @@ public:
 	bool GetFailure() { return m_Failure; }
 	void SetFailure(bool failure) { m_Failure = failure; }
 
+
 protected :	
 	// =======================
 	// jsonファイル関連関数
@@ -140,13 +140,12 @@ protected :
 	void UpdateParam(const json& jsondata, const std::string& heroname);
 
 private:
-	// =======================
-	// 残りスタミナ量関連関数
-	// =======================		
-	//残りスタミナ量による補正処理
+	//残りスタミナ量による補正関数
 	void CorrectionByStamina(float stamina);
-	//失敗率
+	//失敗率を返す関数
 	int FailureRate(float stamina);
+	//トレーニング結果関数
+	void TraningResult(float stamina, float app, float& param);
 
 protected:
 	//ヒーローのパラメータ構造体

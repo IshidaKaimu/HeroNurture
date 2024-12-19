@@ -18,10 +18,11 @@ CNatureScene::CNatureScene()
     , m_Name        ()
     , m_pGround     ()
     , m_pSky        ()
-    , m_pPowerParam ()
-    , m_pMagicParam ()
-    , m_pSpeedParam ()
-    , m_pHpParam    ()
+    , m_pParamBack  ()
+    //, m_pPowerParam ()
+    //, m_pMagicParam ()
+    //, m_pSpeedParam ()
+    //, m_pHpParam    ()
     , m_pStaminaGage()
     , m_pStaminaBack()
     , m_GageWidth   ( CSceneManager::GetInstance()->GetStaminaWidth() )
@@ -65,14 +66,17 @@ void CNatureScene::Create()
 
     //UIオブジェクト
     //----各パラメータ----
-    //筋力
-    m_pPowerParam = std::make_unique<CUIObject>();
-    //魔力
-    m_pMagicParam = std::make_unique<CUIObject>();
-    //素早さ
-    m_pSpeedParam = std::make_unique<CUIObject>();
-    //体力
-    m_pHpParam    = std::make_unique<CUIObject>();
+    // 
+    m_pParamBack = std::make_unique<CUIObject>();
+
+    ////筋力
+    //m_pPowerParam = std::make_unique<CUIObject>();
+    ////魔力
+    //m_pMagicParam = std::make_unique<CUIObject>();
+    ////素早さ
+    //m_pSpeedParam = std::make_unique<CUIObject>();
+    ////体力
+    //m_pHpParam    = std::make_unique<CUIObject>();
     
     //育成関連のシーンで共通して表示するUIのインスタンス生成
     CreateNatureUI(m_pStaminaGage,m_pStaminaBack);
@@ -101,14 +105,16 @@ void CNatureScene::LoadData()
     m_pGround->LoadData();
 
     //----各パラメータのUIのスプライト設定----
-    //筋力
-    m_pPowerParam->AttachSprite(CUIManager::GetSprite(CUIManager::PowerParam));
-    //魔力
-    m_pMagicParam->AttachSprite(CUIManager::GetSprite(CUIManager::MagicParam));
-    //素早さ
-    m_pSpeedParam->AttachSprite(CUIManager::GetSprite(CUIManager::SpeedParam));
-    //体力
-    m_pHpParam->AttachSprite(CUIManager::GetSprite(CUIManager::HpParam));
+    // 
+    m_pParamBack->AttachSprite(CUIManager::GetSprite(CUIManager::ParamList));
+    ////筋力
+    //m_pPowerParam->AttachSprite(CUIManager::GetSprite(CUIManager::PowerParam));
+    ////魔力
+    //m_pMagicParam->AttachSprite(CUIManager::GetSprite(CUIManager::MagicParam));
+    ////素早さ
+    //m_pSpeedParam->AttachSprite(CUIManager::GetSprite(CUIManager::SpeedParam));
+    ////体力
+    //m_pHpParam->AttachSprite(CUIManager::GetSprite(CUIManager::HpParam));
 
     //スタミナゲージのUIのスプライト設定
     LoadNatureUI(m_pStaminaGage, m_pStaminaBack);
@@ -145,14 +151,14 @@ void CNatureScene::Initialize()
     m_Light.vDirection = D3DXVECTOR3(0.0f, 1.0f, 0.0f); //ライト方向
    
     //----各種パラメータUIの初期設定----
-    //筋力
-    ParamInit(m_pPowerParam, 1);
-    //魔力
-    ParamInit(m_pMagicParam, 2);
-    //素早さ
-    ParamInit(m_pSpeedParam, 3);
-    //体力
-    ParamInit(m_pHpParam, 4);
+    ////筋力
+    ParamUIInit(m_pParamBack, 1);
+    ////魔力
+    //ParamUIInit(m_pMagicParam, 2);
+    ////素早さ
+    //ParamUIInit(m_pSpeedParam, 3);
+    ////体力
+    //ParamUIInit(m_pHpParam, 4);
 
     //育成関連のシーンで共通のUIの初期化
     InitNatureUI(m_pStaminaGage,m_pStaminaBack);
@@ -438,12 +444,12 @@ void CNatureScene::WriteParam(const std::string& heroname)
 
 
 //各種パラメータUI初期設定
-void CNatureScene::ParamInit(std::unique_ptr<CUIObject>& param, int no)
+void CNatureScene::ParamUIInit(std::unique_ptr<CUIObject>& param, int no)
 {
     //位置
     param->SetPosition(PARAM_POSX * no, PARAM_POSY, 0.0f);
     //拡縮
-    param->SetScale(0.3f, 0.3f, 0.3f);
+    param->SetScale(0.8f, 0.8f, 0.8f);
     //α値
     param->SetAlpha(1.0f);
     //幅、高さ
@@ -457,20 +463,18 @@ void CNatureScene::DrawParam()
     WriteText* Text = WriteText::GetInstance();
 
     //----各種パラメータのUI描画(背景,値,ランク)----
+    //背景
+    m_pParamBack->Draw();
     //筋力
-    m_pPowerParam->Draw();
     Text->Draw_Text(std::to_wstring(static_cast<int>(m_pHero->GetParam().Power)), WriteText::Normal, PosCorrection(m_pHero->GetParam().Power,PARAM_POSX * 1.35f,PARAMVALUE_POSY));
     CUtility::GetInstance().DrawRank(m_pHero->GetParam().Power, 2,PARAM_POSX * 1, PARAMVALUE_POSY);
     //魔力
-    m_pMagicParam->Draw();
     Text->Draw_Text(std::to_wstring(static_cast<int>(m_pHero->GetParam().Magic)), WriteText::Normal, PosCorrection(m_pHero->GetParam().Magic, PARAM_POSX * 2.35f, PARAMVALUE_POSY));
     CUtility::GetInstance().DrawRank(m_pHero->GetParam().Magic, 2, PARAM_POSX * 2, PARAMVALUE_POSY);
     //素早さ
-    m_pSpeedParam->Draw();
     Text->Draw_Text(std::to_wstring(static_cast<int>(m_pHero->GetParam().Speed)), WriteText::Normal, PosCorrection(m_pHero->GetParam().Speed, PARAM_POSX * 3.35f, PARAMVALUE_POSY));
     CUtility::GetInstance().DrawRank(m_pHero->GetParam().Speed, 2, PARAM_POSX * 3, PARAMVALUE_POSY);
     //体力
-    m_pHpParam->Draw();
     Text->Draw_Text(std::to_wstring(static_cast<int>(m_pHero->GetParam().Hp)), WriteText::Normal, PosCorrection(m_pHero->GetParam().Hp, PARAM_POSX * 4.35f, PARAMVALUE_POSY));
     CUtility::GetInstance().DrawRank(m_pHero->GetParam().Hp, 2, PARAM_POSX * 4, PARAMVALUE_POSY);
 }

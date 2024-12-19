@@ -25,12 +25,29 @@ int CUtility::GenerateRandomValue(int min, int max)
 void CUtility::DrawRank(float value, int typeno, float x, float y)
 {
     //各ランクの基準値の設定
-    if (value >= 1000.0f){ m_Rank = S; }
-    if (value >= 500.0f) { m_Rank = A; }
-    if (value >= 400.0f) { m_Rank = B; }
-    if (value >= 300.0f) { m_Rank = C; }
-    if (value >= 200.0f) { m_Rank = D; }
-    if (value < 200.0f)  { m_Rank = E; }
+    switch (typeno)
+    {
+    case 1:
+        //総合評価中の描画
+        if (value < 2000.0) { m_Rank = S; }
+        if (value < 1500.0f){ m_Rank = A; }
+        if (value < 1200.0f){ m_Rank = B; }
+        if (value < 900.0f) { m_Rank = C; }
+        if (value < 600.0f) { m_Rank = D; }
+        if (value < 300.0f) { m_Rank = E; }
+        break;
+    case 2:    
+        //育成中の描画
+        if (value < 1000.0f){ m_Rank = S; }
+        if (value < 600.0f) { m_Rank = A; }
+        if (value < 500.0f) { m_Rank = B; }
+        if (value < 400.0f) { m_Rank = C; }
+        if (value < 300.0f) { m_Rank = D; }
+        if (value < 200.0f) { m_Rank = E; }
+        break;
+    default:
+        break;
+    }
 
     //テキスト描画クラスのインスタンスを変数に代入
     WriteText* Text = WriteText::GetInstance();

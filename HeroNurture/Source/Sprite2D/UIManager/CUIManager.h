@@ -11,10 +11,7 @@ public:
 	{
 		Fade,		 //シーン遷移時に使うフェード用の画像
 		WhiteFade,	 //白フェード用画像
-		PowerParam,  //筋力パラメータ表示用画像
-		SpeedParam,  //素早さパラメータ表示用画像
-		MagicParam,  //魔力パラメータ表示用画像
-		HpParam,     //体力パラメータ表示用画像
+		ParamList,   //育成中のパラメータ表
 		StaminaGage, //スタミナゲージ表示用画像
 		StaminaBack, //スタミナゲージ背景用画像
 

@@ -268,8 +268,9 @@
     <ClCompile Include="Source\Scene\CSceneBase.cpp" />
     <ClCompile Include="Source\Scene\CSceneManager.cpp" />
     <ClCompile Include="Source\Scene\HeroSelect\CHeroSelect.cpp" />
-    <ClCompile Include="Source\Scene\Title\CTitle.cpp" />
-    <ClCompile Include="Source\Scene\Traning\CTraning.cpp" />
+    <ClCompile Include="Source\Scene\Login\CLoginScene.cpp" />
+    <ClCompile Include="Source\Scene\TraningResult\CTraningResultScene.cpp" />
+    <ClCompile Include="Source\Scene\Traning\CTraningScene.cpp" />
     <ClCompile Include="Source\SkinMesh\CSkinMesh.cpp" />
     <ClCompile Include="Source\SkinMesh\CSkinMeshParser.cpp" />
     <ClCompile Include="Source\SkinMesh\SkinMeshManager\CSkinMeshManager.cpp" />
@@ -330,8 +331,9 @@
     <ClInclude Include="Source\Scene\CSceneBase.h" />
     <ClInclude Include="Source\Scene\CSceneManager.h" />
     <ClInclude Include="Source\Scene\HeroSelect\CHeroSelect.h" />
-    <ClInclude Include="Source\Scene\Title\CTitle.h" />
-    <ClInclude Include="Source\Scene\Traning\CTraning.h" />
+    <ClInclude Include="Source\Scene\Login\CLoginScene.h" />
+    <ClInclude Include="Source\Scene\TraningResult\CTraningResultScene.h" />
+    <ClInclude Include="Source\Scene\Traning\CTraningScene.h" />
     <ClInclude Include="Source\Singleton\CSingleton.h" />
     <ClInclude Include="Source\SkinMesh\CSkinMesh.h" />
     <ClInclude Include="Source\SkinMesh\CSkinMeshParser.h" />

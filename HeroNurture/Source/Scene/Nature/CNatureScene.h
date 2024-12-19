@@ -27,12 +27,13 @@ const D3DXVECTOR3 CAMERAPOS_KAITO  =  { 0.0, 5.0, -4.5 };
 const D3DXVECTOR3 CAMERALOOK_KAITO =  { 0.0, 5.0, 0.0 };
 
 //----パラメータUI情報----
-//アイコン・パラメータ名
+//パラメータ背景
 constexpr float PARAM_POSX = 225.0f;
 constexpr float PARAM_POSY = 450.0f;
+constexpr float PARAM_INTERVAL = 200.0f;
 //数値
-constexpr float PARAMVALUE_POSX = 235.0f;
-constexpr float PARAMVALUE_POSY = 455.0f;
+constexpr float PARAMVALUE_POSX = 240.0f;
+constexpr float PARAMVALUE_POSY = 460.0f;
 
 //----スタミナゲージ----
 //スタミナの最大値
@@ -102,7 +103,7 @@ public:
 	//パラメータ情報の書き込み(SaveParam関数で使う)
 	void WriteParam(const std::string& heroname);
 	//パラメータUIの初期設定
-	void ParamInit(std::unique_ptr<CUIObject>& param, int no);
+	void ParamUIInit(std::unique_ptr<CUIObject>& param, int no);
 	//パラメータの描画
 	void DrawParam();
 
@@ -136,26 +137,26 @@ public:
 	// =======================
 	// オブジェクトクラス
 	// =======================		
-	//スタティックメッシュ
+	//----スタティックメッシュ----
 	//地面クラス
 	std::unique_ptr<CGround> m_pGround;
 	//スカイボックスクラス
 	std::unique_ptr<CSky>	 m_pSky;
 	
-	//UI
-	//----各パラメータ----
-	//筋力
-	std::unique_ptr<CUIObject> m_pPowerParam;
-	//魔力
-	std::unique_ptr<CUIObject> m_pMagicParam;
-	//素早さ
-	std::unique_ptr<CUIObject> m_pSpeedParam;
-	//体力
-	std::unique_ptr<CUIObject> m_pHpParam;
-	//----スタミナゲージ----
-	//ゲージ
+	//----UI----	
+	//パラメータ背景
+	std::unique_ptr<CUIObject>  m_pParamBack;
+	////筋力パラメータ背景
+	//std::unique_ptr<CUIObject> m_pPowerParam;
+	////魔力パラメータ背景
+	//std::unique_ptr<CUIObject> m_pMagicParam;
+	////素早さパラメータ背景
+	//std::unique_ptr<CUIObject> m_pSpeedParam;
+	////体力パラメータ背景
+	//std::unique_ptr<CUIObject> m_pHpParam;
+	//スタミナゲージ
 	std::unique_ptr<CUIObject> m_pStaminaGage;
-	//ゲージ背景
+	//スタミナゲージゲージ背景
 	std::unique_ptr<CUIObject> m_pStaminaBack;
 	//スタミナゲージの幅
 	float m_GageWidth;

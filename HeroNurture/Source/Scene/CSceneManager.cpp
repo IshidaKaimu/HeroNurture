@@ -1,8 +1,9 @@
 #include "CSceneManager.h"
-#include "Scene\Title\CTitle.h"
+#include "Scene\Login\CLoginScene.h"
 #include "Scene\Nature\CNatureScene.h"
 #include "Scene\HeroSelect\CHeroSelect.h"
-#include "Scene\Traning\CTraning.h"
+#include "Scene\Traning\CTraningScene.h"
+#include "Scene\TraningResult\CTraningResultScene.h"
 #include "ImGui\ImGuiManager\ImGuiManager.h"
 CSceneManager::CSceneManager()
     : m_Scene       ()
@@ -11,7 +12,7 @@ CSceneManager::CSceneManager()
     , m_pDx11       ( nullptr )
     , m_GageWidth   ( 1.0f )
 {
-    m_Scene = std::make_unique<CTitle>();   //make_unique:インスタンスを生成して、使わなくなったら勝手に破棄してくれる
+    m_Scene = std::make_unique<CLoginScene>();   //make_unique:インスタンスを生成して、使わなくなったら勝手に破棄してくれる
 }
 
 
@@ -50,10 +51,11 @@ void CSceneManager::Initialize()
 void CSceneManager::Update()
 {        
     ImGui::Begin(JAPANESE("シーン"));
-    if (ImGui::Button(JAPANESE("タイトル"))) { LoadCreate(enSceneList::Title); }
+    if (ImGui::Button(JAPANESE("ログイン"))) { LoadCreate(enSceneList::Login); }
     if (ImGui::Button(JAPANESE("ヒーロー選択"))) { LoadCreate(enSceneList::HeroSelect); }
     if (ImGui::Button(JAPANESE("育成"))) { LoadCreate(enSceneList::Nature); }
     if (ImGui::Button(JAPANESE("修行"))) { LoadCreate(enSceneList::Training); }
+    if (ImGui::Button(JAPANESE("育成結果"))) { LoadCreate(enSceneList::TrainingResult); }
     ImGui::End();
     m_Scene->Update();  //入ってるシーンの動作を行う   
 }
@@ -90,10 +92,11 @@ std::unique_ptr<CSceneBase> CSceneManager::Create(enSceneList List)
     //現在のシーンのインスタンスを返す
     switch (List)
     {
-    case CSceneManager::Title:          return std::make_unique<CTitle>();
+    case CSceneManager::Login:          return std::make_unique<CLoginScene>();
     case CSceneManager::HeroSelect:     return std::make_unique<CHeroSelect>();
     case CSceneManager::Nature:         return std::make_unique<CNatureScene>();
-    case CSceneManager::Training:       return std::make_unique<CTraning>();
+    case CSceneManager::Training:       return std::make_unique<CTraningScene>();
+    case CSceneManager::TrainingResult: return std::make_unique<CTraningResultScene>();
     case CSceneManager::Max_S:          return nullptr;
     case CSceneManager::none:           return nullptr;
     default:                            return nullptr;

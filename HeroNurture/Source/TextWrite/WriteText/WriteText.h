@@ -2,6 +2,10 @@
 #include "DirectWriteCustomFont/DirectWriteCustomFont.h"
 #include "CDirectX11.h"
 
+//=====================================
+// テキスト描画クラス
+//=====================================
+
 class WriteText
 {
 public:
@@ -77,26 +81,26 @@ private:
     FONTDATA m_FontData[enFontType::Max] =  //入力用
     {
         //サイズ、太さ、色、名
-        { 60, DWRITE_FONT_WEIGHT_NORMAL, D2D1::ColorF(D2D1::ColorF::Black), 0 },        //初期値
-        { 60, DWRITE_FONT_WEIGHT_NORMAL, D2D1::ColorF(D2D1::ColorF::White), 0 },        //選択肢
-        { 30, DWRITE_FONT_WEIGHT_NORMAL, D2D1::ColorF(D2D1::ColorF::Black), 0 },        //選択肢内説明
-        { 80, DWRITE_FONT_WEIGHT_NORMAL, D2D1::ColorF(D2D1::ColorF::LightBlue), 0 },    //ターン数
-        { 60, DWRITE_FONT_WEIGHT_NORMAL, D2D1::ColorF(D2D1::ColorF::Orange), 0 },       //上昇値
-        { 60, DWRITE_FONT_WEIGHT_NORMAL, D2D1::ColorF(D2D1::ColorF::DarkBlue), 0 },     //減少値
-        { 60, DWRITE_FONT_WEIGHT_NORMAL, D2D1::ColorF(D2D1::ColorF::Gold), 0 },         //Sランク(小)
-        { 60, DWRITE_FONT_WEIGHT_NORMAL, D2D1::ColorF(D2D1::ColorF::PaleVioletRed), 0 },//Aランク(小)
-        { 60, DWRITE_FONT_WEIGHT_NORMAL, D2D1::ColorF(D2D1::ColorF::Pink), 0 },         //Bランク(小)
-        { 60, DWRITE_FONT_WEIGHT_NORMAL, D2D1::ColorF(D2D1::ColorF::LightGreen), 0 },   //Cランク(小)
-        { 60, DWRITE_FONT_WEIGHT_NORMAL, D2D1::ColorF(D2D1::ColorF::LightBlue), 0 },    //Dランク(小)
-        { 60, DWRITE_FONT_WEIGHT_NORMAL, D2D1::ColorF(D2D1::ColorF::Gray), 0 },         //Eランク(小)
-        { 90, DWRITE_FONT_WEIGHT_NORMAL, D2D1::ColorF(D2D1::ColorF::Gold), 0 },         //Sランク(大)
-        { 90, DWRITE_FONT_WEIGHT_NORMAL, D2D1::ColorF(D2D1::ColorF::PaleVioletRed), 0 },//Aランク(大)
-        { 90, DWRITE_FONT_WEIGHT_NORMAL, D2D1::ColorF(D2D1::ColorF::Pink), 0 },         //Bランク(大)
-        { 90, DWRITE_FONT_WEIGHT_NORMAL, D2D1::ColorF(D2D1::ColorF::LightGreen), 0 },   //Cランク(大)
-        { 90, DWRITE_FONT_WEIGHT_NORMAL, D2D1::ColorF(D2D1::ColorF::LightBlue), 0 },    //Dランク(大)
-        { 90, DWRITE_FONT_WEIGHT_NORMAL, D2D1::ColorF(D2D1::ColorF::Gray), 0 },         //Eランク(大)
-        { 100, DWRITE_FONT_WEIGHT_NORMAL, D2D1::ColorF(D2D1::ColorF::Orange), 1 },      //トレーニング結果(成功)
-        { 100, DWRITE_FONT_WEIGHT_NORMAL, D2D1::ColorF(D2D1::ColorF::DarkBlue), 1 },    //トレーニング結果(失敗)
+        { 60, DWRITE_FONT_WEIGHT_NORMAL, D2D1::ColorF(D2D1::ColorF::Black), 0 },         //初期値
+        { 60, DWRITE_FONT_WEIGHT_NORMAL, D2D1::ColorF(D2D1::ColorF::White), 0 },         //選択肢
+        { 30, DWRITE_FONT_WEIGHT_NORMAL, D2D1::ColorF(D2D1::ColorF::Black), 0 },         //選択肢内説明
+        { 80, DWRITE_FONT_WEIGHT_NORMAL, D2D1::ColorF(D2D1::ColorF::LightBlue), 0 },     //ターン数
+        { 60, DWRITE_FONT_WEIGHT_NORMAL, D2D1::ColorF(D2D1::ColorF::Orange), 0 },        //上昇値
+        { 60, DWRITE_FONT_WEIGHT_NORMAL, D2D1::ColorF(D2D1::ColorF::DarkBlue), 0 },      //減少値
+        { 60, DWRITE_FONT_WEIGHT_NORMAL, D2D1::ColorF(D2D1::ColorF::Gold), 0 },          //Sランク(小)
+        { 60, DWRITE_FONT_WEIGHT_NORMAL, D2D1::ColorF(D2D1::ColorF::PaleVioletRed), 0 }, //Aランク(小)
+        { 60, DWRITE_FONT_WEIGHT_NORMAL, D2D1::ColorF(D2D1::ColorF::Pink), 0 },          //Bランク(小)
+        { 60, DWRITE_FONT_WEIGHT_NORMAL, D2D1::ColorF(D2D1::ColorF::LightGreen), 0 },    //Cランク(小)
+        { 60, DWRITE_FONT_WEIGHT_NORMAL, D2D1::ColorF(D2D1::ColorF::LightBlue), 0 },     //Dランク(小)
+        { 60, DWRITE_FONT_WEIGHT_NORMAL, D2D1::ColorF(D2D1::ColorF::DarkGray), 0 },      //Eランク(小)
+        { 120, DWRITE_FONT_WEIGHT_NORMAL, D2D1::ColorF(D2D1::ColorF::Gold), 0 },         //Sランク(大)
+        { 120, DWRITE_FONT_WEIGHT_NORMAL, D2D1::ColorF(D2D1::ColorF::PaleVioletRed), 0 },//Aランク(大)
+        { 120, DWRITE_FONT_WEIGHT_NORMAL, D2D1::ColorF(D2D1::ColorF::Pink), 0 },         //Bランク(大)
+        { 120, DWRITE_FONT_WEIGHT_NORMAL, D2D1::ColorF(D2D1::ColorF::LightGreen), 0 },   //Cランク(大)
+        { 120, DWRITE_FONT_WEIGHT_NORMAL, D2D1::ColorF(D2D1::ColorF::LightBlue), 0 },    //Dランク(大)
+        { 120, DWRITE_FONT_WEIGHT_NORMAL, D2D1::ColorF(D2D1::ColorF::DarkGray), 0 },     //Eランク(大)
+        { 100, DWRITE_FONT_WEIGHT_NORMAL, D2D1::ColorF(D2D1::ColorF::Orange), 1 },       //トレーニング結果(成功)
+        { 100, DWRITE_FONT_WEIGHT_NORMAL, D2D1::ColorF(D2D1::ColorF::DarkBlue), 1 },     //トレーニング結果(失敗)
     };
 };
 

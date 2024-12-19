@@ -47,19 +47,25 @@ private:
 	//カメラマネージャ
 	CCameraManager* m_pCamera;
 
-	//スカイボックス
-	CSky* m_pSky;
 
+    //=====================================
+	// オブジェクトクラス
+	//=====================================
+	//----スタティックメッシュ-----
+	//スカイボックス
+	std::unique_ptr<CSky>    m_pSky;
 	//地面
-	CGround* m_pGround;
+	std::unique_ptr<CGround> m_pGround;
+
+	//----スキンメッシュ----
+	//ユイ
+	std::unique_ptr<CYui>	m_pYui;
+	//カイト
+	std::unique_ptr<CKaito> m_pKaito;
+
 
 	//ユーザー名
 	std::wstring m_UserName;
 
-    //----各ヒーロークラス----
-	//ユイ
-	CYui*	m_pYui;
-	//カイト
-	CKaito* m_pKaito;
 
 };

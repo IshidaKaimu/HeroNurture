@@ -1,4 +1,4 @@
-#include "CTitle.h"
+#include "CLoginScene.h"
 #include "Scene\CSceneManager.h"
 #include "KeyManager\CKeyManager.h"
 #include "StaticMesh\MeshManager\CMeshManager.h"
@@ -8,27 +8,22 @@
 #include "Json\CJson.h"
 
 //タイトルシーン
-CTitle::CTitle()
+CLoginScene::CLoginScene()
     : m_pCamera ( &CCameraManager::GetInstance() )
     , m_pHero()
     , m_pSky    ()
     , m_pGround ()
-    , m_Opening(false)
-    , m_BossApp(false)
-    , m_BossEvo(false)
-    , m_Special(false)
-    , m_Time   (-10.0f)
 {
     //ライト情報
     m_Light.vDirection = D3DXVECTOR3(0.0f, 1.0f, 0.0f); //ライト方向
 }
 
-CTitle::~CTitle()
+CLoginScene::~CLoginScene()
 {
 }
 
 //構築関数
-void CTitle::Create()
+void CLoginScene::Create()
 {
     //スカイボックスクラス
     m_pSky = new CSky();
@@ -39,7 +34,7 @@ void CTitle::Create()
 }
 
 //破棄関数
-void CTitle::Releace()
+void CLoginScene::Releace()
 {
     SAFE_DELETE(m_pSky);
     SAFE_DELETE(m_pGround);
@@ -48,7 +43,7 @@ void CTitle::Releace()
 
 
 //データ設定関数
-void CTitle::LoadData()
+void CLoginScene::LoadData()
 {
     //メッシュマネージャーのインスタンスを変数に代入
     CMeshManager* MMng = CMeshManager::GetInstance();
@@ -58,13 +53,13 @@ void CTitle::LoadData()
     Initialize();
 }
 
-void CTitle::Initialize()
+void CLoginScene::Initialize()
 {
 }
 
 
 //更新関数
-void CTitle::Update()
+void CLoginScene::Update()
 {   
     //フェードイン処理
     if (!FadeIn()) { return; }
@@ -77,31 +72,24 @@ void CTitle::Update()
     {
         //オープニングシーンへ
         m_SceneTransitionFlg = true;
-        m_Opening = true;
     }
     //フェードアウト処理
     if (m_SceneTransitionFlg && FadeOut()) 
     {
-        if (m_Opening == true) {
-            //ユーザーネームが登録されていたら
-            if (!m_UserName.empty()) 
-            {
-                //シーンのロード
-                CSceneManager::GetInstance()->LoadCreate(CSceneManager::HeroSelect);
-            }
-        }
+       //ユーザーネームが登録されていたら
+       if (!m_UserName.empty()) 
+       {
+           //シーンのロード
+           CSceneManager::GetInstance()->LoadCreate(CSceneManager::HeroSelect);
+       }
     }
 
 
 }
 
 //描画関数
-void CTitle::Draw()
+void CLoginScene::Draw()
 {
-    if (m_Time <= 5.0f) {
-        m_Time += 0.1f;
-    }
-
     //カメラの動作
     m_pCamera->CameraUpdate();
 
@@ -116,7 +104,7 @@ void CTitle::Draw()
 }
 
 //イージング
-float CTitle::Easing(float x)
+float CLoginScene::Easing(float x)
 {
     const float c1 = 1.70158f;
     const float c3 = c1 + 1.0f;
@@ -125,7 +113,7 @@ float CTitle::Easing(float x)
 }
 
 //名前入力処理
-void CTitle::InputName()
+void CLoginScene::InputName()
 {
     //キーマネージャのインスタンスを変数に代入
     CKeyManager* KeyMng = CKeyManager::GetInstance();
@@ -156,7 +144,7 @@ void CTitle::InputName()
 }
 
 //wstringをstringに変換
-std::string CTitle::WstringToString(std::wstring owstring)
+std::string CLoginScene::WstringToString(std::wstring owstring)
 {
     //wstringからSJIS
     int iBufferSize = 

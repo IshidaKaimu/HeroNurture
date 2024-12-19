@@ -1,11 +1,11 @@
-#include "CTraning.h"
+#include "CTraningScene.h"
 #include "ImGui\ImGuiManager\ImGuiManager.h"
 #include "KeyManager\CKeyManager.h"
 #include "Scene\CSceneManager.h"
 #include "WriteText\WriteText.h"
 #include "SkinMeshObject\Hero\CHeroManager.h"
 
-CTraning::CTraning()
+CTraningScene::CTraningScene()
     : m_pCamera ( &CCameraManager::GetInstance() )
     , m_pSky    ()
     , m_pGround ()
@@ -13,12 +13,12 @@ CTraning::CTraning()
 {
 }
 
-CTraning::~CTraning()
+CTraningScene::~CTraningScene()
 {
 }
 
 //構築関数
-void CTraning::Create()
+void CTraningScene::Create()
 {
     //----インスタンス生成----
     //スタティックメッシュオブジェクト
@@ -32,11 +32,11 @@ void CTraning::Create()
 
 }
 //破棄関数
-void CTraning::Releace()
+void CTraningScene::Releace()
 {
 }
 //データ読み込み関数
-void CTraning::LoadData()
+void CTraningScene::LoadData()
 {
     //地面のメッシュデータ設定
     m_pGround->LoadData();
@@ -45,14 +45,14 @@ void CTraning::LoadData()
     CNatureScene::LoadNatureUI(m_pStaminaGage,m_pStaminaBack);
 }
 //初期化関数
-void CTraning::Initialize()
+void CTraningScene::Initialize()
 {
     //育成関連のシーンで共通するUI
     CNatureScene::InitNatureUI(m_pStaminaGage,m_pStaminaBack);
 }
 
 //更新関数
-void CTraning::Update()
+void CTraningScene::Update()
 {
     //フェードイン処理
     if (!FadeIn()) { return; }
@@ -109,7 +109,7 @@ void CTraning::Update()
    }
 }
 //描画関数
-void CTraning::Draw()
+void CTraningScene::Draw()
 {
     m_pGround->Draw();
     //上昇量テキストの描画(仮)
@@ -120,7 +120,7 @@ void CTraning::Draw()
 }
 
 //配列にテキストを追加する関数
-void CTraning::AddText()
+void CTraningScene::AddText()
 {
     //テキスト描画クラスのインスタンスを変数に代入
     WriteText* Text = WriteText::GetInstance();
@@ -158,7 +158,7 @@ void CTraning::AddText()
 }
 
 //配列に追加済みでないか調べる関数
-bool CTraning::AlreadyAddCheck(std::wstring paramname)
+bool CTraningScene::AlreadyAddCheck(std::wstring paramname)
 {
     //既に追加していないかの確認
     bool AlreadyAdd = std::any_of(m_ParamInc.begin(), m_ParamInc.end(), [&](IncParam param) { return param.ParamName == paramname; });
@@ -172,7 +172,7 @@ bool CTraning::AlreadyAddCheck(std::wstring paramname)
 }
 
 //トレーニング結果テキストの描画
-void CTraning::DrawTraningText()
+void CTraningScene::DrawTraningText()
 {
 
     //----クラスのインスタンスを変数に代入----
@@ -216,11 +216,13 @@ void CTraning::DrawTraningText()
 }
 
 //パラメータ変化の描画処理
-void CTraning::DrawParamChange(const IncParam& param)
+void CTraningScene::DrawParamChange(const IncParam& param)
 {
     //----クラスのインスタンスを変数に代入----
     //テキスト描画クラス
     WriteText* Text = WriteText::GetInstance();
+    //ヒーローマネージャークラス
+    CHeroManager* Hero = &CHeroManager::GetInstance();
 
     //描画位置の設定
     //テキストの描画位置を設定
@@ -252,12 +254,20 @@ void CTraning::DrawParamChange(const IncParam& param)
     }
     else 
     {
-        //スタミナがすでに満タンで上昇しなかった場合
+        //スタミナが既に満タンで上昇または既に0の状態で減少した場合
         if (param.ParamName == L"スタミナが")
         {
             //パラメータの名前と変化の描画
             Text->Draw_Text(L"スタミナは", WriteText::Normal, InitOffset);
-            Text->Draw_Text(L"すでに満タンだった", WriteText::Inc, ValueOffset);
+            //スタミナが既に0の状態で減少した場合
+            if (Hero->GetStamina() <= 0)
+            {
+                Text->Draw_Text(L"これ以上減少しない", WriteText::Dec, ValueOffset);
+            }
+            else if(Hero->GetStamina() >= 100)
+            {
+                Text->Draw_Text(L"これ以上回復しない", WriteText::Inc, ValueOffset);
+            }
         }
     }
 }

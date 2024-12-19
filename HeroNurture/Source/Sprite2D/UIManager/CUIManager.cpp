@@ -32,10 +32,7 @@ HRESULT CUIManager::Load(CDirectX11* Dx11)
 	{                                                                    //表示サイズ       //元画像サイズ   //1コマ当たりの表示サイズ
 		{UIList::Fade,	        _T("Data\\Texture\\fade.png")			,{ 1280.0f, 720.0f, 1280.0f, 720.0f, 0.0f, 0.0f,}},
 		{UIList::WhiteFade,	    _T("Data\\Texture\\WhiteFade.png")		,{ 1280.0f, 720.0f, 1280.0f, 720.0f, 0.0f, 0.0f,}},
-		{UIList::PowerParam,	_T("Data\\Texture\\Power.png")		    ,{ 504.0f, 337.0f, 504.0f, 337.0f, 504.0, 337.0f,}},
-		{UIList::SpeedParam,	_T("Data\\Texture\\Speed.png")		    ,{ 504.0f, 342.0f, 504.0f, 342.0f, 504.0f, 342.0f,}},
-		{UIList::MagicParam,	_T("Data\\Texture\\Magic.png")		    ,{ 508.0f, 339.0f, 508.0f, 339.0f, 508.0f, 339.0f,}},
-		{UIList::HpParam,	    _T("Data\\Texture\\Hart.png")		    ,{ 501.0f, 337.0f, 501.0f, 337.0f, 501.0f, 337.0f,}},
+		{UIList::ParamList,	    _T("Data\\Texture\\NatureParamList.png"),{ 787.0f, 161.0f, 787.0f, 161.0f, 787.0f, 161.0f,}},
 		{UIList::StaminaGage,	_T("Data\\Texture\\Stamina.png")		,{ 602.0f, 54.0f,  602.0f, 54.0f,  602.0f, 54.0f,}},
 		{UIList::StaminaBack,	_T("Data\\Texture\\StaminaBack.png")    ,{ 602.0f, 54.0f,  602.0f, 54.0f,  602.0f, 54.0f}}
 	};

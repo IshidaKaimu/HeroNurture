@@ -31,15 +31,15 @@ void CHeroSelect::Create()
 {
    //----ヒーロークラスのインスタンス生成----
    //ユイ
-    m_pYui = new CYui();
+    m_pYui    = make_unique<CYui>();
    //カイト
-   m_pKaito = new CKaito();
+   m_pKaito   = make_unique<CKaito>();
 
-    //スカイボックスのインスタンス生成
-    m_pSky    = new CSky();
+   //スカイボックスのインスタンス生成
+   m_pSky    = make_unique<CSky>();
 
-    //地面のインスタンス生成
-    m_pGround = new CGround();
+   //地面のインスタンス生成
+   m_pGround = make_unique<CGround>();
 }
 
 //データ設定関数
@@ -71,8 +71,6 @@ void CHeroSelect::LoadData()
 //破棄関数
 void CHeroSelect::Releace()
 {
-    SAFE_DELETE(m_pSky);
-    SAFE_DELETE(m_pGround);
 }
 
 //初期化関数

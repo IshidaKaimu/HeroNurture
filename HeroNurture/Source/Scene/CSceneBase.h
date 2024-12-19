@@ -14,6 +14,8 @@ class CSceneBase
 	//フェードの最大時間
 	static constexpr int	FADE_TIME = FPS;	//約1秒間
 	static constexpr bool	DEBUG_FLG = false;	//デバッグフラグ
+	static constexpr float  FADESPEED = 0.05f;	//フェードスピード
+
 public:
 	CSceneBase();
 	virtual ~CSceneBase();
@@ -65,11 +67,10 @@ protected:
 	float       m_AnimCnt;		
 private:
 	//----フェード----	
-    static constexpr float FADESPEED = 0.05f;	//フェードスピード
-	CUIObject*	m_pFade;
-	int			m_FadeTime;		        //シーン切り替え用のタイマー	
-	float		m_FadeAlpha;	        //アルファ値	
-    bool        m_FadeOutFlg;           //フェードアウトフラグ(フェードアウト中にフェードインさせないため)
+	std::unique_ptr<CUIObject>	m_pFade;        //フェード用UI
+	int			m_FadeTime;		                //シーン切り替え用のタイマー	
+	float		m_FadeAlpha;	                //アルファ値	
+    bool        m_FadeOutFlg;                   //フェードアウトフラグ(フェードアウト中にフェードインさせないため)
 
 };
 

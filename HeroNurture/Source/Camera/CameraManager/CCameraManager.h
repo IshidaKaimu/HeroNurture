@@ -3,6 +3,10 @@
 #include "Camera\CCamera.h"
 #include <memory>
 
+//=====================================
+// カメラマネージャークラス
+//=====================================
+
 class CCameraManager
 	: public CCamera
 	, public CSingleton<CCameraManager>

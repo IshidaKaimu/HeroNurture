@@ -4,7 +4,7 @@
 #include "StaticMeshObject\Sky\CSky.h"			//スカイボックスクラス
 #include "WriteText\WriteText.h"				//テキスト描画クラス
 #include "StaticMeshObject\Ground\CGround.h"	//地面クラス
-#include "SkinMeshObject\Hero\CHeroManager.h"		//プレイヤークラス
+#include "SkinMeshObject\Hero\CHeroManager.h"	//プレイヤークラス
 #include <memory>
 #include <Windows.h>
 
@@ -12,15 +12,14 @@
 class CJson;
 
 //=====================================
-//タイトルシーンクラス
-//制作者：石田櫂夢
+// ログインシーンクラス
 //=====================================
-class CTitle
+class CLoginScene
 	:public CSceneBase
 {
 public:
-	CTitle();
-	~CTitle();
+	CLoginScene();
+	~CLoginScene();
 
 
 	//構築関数
@@ -66,22 +65,6 @@ private:
 
 	//プレイヤー
 	std::unique_ptr<CHeroManager> m_pHero;
-
-	//----フラグ----
-	//オープニングに移らせるフラグ
-	bool m_Opening;
-	//ボス出現シーンに移らせるフラグ
-	bool m_BossApp;
-	//ボス進化シーンに移らせるフラグ
-	bool m_BossEvo;
-	//必殺技シーンに移らせるフラグ
-	bool m_Special;
-	//ボス撃破シーンに移らせるフラグ
-	bool m_BossDeath;
-
-	//時間経過でかわるX
-	float m_Time;
-
 
 };
 

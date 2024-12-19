@@ -3,15 +3,15 @@
 #include "UIObject\CUIObject.h"
 #include "WriteText\WriteText.h"
 
-//ランク構造体
+//ランクリスト
 enum enRankList : char 
 {
-	S,
-	A,
-	B,
-	C,
-	D,
-	E
+	S,	//Sランク
+	A,	//Aランク
+	B,	//Bランク
+	C,	//Cランク
+	D,  //Dランク
+	E   //Eランク
 };
 
 //=====================================

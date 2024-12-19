@@ -38,14 +38,13 @@ struct IncParam
 
 //=====================================
 //トレーニングシーンクラス
-//制作者：石田櫂夢
 //=====================================
-class CTraning
+class CTraningScene
 	:public CNatureScene
 {
 public:
-	CTraning();
-	~CTraning();
+	CTraningScene();
+	~CTraningScene();
 
 	//構築関数
 	void Create()	  override;
@@ -75,8 +74,10 @@ private:
 	//カメラマネージャ
 	CCameraManager* m_pCamera;
 
-	//----オブジェクトクラス----
-	// スタティックメッシュ
+	//=====================================
+	// オブジェクトクラス
+	//=====================================
+	//----スタティックメッシュ----
 	//スカイボックス
 	std::unique_ptr<CSky> m_pSky;
 	//地面

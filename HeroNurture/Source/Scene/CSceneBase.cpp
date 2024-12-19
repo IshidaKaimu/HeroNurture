@@ -12,15 +12,13 @@ CSceneBase::CSceneBase()
     , m_FadeAlpha (1.0f)	//不透過に設定
     , m_FadeOutFlg(false)
 {
-    m_pFade = new CUIObject();		//フェード
+    m_pFade = std::make_unique<CUIObject>();
     m_pFade->AttachSprite(CUIManager::GetSprite(CUIManager::Fade));
     m_pFade->SetAlpha(m_FadeAlpha);
 }
 
 CSceneBase::~CSceneBase()
 {
-	//破棄
-	SAFE_DELETE( m_pFade );		//フェード
 }
 
 //初期化関数
