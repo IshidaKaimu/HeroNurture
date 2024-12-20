@@ -33,18 +33,32 @@ class CHeroManager;
 const D3DXVECTOR3 RESULT_CAMPOS  = { 0.0, 5.0, -4.0 };
 //カメラ注視点
 const D3DXVECTOR3 RESULT_CAMLOOK = { 2.0, 5.0, 3.0 };
-//----育成評価描画関連----
-//ランクX座標
+//----育成評価描画関連(_TR = トレーニング結果シーンで用いることを示す)----
+//最終ランクX座標
 constexpr float RANK_POSX = 900.0f;
-//ランクY座標
-constexpr float RANK_POSY = 30.0f;
+//最終ランクY座標
+constexpr float RANK_POSY_TR = 30.0f;
+//各パラメータランクX座標
+constexpr float PARAMRANK_POSX_TR = 830.0f;
+//各パラメータランクY座標
+constexpr float PARAMRANK_POSY_TR = 230.0f;
+//各パラメータランク配置間隔
+constexpr float PARAMRANK_INTERVAL_TR = 125.0f;
 //パラメータ背景X座標
-const float PARAMBACK_POSX = 850.0f;
+const float PARAMBACK_POSX_TR = 725.0f;
 //パラメータ背景Y座標
-const float PARAMBACK_POSY = 600.0f;
+const float PARAMBACK_POSY_TR = 125.0f;
 //パラメータ背景拡縮
-const D3DXVECTOR3 PARAMBACK_SCALE = { 0.3f,0.3f,0.3f };
-
+const D3DXVECTOR3 PARAMBACK_SCALE_TR = { 1.1f, 1.1f , 1.1f };
+//パラメータの値X座標
+const float PARAMVALUE_POSX_TR = 725.0f;
+//パラメータの値Y座標
+const float PARAMVALUE_POSY_TR = 200.0f;
+//パラメータの値配置間隔
+const float PARAMVALUE_INTERVAL_TR = 200.0f;
+//「最終評価」テキストX座標
+const D3DXVECTOR2 RESULTTEXT_POS = { 890.0f,0.0f };
+ 
 //=====================================
 // 育成結果シーンクラス
 //=====================================
@@ -76,28 +90,17 @@ private:
 	void DrawResult();
 	//パラメータの合計値を返す
 	float ParamTotal();
-	//パラメータ背景UIの初期設定
-	void ParamBackUIInit(std::unique_ptr<CUIObject>& param, int no);
 	//パラメータUIの描画
-	void DrawParamUI(std::unique_ptr<CUIObject>& param, float paramvalue, int no);
+	void DrawParamUI(float paramvalue, int no);
 
 
 private:
 	//カメラマネージャ
 	CCameraManager* m_pCamera;
 
-	//筋力パラメータ背景
-	std::unique_ptr<CUIObject> m_pPowerParam;
-	//魔力パラメータ背景
-	std::unique_ptr<CUIObject> m_pMagicParam;
-	//素早さパラメータ背景
-	std::unique_ptr<CUIObject> m_pSpeedParam;
-	//体力パラメータ背景
-	std::unique_ptr<CUIObject> m_pHpParam;
-	//スタミナゲージ
-	std::unique_ptr<CUIObject> m_pStaminaGage;
-	//スタミナゲージゲージ背景
-	std::unique_ptr<CUIObject> m_pStaminaBack;
+	//パラメータ背景UI
+	std::unique_ptr<CUIObject> m_pParamList;
+
 	//スタミナゲージの幅
 	float m_GageWidth;
 

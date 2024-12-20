@@ -21,7 +21,19 @@ public:
 		m_vPosition.y = y;
 		m_vPosition.z = z;
 	};
-	void SetPosition( const D3DXVECTOR3& pos ){
+	//X座標設定関数.
+	void SetPositionX(float x) {
+		m_vPosition.x = x;
+	}
+	//Y座標設定関数.
+	void SetPositionY(float y) {
+		m_vPosition.y = y;
+	}
+	//Z座標設定関数.
+	void SetPositionZ(float z) {
+		m_vPosition.x = z;
+	}
+	void SetPosition(const D3DXVECTOR3& pos) {
 		m_vPosition = pos;
 	}
 	//座標取得関数.

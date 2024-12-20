@@ -20,20 +20,30 @@ using json = nlohmann::json;
 // =======================		
 //----各ヒーローごとのカメラ位置/注視点---
 //ユイ
-const D3DXVECTOR3 CAMERAPOS_YUI  = { 0.0, 5.0, -6.0 };
+const D3DXVECTOR3 CAMERAPOS_YUI  = { 0.0, 5.0, -4.0 };
 const D3DXVECTOR3 CAMERALOOK_YUI = { 0.0, 5.0, 0.0 };
 //カイト
 const D3DXVECTOR3 CAMERAPOS_KAITO  =  { 0.0, 5.0, -4.5 };
 const D3DXVECTOR3 CAMERALOOK_KAITO =  { 0.0, 5.0, 0.0 };
 
-//----パラメータUI情報----
+//----UI情報(_N = 育成シーンで用いることを示す)----
 //パラメータ背景
-constexpr float PARAM_POSX = 225.0f;
-constexpr float PARAM_POSY = 450.0f;
-constexpr float PARAM_INTERVAL = 200.0f;
+constexpr float PARAMBACK_POSX_N     = 330.0f; //X座標
+constexpr float PARAMBACK_POSY_N     = 410.0f; //Y座標
+const D3DXVECTOR3 PARAMBACK_SCALE_N = { 0.8f,0.8f,0.8f }; //拡縮
+//トレーニングUI
+constexpr float TRANING_POSX_N     = 300.0f; //X座標
+constexpr float TRANING_POSY_N     = 580.0f; //Y座標
+constexpr float TRANING_INTERVAL_N = 180.0f; //配置間隔
+const D3DXVECTOR3 TRANING_SCALE_N  = { 0.5f,0.5f,0.5f }; //拡縮
 //数値
-constexpr float PARAMVALUE_POSX = 240.0f;
-constexpr float PARAMVALUE_POSY = 460.0f;
+constexpr float PARAMVALUE_POSX_N = 425.0f; //X座標
+constexpr float PARAMVALUE_POSY_N = 430.0f; //Y座標
+constexpr float PARAMVALUE_INTERVAL_N = 150.0f; //配置間隔
+//ランク
+constexpr float RANK_POSX_N = 350.0f; //X座標
+constexpr float RANK_POSY_N = 430.0f; //Y座標
+constexpr float RANK_INTERVAL_N = 150.0f;//配置間隔
 
 //----スタミナゲージ----
 //スタミナの最大値
@@ -71,7 +81,6 @@ public:
 	void Update()     override;
 	//描画関数
 	void Draw()		  override;
-
 	//デバッグ用関数
 	void Debug();
 
@@ -95,6 +104,9 @@ public:
 	//トレーニング選択処理
 	void SelectTraning();
 
+	//UIの初期設定
+	void UIInit(std::unique_ptr<CUIObject>& traning,float x, float y, float interval, D3DXVECTOR3 scale, int no);
+
 	// =======================
 	// パラメータ関連関数
 	// =======================		
@@ -102,25 +114,19 @@ public:
 	void SaveParam();
 	//パラメータ情報の書き込み(SaveParam関数で使う)
 	void WriteParam(const std::string& heroname);
-	//パラメータUIの初期設定
-	void ParamUIInit(std::unique_ptr<CUIObject>& param, int no);
 	//パラメータの描画
 	void DrawParam();
-
 	//パラメータの値の桁数による描画位置の補正
 	D3DXVECTOR2 PosCorrection(float value, float x, float y);
+
+	//各トレーニングの描画
+	void DrawTraning();
 
 	//残りターン数の描画
 	void DrawRemainingTurn();
 
 	//ゲージアニメーション
 	void GageAnim();
-
-	// =======================
-	// ゲッター・セッター関数
-	// =======================
-
-
 public:
 	//カメラマネージャクラス
 	CCameraManager* m_pCamera;
@@ -146,17 +152,17 @@ public:
 	//----UI----	
 	//パラメータ背景
 	std::unique_ptr<CUIObject>  m_pParamBack;
-	////筋力パラメータ背景
-	//std::unique_ptr<CUIObject> m_pPowerParam;
-	////魔力パラメータ背景
-	//std::unique_ptr<CUIObject> m_pMagicParam;
-	////素早さパラメータ背景
-	//std::unique_ptr<CUIObject> m_pSpeedParam;
-	////体力パラメータ背景
-	//std::unique_ptr<CUIObject> m_pHpParam;
+	//筋力トレーニングUI
+	std::unique_ptr<CUIObject> m_pPowerTraning;
+	//魔力トレーニングUI
+	std::unique_ptr<CUIObject> m_pMagicTraning;
+	//素早さトレーニングUI
+	std::unique_ptr<CUIObject> m_pSpeedTraning;
+	//体力トレーニングUI
+	std::unique_ptr<CUIObject> m_pHpTraning;
 	//スタミナゲージ
 	std::unique_ptr<CUIObject> m_pStaminaGage;
-	//スタミナゲージゲージ背景
+	//スタミナゲージ背景
 	std::unique_ptr<CUIObject> m_pStaminaBack;
 	//スタミナゲージの幅
 	float m_GageWidth;

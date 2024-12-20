@@ -14,10 +14,7 @@
 
 CTraningResultScene::CTraningResultScene()
     : m_pCamera(&CCameraManager::GetInstance())
-    , m_pPowerParam()
-    , m_pMagicParam()
-    , m_pSpeedParam()
-    , m_pHpParam   ()
+    , m_pParamList()
 {
 }
 
@@ -28,11 +25,8 @@ CTraningResultScene::~CTraningResultScene()
 //構築関数
 void CTraningResultScene::Create()
 {
-    //各パラメータ背景UIのインスタンス生成
-    m_pPowerParam = std::make_unique<CUIObject>();
-    m_pMagicParam = std::make_unique<CUIObject>();
-    m_pSpeedParam = std::make_unique<CUIObject>();
-    m_pHpParam    = std::make_unique<CUIObject>();
+    //パラメータ背景UIのインスタンス生成
+    m_pParamList = std::make_unique<CUIObject>();
 }
 
 //データ設定関数
@@ -40,21 +34,15 @@ void CTraningResultScene::LoadData()
 {
     //----クラスのインスタンスを変数に代入----
     //ヒーローマネージャー
-    CHeroManager* Hero = &CHeroManager::GetInstance();
+    CHeroManager* HeroMng = &CHeroManager::GetInstance();
+    //UIマネージャー
+    CUIManager* UIMng = CUIManager::GetInstance();
 
     //セットされたヒーローのメッシュ設定
-    Hero->LoadMeshData();
+    HeroMng->LoadMeshData();
 
-    //----各パラメータのUIのスプライト設定----
-    //筋力
-    //m_pPowerParam->AttachSprite(CUIManager::GetSprite(CUIManager::PowerParam));
-    ////魔力
-    //m_pMagicParam->AttachSprite(CUIManager::GetSprite(CUIManager::MagicParam));
-    ////素早さ
-    //m_pSpeedParam->AttachSprite(CUIManager::GetSprite(CUIManager::SpeedParam));
-    ////体力
-    //m_pHpParam->AttachSprite(CUIManager::GetSprite(CUIManager::HpParam));
-
+    //パラメータの背景のスプライト設定
+    m_pParamList->AttachSprite(CUIManager::GetSprite(CUIManager::ResultParamList));
 }
 
 //破棄関数
@@ -71,11 +59,11 @@ void CTraningResultScene::Initialize()
     //セットされているヒーローの初期化
     Hero->Initialize();
 
-    //各パラメータ背景UIの初期化
-    ParamBackUIInit(m_pPowerParam,1);
-    ParamBackUIInit(m_pMagicParam,2);
-    ParamBackUIInit(m_pSpeedParam,3);
-    ParamBackUIInit(m_pHpParam,4);
+    //パラメータ背景UI情報の初期化
+    m_pParamList->SetPosition(PARAMBACK_POSX_TR,PARAMBACK_POSY_TR,0.0);
+    m_pParamList->SetScale(PARAMBACK_SCALE_TR);
+    m_pParamList->SetAlpha(1.0f);
+    m_pParamList->SetDisplay(1.0f,1.0f);
 
     //カメラ位置の設定
     m_pCamera->SetPos(RESULT_CAMPOS);
@@ -121,6 +109,7 @@ void CTraningResultScene::Update()
     //フェードアウト処理
     if (m_SceneTransitionFlg && FadeOut())
     {
+        CSceneManager::GetInstance()->SetIsDataLoaded(false);
         CSceneManager::GetInstance()->LoadCreate(CSceneManager::HeroSelect);
     }
 }
@@ -168,23 +157,22 @@ void CTraningResultScene::DrawResult()
     //ヒーローマネージャー
     CHeroManager* HeroMng = &CHeroManager::GetInstance();
 
-    //「最終評価」テキスト
+    //「最終評価」テキストの描画
     std::wstring ResultText = L"最終評価";
+    Text->Draw_Text(ResultText, WriteText::Normal, RESULTTEXT_POS, false, true);
 
-    Text->Draw_Text(ResultText, WriteText::Normal, D3DXVECTOR2(900.0f, 0.0f), false, true);
+    //パラメータの背景の描画
+    m_pParamList->Draw();
 
-    //----各パラメータのUIの描画----
-    //筋力
-    DrawParamUI(m_pPowerParam,HeroMng->GetParam().Power,1);
-    //魔力
-    DrawParamUI(m_pMagicParam,HeroMng->GetParam().Magic,2);
-    //素早さ
-    DrawParamUI(m_pSpeedParam,HeroMng->GetParam().Speed,3);
-    //体力
-    DrawParamUI(m_pHpParam,HeroMng->GetParam().Hp,4);
+    //各パラメータの値、ランクの描画
+    DrawParamUI(HeroMng->GetParam().Power, 0);
+    DrawParamUI(HeroMng->GetParam().Magic, 1);
+    DrawParamUI(HeroMng->GetParam().Speed, 2);
+    DrawParamUI(HeroMng->GetParam().Hp, 3);
+
 
     //ランクの描画
-    CUtility::GetInstance().DrawRank(ParamTotal(), 1, RANK_POSX, RANK_POSY);
+    CUtility::GetInstance().DrawRank(ParamTotal(), 1, RANK_POSX, RANK_POSY_TR);
 }
 
 //パラメータの合計値
@@ -199,21 +187,8 @@ float CTraningResultScene::ParamTotal()
     return Total;
 }
 
-//パラメータUIの初期設定
-void CTraningResultScene::ParamBackUIInit(std::unique_ptr<CUIObject>& param, int no)
-{
-    //位置
-    param->SetPosition(PARAMBACK_POSX, PARAMBACK_POSY * no/4, 0.0f);
-    //拡縮
-    param->SetScale(PARAMBACK_SCALE);
-    //α値
-    param->SetAlpha(1.0f);
-    //幅、高さ
-    param->SetDisplay(1.0f, 1.0f);
-}
-
 //パラメータUIの描画
-void CTraningResultScene::DrawParamUI(std::unique_ptr<CUIObject>& param, float paramvalue, int no)
+void CTraningResultScene::DrawParamUI(float paramvalue, int no)
 {
     //----クラスのインスタンスを変数に代入----
     //テキスト描画クラス
@@ -222,8 +197,7 @@ void CTraningResultScene::DrawParamUI(std::unique_ptr<CUIObject>& param, float p
     CUtility* Utility = &CUtility::GetInstance();
 
     //----各パラメータのUIの描画(背景,値,ランク)----
-    param->Draw();
-    Text->Draw_Text(std::to_wstring(static_cast<int>(paramvalue)), WriteText::Normal, D3DXVECTOR2(0.0f, 200.0f * no));
-    Utility->DrawRank(paramvalue, 2,PARAMBACK_POSX,PARAMBACK_POSY * no/4);
+    Text->Draw_Text(std::to_wstring(static_cast<int>(paramvalue)), WriteText::Normal, D3DXVECTOR2(PARAMVALUE_POSX_TR, PARAMVALUE_POSY_TR + (PARAMVALUE_INTERVAL_TR* no)));
+    Utility->DrawRank(paramvalue, 2, PARAMRANK_POSX_TR, PARAMRANK_POSY_TR + (PARAMRANK_INTERVAL_TR * no));
 }
 

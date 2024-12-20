@@ -19,10 +19,6 @@ CNatureScene::CNatureScene()
     , m_pGround     ()
     , m_pSky        ()
     , m_pParamBack  ()
-    //, m_pPowerParam ()
-    //, m_pMagicParam ()
-    //, m_pSpeedParam ()
-    //, m_pHpParam    ()
     , m_pStaminaGage()
     , m_pStaminaBack()
     , m_GageWidth   ( CSceneManager::GetInstance()->GetStaminaWidth() )
@@ -38,7 +34,6 @@ CNatureScene::~CNatureScene()
 //構築関数
 void CNatureScene::Create()
 {
-    //----インスタンス生成----
     //セットされたヒーローのクラスのインスタンス生成
     switch (m_pHero->GetSelectHero())
     {
@@ -58,26 +53,21 @@ void CNatureScene::Create()
         break;
     }
     
-    //スタティックメッシュオブジェクト
+    //----スタティックメッシュオブジェクト----
     //地面
     m_pGround = std::make_unique<CGround>();
     //スカイボックス
     m_pSky    = std::make_unique<CSky>();
 
-    //UIオブジェクト
-    //----各パラメータ----
-    // 
+    //----UIオブジェクト----
+    //パラメータの背景
     m_pParamBack = std::make_unique<CUIObject>();
+    //各種トレーニングUI
+    m_pPowerTraning = std::make_unique<CUIObject>();
+    m_pMagicTraning = std::make_unique<CUIObject>();
+    m_pSpeedTraning = std::make_unique<CUIObject>();
+    m_pHpTraning    = std::make_unique<CUIObject>();
 
-    ////筋力
-    //m_pPowerParam = std::make_unique<CUIObject>();
-    ////魔力
-    //m_pMagicParam = std::make_unique<CUIObject>();
-    ////素早さ
-    //m_pSpeedParam = std::make_unique<CUIObject>();
-    ////体力
-    //m_pHpParam    = std::make_unique<CUIObject>();
-    
     //育成関連のシーンで共通して表示するUIのインスタンス生成
     CreateNatureUI(m_pStaminaGage,m_pStaminaBack);
 }
@@ -104,21 +94,16 @@ void CNatureScene::LoadData()
     //地面のメッシュデータ設定
     m_pGround->LoadData();
 
-    //----各パラメータのUIのスプライト設定----
-    // 
+    //パラメータの背景UIのスプライト設定
     m_pParamBack->AttachSprite(CUIManager::GetSprite(CUIManager::ParamList));
-    ////筋力
-    //m_pPowerParam->AttachSprite(CUIManager::GetSprite(CUIManager::PowerParam));
-    ////魔力
-    //m_pMagicParam->AttachSprite(CUIManager::GetSprite(CUIManager::MagicParam));
-    ////素早さ
-    //m_pSpeedParam->AttachSprite(CUIManager::GetSprite(CUIManager::SpeedParam));
-    ////体力
-    //m_pHpParam->AttachSprite(CUIManager::GetSprite(CUIManager::HpParam));
+    //各種トレーニングUIのスプライト設定
+    m_pPowerTraning->AttachSprite(CUIManager::GetSprite(CUIManager::PowerTraning));
+    m_pMagicTraning->AttachSprite(CUIManager::GetSprite(CUIManager::MagicTraning));
+    m_pSpeedTraning->AttachSprite(CUIManager::GetSprite(CUIManager::SpeedTraning));
+    m_pHpTraning   ->AttachSprite(CUIManager::GetSprite(CUIManager::HpTraning));
 
     //スタミナゲージのUIのスプライト設定
     LoadNatureUI(m_pStaminaGage, m_pStaminaBack);
-
 }
 
 //初期化関数
@@ -150,15 +135,14 @@ void CNatureScene::Initialize()
     //向き
     m_Light.vDirection = D3DXVECTOR3(0.0f, 1.0f, 0.0f); //ライト方向
    
-    //----各種パラメータUIの初期設定----
-    ////筋力
-    ParamUIInit(m_pParamBack, 1);
-    ////魔力
-    //ParamUIInit(m_pMagicParam, 2);
-    ////素早さ
-    //ParamUIInit(m_pSpeedParam, 3);
-    ////体力
-    //ParamUIInit(m_pHpParam, 4);
+    //----パラメータの値を除くUIの初期設定----
+    //パラメータの背景
+    UIInit(m_pParamBack, PARAMBACK_POSX_N, PARAMBACK_POSY_N, 0, PARAMBACK_SCALE_N, 0);
+    //各種トレーニング
+    UIInit(m_pPowerTraning, TRANING_POSX_N, TRANING_POSY_N, 0, TRANING_SCALE_N, 0);
+    UIInit(m_pMagicTraning, TRANING_POSX_N, TRANING_POSY_N, TRANING_INTERVAL_N, TRANING_SCALE_N, 1);
+    UIInit(m_pSpeedTraning, TRANING_POSX_N, TRANING_POSY_N, TRANING_INTERVAL_N, TRANING_SCALE_N, 2);
+    UIInit(m_pHpTraning,    TRANING_POSX_N, TRANING_POSY_N, TRANING_INTERVAL_N, TRANING_SCALE_N, 3);
 
     //育成関連のシーンで共通のUIの初期化
     InitNatureUI(m_pStaminaGage,m_pStaminaBack);
@@ -223,6 +207,10 @@ void CNatureScene::Update()
 //描画関数
 void CNatureScene::Draw()
 {
+    //----クラスのインスタンスを変数に代入----
+    //シーンマネージャー
+    CSceneManager* SceneMng = CSceneManager::GetInstance();
+
     //カメラの更新処理
     m_pCamera->CameraUpdate();
 
@@ -232,11 +220,22 @@ void CNatureScene::Draw()
     //地面クラスの描画
     m_pGround->Draw();
 
+    //深度を無視する
+    SceneMng->GetDx11()->SetDepth(false);
+
     //育成関連シーンで共通のUIの描画
-    DrawNatureUI( m_pStaminaGage, m_pStaminaBack);
+    DrawNatureUI(m_pStaminaGage, m_pStaminaBack);
+
+    //各トレーニングの描画
+    DrawTraning();
 
     //各パラメータUIの描画
     DrawParam();
+
+    //深度を戻す
+    SceneMng->GetDx11()->SetDepth(true);
+
+
 }
 
 void CNatureScene::Debug()
@@ -325,14 +324,10 @@ void CNatureScene::DrawNatureUI(std::unique_ptr<CUIObject>& gage, std::unique_pt
 {
     //スタミナゲージのアニメーション
     GageAnim();
-
-    CSceneManager::GetInstance()->GetDx11()->SetDepth(false);
     //ゲージ背景
     back->Draw();
     //スタミナゲージ
     gage->Draw();
-    CSceneManager::GetInstance()->GetDx11()->SetDepth(true);
-
     //残りターン数の描画
     DrawRemainingTurn();
 }
@@ -403,6 +398,20 @@ void CNatureScene::SelectTraning()
     SceneMng->LoadCreate(CSceneManager::Training);
 }
 
+//各種UI初期設定
+void CNatureScene::UIInit(std::unique_ptr<CUIObject>& ui, float x, float y, float interval, D3DXVECTOR3 scale, int no)
+{
+    //位置
+    ui->SetPosition(x + (interval * no), y, 0.0f);
+    //拡縮
+    ui->SetScale(scale);
+    //α値
+    ui->SetAlpha(1.0f);
+    //幅、高さ
+    ui->SetDisplay(1.0f, 1.0f);
+}
+
+
 //ヒーローごとのパラメータ書き込み
 void CNatureScene::SaveParam()
 {
@@ -443,19 +452,6 @@ void CNatureScene::WriteParam(const std::string& heroname)
 }
 
 
-//各種パラメータUI初期設定
-void CNatureScene::ParamUIInit(std::unique_ptr<CUIObject>& param, int no)
-{
-    //位置
-    param->SetPosition(PARAM_POSX * no, PARAM_POSY, 0.0f);
-    //拡縮
-    param->SetScale(0.8f, 0.8f, 0.8f);
-    //α値
-    param->SetAlpha(1.0f);
-    //幅、高さ
-    param->SetDisplay(1.0f, 1.0f);
-}
-
 //各種パラメータの描画
 void CNatureScene::DrawParam()
 {
@@ -466,17 +462,18 @@ void CNatureScene::DrawParam()
     //背景
     m_pParamBack->Draw();
     //筋力
-    Text->Draw_Text(std::to_wstring(static_cast<int>(m_pHero->GetParam().Power)), WriteText::Normal, PosCorrection(m_pHero->GetParam().Power,PARAM_POSX * 1.35f,PARAMVALUE_POSY));
-    CUtility::GetInstance().DrawRank(m_pHero->GetParam().Power, 2,PARAM_POSX * 1, PARAMVALUE_POSY);
+    Text->Draw_Text(std::to_wstring(static_cast<int>(m_pHero->GetParam().Power)), WriteText::Normal, PosCorrection(m_pHero->GetParam().Power,PARAMVALUE_POSX_N, PARAMVALUE_POSY_N));
+    CUtility::GetInstance().DrawRank(m_pHero->GetParam().Power, 2, RANK_POSX_N, RANK_POSY_N);
     //魔力
-    Text->Draw_Text(std::to_wstring(static_cast<int>(m_pHero->GetParam().Magic)), WriteText::Normal, PosCorrection(m_pHero->GetParam().Magic, PARAM_POSX * 2.35f, PARAMVALUE_POSY));
-    CUtility::GetInstance().DrawRank(m_pHero->GetParam().Magic, 2, PARAM_POSX * 2, PARAMVALUE_POSY);
+    Text->Draw_Text(std::to_wstring(static_cast<int>(m_pHero->GetParam().Magic)), WriteText::Normal, PosCorrection(m_pHero->GetParam().Magic, PARAMVALUE_POSX_N + PARAMVALUE_INTERVAL_N, PARAMVALUE_POSY_N));
+    CUtility::GetInstance().DrawRank(m_pHero->GetParam().Magic, 2, RANK_POSX_N + RANK_INTERVAL_N, RANK_POSY_N);
     //素早さ
-    Text->Draw_Text(std::to_wstring(static_cast<int>(m_pHero->GetParam().Speed)), WriteText::Normal, PosCorrection(m_pHero->GetParam().Speed, PARAM_POSX * 3.35f, PARAMVALUE_POSY));
-    CUtility::GetInstance().DrawRank(m_pHero->GetParam().Speed, 2, PARAM_POSX * 3, PARAMVALUE_POSY);
+    Text->Draw_Text(std::to_wstring(static_cast<int>(m_pHero->GetParam().Speed)), WriteText::Normal, PosCorrection(m_pHero->GetParam().Speed, PARAMVALUE_POSX_N + (PARAMVALUE_INTERVAL_N * 2), PARAMVALUE_POSY_N));
+    CUtility::GetInstance().DrawRank(m_pHero->GetParam().Speed, 2, RANK_POSX_N + (RANK_INTERVAL_N * 2), RANK_POSY_N);
     //体力
-    Text->Draw_Text(std::to_wstring(static_cast<int>(m_pHero->GetParam().Hp)), WriteText::Normal, PosCorrection(m_pHero->GetParam().Hp, PARAM_POSX * 4.35f, PARAMVALUE_POSY));
-    CUtility::GetInstance().DrawRank(m_pHero->GetParam().Hp, 2, PARAM_POSX * 4, PARAMVALUE_POSY);
+    Text->Draw_Text(std::to_wstring(static_cast<int>(m_pHero->GetParam().Hp)), WriteText::Normal, PosCorrection(m_pHero->GetParam().Hp, PARAMVALUE_POSX_N
+        + (PARAMVALUE_INTERVAL_N * 3), PARAMVALUE_POSY_N));
+    CUtility::GetInstance().DrawRank(m_pHero->GetParam().Hp, 2, RANK_POSX_N + (RANK_INTERVAL_N * 3), RANK_POSY_N);
 }
 
 //パラメータの値描画時の桁数による位置補正
@@ -485,9 +482,35 @@ D3DXVECTOR2 CNatureScene::PosCorrection(float value, float x, float y)
     //桁数(値を文字列に変換して桁数を取得)
     int DigitCount = static_cast<int>(std::to_wstring(static_cast<int>(value)).length());
     //桁数に応じた補正
-    float OffsetX = (DigitCount == 3) ? -30.0f : 0.0f;
+    float OffsetX = (DigitCount == 3) ? -35.0f : 0.0f;
 
     return D3DXVECTOR2( x + OffsetX, y );
+}
+
+//各種トレーニングの描画
+void CNatureScene::DrawTraning()
+{
+
+    //選択されたときそれぞれの位置を上げる変数
+    float PosUp = 20.0f;
+
+    //筋力トレーニング選択時
+    if (m_SelectNo == 0) { m_pPowerTraning->SetPositionY(TRANING_POSY_N - PosUp); }
+    else { m_pPowerTraning->SetPositionY(TRANING_POSY_N); }
+    //魔力トレーニング選択時
+    if (m_SelectNo == 1) { m_pMagicTraning->SetPositionY(TRANING_POSY_N - PosUp); }
+    else { m_pMagicTraning->SetPositionY(TRANING_POSY_N); }
+    //素早さトレーニング選択時
+    if (m_SelectNo == 2) { m_pSpeedTraning->SetPositionY(TRANING_POSY_N  - PosUp); }
+    else { m_pSpeedTraning->SetPositionY(TRANING_POSY_N); }
+    //体力トレーニング選択時
+    if (m_SelectNo == 3) { m_pHpTraning->SetPositionY(TRANING_POSY_N - PosUp); }
+    else { m_pHpTraning->SetPositionY(TRANING_POSY_N); }
+
+    m_pPowerTraning->Draw();
+    m_pMagicTraning->Draw();
+    m_pSpeedTraning->Draw();
+    m_pHpTraning->Draw();
 }
 
 //残りターン数の描画

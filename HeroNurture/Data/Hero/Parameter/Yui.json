@@ -7,9 +7,9 @@
  },
  "Name": "Yui",
  "Parameter": {
-  "Hp": 650.0,
-  "Magic": 560.0,
-  "Power": 530.0,
-  "Speed": 590.0
+  "Hp": 150.0,
+  "Magic": 60.0,
+  "Power": 830.0,
+  "Speed": 90.0
  }
 }

@@ -9,12 +9,16 @@ public:
 	//UIリスト
 	enum UIList
 	{
-		Fade,		 //シーン遷移時に使うフェード用の画像
-		WhiteFade,	 //白フェード用画像
-		ParamList,   //育成中のパラメータ表
-		StaminaGage, //スタミナゲージ表示用画像
-		StaminaBack, //スタミナゲージ背景用画像
-
+		Fade,		    //シーン遷移時に使うフェード用の画像
+		WhiteFade,	    //白フェード用画像
+		ParamList,      //育成中のパラメータ表
+		ResultParamList,//育成結果表示時のパラメータ表
+		PowerTraning,   //筋力トレーニング
+		MagicTraning,   //魔力トレーニング
+		SpeedTraning,   //素早さトレーニング
+		HpTraning,      //体力トレーニング
+		StaminaGage,    //スタミナゲージ表示用画像
+		StaminaBack,    //スタミナゲージ背景用画像
 		Max,
 	};
 

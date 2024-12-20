@@ -115,8 +115,16 @@ void CTraningScene::Draw()
     //上昇量テキストの描画(仮)
     DrawTraningText();
 
+    //シーンマネージャー
+    CSceneManager* SceneMng = CSceneManager::GetInstance();
+
+    //深度を無視する
+    SceneMng->GetDx11()->SetDepth(false);
     //育成関連のシーンで共通して表示するUI
     CNatureScene::DrawNatureUI(m_pStaminaGage,m_pStaminaBack);
+    //深度を戻す
+    SceneMng->GetDx11()->SetDepth(true);
+
 }
 
 //配列にテキストを追加する関数
