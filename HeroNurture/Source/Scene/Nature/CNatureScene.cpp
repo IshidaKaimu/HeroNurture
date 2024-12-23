@@ -420,20 +420,6 @@ void CNatureScene::SaveParam()
     //トレーニング実行時にパラメータ情報を書き込むファイルの階層
     std::string ParamFilePath = "Data\\Hero\\Parameter\\";
 
-    //ヒーローごとのパラメータ情報の書き込み
-    //switch (m_pHero->GetSelectHero())
-    //{
-    //case CHeroManager::Yui:
-    //    //ユイ
-    //    m_pJson->SaveNatureData("Yui",m_ParamWriter, ParamFilePath);
-    //    break;
-    //case CHeroManager::Kaito:
-    //    //カイト
-    //    m_pJson->SaveNatureData("Kaito", m_ParamWriter, ParamFilePath);
-    //    break;
-    //default:
-    //    break;
-    //}
 
     m_pJson->SaveNatureData(m_pHero->GetHeroName(), m_ParamWriter, ParamFilePath);
 }
