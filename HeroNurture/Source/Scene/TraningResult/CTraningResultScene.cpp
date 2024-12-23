@@ -7,6 +7,7 @@
 #include "ImGui\ImGuiManager\ImGuiManager.h"
 #include "Camera\CameraManager\CCameraManager.h"
 #include "SkinMeshObject\Hero\CHeroManager.h"
+#include "Json\CJson.h"
 #include <cmath>
 #include <fstream>
 #include <sstream>
@@ -14,7 +15,9 @@
 
 CTraningResultScene::CTraningResultScene()
     : m_pCamera(&CCameraManager::GetInstance())
-    , m_pParamList()
+    , m_pParamList  ()
+    , m_pJson       ()
+    , m_ResultWriter()
 {
 }
 
@@ -145,7 +148,6 @@ void CTraningResultScene::Debug()
     CCameraManager::GetInstance().SetLook(m_CamLook);
     ImGui::End();
 #endif
-
 }
 
 //ˆç¬Œ‹‰Ê‚Ì•`‰æ
@@ -200,4 +202,3 @@ void CTraningResultScene::DrawParamUI(float paramvalue, int no)
     Text->Draw_Text(std::to_wstring(static_cast<int>(paramvalue)), WriteText::Normal, D3DXVECTOR2(PARAMVALUE_POSX_TR, PARAMVALUE_POSY_TR + (PARAMVALUE_INTERVAL_TR* no)));
     Utility->DrawRank(paramvalue, 2, PARAMRANK_POSX_TR, PARAMRANK_POSY_TR + (PARAMRANK_INTERVAL_TR * no));
 }
-

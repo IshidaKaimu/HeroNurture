@@ -79,6 +79,9 @@ public:
 	//スタミナの回復
 	void StaminaRecovery();
 
+	//選択しているヒーローを文字列で返す関数
+	std::string GetHeroName();
+
 	// =======================
 	// ゲッター・セッター関数
 	// =======================
@@ -122,6 +125,9 @@ private:
 
 	//トレーニングリスト
 	enTraningList m_Traning;
+
+	//ヒーロー名
+	std::string m_HeroName;
 
 	//スタミナ
     //どのヒーローでも共通

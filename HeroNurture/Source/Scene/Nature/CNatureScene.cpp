@@ -2,19 +2,18 @@
 #include "ImGui\ImGuiManager\ImGuiManager.h"
 #include "SkinMesh\SkinMeshManager\CSkinMeshManager.h"
 #include "Camera\CameraManager\CCameraManager.h"
+#include "Light\LightManager\CLightManager.h"
 #include "SkinMeshObject\Hero\CHeroManager.h"
 #include "StaticMesh\MeshManager\CMeshManager.h"
 #include "Sprite2D\UIManager\CUIManager.h"
 #include "Scene\CSceneManager.h"
 #include "KeyManager\CKeyManager.h"
 #include "WriteText\WriteText.h"
-#include "Json\CJson.h"
 #include "Utility\CUtility.h"
 
 CNatureScene::CNatureScene()
     : m_pCamera     ( &CCameraManager::GetInstance() )
     , m_pHero       ( &CHeroManager::GetInstance() )
-    , m_pJson       ()
     , m_Name        ()
     , m_pGround     ()
     , m_pSky        ()
@@ -22,6 +21,7 @@ CNatureScene::CNatureScene()
     , m_pStaminaGage()
     , m_pStaminaBack()
     , m_GageWidth   ( CSceneManager::GetInstance()->GetStaminaWidth() )
+    , m_pJson()
     , m_ParamWriter ()
     , m_ParamData   ()
 {
@@ -267,6 +267,8 @@ void CNatureScene::Debug()
     if (m_SelectNo == 4) { ImGui::Text(JAPANESE("休息")); }
     ImGui::End();
 #endif
+
+    CLightManager::GetInstance().Debug();
 }
 
 // =======================
@@ -415,76 +417,58 @@ void CNatureScene::UIInit(std::unique_ptr<CUIObject>& ui, float x, float y, floa
 //ヒーローごとのパラメータ書き込み
 void CNatureScene::SaveParam()
 {
+    //トレーニング実行時にパラメータ情報を書き込むファイルの階層
+    std::string ParamFilePath = "Data\\Hero\\Parameter\\";
+
     //ヒーローごとのパラメータ情報の書き込み
-    switch (m_pHero->GetSelectHero())
-    {
-    case CHeroManager::Yui:
-        //ユイ
-        WriteParam("Yui");
-        break;
-    case CHeroManager::Kaito:
-        //カイト
-        WriteParam("Kaito");
-        break;
-    default:
-        break;
-    }
+    //switch (m_pHero->GetSelectHero())
+    //{
+    //case CHeroManager::Yui:
+    //    //ユイ
+    //    m_pJson->SaveNatureData("Yui",m_ParamWriter, ParamFilePath);
+    //    break;
+    //case CHeroManager::Kaito:
+    //    //カイト
+    //    m_pJson->SaveNatureData("Kaito", m_ParamWriter, ParamFilePath);
+    //    break;
+    //default:
+    //    break;
+    //}
+
+    m_pJson->SaveNatureData(m_pHero->GetHeroName(), m_ParamWriter, ParamFilePath);
 }
 
 //パラメータ情報の書き込み
 void CNatureScene::WriteParam(const std::string& heroname)
 {
-    //書き込む情報の格納
-    //----パラメータ----
-    m_ParamWriter["Name"] = heroname;
-    m_ParamWriter["Parameter"]["Power"] = m_pHero->GetParam().Power;
-    m_ParamWriter["Parameter"]["Magic"] = m_pHero->GetParam().Magic;
-    m_ParamWriter["Parameter"]["Speed"] = m_pHero->GetParam().Speed;
-    m_ParamWriter["Parameter"]["Hp"]    = m_pHero->GetParam().Hp;
-    //----適正率----
-    m_ParamWriter["Appropriate"]["Power"] = m_pHero->GetApp().PowerApp;
-    m_ParamWriter["Appropriate"]["Magic"] = m_pHero->GetApp().MagicApp;
-    m_ParamWriter["Appropriate"]["Speed"] = m_pHero->GetApp().SpeedApp;
-    m_ParamWriter["Appropriate"]["Hp"]    = m_pHero->GetApp().HpApp;
-
-    //ファイルに書き込み
-    m_pJson->CreateOrWrite("Data\\Hero\\Parameter\\", m_ParamWriter);
 }
 
 
 //各種パラメータの描画
 void CNatureScene::DrawParam()
 {
-    //テキスト描画クラスのインスタンスを変数に代入
+    //----クラスのインスタンスを変数に代入----
+    //テキスト描画クラス
     WriteText* Text = WriteText::GetInstance();
+    //汎用クラス
+    CUtility* Utility = &CUtility::GetInstance();
 
     //----各種パラメータのUI描画(背景,値,ランク)----
     //背景
     m_pParamBack->Draw();
     //筋力
-    Text->Draw_Text(std::to_wstring(static_cast<int>(m_pHero->GetParam().Power)), WriteText::Normal, PosCorrection(m_pHero->GetParam().Power,PARAMVALUE_POSX_N, PARAMVALUE_POSY_N));
+    Text->Draw_Text(std::to_wstring(static_cast<int>(m_pHero->GetParam().Power)), WriteText::Normal, Utility->PosCorrection(m_pHero->GetParam().Power,CORRECTION_DIGIT,PARAMVALUE_POSX_N, PARAMVALUE_POSY_N));
     CUtility::GetInstance().DrawRank(m_pHero->GetParam().Power, 2, RANK_POSX_N, RANK_POSY_N);
     //魔力
-    Text->Draw_Text(std::to_wstring(static_cast<int>(m_pHero->GetParam().Magic)), WriteText::Normal, PosCorrection(m_pHero->GetParam().Magic, PARAMVALUE_POSX_N + PARAMVALUE_INTERVAL_N, PARAMVALUE_POSY_N));
+    Text->Draw_Text(std::to_wstring(static_cast<int>(m_pHero->GetParam().Magic)), WriteText::Normal, Utility->PosCorrection(m_pHero->GetParam().Magic, CORRECTION_DIGIT, PARAMVALUE_POSX_N + PARAMVALUE_INTERVAL_N, PARAMVALUE_POSY_N));
     CUtility::GetInstance().DrawRank(m_pHero->GetParam().Magic, 2, RANK_POSX_N + RANK_INTERVAL_N, RANK_POSY_N);
     //素早さ
-    Text->Draw_Text(std::to_wstring(static_cast<int>(m_pHero->GetParam().Speed)), WriteText::Normal, PosCorrection(m_pHero->GetParam().Speed, PARAMVALUE_POSX_N + (PARAMVALUE_INTERVAL_N * 2), PARAMVALUE_POSY_N));
+    Text->Draw_Text(std::to_wstring(static_cast<int>(m_pHero->GetParam().Speed)), WriteText::Normal, Utility->PosCorrection(m_pHero->GetParam().Speed, CORRECTION_DIGIT, PARAMVALUE_POSX_N + (PARAMVALUE_INTERVAL_N * 2), PARAMVALUE_POSY_N));
     CUtility::GetInstance().DrawRank(m_pHero->GetParam().Speed, 2, RANK_POSX_N + (RANK_INTERVAL_N * 2), RANK_POSY_N);
     //体力
-    Text->Draw_Text(std::to_wstring(static_cast<int>(m_pHero->GetParam().Hp)), WriteText::Normal, PosCorrection(m_pHero->GetParam().Hp, PARAMVALUE_POSX_N
+    Text->Draw_Text(std::to_wstring(static_cast<int>(m_pHero->GetParam().Hp)), WriteText::Normal, Utility->PosCorrection(m_pHero->GetParam().Hp, CORRECTION_DIGIT, PARAMVALUE_POSX_N
         + (PARAMVALUE_INTERVAL_N * 3), PARAMVALUE_POSY_N));
     CUtility::GetInstance().DrawRank(m_pHero->GetParam().Hp, 2, RANK_POSX_N + (RANK_INTERVAL_N * 3), RANK_POSY_N);
-}
-
-//パラメータの値描画時の桁数による位置補正
-D3DXVECTOR2 CNatureScene::PosCorrection(float value, float x, float y)
-{
-    //桁数(値を文字列に変換して桁数を取得)
-    int DigitCount = static_cast<int>(std::to_wstring(static_cast<int>(value)).length());
-    //桁数に応じた補正
-    float OffsetX = (DigitCount == 3) ? -35.0f : 0.0f;
-
-    return D3DXVECTOR2( x + OffsetX, y );
 }
 
 //各種トレーニングの描画
@@ -516,16 +500,22 @@ void CNatureScene::DrawTraning()
 //残りターン数の描画
 void CNatureScene::DrawRemainingTurn()
 {
+    //----クラスのインスタンスを変数に代入----
+    //テキスト描画クラス
+    WriteText* Text = WriteText::GetInstance();
+    //汎用クラス
+    CUtility* Utility = &CUtility::GetInstance();
+    //シーンマネージャー
+    CSceneManager* SceneMng = CSceneManager::GetInstance();
+
     //整数をwstring型に変換
     std::wstring Turn = std::to_wstring(CSceneManager::GetInstance()->GetRemainingTurn());
 
-    //テキスト描画クラスのインスタンスを変数に代入
-    WriteText* Text = WriteText::GetInstance();
 
     //残りターン数の描画
     Text->Draw_Text(L"残り", WriteText::Normal, D3DXVECTOR2(0.0, -20.0));
-    Text->Draw_Text(Turn, WriteText::Turn, D3DXVECTOR2(110.0, -30.0));
-    Text->Draw_Text(L"ターン", WriteText::Normal, D3DXVECTOR2(160.0, -20.0));
+    Text->Draw_Text(Turn, WriteText::Turn, Utility->PosCorrection(SceneMng->GetRemainingTurn(),2,140,-40.0f));
+    Text->Draw_Text(L"ターン", WriteText::Normal, D3DXVECTOR2(200.0, -20.0));
 }
 
 

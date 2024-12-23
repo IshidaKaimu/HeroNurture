@@ -2,6 +2,7 @@
 #include "Singleton\CSingleton.h"
 #include "UIObject\CUIObject.h"
 #include "WriteText\WriteText.h"
+#include "Json\CJson.h"
 
 //ランクリスト
 enum enRankList : char 
@@ -31,6 +32,9 @@ public:
 
 	//ランクの表示
 	void DrawRank(float value, int typeno, float x, float y);
+
+	//値の桁数による描画位置の補正
+	D3DXVECTOR2 PosCorrection(float value, float digit, float x, float y);
 
 private:
 	CUtility();

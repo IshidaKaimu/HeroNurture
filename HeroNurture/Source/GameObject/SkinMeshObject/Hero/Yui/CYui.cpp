@@ -3,6 +3,7 @@
 #include "Sound\CSoundManager.h"
 #include "SkinMesh\SkinMeshManager\CSkinMeshManager.h"
 #include "Scene\CSceneManager.h"
+#include "SkinMeshObject\Hero\CHeroManager.h"
 
 CYui::CYui()
 	: m_BonePos()

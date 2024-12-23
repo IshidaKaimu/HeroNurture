@@ -6,6 +6,7 @@ CHeroManager::CHeroManager()
     : m_Hero         ()
     , m_HeroList     ()
     , m_Traning      ()
+    , m_HeroName     ()
     , m_Stamina      ()
     , m_BeforeStamina()
     , m_AfterStamina ()
@@ -90,6 +91,23 @@ void CHeroManager::StaminaRecovery()
     //回復後のスタミナを保存
     m_AfterStamina = m_Stamina;
 
+}
+
+//ヒーロー名を文字列で返す関数
+std::string CHeroManager::GetHeroName()
+{
+    switch (m_HeroList)
+    {
+    case CHeroManager::Yui:
+        m_HeroName = "Yui";
+        break;
+    case CHeroManager::Kaito:
+        m_HeroName = "Kaito";
+        break;
+    default:
+        break;
+    }
+    return m_HeroName;
 }
 
 //ヒーロー設定関数

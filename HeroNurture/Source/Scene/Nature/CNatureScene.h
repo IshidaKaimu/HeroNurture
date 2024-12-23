@@ -5,11 +5,19 @@
 #include "StaticMeshObject\Ground\CGround.h"
 #include "json.hpp"
 #include <memory>
+#include "Json\CJson.h"
 
-//----前方宣言----
-class WriteText;
-class CJson;
+// =======================
+// 前方宣言
+// =======================		
+//----マネージャークラス----
+//シーン
 class CSceneManager;
+//ライト
+class CLightManager;
+//文字描画クラス
+class WriteText;
+//汎用クラス
 class CUtility;
 
 //Json使用に必要な名前空間の格納
@@ -44,6 +52,8 @@ constexpr float PARAMVALUE_INTERVAL_N = 150.0f; //配置間隔
 constexpr float RANK_POSX_N = 350.0f; //X座標
 constexpr float RANK_POSY_N = 430.0f; //Y座標
 constexpr float RANK_INTERVAL_N = 150.0f;//配置間隔
+//位置の補正を入れる桁数
+constexpr int   CORRECTION_DIGIT = 3;
 
 //----スタミナゲージ----
 //スタミナの最大値
@@ -116,8 +126,6 @@ public:
 	void WriteParam(const std::string& heroname);
 	//パラメータの描画
 	void DrawParam();
-	//パラメータの値の桁数による描画位置の補正
-	D3DXVECTOR2 PosCorrection(float value, float x, float y);
 
 	//各トレーニングの描画
 	void DrawTraning();
@@ -133,9 +141,6 @@ public:
 
 	//ヒーローマネージャクラス
 	CHeroManager* m_pHero;
-
-	//jsonクラス
-	std::unique_ptr<CJson> m_pJson;
 
 	//名前構造体
 	HeroName m_Name;
@@ -169,7 +174,9 @@ public:
 
 	// =======================
 	// json関連
-	// =======================		
+	// =======================	
+	//jsonクラス
+	std::unique_ptr<CJson> m_pJson;
 	//パラメータ情報の書き込み用
 	json m_ParamWriter;
 	//パラメータデータ格納用

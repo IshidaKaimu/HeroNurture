@@ -140,15 +140,14 @@ void CHeroBase::TraningResult(float stamina, float app, float& param)
 	//‚±‚Ì—”‚Å¬Œ÷‚·‚é‚©‚ðŒˆ‚ß‚é
 	int Succes = CUtility::GenerateRandomValue(0, 100);
 
-	//if (Succes >= FailureRate(stamina)) {
+	if (Succes >= FailureRate(stamina)) {
 		float AppBonus = INCREASE_VALUE * ( 1.0 + ( app / 100.0 ) );
-		//param += AppBonus * m_Correction;
-		param += 800;
-	//}
-	//else
-	//{
-	//	m_Failure = true;
-	//}
+		param += AppBonus * m_Correction;
+	}
+	else
+	{
+		m_Failure = true;
+	}
 }
 
 

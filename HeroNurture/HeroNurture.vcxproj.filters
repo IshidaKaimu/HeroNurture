@@ -331,6 +331,7 @@
     <ClInclude Include="Source\Scene\Traning\CTraningScene.h" />
     <ClInclude Include="Source\Utility\CUtility.h" />
     <ClInclude Include="Source\Scene\TraningResult\CTraningResultScene.h" />
+    <ClInclude Include="Source\Scene\Battle\CBattleScene.h" />
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="Source\BoundingSphere\CBoundingSphere.cpp">
@@ -490,6 +491,7 @@
     <ClCompile Include="Source\Scene\Traning\CTraningScene.cpp" />
     <ClCompile Include="Source\Utility\CUtility.cpp" />
     <ClCompile Include="Source\Scene\TraningResult\CTraningResultScene.cpp" />
+    <ClCompile Include="Source\Scene\Battle\CBattleScene.cpp" />
   </ItemGroup>
   <ItemGroup>
     <None Include="Source\ImGui\.editorconfig">

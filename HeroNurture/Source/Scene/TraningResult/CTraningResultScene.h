@@ -5,7 +5,7 @@
 #include "WriteText\WriteText.h"
 #include "StaticMeshObject\Ground\CGround.h"
 #include "SkinMeshObject\Hero\CHeroBase.h"
-#include "json.hpp"
+#include "json\CJson.h"
 #include "Utility\CUtility.h"
 
 //=====================================
@@ -25,6 +25,9 @@ class CCameraManager;
 //ヒーロー
 class CHeroManager;
 
+//Json使用に必要な名前空間の格納
+using json = nlohmann::json;
+
 //=====================================
 // 定数宣言
 //=====================================
@@ -38,12 +41,12 @@ const D3DXVECTOR3 RESULT_CAMLOOK = { 2.0, 5.0, 3.0 };
 constexpr float RANK_POSX = 900.0f;
 //最終ランクY座標
 constexpr float RANK_POSY_TR = 30.0f;
-//各パラメータランクX座標
-constexpr float PARAMRANK_POSX_TR = 830.0f;
-//各パラメータランクY座標
-constexpr float PARAMRANK_POSY_TR = 230.0f;
+//パラメータランク配置開始地点X座標
+constexpr float PARAMRANK_POSX_TR = 855.0f;
+//パラメータランク配置開始地点Y座標
+constexpr float PARAMRANK_POSY_TR = 225.0f;
 //各パラメータランク配置間隔
-constexpr float PARAMRANK_INTERVAL_TR = 125.0f;
+constexpr float PARAMRANK_INTERVAL_TR = 130.0f;
 //パラメータ背景X座標
 const float PARAMBACK_POSX_TR = 725.0f;
 //パラメータ背景Y座標
@@ -51,11 +54,11 @@ const float PARAMBACK_POSY_TR = 125.0f;
 //パラメータ背景拡縮
 const D3DXVECTOR3 PARAMBACK_SCALE_TR = { 1.1f, 1.1f , 1.1f };
 //パラメータの値X座標
-const float PARAMVALUE_POSX_TR = 725.0f;
+const float PARAMVALUE_POSX_TR = 900.0f;
 //パラメータの値Y座標
-const float PARAMVALUE_POSY_TR = 200.0f;
+const float PARAMVALUE_POSY_TR = 225.0f;
 //パラメータの値配置間隔
-const float PARAMVALUE_INTERVAL_TR = 200.0f;
+const float PARAMVALUE_INTERVAL_TR = 130.0f;
 //「最終評価」テキストX座標
 const D3DXVECTOR2 RESULTTEXT_POS = { 890.0f,0.0f };
  
@@ -92,6 +95,8 @@ private:
 	float ParamTotal();
 	//パラメータUIの描画
 	void DrawParamUI(float paramvalue, int no);
+	//育成結果の保存
+	void SaveResult(const std::string& heroname);
 
 
 private:
@@ -101,7 +106,11 @@ private:
 	//パラメータ背景UI
 	std::unique_ptr<CUIObject> m_pParamList;
 
-	//スタミナゲージの幅
-	float m_GageWidth;
-
+	// =======================
+	// json関連
+	// =======================	
+	//jsonクラス
+	std::unique_ptr<CJson> m_pJson;
+	//育成結果書き込み用
+	json m_ResultWriter;
 };

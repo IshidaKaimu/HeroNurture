@@ -29,21 +29,21 @@ void CUtility::DrawRank(float value, int typeno, float x, float y)
     {
     case 1:
         //‘‡•]‰¿’†‚Ì•`‰æ
-        if (value < 2000.0) { m_Rank = S; }
-        if (value < 1500.0f){ m_Rank = A; }
-        if (value < 1200.0f){ m_Rank = B; }
-        if (value < 900.0f) { m_Rank = C; }
-        if (value < 600.0f) { m_Rank = D; }
-        if (value < 300.0f) { m_Rank = E; }
+        if (value < 3500.0f){ m_Rank = S; }
+        if (value < 2000.0f){ m_Rank = A; }
+        if (value < 1600.0f){ m_Rank = B; }
+        if (value < 1200.0f){ m_Rank = C; }
+        if (value < 800.0f) { m_Rank = D; }
+        if (value < 400.0f) { m_Rank = E; }
         break;
     case 2:    
         //ˆç¬’†‚Ì•`‰æ
-        if (value < 1000.0f){ m_Rank = S; }
-        if (value < 600.0f) { m_Rank = A; }
-        if (value < 500.0f) { m_Rank = B; }
-        if (value < 400.0f) { m_Rank = C; }
-        if (value < 300.0f) { m_Rank = D; }
-        if (value < 200.0f) { m_Rank = E; }
+        if (value < 650.0f){ m_Rank = S; }
+        if (value < 550.0f){ m_Rank = A; }
+        if (value < 450.0f){ m_Rank = B; }
+        if (value < 350.0f){ m_Rank = C; }
+        if (value < 250.0f){ m_Rank = D; }
+        if (value < 150.0f){ m_Rank = E; }
         break;
     default:
         break;
@@ -95,3 +95,15 @@ void CUtility::DrawRank(float value, int typeno, float x, float y)
     default:break;
     }
 }
+
+//’l•`‰æ‚ÌŒ…”‚É‚æ‚éˆÊ’u•â³
+D3DXVECTOR2 CUtility::PosCorrection(float value, float digit, float x, float y)
+{
+    //Œ…”(’l‚ğ•¶š—ñ‚É•ÏŠ·‚µ‚ÄŒ…”‚ğæ“¾)
+    int DigitCount = static_cast<int>(std::to_wstring(static_cast<int>(value)).length());
+    //Œ…”‚É‰‚¶‚½•â³
+    float OffsetX = (DigitCount == digit) ? -35.0f : 0.0f;
+
+    return D3DXVECTOR2(x + OffsetX, y);
+}
+
