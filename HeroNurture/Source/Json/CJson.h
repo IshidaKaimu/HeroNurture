@@ -25,11 +25,15 @@ public:
 	//ファイルを作成/書き込み
 	void CreateOrWrite( const std::string& hierarchy, json& jsondata );
 
+	//ファイルに追記
+	void PostScript(const std::string& hierarchy, json& jsondata);
+
+
 	//ファイルの読み込み
 	bool Load( json& jsondata,const std::string& filename );
 
 	//育成情報の書き込み
-	void SaveNatureData(const std::string& heroname, json& json, std::string& savelocation);
+	void SaveNatureData(const std::string& heroname, json& json, std::string& hierarchy);
 
 
 private:

@@ -84,10 +84,13 @@ void CTraningResultScene::Update()
     //キーマネージャー
     CKeyManager* KeyMng = CKeyManager::GetInstance();
     //ヒーローマネージャー
-    CHeroManager* Hero = &CHeroManager::GetInstance();
+    CHeroManager* HeroMng = &CHeroManager::GetInstance();
 
     //キーマネージャの動作処理
     KeyMng->Update();
+
+    //育成結果を保存するファイルの階層
+    std::string SaveHierarchy = "Data\\Hero\\Result\\";
 
     //カーソルの移動
     if (KeyMng->IsDown(VK_RIGHT))
@@ -113,6 +116,7 @@ void CTraningResultScene::Update()
     if (m_SceneTransitionFlg && FadeOut())
     {
         CSceneManager::GetInstance()->SetIsDataLoaded(false);
+        m_pJson->SaveNatureData(HeroMng->GetHeroName(), m_ResultWriter, SaveHierarchy);
         CSceneManager::GetInstance()->LoadCreate(CSceneManager::HeroSelect);
     }
 }

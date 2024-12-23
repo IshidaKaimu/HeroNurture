@@ -122,8 +122,6 @@ public:
 	// =======================		
 	//ヒーローのごとのパラメータ情報の書き込み
 	void SaveParam();
-	//パラメータ情報の書き込み(SaveParam関数で使う)
-	void WriteParam(const std::string& heroname);
 	//パラメータの描画
 	void DrawParam();
 

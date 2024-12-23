@@ -234,8 +234,6 @@ void CNatureScene::Draw()
 
     //深度を戻す
     SceneMng->GetDx11()->SetDepth(true);
-
-
 }
 
 void CNatureScene::Debug()
@@ -268,7 +266,10 @@ void CNatureScene::Debug()
     ImGui::End();
 #endif
 
+    //ライトマネージャー
+#ifdef DEBUG 
     CLightManager::GetInstance().Debug();
+#endif
 }
 
 // =======================
@@ -419,16 +420,9 @@ void CNatureScene::SaveParam()
 {
     //トレーニング実行時にパラメータ情報を書き込むファイルの階層
     std::string ParamFilePath = "Data\\Hero\\Parameter\\";
-
-
+    //セットされたヒーローのパラメータ情報の書き込み
     m_pJson->SaveNatureData(m_pHero->GetHeroName(), m_ParamWriter, ParamFilePath);
 }
-
-//パラメータ情報の書き込み
-void CNatureScene::WriteParam(const std::string& heroname)
-{
-}
-
 
 //各種パラメータの描画
 void CNatureScene::DrawParam()
@@ -496,7 +490,6 @@ void CNatureScene::DrawRemainingTurn()
 
     //整数をwstring型に変換
     std::wstring Turn = std::to_wstring(CSceneManager::GetInstance()->GetRemainingTurn());
-
 
     //残りターン数の描画
     Text->Draw_Text(L"残り", WriteText::Normal, D3DXVECTOR2(0.0, -20.0));
