@@ -35,6 +35,9 @@ public:
 	//育成情報の書き込み
 	void SaveNatureData(const std::string& heroname, json& json, std::string& hierarchy);
 
+	//育成結果の保存
+	void SaveResult(const std::string& heroname, json& json, std::string& hierarchy);
+
 
 private:
 	//jsonファイルのデータ

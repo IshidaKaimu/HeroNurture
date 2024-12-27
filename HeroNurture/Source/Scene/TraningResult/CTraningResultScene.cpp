@@ -116,7 +116,7 @@ void CTraningResultScene::Update()
     if (m_SceneTransitionFlg && FadeOut())
     {
         CSceneManager::GetInstance()->SetIsDataLoaded(false);
-        m_pJson->SaveNatureData(HeroMng->GetHeroName(), m_ResultWriter, SaveHierarchy);
+        m_pJson->SaveResult(HeroMng->GetHeroName(), m_ResultWriter, SaveHierarchy);
         CSceneManager::GetInstance()->LoadCreate(CSceneManager::HeroSelect);
     }
 }
