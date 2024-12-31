@@ -237,6 +237,7 @@
     <ClCompile Include="Source\GameObject\SkinMeshObject\Hero\CHeroManager.cpp" />
     <ClCompile Include="Source\GameObject\SkinMeshObject\Hero\Yui\CYui.cpp" />
     <ClCompile Include="Source\Light\LightManager\CLightManager.cpp" />
+    <ClCompile Include="Source\Scene\BattleHeroSelect\CBattleHeroSelectScene.cpp" />
     <ClCompile Include="Source\Scene\Battle\CBattleScene.cpp" />
     <ClCompile Include="Source\Scene\Nature\CNatureScene.cpp" />
     <ClCompile Include="Source\DebugText\CDebugText.cpp" />
@@ -268,7 +269,7 @@
     <ClCompile Include="Source\Ray\CRay.cpp" />
     <ClCompile Include="Source\Scene\CSceneBase.cpp" />
     <ClCompile Include="Source\Scene\CSceneManager.cpp" />
-    <ClCompile Include="Source\Scene\HeroSelect\CHeroSelect.cpp" />
+    <ClCompile Include="Source\Scene\NatureHeroSelect\CNatureHeroSelect.cpp" />
     <ClCompile Include="Source\Scene\Login\CLoginScene.cpp" />
     <ClCompile Include="Source\Scene\TraningResult\CTraningResultScene.cpp" />
     <ClCompile Include="Source\Scene\Traning\CTraningScene.cpp" />
@@ -299,6 +300,7 @@
     <ClInclude Include="Source\GameObject\SkinMeshObject\Hero\CHeroManager.h" />
     <ClInclude Include="Source\GameObject\SkinMeshObject\Hero\Yui\CYui.h" />
     <ClInclude Include="Source\Light\LightManager\CLightManager.h" />
+    <ClInclude Include="Source\Scene\BattleHeroSelect\CBattleHeroSelectScene.h" />
     <ClInclude Include="Source\Scene\Battle\CBattleScene.h" />
     <ClInclude Include="Source\Scene\Nature\CNatureScene.h" />
     <ClInclude Include="Source\DebugText\CDebugText.h" />
@@ -332,7 +334,7 @@
     <ClInclude Include="Source\Ray\CRay.h" />
     <ClInclude Include="Source\Scene\CSceneBase.h" />
     <ClInclude Include="Source\Scene\CSceneManager.h" />
-    <ClInclude Include="Source\Scene\HeroSelect\CHeroSelect.h" />
+    <ClInclude Include="Source\Scene\NatureHeroSelect\CNatureHeroSelect.h" />
     <ClInclude Include="Source\Scene\Login\CLoginScene.h" />
     <ClInclude Include="Source\Scene\TraningResult\CTraningResultScene.h" />
     <ClInclude Include="Source\Scene\Traning\CTraningScene.h" />

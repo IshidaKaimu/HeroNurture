@@ -1,10 +1,10 @@
 #pragma once
-#include "Scene/CSceneBase.h"
-#include "Camera/CCamera.h"
-#include "StaticMeshObject/Sky/CSky.h"
-#include "WriteText/WriteText.h"
-#include "StaticMeshObject/Ground/CGround.h"
-#include "SkinMeshObject/Hero/CHeroBase.h"
+#include "Scene\CSceneBase.h"
+#include "Camera\CCamera.h"
+#include "StaticMeshObject\Sky\CSky.h"
+#include "WriteText\WriteText.h"
+#include "StaticMeshObject\Ground\CGround.h"
+#include "SkinMeshObject\Hero\CHeroBase.h"
 #include "json.hpp"
 
 //ëOï˚êÈåæ
@@ -17,12 +17,12 @@ static const D3DXVECTOR3 CAMPOS  = { 0.0f, 5.2f, -2.8f };
 static const D3DXVECTOR3 CAMLOOK = { 0.0f, 6.2f,  3.0f };
 
 
-class CHeroSelect
+class CNatureHeroSelect
 	:public CSceneBase
 {
 public:
-	CHeroSelect();
-	~CHeroSelect();
+	CNatureHeroSelect();
+	~CNatureHeroSelect();
 
 	//ç\ízä÷êî
 	void Create()	  override;

@@ -111,6 +111,12 @@ public:
 	void SetTraning(enTraningList traning) { m_Traning = traning; }
 	//トレーニングに失敗したかのフラグ
 	bool GetFailure() { return m_Hero->GetFailure(); }
+	//バトルに使用するパラメータ
+	void SetBattlePower(float power) { m_Hero ->SetBattlePower(power); }
+	void SetBattleMagic(float magic) { m_Hero ->SetBattleMagic(magic); }
+	void SetBattleSpeed(float speed) { m_Hero ->SetBattleSpeed(speed); }
+	void SetBattleHp(float hp)       { m_Hero->SetBattleSpeed(hp); }
+
 
 private:
 	//他からアクセスすることがないように

@@ -6,7 +6,7 @@
 
 //----‘O•ûéŒ¾---
 class CTitleScene;
-class CHeroSelect;
+class CNatureHeroSelect;
 class CNatureScene;
 class CTraningScene;
 class CTraningResult;
@@ -30,6 +30,7 @@ public:
 		Nature,
 		Training,
 		TrainingResult,
+		BattleHeroSelect,
 		Battle,
 		Max_S,
 		none,

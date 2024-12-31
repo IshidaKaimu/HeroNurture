@@ -105,20 +105,11 @@ public:
 	void SpeedUp( float stamina );
 	//体力
 	void HpUp( float stamina );
-	//----イベントによる上昇----
-    //筋力
-	void PowerUpEvent(float power) { m_Param.Power += power; };
-	//魔力
-	void MagicUpEvent(float magic) { m_Param.Magic += magic; }
-	//素早さ
-	void SpeedUpEvent(float speed) { m_Param.Speed += speed; }
-	//体力
-	void HpUpEvent(float hp){ m_Param.Hp += hp; }
 
 	// =======================
 	// ゲッター・セッター関数
 	// =======================		
-	//現在のパラメータ
+	//育成中のパラメータ
 	enParam GetParam()      { return  m_Param; }
 	//キャラごとの適正率
 	enAppropriate GetApp()  { return  m_App; }
@@ -128,6 +119,13 @@ public:
 	//トレーニング失敗フラグ
 	bool GetFailure() { return m_Failure; }
 	void SetFailure(bool failure) { m_Failure = failure; }
+	//バトルに使用するパラメータ
+	enParam GetBattleParam() { return m_BattleParam; }
+	void SetBattleParam(enParam battle) { m_BattleParam = battle; }
+	void SetBattlePower(float power) { m_BattleParam.Power = power; }
+	void SetBattleMagic(float magic) { m_BattleParam.Magic = magic; }
+	void SetBattleSpeed(float speed) { m_BattleParam.Speed = speed; }
+	void SetBattleHp   (float hp)    { m_BattleParam.Hp = hp; }
 
 
 protected :	
@@ -148,8 +146,13 @@ private:
 	void TraningResult(float stamina, float app, float& param);
 
 protected:
-	//ヒーローのパラメータ構造体
+	// =======================
+	// パラメータ
+	// =======================		
+	//育成中
 	enParam m_Param;
+	//バトル
+	enParam m_BattleParam;
 
 	//ヒーローの適正率構造体
 	enAppropriate m_App;

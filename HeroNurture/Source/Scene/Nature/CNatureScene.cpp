@@ -215,7 +215,7 @@ void CNatureScene::Draw()
     m_pCamera->CameraUpdate();
 
     //セットされたヒーローのクラスの描画
-    CHeroManager::GetInstance().Draw();
+    m_pHero->Draw();
 
     //地面クラスの描画
     m_pGround->Draw();

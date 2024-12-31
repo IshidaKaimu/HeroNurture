@@ -260,7 +260,7 @@
     <ClInclude Include="Source\Scene\Login\CLoginScene.h">
       <Filter>Source\Scene\Title</Filter>
     </ClInclude>
-    <ClInclude Include="Source\Scene\HeroSelect\CHeroSelect.h">
+    <ClInclude Include="Source\Scene\NatureHeroSelect\CNatureHeroSelect.h">
       <Filter>Source\Scene\GameMain</Filter>
     </ClInclude>
     <ClInclude Include="Source\SkinMesh\CSkinMesh.h">
@@ -332,6 +332,7 @@
     <ClInclude Include="Source\Utility\CUtility.h" />
     <ClInclude Include="Source\Scene\TraningResult\CTraningResultScene.h" />
     <ClInclude Include="Source\Scene\Battle\CBattleScene.h" />
+    <ClInclude Include="Source\Scene\BattleHeroSelect\CBattleHeroSelectScene.h" />
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="Source\BoundingSphere\CBoundingSphere.cpp">
@@ -418,7 +419,7 @@
     <ClCompile Include="Source\Scene\Login\CLoginScene.cpp">
       <Filter>Source\Scene\Title</Filter>
     </ClCompile>
-    <ClCompile Include="Source\Scene\HeroSelect\CHeroSelect.cpp">
+    <ClCompile Include="Source\Scene\NatureHeroSelect\CNatureHeroSelect.cpp">
       <Filter>Source\Scene\GameMain</Filter>
     </ClCompile>
     <ClCompile Include="Source\SkinMesh\CSkinMesh.cpp">
@@ -492,6 +493,7 @@
     <ClCompile Include="Source\Utility\CUtility.cpp" />
     <ClCompile Include="Source\Scene\TraningResult\CTraningResultScene.cpp" />
     <ClCompile Include="Source\Scene\Battle\CBattleScene.cpp" />
+    <ClCompile Include="Source\Scene\BattleHeroSelect\CBattleHeroSelectScene.cpp" />
   </ItemGroup>
   <ItemGroup>
     <None Include="Source\ImGui\.editorconfig">

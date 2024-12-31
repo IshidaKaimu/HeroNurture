@@ -113,8 +113,7 @@ void CJson::SaveNatureData(const std::string& heroname, json& jsondata, std::str
 
     //‘‚«ž‚Þî•ñ‚ÌŠi”[
     //----ƒpƒ‰ƒ[ƒ^----
-    jsondata["Name"] = "Result";
-    jsondata["HeroName"] = heroname;
+    jsondata["Name"] = heroname;
     jsondata["Parameter"]["Power"] = HeroMng->GetParam().Power;
     jsondata["Parameter"]["Magic"] = HeroMng->GetParam().Magic;
     jsondata["Parameter"]["Speed"] = HeroMng->GetParam().Speed;

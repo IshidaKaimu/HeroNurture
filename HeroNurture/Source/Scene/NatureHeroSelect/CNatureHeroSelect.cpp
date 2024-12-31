@@ -1,4 +1,4 @@
-#include "CHeroSelect.h"
+#include "CNatureHeroSelect.h"
 #include "Scene\CSceneManager.h"
 #include "KeyManager\CKeyManager.h"
 #include "StaticMesh\MeshManager\CMeshManager.h"
@@ -14,7 +14,7 @@
 #include <sstream>
 
 
-CHeroSelect::CHeroSelect()
+CNatureHeroSelect::CNatureHeroSelect()
     : m_pCamera (  &CCameraManager::GetInstance() )
     , m_pSky    ()
     , m_pGround ()
@@ -22,12 +22,12 @@ CHeroSelect::CHeroSelect()
 {
 }
 
-CHeroSelect::~CHeroSelect()
+CNatureHeroSelect::~CNatureHeroSelect()
 {
 }
 
 //構築関数
-void CHeroSelect::Create()
+void CNatureHeroSelect::Create()
 {
    //----ヒーロークラスのインスタンス生成----
    //ユイ
@@ -43,7 +43,7 @@ void CHeroSelect::Create()
 }
 
 //データ設定関数
-void CHeroSelect::LoadData()
+void CNatureHeroSelect::LoadData()
 {
     //メッシュマネージャーのインスタンスを変数に代入
     CMeshManager* MMng = CMeshManager::GetInstance();
@@ -69,12 +69,12 @@ void CHeroSelect::LoadData()
 }
 
 //破棄関数
-void CHeroSelect::Releace()
+void CNatureHeroSelect::Releace()
 {
 }
 
 //初期化関数
-void CHeroSelect::Initialize()
+void CNatureHeroSelect::Initialize()
 {
 
 #ifdef DEBUG
@@ -102,7 +102,7 @@ void CHeroSelect::Initialize()
 }
 
 //更新関数
-void CHeroSelect::Update()
+void CNatureHeroSelect::Update()
 {
 
     //フェードイン処理
@@ -171,7 +171,7 @@ void CHeroSelect::Update()
 }
 
 //描画関数
-void CHeroSelect::Draw()
+void CNatureHeroSelect::Draw()
 {  
     //カメラの動作
     m_pCamera->CameraUpdate();
