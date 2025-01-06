@@ -4,11 +4,13 @@
 #include "Scene\CSceneManager.h"
 #include "WriteText\WriteText.h"
 #include "SkinMeshObject\Hero\CHeroManager.h"
+#include "Sprite2D\UIManager\CUIManager.h"
 
 CTraningScene::CTraningScene()
     : m_pCamera ( &CCameraManager::GetInstance() )
     , m_pSky    ()
     , m_pGround ()
+    , m_pBack   ()
     , m_TextNo  ()
 {
 }
@@ -27,6 +29,10 @@ void CTraningScene::Create()
     //地面
     m_pGround = make_unique<CGround>();
 
+    //UIオブジェクト
+    //背景
+    m_pBack = make_unique<CUIObject>();
+
     //育成関連のシーンで共通するUIのインスタンス生成
     CNatureScene::CreateNatureUI(m_pStaminaGage,m_pStaminaBack);
 
@@ -38,15 +44,34 @@ void CTraningScene::Releace()
 //データ読み込み関数
 void CTraningScene::LoadData()
 {
+    //----クラスのインスタンスを変数に代入----
+    //テキスト描画クラス
+    WriteText* Text = WriteText::GetInstance();
+    //ヒーローマネージャークラス
+    CHeroManager* HeroMng = &CHeroManager::GetInstance();
+
     //地面のメッシュデータ設定
     m_pGround->LoadData();
 
     //育成関連のシーンで共通するUIのスプライトデータ設定
     CNatureScene::LoadNatureUI(m_pStaminaGage,m_pStaminaBack);
+
+    //トレーニングごとの背景UIのスプライトデータ設定
+    switch (HeroMng->GetTraining())
+    {
+    case CHeroManager::PowerTraining: m_pBack->AttachSprite(CUIManager::GetSprite(CUIManager::ResultParamList));break;
+    case CHeroManager::MagicTraining: m_pBack->AttachSprite(CUIManager::GetSprite(CUIManager::ResultParamList));break;
+    case CHeroManager::SpeedTraining: m_pBack->AttachSprite(CUIManager::GetSprite(CUIManager::ResultParamList));break;
+    case CHeroManager::HpTraining:    m_pBack->AttachSprite(CUIManager::GetSprite(CUIManager::ResultParamList));break;
+    default:  break;
+    }
+
 }
 //初期化関数
 void CTraningScene::Initialize()
 {
+    CSceneManager::GetInstance()->InitWhiteFade();
+
     //育成関連のシーンで共通するUI
     CNatureScene::InitNatureUI(m_pStaminaGage,m_pStaminaBack);
 }
@@ -111,12 +136,16 @@ void CTraningScene::Update()
 //描画関数
 void CTraningScene::Draw()
 {
+    //クラスのインスタンスを変数に代入----
+    //シーンマネージャー
+    CSceneManager* SceneMng = CSceneManager::GetInstance();
+
     m_pGround->Draw();
     //上昇量テキストの描画(仮)
     DrawTraningText();
 
-    //シーンマネージャー
-    CSceneManager* SceneMng = CSceneManager::GetInstance();
+    //各トレーニング背景UIの描画
+    DrawTraningBack();
 
     //深度を無視する
     SceneMng->GetDx11()->SetDepth(false);
@@ -126,6 +155,34 @@ void CTraningScene::Draw()
     SceneMng->GetDx11()->SetDepth(true);
 
 }
+
+////各トレーニングのアニメーション
+//void CTraningScene::TraningAnimation()
+//{    
+//    //----クラスのインスタンスを変数に代入----
+//    //テキスト描画クラス
+//    WriteText* Text = WriteText::GetInstance();
+//    //ヒーローマネージャークラス
+//    CHeroManager* HeroMng = &CHeroManager::GetInstance();
+//
+//    switch (HeroMng->GetTraining())
+//    {
+//    case CHeroManager::PowerTraining:
+//        HeroMng->PowerTraningAnimation();
+//        break;
+//    case CHeroManager::MagicTraining:
+//        HeroMng->MagicTraningAnimation();
+//        break;
+//    case CHeroManager::SpeedTraining:
+//        HeroMng->SpeedTraningAnimation();
+//        break;
+//    case CHeroManager::HpTraining:
+//        HeroMng->HpTraningAnimation();
+//        break;
+//    default:
+//        break;
+//    }
+//}
 
 //配列にテキストを追加する関数
 void CTraningScene::AddText()
@@ -182,21 +239,20 @@ bool CTraningScene::AlreadyAddCheck(std::wstring paramname)
 //トレーニング結果テキストの描画
 void CTraningScene::DrawTraningText()
 {
-
     //----クラスのインスタンスを変数に代入----
     //テキスト描画クラス
     WriteText* Text = WriteText::GetInstance();
     //ヒーローマネージャークラス
-    CHeroManager* Hero = &CHeroManager::GetInstance();
+    CHeroManager* HeroMng = &CHeroManager::GetInstance();
     //シーンマネージャークラス
     CSceneManager* SceneMng = CSceneManager::GetInstance();
 
     //----テキストを変数に代入----
     //失敗したか同課によって返すテキストを変える
-    std::wstring ResultText = Hero->GetFailure() ? L"失敗..." : L"成功!!";
+    std::wstring ResultText = HeroMng->GetFailure() ? L"失敗..." : L"成功!!";
 
     //トレーニングが失敗したかの条件文
-    bool Failure = Hero->GetFailure();
+    bool Failure = HeroMng->GetFailure();
     //休息が選択されていたかの条件文
     bool Rest = SceneMng->GetRestFlag();
 
@@ -230,7 +286,7 @@ void CTraningScene::DrawParamChange(const IncParam& param)
     //テキスト描画クラス
     WriteText* Text = WriteText::GetInstance();
     //ヒーローマネージャークラス
-    CHeroManager* Hero = &CHeroManager::GetInstance();
+    CHeroManager* HeroMng = &CHeroManager::GetInstance();
 
     //描画位置の設定
     //テキストの描画位置を設定
@@ -268,11 +324,11 @@ void CTraningScene::DrawParamChange(const IncParam& param)
             //パラメータの名前と変化の描画
             Text->Draw_Text(L"スタミナは", WriteText::Normal, InitOffset);
             //スタミナが既に0の状態で減少した場合
-            if (Hero->GetStamina() <= 0)
+            if (HeroMng->GetStamina() <= 0)
             {
                 Text->Draw_Text(L"これ以上減少しない", WriteText::Dec, ValueOffset);
             }
-            else if(Hero->GetStamina() >= 100)
+            else if(HeroMng->GetStamina() >= 100)
             {
                 Text->Draw_Text(L"これ以上回復しない", WriteText::Inc, ValueOffset);
             }

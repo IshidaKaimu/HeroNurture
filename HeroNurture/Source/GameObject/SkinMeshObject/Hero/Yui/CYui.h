@@ -34,10 +34,25 @@ public:
 	// =======================
 	// 各シーンごとのアニメーション
 	// =======================
-	//ヒーロー選択シーン 
-	void SelectAnimation() override;
+	//育成ヒーロー選択シーン 
+	void NatureHeroSelectAnimation() override;
+	//バトルヒーロー選択シーン
+	void BattleHeroSelectAnimation() override;
 	// 育成シーン		
 	void NatureAnimation(int no) override;
+	// =======================
+	// トレーニングごとのアニメーション関数
+	// =======================		
+	//筋力
+	void PowerTraningAnimation() override;
+	//魔力
+	void MagicTraningAnimation() override;
+	//体力
+	void SpeedTraningAnimation()override;
+	//Hp
+	void HpTraningAnimation()override;
+
+
 
 private:
 	//アニメーションスピードの設定
@@ -47,10 +62,7 @@ private:
 	void AnimChange();
 
 protected:
-	D3DXVECTOR3    m_BonePos;			//カイト:ボーン座標
-	bool           m_Run;				//走り出すフラグ
 	bool           m_AnimChange;		//アニメーション切り替えフラグ
-	float          m_EffPosZ;			//エフェクトのZ軸位置
 
 };
 

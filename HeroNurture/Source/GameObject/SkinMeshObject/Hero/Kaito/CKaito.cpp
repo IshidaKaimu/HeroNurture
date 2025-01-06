@@ -80,8 +80,13 @@ void CKaito::Draw()
 	CSkinMeshObject::Draw();
 }
 
-//ヒーロー選択シーンのアニメーション
-void CKaito::SelectAnimation()
+//育成ヒーロー選択シーンのアニメーション
+void CKaito::NatureHeroSelectAnimation()
+{
+}
+
+//バトルヒーロー選択シーンのアニメーション
+void CKaito::BattleHeroSelectAnimation()
 {
 }
 

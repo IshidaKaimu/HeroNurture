@@ -50,12 +50,25 @@ public:
 	// 各シーンごとのアニメーション
 	// =======================
     //ヒーロー選択シーン 
-	void SelectAnimation() override;
+	void NatureHeroSelectAnimation() override;
 	//育成シーン
 	void NatureAnimation(int no) override;
 
 	//各ヒーロークラスの構築
 	static std::unique_ptr<CHeroBase>Create(enHeroList list);
+
+	// =======================
+	// トレーニングごとのアニメーション関数
+	// =======================		
+	//筋力
+	void PowerTraningAnimation() { m_Hero->PowerTraningAnimation(); }
+	//魔力
+	void MagicTraningAnimation() { m_Hero->MagicTraningAnimation(); };
+	//体力
+	void SpeedTraningAnimation() { m_Hero->SpeedTraningAnimation(); };
+	//Hp
+	void HpTraningAnimation() { m_Hero->HpTraningAnimation(); };
+
 
 	// =======================
 	// 各パラメータ上昇関数

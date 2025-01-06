@@ -9,6 +9,8 @@ CHeroBase::CHeroBase()
 	: m_Param          ()
 	, m_pJson          ()
 	, m_UserName       ()
+	, m_EventCnt	   ()
+	, m_BeforeParam	   ()
 	, m_Correction	   (1.0)
 	, m_Failure		   (false)
 {

@@ -36,6 +36,7 @@ HRESULT CUIManager::Load(CDirectX11* Dx11)
 		{UIList::MagicTraning,   _T("Data\\Texture\\MagicTraning.png")	 ,{ 290.0, 260.0, 290.0, 260.0, 290.0, 260.0,}},
 		{UIList::SpeedTraning,   _T("Data\\Texture\\SpeedTraning.png")	 ,{ 290.0, 260.0, 290.0, 260.0, 290.0, 260.0,}},
 		{UIList::HpTraning,	     _T("Data\\Texture\\HpTraning.png")		 ,{ 290.0, 260.0, 290.0, 260.0, 290.0, 260.0,}},
+		{UIList::Rest,	         _T("Data\\Texture\\Rest.png")		 ,{ 290.0, 260.0, 290.0, 260.0, 290.0, 260.0,}},
 		{UIList::ParamList,	     _T("Data\\Texture\\NatureParamList.png"),{ 787.0f, 161.0f, 787.0f, 161.0f, 787.0f, 161.0f,}},
 		{UIList::ResultParamList,_T("Data\\Texture\\ResultParamList.png"),{ 400.0f, 600.0f, 400.0f, 600.0f, 400.0f, 600.0f,}},
 		{UIList::StaminaGage,	 _T("Data\\Texture\\Stamina.png")		 ,{ 602.0f, 54.0f,  602.0f, 54.0f,  602.0f, 54.0f,}},

@@ -7,22 +7,27 @@
 #include "SkinMeshObject\Hero\CHeroBase.h"
 #include "json.hpp"
 
-//前方宣言
+//=====================================
+// 前方宣言
+//=====================================
 //----各ヒーローのクラス
 class CYui;
 class CKaito;
 
+// =======================
+// 定数宣言 (_NS = トレーニング結果シーンで用いることを示す)
+// =======================	
 //----各ヒーローのカメラ配置・注視点----
-static const D3DXVECTOR3 CAMPOS  = { 0.0f, 5.2f, -2.8f };
-static const D3DXVECTOR3 CAMLOOK = { 0.0f, 6.2f,  3.0f };
+static const D3DXVECTOR3 CAMPOS_NS  = { 0.0f, 5.2f, -2.8f };
+static const D3DXVECTOR3 CAMLOOK_NS = { 0.0f, 6.2f,  3.0f };
 
 
-class CNatureHeroSelect
+class CNatureHeroSelectScene
 	:public CSceneBase
 {
 public:
-	CNatureHeroSelect();
-	~CNatureHeroSelect();
+	CNatureHeroSelectScene();
+	~CNatureHeroSelectScene();
 
 	//構築関数
 	void Create()	  override;

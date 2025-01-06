@@ -34,8 +34,10 @@ public:
 	// =======================
 	// 各シーンごとのアニメーション
 	// =======================
-	//ヒーロー選択シーン
-	virtual void SelectAnimation() override;
+	//育成ヒーロー選択シーン
+	virtual void NatureHeroSelectAnimation() override;
+	//バトルヒーロー選択シーン
+	virtual void BattleHeroSelectAnimation() override;
 	// 育成シーン		
 	void NatureAnimation(int no) override;
 

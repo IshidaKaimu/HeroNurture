@@ -17,6 +17,7 @@ public:
 		MagicTraning,   //魔力トレーニング
 		SpeedTraning,   //素早さトレーニング
 		HpTraning,      //体力トレーニング
+		Rest,           //休息		
 		StaminaGage,    //スタミナゲージ表示用画像
 		StaminaBack,    //スタミナゲージ背景用画像
 		Max,

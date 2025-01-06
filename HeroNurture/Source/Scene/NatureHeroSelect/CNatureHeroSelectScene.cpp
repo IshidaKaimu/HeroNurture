@@ -1,4 +1,4 @@
-#include "CNatureHeroSelect.h"
+#include "CNatureHeroSelectScene.h"
 #include "Scene\CSceneManager.h"
 #include "KeyManager\CKeyManager.h"
 #include "StaticMesh\MeshManager\CMeshManager.h"
@@ -14,7 +14,7 @@
 #include <sstream>
 
 
-CNatureHeroSelect::CNatureHeroSelect()
+CNatureHeroSelectScene::CNatureHeroSelectScene()
     : m_pCamera (  &CCameraManager::GetInstance() )
     , m_pSky    ()
     , m_pGround ()
@@ -22,12 +22,12 @@ CNatureHeroSelect::CNatureHeroSelect()
 {
 }
 
-CNatureHeroSelect::~CNatureHeroSelect()
+CNatureHeroSelectScene::~CNatureHeroSelectScene()
 {
 }
 
 //構築関数
-void CNatureHeroSelect::Create()
+void CNatureHeroSelectScene::Create()
 {
    //----ヒーロークラスのインスタンス生成----
    //ユイ
@@ -43,7 +43,7 @@ void CNatureHeroSelect::Create()
 }
 
 //データ設定関数
-void CNatureHeroSelect::LoadData()
+void CNatureHeroSelectScene::LoadData()
 {
     //メッシュマネージャーのインスタンスを変数に代入
     CMeshManager* MMng = CMeshManager::GetInstance();
@@ -54,13 +54,13 @@ void CNatureHeroSelect::LoadData()
     //ヒーローマネージャーのインスタンスを変数に代入
     CHeroManager* Hero = &CHeroManager::GetInstance();
 
-    //----ヒーロークラスのデータ読み込み----
+    //----各ヒーロークラスのメッシュデータ設定----
     //ユイ
     m_pYui->AttachMesh(CSkinMeshManager::GetMesh(CSkinMeshManager::Yui));
     //カイト
     m_pKaito->AttachMesh(CSkinMeshManager::GetMesh(CSkinMeshManager::Kaito));
 
-    //スカイボックスのメッシュ設定
+    //スカイボックスのメッシュデータ設定
     m_pSky->AttachMesh(CMeshManager::GetMesh(CMeshManager::Sky));
 
     //地面のメッシュ設定
@@ -69,12 +69,12 @@ void CNatureHeroSelect::LoadData()
 }
 
 //破棄関数
-void CNatureHeroSelect::Releace()
+void CNatureHeroSelectScene::Releace()
 {
 }
 
 //初期化関数
-void CNatureHeroSelect::Initialize()
+void CNatureHeroSelectScene::Initialize()
 {
 
 #ifdef DEBUG
@@ -83,9 +83,9 @@ void CNatureHeroSelect::Initialize()
 #endif
 
     //カメラ位置の設定
-    m_pCamera->SetPos(CAMPOS);
+    m_pCamera->SetPos(CAMPOS_NS);
     //カメラの注視点の設定
-    m_pCamera->SetLook(CAMLOOK);
+    m_pCamera->SetLook(CAMLOOK_NS);
 
     //ライト情報
     m_Light.Position = D3DXVECTOR3(0.0f, 1.0f, 0.0f);
@@ -102,7 +102,7 @@ void CNatureHeroSelect::Initialize()
 }
 
 //更新関数
-void CNatureHeroSelect::Update()
+void CNatureHeroSelectScene::Update()
 {
 
     //フェードイン処理
@@ -171,7 +171,7 @@ void CNatureHeroSelect::Update()
 }
 
 //描画関数
-void CNatureHeroSelect::Draw()
+void CNatureHeroSelectScene::Draw()
 {  
     //カメラの動作
     m_pCamera->CameraUpdate();
@@ -190,12 +190,12 @@ void CNatureHeroSelect::Draw()
     {
     case 0:
         //ユイ
-        m_pYui->SelectAnimation();
+        m_pYui->NatureHeroSelectAnimation();
         m_pYui->Draw();
         break;
     case 1:
         //カイト
-        m_pKaito->SelectAnimation();
+        m_pKaito->NatureHeroSelectAnimation();
         m_pKaito->Draw();
         break;
     default:

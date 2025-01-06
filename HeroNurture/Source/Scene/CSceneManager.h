@@ -6,7 +6,7 @@
 
 //----前方宣言---
 class CTitleScene;
-class CNatureHeroSelect;
+class CNatureHeroSelectScene;
 class CNatureScene;
 class CTraningScene;
 class CTraningResult;
@@ -69,16 +69,22 @@ public:
 	//読み込み回数制限フラグの操作
 	void SetIsDataLoaded(bool loaded) { m_IsDataLoaded = loaded; }
 
+	//----育成経過ターン関連関数----
 	//ターン数の経過
 	void TurnProgress() { m_Turn--; }
-
 	//ターン数の初期化
 	void InitTurn() { m_Turn = MAX_TURN; }
 
 	//スタミナゲージの幅の初期化
 	void InitStaminaWidth() { m_GageWidth = 1.0f; }
 
-    //---ゲッター・セッター---
+	//白フェード関連の初期化
+	void InitWhiteFade() { m_Scene->InitWhiteFade(); }
+
+	//白フェードの再生
+	void PlayWhiteFade(int max, float speed, float alpha) { m_Scene->PlayWhiteFade(max, speed, alpha); }
+
+	//---ゲッター・セッター---
     //DirectX9
     CDirectX9* GetDx9() { return m_pDx9; }
 	void SetDx9( CDirectX9& Dx9) { m_pDx9 = &Dx9; }

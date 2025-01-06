@@ -87,10 +87,23 @@ public:
 	// =======================
 	// シーンごとのアニメーション関数
 	// =======================		
-	//ヒーロー選択シーン
-	virtual void SelectAnimation() {};
+	//育成ヒーロー選択シーン
+	virtual void NatureHeroSelectAnimation() {};
+	//バトルヒーロー選択シーン
+	virtual void BattleHeroSelectAnimation() {};
 	//育成シーン
 	virtual void NatureAnimation(int no) {};
+	// =======================
+	// トレーニングごとのアニメーション関数
+	// =======================		
+	//筋力
+	virtual void PowerTraningAnimation() {};
+	//魔力
+	virtual void MagicTraningAnimation() {};
+	//体力
+	virtual void SpeedTraningAnimation() {};
+	//Hp
+	virtual void HpTraningAnimation() {};
 
 public:
 	// =======================
@@ -162,6 +175,9 @@ protected:
 
 	//ユーザーネーム
 	std::string m_UserName;
+
+	//イベントシーンに用いるカウント
+	int m_EventCnt;
 
 private:
 	//パラメータ更新前のパラメータ情報

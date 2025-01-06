@@ -18,6 +18,11 @@ CNatureScene::CNatureScene()
     , m_pGround     ()
     , m_pSky        ()
     , m_pParamBack  ()
+    , m_pPowerTraning()
+    , m_pMagicTraning()
+    , m_pSpeedTraning()
+    , m_pHpTraning()
+    , m_pRest()
     , m_pStaminaGage()
     , m_pStaminaBack()
     , m_GageWidth   ( CSceneManager::GetInstance()->GetStaminaWidth() )
@@ -67,6 +72,7 @@ void CNatureScene::Create()
     m_pMagicTraning = std::make_unique<CUIObject>();
     m_pSpeedTraning = std::make_unique<CUIObject>();
     m_pHpTraning    = std::make_unique<CUIObject>();
+    m_pRest         = std::make_unique<CUIObject>();
 
     //育成関連のシーンで共通して表示するUIのインスタンス生成
     CreateNatureUI(m_pStaminaGage,m_pStaminaBack);
@@ -101,6 +107,7 @@ void CNatureScene::LoadData()
     m_pMagicTraning->AttachSprite(CUIManager::GetSprite(CUIManager::MagicTraning));
     m_pSpeedTraning->AttachSprite(CUIManager::GetSprite(CUIManager::SpeedTraning));
     m_pHpTraning   ->AttachSprite(CUIManager::GetSprite(CUIManager::HpTraning));
+    m_pRest        ->AttachSprite(CUIManager::GetSprite(CUIManager::Rest));
 
     //スタミナゲージのUIのスプライト設定
     LoadNatureUI(m_pStaminaGage, m_pStaminaBack);
@@ -143,6 +150,7 @@ void CNatureScene::Initialize()
     UIInit(m_pMagicTraning, TRANING_POSX_N, TRANING_POSY_N, TRANING_INTERVAL_N, TRANING_SCALE_N, 1);
     UIInit(m_pSpeedTraning, TRANING_POSX_N, TRANING_POSY_N, TRANING_INTERVAL_N, TRANING_SCALE_N, 2);
     UIInit(m_pHpTraning,    TRANING_POSX_N, TRANING_POSY_N, TRANING_INTERVAL_N, TRANING_SCALE_N, 3);
+    UIInit(m_pRest,    TRANING_POSX_N, TRANING_POSY_N, TRANING_INTERVAL_N, TRANING_SCALE_N, 4);
 
     //育成関連のシーンで共通のUIの初期化
     InitNatureUI(m_pStaminaGage,m_pStaminaBack);
@@ -470,11 +478,15 @@ void CNatureScene::DrawTraning()
     //体力トレーニング選択時
     if (m_SelectNo == 3) { m_pHpTraning->SetPositionY(TRANING_POSY_N - PosUp); }
     else { m_pHpTraning->SetPositionY(TRANING_POSY_N); }
+    //休息選択時
+    if (m_SelectNo == 4) { m_pRest->SetPositionY(TRANING_POSY_N - PosUp); }
+    else { m_pRest->SetPositionY(TRANING_POSY_N); }
 
     m_pPowerTraning->Draw();
     m_pMagicTraning->Draw();
     m_pSpeedTraning->Draw();
     m_pHpTraning->Draw();
+    m_pRest->Draw();
 }
 
 //残りターン数の描画

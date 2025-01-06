@@ -163,6 +163,8 @@ public:
 	std::unique_ptr<CUIObject> m_pSpeedTraning;
 	//体力トレーニングUI
 	std::unique_ptr<CUIObject> m_pHpTraning;
+	//休息UI
+	std::unique_ptr<CUIObject> m_pRest;
 	//スタミナゲージ
 	std::unique_ptr<CUIObject> m_pStaminaGage;
 	//スタミナゲージ背景

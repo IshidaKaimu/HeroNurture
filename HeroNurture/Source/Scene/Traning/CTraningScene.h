@@ -9,12 +9,16 @@
 #include "json.hpp"
 
 //========================
-//前方宣言
+// 前方宣言
 //=======================
+//----マネージャークラス----
+//ヒーローマネージャー
 class CHeroManager;
+//UIマネージャー
+class CUIManager;
 
 //========================
-//定数宣言
+// 定数宣言
 //=======================
 //----テキストの位置----
 //パラメータの種類
@@ -59,7 +63,9 @@ public:
 	//描画関数
 	void Draw()		  override;
 
-public:
+private:
+	////トレーニングごとのアニメーション
+	//void TraningAnimation();
 	//パラメータが上昇していたら配列にテキストを追加する処理
 	void AddText();
 	//配列に既に追加している情報ではないかの確認
@@ -82,6 +88,10 @@ private:
 	std::unique_ptr<CSky> m_pSky;
 	//地面
 	std::unique_ptr<CGround> m_pGround;
+
+	//----UI----
+	//背景UI
+	std::unique_ptr<CUIObject> m_pBack;
 
 	//----vector配列----
 	//テキストの描画順処理に使う配列

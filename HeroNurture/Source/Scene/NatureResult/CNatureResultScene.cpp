@@ -1,4 +1,4 @@
-#include "Scene\TraningResult\CTraningResultScene.h"
+#include "Scene\NatureResult\CNatureResultScene.h"
 #include "Scene\CSceneManager.h"
 #include "KeyManager\CKeyManager.h"
 #include "Sprite2D\UIManager\CUIManager.h"
@@ -13,7 +13,7 @@
 #include <sstream>
 
 
-CTraningResultScene::CTraningResultScene()
+CNatureResultScene::CNatureResultScene()
     : m_pCamera(&CCameraManager::GetInstance())
     , m_pParamList  ()
     , m_pJson       ()
@@ -21,19 +21,19 @@ CTraningResultScene::CTraningResultScene()
 {
 }
 
-CTraningResultScene::~CTraningResultScene()
+CNatureResultScene::~CNatureResultScene()
 {
 }
 
 //構築関数
-void CTraningResultScene::Create()
+void CNatureResultScene::Create()
 {
     //パラメータ背景UIのインスタンス生成
     m_pParamList = std::make_unique<CUIObject>();
 }
 
 //データ設定関数
-void CTraningResultScene::LoadData()
+void CNatureResultScene::LoadData()
 {
     //----クラスのインスタンスを変数に代入----
     //ヒーローマネージャー
@@ -49,12 +49,12 @@ void CTraningResultScene::LoadData()
 }
 
 //破棄関数
-void CTraningResultScene::Releace()
+void CNatureResultScene::Releace()
 {
 }
 
 //初期化関数
-void CTraningResultScene::Initialize()
+void CNatureResultScene::Initialize()
 {
     //ヒーローマネージャのインスタンスを変数に代入
     CHeroManager* Hero = &CHeroManager::GetInstance();
@@ -63,19 +63,19 @@ void CTraningResultScene::Initialize()
     Hero->Initialize();
 
     //パラメータ背景UI情報の初期化
-    m_pParamList->SetPosition(PARAMBACK_POSX_TR,PARAMBACK_POSY_TR,0.0);
-    m_pParamList->SetScale(PARAMBACK_SCALE_TR);
+    m_pParamList->SetPosition(PARAMBACK_POSX_NR,PARAMBACK_POSY_NR,0.0);
+    m_pParamList->SetScale(PARAMBACK_SCALE_NR);
     m_pParamList->SetAlpha(1.0f);
     m_pParamList->SetDisplay(1.0f,1.0f);
 
     //カメラ位置の設定
-    m_pCamera->SetPos(RESULT_CAMPOS);
+    m_pCamera->SetPos(CAMPOS_NR);
     //カメラ注視点の設定
-    m_pCamera->SetLook(RESULT_CAMLOOK);
+    m_pCamera->SetLook(CAMLOOK_NR);
 }
 
 //更新関数
-void CTraningResultScene::Update()
+void CNatureResultScene::Update()
 {
     //フェードイン処理
     if (!FadeIn()) { return; }
@@ -122,7 +122,7 @@ void CTraningResultScene::Update()
 }
 
 //描画関数
-void CTraningResultScene::Draw()
+void CNatureResultScene::Draw()
 {
     //----クラスのインスタンスを変数に代入----
     //ヒーローマネージャー
@@ -142,7 +142,7 @@ void CTraningResultScene::Draw()
 }
 
 //デバッグ処理
-void CTraningResultScene::Debug()
+void CNatureResultScene::Debug()
 {
 #ifdef DEBUG 
     ImGui::Begin(JAPANESE("カメラ"));
@@ -155,7 +155,7 @@ void CTraningResultScene::Debug()
 }
 
 //育成結果の描画
-void CTraningResultScene::DrawResult()
+void CNatureResultScene::DrawResult()
 {
     //----クラスのインスタンスを変数に代入----
     //テキスト描画クラス
@@ -163,9 +163,9 @@ void CTraningResultScene::DrawResult()
     //ヒーローマネージャー
     CHeroManager* HeroMng = &CHeroManager::GetInstance();
 
-    //「最終評価」テキストの描画
-    std::wstring ResultText = L"最終評価";
-    Text->Draw_Text(ResultText, WriteText::Normal, RESULTTEXT_POS, false, true);
+    //「育成ランク」テキストの描画
+    std::wstring ResultText = L"育成ランク";
+    Text->Draw_Text(ResultText, WriteText::Normal, RESULTTEXT_POS_NR, false, true);
 
     //パラメータの背景の描画
     m_pParamList->Draw();
@@ -178,11 +178,11 @@ void CTraningResultScene::DrawResult()
 
 
     //ランクの描画
-    CUtility::GetInstance().DrawRank(ParamTotal(), 1, RANK_POSX, RANK_POSY_TR);
+    CUtility::GetInstance().DrawRank(ParamTotal(), 1, RANK_POSX_NR, RANK_POSY_NR);
 }
 
 //パラメータの合計値
-float CTraningResultScene::ParamTotal()
+float CNatureResultScene::ParamTotal()
 {
     //セット中のヒーローのステータスを変数に代入
     CHeroManager::enParam HeroParam = CHeroManager::GetInstance().GetParam();
@@ -194,7 +194,7 @@ float CTraningResultScene::ParamTotal()
 }
 
 //パラメータUIの描画
-void CTraningResultScene::DrawParamUI(float paramvalue, int no)
+void CNatureResultScene::DrawParamUI(float paramvalue, int no)
 {
     //----クラスのインスタンスを変数に代入----
     //テキスト描画クラス
@@ -203,6 +203,6 @@ void CTraningResultScene::DrawParamUI(float paramvalue, int no)
     CUtility* Utility = &CUtility::GetInstance();
 
     //----各パラメータのUIの描画(背景,値,ランク)----
-    Text->Draw_Text(std::to_wstring(static_cast<int>(paramvalue)), WriteText::Normal, D3DXVECTOR2(PARAMVALUE_POSX_TR, PARAMVALUE_POSY_TR + (PARAMVALUE_INTERVAL_TR* no)));
-    Utility->DrawRank(paramvalue, 2, PARAMRANK_POSX_TR, PARAMRANK_POSY_TR + (PARAMRANK_INTERVAL_TR * no));
+    Text->Draw_Text(std::to_wstring(static_cast<int>(paramvalue)), WriteText::Normal, D3DXVECTOR2(PARAMVALUE_POSX_NR, PARAMVALUE_POSY_NR + (PARAMVALUE_INTERVAL_NR* no)));
+    Utility->DrawRank(paramvalue, 2, PARAMRANK_POSX_NR, PARAMRANK_POSY_NR + (PARAMRANK_INTERVAL_NR * no));
 }

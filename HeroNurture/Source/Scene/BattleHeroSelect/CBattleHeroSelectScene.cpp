@@ -2,10 +2,19 @@
 #include "CBattleHeroSelectScene.h"
 #include "SkinMeshObject\Hero\CHeroManager.h"
 #include "KeyManager\CKeyManager.h"
+#include "Sprite2D\UIManager\CUIManager.h"
+#include "SkinMesh\SkinMeshManager\CSkinMeshManager.h"
+#include "Camera\CameraManager\CCameraManager.h"
+
 
 CBattleHeroSelectScene::CBattleHeroSelectScene()
 	: m_BattleTurn()
 	, m_pJson()
+	, m_ResultData()
+	, m_pCamera( &CCameraManager::GetInstance() )
+	, m_pParamBack()
+	, m_pYui()
+	, m_pKaito()
 {
 }
 
@@ -16,8 +25,17 @@ CBattleHeroSelectScene::~CBattleHeroSelectScene()
 //構築関数
 void CBattleHeroSelectScene::Create()
 {
+	//----インスタンス生成----
 	//jsonクラス
 	m_pJson = std::make_unique<CJson>();
+	//パラメータ背景
+	m_pParamBack = std::make_unique<CUIObject>();
+
+	//----ヒーロークラス----
+	//カイトクラス
+	m_pKaito = std::make_unique<CKaito>();
+	//ユイクラス
+	m_pYui = std::make_unique<CYui>();
 }
 
 //破棄関数
@@ -32,6 +50,15 @@ void CBattleHeroSelectScene::LoadData()
 	std::string ResultDataPath = "Data\\Hero\\Result\\Result";
 	//育成結果のファイルをロード
 	m_pJson->Load(m_ResultData,ResultDataPath);
+
+	//----各ヒーロークラスのメッシュデータ設定----
+	//ユイ
+	m_pYui->AttachMesh(CSkinMeshManager::GetMesh(CSkinMeshManager::Yui));
+	//カイト
+	m_pKaito->AttachMesh(CSkinMeshManager::GetMesh(CSkinMeshManager::Kaito));
+
+	//パラメータ背景UIのスプライトを設定
+	m_pParamBack->AttachSprite(CUIManager::GetSprite(CUIManager::ResultParamList));
 }
 
 //初期化関数
@@ -39,6 +66,26 @@ void CBattleHeroSelectScene::Initialize()
 {
 	//選択番号の初期化
 	m_SelectNo = 1;
+
+	//----各ヒーロークラスの初期化----
+    //ユイ
+	m_pYui->Initialize();
+	//カイト
+	m_pKaito->Initialize();
+
+	//カメラ情報の設定
+	m_pCamera->SetPos(CAMPOS_BS);
+	m_pCamera->SetLook(CAMLOOK_BS);
+
+	//パラメータ背景UIの設定
+	//位置
+	m_pParamBack->SetPosition(PARAMBACK_POS_BS);
+	//拡縮
+	m_pParamBack->SetScale(PARAMBACK_SCALE_BS);
+	//α値
+	m_pParamBack->SetAlpha(1.0f);
+	//幅
+	m_pParamBack->SetDisplay(1.0f, 1.0f);
 }
 
 //更新関数
@@ -61,8 +108,8 @@ void CBattleHeroSelectScene::Update()
 	}
 	else if (KeyMng->IsDown(VK_LEFT))
 	{
-		if (m_SelectNo > 0) { m_SelectNo--; }
-		else { m_SelectNo = 1; }
+		if (m_SelectNo > 1) { m_SelectNo--; }
+		else { m_SelectNo = m_ResultData.size(); }
 	}
 
 }
@@ -70,15 +117,11 @@ void CBattleHeroSelectScene::Update()
 //描画関数
 void CBattleHeroSelectScene::Draw()
 {
-    //クラスのインスタンスを変数に代入
-	//テキスト描画クラス
-	WriteText* Text = WriteText::GetInstance();
+	//カメラの動作
+	m_pCamera->CameraUpdate();
 
-	//保存されている育成データの数を描画
-	Text->Draw_Text(std::to_wstring(m_ResultData.size()), WriteText::Normal, NATUREDATA_MAX_POS);
-
-	//選択中の育成データのパラメータの表示
-	DrawSaveParameter(m_ResultData,m_SelectNo);
+	//保存されている育成評価の表示
+	DrawResultData();
 }
 
 //デバッグ処理
@@ -86,7 +129,43 @@ void CBattleHeroSelectScene::Debug()
 {
 }
 
-//保存されているヒーローのパラメータを選択番号ごとに表示する
+void CBattleHeroSelectScene::DrawResultData()
+{
+	//クラスのインスタンスを変数に代入
+	//テキスト描画クラス
+	WriteText* Text = WriteText::GetInstance();
+
+	//保存されている育成データの数と現在の選択番号を描画
+	Text->Draw_Text(std::to_wstring(m_SelectNo) + L"/", WriteText::Normal, SELECTNO_POS);
+	Text->Draw_Text(std::to_wstring(m_ResultData.size()), WriteText::Normal, NATUREDATA_MAX_POS);
+
+	for (const auto& data : m_ResultData)
+	{
+		if (data["Number"] == m_SelectNo)
+		{
+
+			//選択されているデータのヒーローの描画
+			if (data["HeroName"] == "Yui")
+			{
+				m_pYui->BattleHeroSelectAnimation();
+				m_pYui->Draw();
+			}
+			else if (data["HeroName"] == "Kaito")
+			{
+				m_pKaito->BattleHeroSelectAnimation();
+				m_pKaito->Draw();
+			}
+		}
+	}
+	//パラメータ背景の描画
+	m_pParamBack->Draw();
+
+	//選択中の育成データのパラメータの描画
+	DrawSaveParameter(m_ResultData, m_SelectNo);	 
+}
+
+
+//保存されているヒーローのパラメータを選択番号ごとに描画する
 void CBattleHeroSelectScene::DrawSaveParameter(const json& jsondata, int number)
 {
 	//クラスのインスタンスを変数に代入
@@ -94,15 +173,39 @@ void CBattleHeroSelectScene::DrawSaveParameter(const json& jsondata, int number)
 	WriteText* Text = WriteText::GetInstance();
 	//ヒーローマネージャー
 	CHeroManager* HeroMng = &CHeroManager::GetInstance();
-	
+	//汎用クラス
+	CUtility* Utility = &CUtility::GetInstance();
+
+	//「育成ランク」テキストの描画
+	std::wstring ResultText = L"育成ランク";
+	Text->Draw_Text(ResultText, WriteText::Normal, RESULTTEXT_POS_BS, false, true);
+
 	for (const auto& data : jsondata)
 	{
 		if (data["Number"] == number)
 		{
-			Text->Draw_Text(std::to_wstring(static_cast<int>(data["Parameter"]["Power"])), WriteText::Normal, D3DXVECTOR2(PARAMVALUE_POSX_BS, PARAMVALUE_POSY_BS));
-			Text->Draw_Text(std::to_wstring(static_cast<int>(data["Parameter"]["Magic"])), WriteText::Normal, D3DXVECTOR2(PARAMVALUE_POSX_BS + PARAMVALUE_INTERVAL_BS, PARAMVALUE_POSY_BS));
-			Text->Draw_Text(std::to_wstring(static_cast<int>(data["Parameter"]["Speed"])), WriteText::Normal, D3DXVECTOR2(PARAMVALUE_POSX_BS + (PARAMVALUE_INTERVAL_BS * 2), PARAMVALUE_POSY_BS));
-			Text->Draw_Text(std::to_wstring(static_cast<int>(data["Parameter"]["Hp"])), WriteText::Normal, D3DXVECTOR2(PARAMVALUE_POSX_BS + (PARAMVALUE_INTERVAL_BS * 3), PARAMVALUE_POSY_BS));
+			//各パラメータの格納
+			float Power = data["Parameter"]["Power"];
+			float Magic = data["Parameter"]["Magic"];
+			float Speed = data["Parameter"]["Speed"];
+			float Hp = data["Parameter"]["Hp"];
+			//パラメータの合計
+			float ParamTotal = Power + Magic + Speed + Hp;
+
+			//各パラメータの描画
+			Text->Draw_Text(std::to_wstring(static_cast<int>(Power)), WriteText::Normal, D3DXVECTOR2(PARAMVALUE_POSX_BS, PARAMVALUE_POSY_BS));
+			Utility->DrawRank(Power, 2,PARAMRANK_POSX_BS, PARAMRANK_POSY_BS);
+			Text->Draw_Text(std::to_wstring(static_cast<int>(Magic)), WriteText::Normal, D3DXVECTOR2(PARAMVALUE_POSX_BS, PARAMVALUE_POSY_BS + PARAMVALUE_INTERVAL_BS));
+			Utility->DrawRank(Magic, 2, PARAMRANK_POSX_BS, PARAMRANK_POSY_BS + PARAMRANK_INTERVAL_BS);
+			Text->Draw_Text(std::to_wstring(static_cast<int>(Speed)), WriteText::Normal, D3DXVECTOR2(PARAMVALUE_POSX_BS, PARAMVALUE_POSY_BS + (PARAMVALUE_INTERVAL_BS * 2)));
+			Utility->DrawRank(Speed, 2, PARAMRANK_POSX_BS, PARAMRANK_POSY_BS + (PARAMRANK_INTERVAL_BS * 2));
+			Text->Draw_Text(std::to_wstring(static_cast<int>(Hp)), WriteText::Normal, D3DXVECTOR2(PARAMVALUE_POSX_BS, PARAMVALUE_POSY_BS + (PARAMVALUE_INTERVAL_BS * 3)));
+			Utility->DrawRank(Hp, 2, PARAMRANK_POSX_BS, PARAMRANK_POSY_BS + (PARAMRANK_INTERVAL_BS * 3));
+			
+			//育成ランクの描画
+			Utility->DrawRank(ParamTotal, 1, RANK_POSX_BS, RANK_POSY_BS);
 		}
 	}
+
 }
+

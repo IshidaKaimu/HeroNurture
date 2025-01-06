@@ -12,9 +12,14 @@ CSceneBase::CSceneBase()
     , m_FadeAlpha (1.0f)	//不透過に設定
     , m_FadeOutFlg(false)
 {
+    //フェード
     m_pFade = std::make_unique<CUIObject>();
     m_pFade->AttachSprite(CUIManager::GetSprite(CUIManager::Fade));
     m_pFade->SetAlpha(m_FadeAlpha);
+    //白フェード
+    m_pWhiteFade = std::make_unique<CUIObject>();
+    m_pWhiteFade->AttachSprite(CUIManager::GetSprite(CUIManager::WhiteFade));
+    m_pWhiteFade->SetAlpha(m_WhiteFadeAlpha);
 }
 
 CSceneBase::~CSceneBase()
@@ -35,7 +40,8 @@ void CSceneBase::Update()
 void CSceneBase::Draw()
 {
 	//描画
-	m_pFade->Draw();	//フェード
+	m_pFade->Draw();	 //フェード
+    m_pWhiteFade->Draw();//白フェード
 }
 
 //破棄関数
@@ -100,4 +106,41 @@ bool CSceneBase::FadeIn()
 
     return false;
 }
+
+//白フェード関連の初期化
+void CSceneBase::InitWhiteFade()
+{
+    m_WhiteFadeCnt = 0;
+    m_AlphaChange = true;
+    m_WhiteFadeAlpha = 0.0f;
+}
+
+//白フェード再生
+void CSceneBase::PlayWhiteFade(int max, float speed, float alpha)
+{
+    if (m_AlphaChange == false && m_WhiteFadeCnt <= max)
+    {
+        m_WhiteFadeAlpha += speed;
+
+        if (m_WhiteFadeAlpha >= alpha)
+        {
+            m_AlphaChange = true;
+            m_WhiteFadeCnt++;
+        }
+    }
+    else
+    {
+        m_WhiteFadeAlpha -= speed;
+
+        if (m_WhiteFadeAlpha < 0.0f)
+        {
+            m_WhiteFadeAlpha = 0.0f;
+            m_AlphaChange = false;
+        }
+    }
+
+    //α値の設定
+    m_pWhiteFade->SetAlpha(m_WhiteFadeAlpha);
+}
+
 

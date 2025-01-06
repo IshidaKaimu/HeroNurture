@@ -1,9 +1,9 @@
 #include "CSceneManager.h"
 #include "Scene\Login\CLoginScene.h"
 #include "Scene\Nature\CNatureScene.h"
-#include "Scene\NatureHeroSelect\CNatureHeroSelect.h"
+#include "Scene\NatureHeroSelect\CNatureHeroSelectScene.h"
 #include "Scene\Traning\CTraningScene.h"
-#include "Scene\TraningResult\CTraningResultScene.h"
+#include "Scene\NatureResult\CNatureResultScene.h"
 #include "Scene\BattleHeroSelect\CBattleHeroSelectScene.h"
 #include "Scene\Battle\CBattleScene.h"
 #include "ImGui\ImGuiManager\ImGuiManager.h"
@@ -97,10 +97,10 @@ std::unique_ptr<CSceneBase> CSceneManager::Create(enSceneList List)
     switch (List)
     {
     case CSceneManager::Login:            return std::make_unique<CLoginScene>();
-    case CSceneManager::HeroSelect:       return std::make_unique<CNatureHeroSelect>();
+    case CSceneManager::HeroSelect:       return std::make_unique<CNatureHeroSelectScene>();
     case CSceneManager::Nature:           return std::make_unique<CNatureScene>();
     case CSceneManager::Training:         return std::make_unique<CTraningScene>();
-    case CSceneManager::TrainingResult:   return std::make_unique<CTraningResultScene>();
+    case CSceneManager::TrainingResult:   return std::make_unique<CNatureResultScene>();
     case CSceneManager::BattleHeroSelect: return std::make_unique<CBattleHeroSelectScene>();
     case CSceneManager::Battle:           return std::make_unique<CBattleScene>();
     case CSceneManager::Max_S:            return nullptr;

@@ -53,9 +53,9 @@ void CHeroManager::Draw()
 }
 
 //ヒーロー選択シーンのアニメーション
-void CHeroManager::SelectAnimation()
+void CHeroManager::NatureHeroSelectAnimation()
 {
-    m_Hero->SelectAnimation();
+    m_Hero->NatureHeroSelectAnimation();
 }
 
 //育成シーンのアニメーション

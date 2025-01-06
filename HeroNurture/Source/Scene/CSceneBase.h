@@ -43,6 +43,12 @@ protected:
     bool FadeOut();
     //フェードイン
     bool FadeIn();
+public:
+	//白フェード関連の初期化
+	void InitWhiteFade();
+	//白フェード
+	void PlayWhiteFade(int max, float speed, float alpha);
+
 
 protected:
 	//ライト情報
@@ -59,6 +65,8 @@ protected:
 	bool        m_IsScene;  
     //シーン遷移フラグ
     bool        m_SceneTransitionFlg;
+	//白フェードフラグ
+	bool        m_WhiteFlag;
 
 	//選択中番号
     int         m_SelectNo;
@@ -66,11 +74,17 @@ protected:
 	//アニメーションカウント
 	float       m_AnimCnt;		
 private:
-	//----フェード----	
-	std::unique_ptr<CUIObject>	m_pFade;        //フェード用UI
+	//----フェード----
+	//シーン遷移	
+	std::unique_ptr<CUIObject> m_pFade;        //フェード用UI
 	int			m_FadeTime;		                //シーン切り替え用のタイマー	
 	float		m_FadeAlpha;	                //アルファ値	
     bool        m_FadeOutFlg;                   //フェードアウトフラグ(フェードアウト中にフェードインさせないため)
-
+	//白フェード
+	std::unique_ptr<CUIObject> m_pWhiteFade;	//白フェード用UI
+	int			m_WhiteFadeTime;		        //シーン切り替え用のタイマー	
+	bool		m_AlphaChange;					//フェード回数制御用フラグ
+	int         m_WhiteFadeCnt;					//フェード回数のカウント
+	float       m_WhiteFadeAlpha;				//フェード画像のα値
 };
 
