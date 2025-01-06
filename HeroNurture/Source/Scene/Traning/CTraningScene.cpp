@@ -59,10 +59,11 @@ void CTraningScene::LoadData()
     //トレーニングごとの背景UIのスプライトデータ設定
     switch (HeroMng->GetTraining())
     {
-    case CHeroManager::PowerTraining: m_pBack->AttachSprite(CUIManager::GetSprite(CUIManager::ResultParamList));break;
-    case CHeroManager::MagicTraining: m_pBack->AttachSprite(CUIManager::GetSprite(CUIManager::ResultParamList));break;
-    case CHeroManager::SpeedTraining: m_pBack->AttachSprite(CUIManager::GetSprite(CUIManager::ResultParamList));break;
-    case CHeroManager::HpTraining:    m_pBack->AttachSprite(CUIManager::GetSprite(CUIManager::ResultParamList));break;
+    case CHeroManager::PowerTraining: m_pBack->AttachSprite(CUIManager::GetSprite(CUIManager::PowerBack));break;
+    case CHeroManager::MagicTraining: m_pBack->AttachSprite(CUIManager::GetSprite(CUIManager::MagicBack));break;
+    case CHeroManager::SpeedTraining: m_pBack->AttachSprite(CUIManager::GetSprite(CUIManager::SpeedBack));break;
+    case CHeroManager::HpTraining:    m_pBack->AttachSprite(CUIManager::GetSprite(CUIManager::HpBack));break;
+    case CHeroManager::Rest:          m_pBack->AttachSprite(CUIManager::GetSprite(CUIManager::RestBack));break;
     default:  break;
     }
 
@@ -74,6 +75,10 @@ void CTraningScene::Initialize()
 
     //育成関連のシーンで共通するUI
     CNatureScene::InitNatureUI(m_pStaminaGage,m_pStaminaBack);
+
+    m_pBack->SetPosition(0.0f, 0.0f, 0.0f);
+    m_pBack->SetScale(1.0f, 1.0f, 1.0f);
+    m_pBack->SetDisplay(1.0f, 1.0f);
 }
 
 //更新関数
@@ -141,11 +146,12 @@ void CTraningScene::Draw()
     CSceneManager* SceneMng = CSceneManager::GetInstance();
 
     m_pGround->Draw();
-    //上昇量テキストの描画(仮)
-    DrawTraningText();
 
     //各トレーニング背景UIの描画
-    DrawTraningBack();
+    m_pBack->Draw();
+    
+    //上昇量テキストの描画
+    DrawTraningText();
 
     //深度を無視する
     SceneMng->GetDx11()->SetDepth(false);
