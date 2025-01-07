@@ -17,12 +17,13 @@ public:
 		MagicTraning,   //魔力トレーニング
 		SpeedTraning,   //素早さトレーニング
 		HpTraning,      //体力トレーニング
+		Rest,           //休息		
 		PowerBack,		//筋力トレーニング背景
 		MagicBack,		//魔力トレーニング背景
 		SpeedBack,		//素早さトレーニング背景
 		HpBack,		    //体力トレーニング背景
 		RestBack,		//休息背景
-		Rest,           //休息		
+		TextBox,		//テキストボックス
 		StaminaGage,    //スタミナゲージ表示用画像
 		StaminaBack,    //スタミナゲージ背景用画像
 		Max,
