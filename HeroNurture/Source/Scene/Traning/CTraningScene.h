@@ -22,9 +22,9 @@ class CUIManager;
 //=======================
 //----テキストの位置----
 //パラメータの種類
-const D3DXVECTOR2 PARAMTEXT_OFFSET  = { 0.0f,600.0f };
+const D3DXVECTOR2 PARAMTEXT_OFFSET  = { 80.0f,600.0f };
 //値
-const D3DXVECTOR2 VALUETEXT_OFFSET  = { 195.0f,600.0f };
+const D3DXVECTOR2 VALUETEXT_OFFSET  = { 275.0f,600.0f };
 //トレーニング結果
 const D3DXVECTOR2 RESULTTEXT_OFFSET = { 500.0f,100.0f };
 
@@ -90,8 +90,10 @@ private:
 	std::unique_ptr<CGround> m_pGround;
 
 	//----UI----
-	//背景UI
+	//背景
 	std::unique_ptr<CUIObject> m_pBack;
+	//テキストボックス
+	std::unique_ptr<CUIObject> m_pTextBox;
 
 	//----vector配列----
 	//テキストの描画順処理に使う配列
