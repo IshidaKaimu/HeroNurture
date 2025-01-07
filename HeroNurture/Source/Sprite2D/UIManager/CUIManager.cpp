@@ -1,7 +1,6 @@
 #include "CUIManager.h"
 CUIManager::CUIManager()
 	: m_pSprite2D()
-
 {
 }
 
@@ -36,12 +35,13 @@ HRESULT CUIManager::Load(CDirectX11* Dx11)
 		{UIList::MagicTraning,   _T("Data\\Texture\\MagicTraning.png")	   ,{ 290.0, 260.0, 290.0, 260.0, 290.0, 260.0,}},
 		{UIList::SpeedTraning,   _T("Data\\Texture\\SpeedTraning.png")	   ,{ 290.0, 260.0, 290.0, 260.0, 290.0, 260.0,}},
 		{UIList::HpTraning,	     _T("Data\\Texture\\HpTraning.png")		   ,{ 290.0, 260.0, 290.0, 260.0, 290.0, 260.0,}},
+		{UIList::Rest,	         _T("Data\\Texture\\Rest.png")		       ,{ 290.0, 260.0, 290.0, 260.0, 290.0, 260.0,}},
 		{UIList::PowerBack,	     _T("Data\\Texture\\PowerTraningBack.png") ,{ 1280.0f, 720.0f, 1280.0f, 720.0f,1280.0f,720.0f}},
 		{UIList::MagicBack,	     _T("Data\\Texture\\MagicTraningBack.png") ,{ 1280.0f, 720.0f, 1280.0f, 720.0f,1280.0f,720.0f}},
 		{UIList::SpeedBack,	     _T("Data\\Texture\\SpeedTraningBack.png") ,{ 1280.0f, 720.0f, 1280.0f, 720.0f,1280.0f,720.0f}},
 		{UIList::HpBack,	     _T("Data\\Texture\\HpTraningBack.png")	   ,{ 1280.0f, 720.0f, 1280.0f, 720.0f,1280.0f,720.0f}},
 		{UIList::RestBack,	     _T("Data\\Texture\\RestBack.png")		   ,{ 1280.0f, 720.0f, 1280.0f, 720.0f,1280.0f,720.0f}},
-		{UIList::Rest,	         _T("Data\\Texture\\Rest.png")		       ,{ 290.0, 260.0, 290.0, 260.0, 290.0, 260.0,}},
+		{UIList::TextBox,	     _T("Data\\Texture\\TextBox.png")		   ,{ 1180.0f, 190.0f, 1180.0f, 190.0f, 1180.0f, 190.0f}},
 		{UIList::ParamList,	     _T("Data\\Texture\\NatureParamList.png")  ,{ 787.0f, 161.0f, 787.0f, 161.0f, 787.0f, 161.0f,}},
 		{UIList::ResultParamList,_T("Data\\Texture\\ResultParamList.png")  ,{ 400.0f, 600.0f, 400.0f, 600.0f, 400.0f, 600.0f,}},
 		{UIList::StaminaGage,	 _T("Data\\Texture\\Stamina.png")		   ,{ 602.0f, 54.0f,  602.0f, 54.0f,  602.0f, 54.0f,}},

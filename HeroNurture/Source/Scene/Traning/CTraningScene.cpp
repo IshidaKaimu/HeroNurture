@@ -12,6 +12,7 @@ CTraningScene::CTraningScene()
     , m_pGround ()
     , m_pBack   ()
     , m_TextNo  ()
+    , m_pTextBox()
 {
 }
 
@@ -32,6 +33,8 @@ void CTraningScene::Create()
     //UIオブジェクト
     //背景
     m_pBack = make_unique<CUIObject>();
+    //テキストボックス
+    m_pTextBox = make_unique<CUIObject>();
 
     //育成関連のシーンで共通するUIのインスタンス生成
     CNatureScene::CreateNatureUI(m_pStaminaGage,m_pStaminaBack);
@@ -67,6 +70,9 @@ void CTraningScene::LoadData()
     default:  break;
     }
 
+    //テキストボックスのスプライトデータ設定
+    m_pTextBox->AttachSprite(CUIManager::GetSprite(CUIManager::TextBox)); 
+
 }
 //初期化関数
 void CTraningScene::Initialize()
@@ -76,9 +82,16 @@ void CTraningScene::Initialize()
     //育成関連のシーンで共通するUI
     CNatureScene::InitNatureUI(m_pStaminaGage,m_pStaminaBack);
 
+    //背景画像の設定
     m_pBack->SetPosition(0.0f, 0.0f, 0.0f);
     m_pBack->SetScale(1.0f, 1.0f, 1.0f);
     m_pBack->SetDisplay(1.0f, 1.0f);
+
+    //テキストボックスの設定
+    m_pTextBox->SetPosition(30.0f, 580.0f, 0.0f);
+    m_pTextBox->SetScale(1.0f, 0.7f, 1.0f);
+    m_pTextBox->SetDisplay(1.0f, 1.0f);
+
 }
 
 //更新関数
@@ -150,45 +163,19 @@ void CTraningScene::Draw()
     //各トレーニング背景UIの描画
     m_pBack->Draw();
     
+    //深度を無視する
+    SceneMng->GetDx11()->SetDepth(false);
+
     //上昇量テキストの描画
     DrawTraningText();
 
-    //深度を無視する
-    SceneMng->GetDx11()->SetDepth(false);
     //育成関連のシーンで共通して表示するUI
     CNatureScene::DrawNatureUI(m_pStaminaGage,m_pStaminaBack);
+
     //深度を戻す
     SceneMng->GetDx11()->SetDepth(true);
 
 }
-
-////各トレーニングのアニメーション
-//void CTraningScene::TraningAnimation()
-//{    
-//    //----クラスのインスタンスを変数に代入----
-//    //テキスト描画クラス
-//    WriteText* Text = WriteText::GetInstance();
-//    //ヒーローマネージャークラス
-//    CHeroManager* HeroMng = &CHeroManager::GetInstance();
-//
-//    switch (HeroMng->GetTraining())
-//    {
-//    case CHeroManager::PowerTraining:
-//        HeroMng->PowerTraningAnimation();
-//        break;
-//    case CHeroManager::MagicTraining:
-//        HeroMng->MagicTraningAnimation();
-//        break;
-//    case CHeroManager::SpeedTraining:
-//        HeroMng->SpeedTraningAnimation();
-//        break;
-//    case CHeroManager::HpTraining:
-//        HeroMng->HpTraningAnimation();
-//        break;
-//    default:
-//        break;
-//    }
-//}
 
 //配列にテキストを追加する関数
 void CTraningScene::AddText()
@@ -261,6 +248,9 @@ void CTraningScene::DrawTraningText()
     bool Failure = HeroMng->GetFailure();
     //休息が選択されていたかの条件文
     bool Rest = SceneMng->GetRestFlag();
+
+    //テキストボックスの描画
+    m_pTextBox->Draw();
 
     //休憩が選択されていない場合
     if (!Rest)
