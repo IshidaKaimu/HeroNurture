@@ -6,6 +6,7 @@ class CHeroManager
 	: public CHeroBase
 	, public CSingleton<CHeroManager>
 {
+
 public:
 	//ヒーローリスト列挙型
 	enum enHeroList :char
@@ -20,6 +21,7 @@ public:
 	{
 		PowerTraining,
 		MagicTraining,
+
 		SpeedTraining,
 		HpTraining,
 		Rest,
@@ -31,6 +33,7 @@ public:
 	friend class CSingleton<CHeroManager>;
 	~CHeroManager();
 
+public:
 	//初期化関数
 	void Initialize() override;
 
@@ -100,17 +103,22 @@ public:
 	// =======================
 	//ヒーロー設定関数
 	void SetHero(enHeroList list);
-	//ヒーロー選択関数
-	void SelectHero(enHeroList list) { m_HeroList = list; }
 	//選択したヒーロー
+	void SelectHero(enHeroList list) { m_HeroList = list; }
 	enHeroList GetSelectHero() { return m_HeroList; }
+	//バトルに使用するヒーローの名前
+	std::string GetBattleHeroName() { return m_Hero->GetBattleHeroName(); }
 	//現在のパラメータ
 	enParam GetParam() { return m_Hero->GetParam(); }	
+	//バトルに使用するパラメータ
+	enParam GetBattleParam() { return m_Hero->GetBattleParam(); }
 	//キャラごとの適正率
 	enAppropriate GetApp() { return m_Hero->GetApp(); }
 	//更新前のパラメータ
 	enParam GetBeforeParam() { return m_Hero->GetBeforeParam(); }
 	void SetBeforeParam(enParam before) { m_Hero->SetBeforeParam(before); }
+	//バトルシーンで使用する情報
+	void LoadBattleParamData(const json& jsondata, int selectno) { m_Hero->LoadBattleParamData(jsondata, selectno); }
 	//スタミナ
 	float GetStamina() { return m_Stamina; }
 	void  SetStamina(float stamina) { m_Stamina = stamina; }
@@ -124,12 +132,6 @@ public:
 	void SetTraning(enTraningList traning) { m_Traning = traning; }
 	//トレーニングに失敗したかのフラグ
 	bool GetFailure() { return m_Hero->GetFailure(); }
-	//バトルに使用するパラメータ
-	void SetBattlePower(float power) { m_Hero ->SetBattlePower(power); }
-	void SetBattleMagic(float magic) { m_Hero ->SetBattleMagic(magic); }
-	void SetBattleSpeed(float speed) { m_Hero ->SetBattleSpeed(speed); }
-	void SetBattleHp(float hp)       { m_Hero->SetBattleSpeed(hp); }
-
 
 private:
 	//他からアクセスすることがないように

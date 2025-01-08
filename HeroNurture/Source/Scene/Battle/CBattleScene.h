@@ -24,6 +24,8 @@ class ImGuiManager;
 class CCameraManager;
 //ヒーロー
 class CHeroManager;
+//ImGui
+class ImGuiManager;
 
 //Json使用に必要な名前空間の格納
 using json = nlohmann::json;
@@ -56,6 +58,19 @@ public:
 	void Debug();
 
 private:
+	//バトルに使用するデータの読み込み
+	void LoadBattleData();
+
+private:
+	//ヒーローマネージャークラス
+	std::unique_ptr<CHeroManager> m_pHero;
+
+	//jsonクラス
+	std::unique_ptr<CJson> m_pJson;
+
+	//バトルに使用するデータ
+	json m_BattleData;
+
 	//経過ターン数
 	int m_BattleTurn;
 };

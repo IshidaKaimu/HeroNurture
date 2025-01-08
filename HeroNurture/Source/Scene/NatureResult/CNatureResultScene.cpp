@@ -89,9 +89,6 @@ void CNatureResultScene::Update()
     //キーマネージャの動作処理
     KeyMng->Update();
 
-    //育成結果を保存するファイルの階層
-    std::string SaveHierarchy = "Data\\Hero\\Result\\";
-
     //カーソルの移動
     if (KeyMng->IsDown(VK_RIGHT))
     {
@@ -116,7 +113,7 @@ void CNatureResultScene::Update()
     if (m_SceneTransitionFlg && FadeOut())
     {
         CSceneManager::GetInstance()->SetIsDataLoaded(false);
-        m_pJson->SaveResult(HeroMng->GetHeroName(), m_ResultWriter, SaveHierarchy);
+        m_pJson->SaveResult(HeroMng->GetHeroName(), m_ResultWriter);
         CSceneManager::GetInstance()->LoadCreate(CSceneManager::HeroSelect);
     }
 }

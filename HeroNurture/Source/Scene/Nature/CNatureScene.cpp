@@ -159,20 +159,22 @@ void CNatureScene::Initialize()
 //更新関数
 void CNatureScene::Update()
 {
+    //----クラスのインスタンスを変数に代入----
+    //キーマネージャー
+    CKeyManager* KeyMng = CKeyManager::GetInstance();
+    //ヒーローマネージャー
+    CHeroManager* HeroMng = &CHeroManager::GetInstance();
+    //シーンマネージャー
+    CSceneManager* SceneMng = CSceneManager::GetInstance();
+
     //フェードイン処理
     if (!FadeIn()) { return; }
 
     //セットされたヒーローのクラスの更新
     m_pHero->Update();
 
-    //キーマネージャのインスタンスを変数に代入
-    CKeyManager* KeyMng = CKeyManager::GetInstance();
-
     //キーマネージャーの更新処理
     CKeyManager::GetInstance()->Update();
-
-    //ヒーローマネージャのインスタンスを変数に代入
-    CHeroManager* Hero = &CHeroManager::GetInstance();
 
     //筋力トレーニング
     //カーソルの移動
@@ -193,7 +195,7 @@ void CNatureScene::Update()
 
 
     //トレーニングの決定
-    if (KeyMng->IsDown(VK_RETURN))
+    if (KeyMng->IsDown(VK_RETURN) && !m_SceneTransitionFlg)
     {
         //選択肢の位置に応じたトレーニングをセット
         switch (m_SelectNo)
@@ -206,6 +208,25 @@ void CNatureScene::Update()
         }
         //パラメータ処理
         SelectTraning();
+
+        m_SceneTransitionFlg = true;
+    }
+
+    if (SceneMng->GetRemainingTurn() <= 0) 
+    {
+        m_SceneTransitionFlg = true;
+    }
+
+    if (m_SceneTransitionFlg && FadeOut())
+    {
+        if (SceneMng->GetRemainingTurn() > 0)
+        {
+            SceneMng->LoadCreate(CSceneManager::Training);
+        }
+        else
+        {
+            SceneMng->LoadCreate(CSceneManager::NatureResult);
+        }
     }
 
     //デバッグ処理
@@ -280,10 +301,7 @@ void CNatureScene::Debug()
 #endif
 }
 
-// =======================
-// 育成関連のシーンで固定するUI関連の関数
-// =======================		
-//インスタンス生成
+//育成関連UIのインスタンス生成
 void CNatureScene::CreateNatureUI(std::unique_ptr<CUIObject>& gage, std::unique_ptr<CUIObject>& back)
 {
     //スタミナゲージ
@@ -291,7 +309,7 @@ void CNatureScene::CreateNatureUI(std::unique_ptr<CUIObject>& gage, std::unique_
     //ゲージ背景
     back = std::make_unique<CUIObject>();
 }
-//スプライトデータの読み込み
+//育成関連UIのスプライトデータの読み込み
 void CNatureScene::LoadNatureUI(std::unique_ptr<CUIObject>& gage, std::unique_ptr<CUIObject>& back)
 {
     //スタミナゲージ
@@ -299,7 +317,7 @@ void CNatureScene::LoadNatureUI(std::unique_ptr<CUIObject>& gage, std::unique_pt
     //ゲージ背景
     back->AttachSprite(CUIManager::GetSprite(CUIManager::StaminaBack));
 }
-//初期化
+//育成関連UIの初期化
 void CNatureScene::InitNatureUI(std::unique_ptr<CUIObject>& gage, std::unique_ptr<CUIObject>& back)
 {
     //読み込みが初回であるなら
@@ -308,8 +326,7 @@ void CNatureScene::InitNatureUI(std::unique_ptr<CUIObject>& gage, std::unique_pt
         //ターン数・HPの値の初期化
         //ターン数
         CSceneManager::GetInstance()->InitTurn();
-        //スタミナゲージの幅
-        CSceneManager::GetInstance()->InitStaminaWidth();
+        gage->SetWidth(1.0f);
         //スタミナの初期化
         m_pHero->InitStamina();
     }
@@ -318,7 +335,7 @@ void CNatureScene::InitNatureUI(std::unique_ptr<CUIObject>& gage, std::unique_pt
         //スタミナに減少後の値をセット
         m_pHero->SetStamina(m_pHero->GetAfterStamina());
         //現在のスタミナ幅を取得し、設定する
-        m_pStaminaGage->SetWidth(CSceneManager::GetInstance()->GetStaminaWidth());
+        gage->SetWidth(CSceneManager::GetInstance()->GetStaminaWidth());
     }
 
     //拡縮
@@ -400,13 +417,9 @@ void CNatureScene::SelectTraning()
     //更新後パラメータの保存
     SaveParam();
 
-    //ターン経過処理
-    SceneMng->TurnProgress();
-
     //初回のみ読み込むものを読み込まなくする
     CSceneManager::GetInstance()->SetIsDataLoaded(true);
 
-    SceneMng->LoadCreate(CSceneManager::Training);
 }
 
 //各種UI初期設定
@@ -427,9 +440,9 @@ void CNatureScene::UIInit(std::unique_ptr<CUIObject>& ui, float x, float y, floa
 void CNatureScene::SaveParam()
 {
     //トレーニング実行時にパラメータ情報を書き込むファイルの階層
-    std::string ParamFilePath = "Data\\Hero\\Parameter\\";
+    std::string ParamFileHierarchy = "Data\\Hero\\Parameter\\";
     //セットされたヒーローのパラメータ情報の書き込み
-    m_pJson->SaveNatureData(m_pHero->GetHeroName(), m_ParamWriter, ParamFilePath);
+    m_pJson->SaveNatureData(m_pHero->GetHeroName(), m_ParamWriter, ParamFileHierarchy);
 }
 
 //各種パラメータの描画
@@ -462,7 +475,6 @@ void CNatureScene::DrawParam()
 //各種トレーニングの描画
 void CNatureScene::DrawTraning()
 {
-
     //選択されたときそれぞれの位置を上げる変数
     float PosUp = 20.0f;
 
@@ -513,6 +525,10 @@ void CNatureScene::DrawRemainingTurn()
 //スタミナゲージのアニメーション
 void CNatureScene::GageAnim()
 {
+    //クラスのインスタンスを変数に代入
+    //シーンマネージャー
+    CSceneManager* SceneMng = CSceneManager::GetInstance();
+
     //ゲージ幅の確認
     float GageScale = 1.0f * m_pHero->GetStamina() / STAMINA_MAX;
 
@@ -525,6 +541,14 @@ void CNatureScene::GageAnim()
     CSceneManager::GetInstance()->SetStaminaWidth(m_GageWidth);
 
     //スタミナゲージの幅高さを設定
-    m_pStaminaGage->SetDisplay(m_GageWidth, 1.0f);
+    if (SceneMng->GetIsDataLoaded()) {
+        m_pStaminaGage->SetDisplay(m_GageWidth, 1.0f);
+    }
+    else
+    {
+        //不自然なゲージの動きをなくす
+        m_pStaminaGage->SetDisplay(1.0f, 1.0f);
+    }
+
 
 }

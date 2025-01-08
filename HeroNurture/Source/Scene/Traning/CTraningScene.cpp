@@ -147,7 +147,8 @@ void CTraningScene::Update()
    {
        //休息フラグが立っていたら降ろす
        if (SceneMng->GetRestFlag()) { SceneMng->SetRestFlag(false); }
-
+       //ターン経過処理
+       SceneMng->TurnProgress();
        CSceneManager::GetInstance()->LoadCreate(CSceneManager::Nature);
    }
 }

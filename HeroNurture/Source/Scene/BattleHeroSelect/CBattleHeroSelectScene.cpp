@@ -5,12 +5,15 @@
 #include "Sprite2D\UIManager\CUIManager.h"
 #include "SkinMesh\SkinMeshManager\CSkinMeshManager.h"
 #include "Camera\CameraManager\CCameraManager.h"
+#include "Scene\CSceneManager.h"
+#include "Utility\CUtility.h"
 
 
 CBattleHeroSelectScene::CBattleHeroSelectScene()
 	: m_BattleTurn()
 	, m_pJson()
 	, m_ResultData()
+	, m_BattleDataWriter()
 	, m_pCamera( &CCameraManager::GetInstance() )
 	, m_pParamBack()
 	, m_pYui()
@@ -94,12 +97,17 @@ void CBattleHeroSelectScene::Update()
 	//フェードイン処理
 	if (!FadeIn()) { return; }
 
-	//クラスのインスタンスを変数に代入
+	//----クラスのインスタンスを変数に代入----
+	//キーマネージャー
 	CKeyManager* KeyMng = CKeyManager::GetInstance();
+	//ヒーローマネージャー
+	CHeroManager* HeroMng = &CHeroManager::GetInstance();
+	//シーンマネージャー
+	CSceneManager* SceneMng = CSceneManager::GetInstance();
 
 	KeyMng->Update();
 
-	//カーソルの移動
+	//選択番号の遷移
 	if (KeyMng->IsDown(VK_RIGHT))
 	{
 		//キー入力で選択を進める
@@ -112,6 +120,18 @@ void CBattleHeroSelectScene::Update()
 		else { m_SelectNo = m_ResultData.size(); }
 	}
 
+	//フェード開始
+	if (KeyMng->IsDown(VK_RETURN))
+	{
+		m_SceneTransitionFlg = true;
+	}
+
+	if (m_SceneTransitionFlg && FadeOut())
+	{
+		//選択した育成データをバトルに使用するデータとして書き込み
+		m_pJson->SaveBattleData(m_ResultData,m_BattleDataWriter,m_SelectNo);
+		SceneMng->LoadCreate(CSceneManager::Battle);
+	}
 }
 
 //描画関数
@@ -131,19 +151,20 @@ void CBattleHeroSelectScene::Debug()
 
 void CBattleHeroSelectScene::DrawResultData()
 {
-	//クラスのインスタンスを変数に代入
+	//----クラスのインスタンスを変数に代入----
 	//テキスト描画クラス
 	WriteText* Text = WriteText::GetInstance();
+	//汎用クラス
+	CUtility* Utility = &CUtility::GetInstance();
 
 	//保存されている育成データの数と現在の選択番号を描画
-	Text->Draw_Text(std::to_wstring(m_SelectNo) + L"/", WriteText::Normal, SELECTNO_POS);
+	Text->Draw_Text(std::to_wstring(m_SelectNo) + L"/", WriteText::Normal, Utility->PosCorrection(m_SelectNo,2,SELECTNO_POS.x, SELECTNO_POS.y));
 	Text->Draw_Text(std::to_wstring(m_ResultData.size()), WriteText::Normal, NATUREDATA_MAX_POS);
 
 	for (const auto& data : m_ResultData)
 	{
 		if (data["Number"] == m_SelectNo)
 		{
-
 			//選択されているデータのヒーローの描画
 			if (data["HeroName"] == "Yui")
 			{

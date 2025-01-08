@@ -12,7 +12,7 @@ class CTraningScene;
 class CTraningResult;
 
 //育成ターン数
-constexpr int MAX_TURN = 10;
+constexpr int MAX_TURN = 2;
 
 //=====================================
 //シーンマネージャークラス
@@ -29,7 +29,7 @@ public:
 		HeroSelect,
 		Nature,
 		Training,
-		TrainingResult,
+		NatureResult,
 		BattleHeroSelect,
 		Battle,
 		Max_S,

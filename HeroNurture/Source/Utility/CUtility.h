@@ -22,10 +22,11 @@ enum enRankList : char
 class CUtility
 	: public CSingleton<CUtility>
 {
-public:
+private:
 	//アクセス権を与える
-    friend class CSingleton<CUtility>;
+	friend class CSingleton<CUtility>;
 	~CUtility();
+public:
 
 	//乱数の生成
 	static int GenerateRandomValue(int min,int max);

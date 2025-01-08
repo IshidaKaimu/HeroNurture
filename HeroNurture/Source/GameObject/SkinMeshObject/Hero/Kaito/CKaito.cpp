@@ -51,6 +51,12 @@ void CKaito::LoadParamData(const json& jsondata)
 	}
 }
 
+//バトルに使用するデータの読み込み
+void CKaito::LoadBattleParamData(const json& jsondata)
+{
+	LoadBattleParam(jsondata);
+}
+
 //更新関数
 void CKaito::Update()
 {

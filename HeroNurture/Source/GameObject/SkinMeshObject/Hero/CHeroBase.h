@@ -78,6 +78,9 @@ public:
 	//パラメータ情報読み込み
 	virtual void LoadParamData(const json& jsondata) {};
 
+	//バトルパラメータ情報読み込み
+	virtual void LoadBattleParamData() {};
+
 	//更新関数
 	virtual void Update();
 
@@ -123,7 +126,11 @@ public:
 	// ゲッター・セッター関数
 	// =======================		
 	//育成中のパラメータ
-	enParam GetParam()      { return  m_Param; }
+	enParam GetParam()       { return  m_Param; }
+	//バトルに使用するパラメータ
+	enParam GetBattleParam() { return m_BattleParam; }
+	//バトルに使用するヒーローの名前
+	std::string GetBattleHeroName() { return m_BattleHeroName; }
 	//キャラごとの適正率
 	enAppropriate GetApp()  { return  m_App; }
 	//更新前のパラメータ
@@ -132,14 +139,8 @@ public:
 	//トレーニング失敗フラグ
 	bool GetFailure() { return m_Failure; }
 	void SetFailure(bool failure) { m_Failure = failure; }
-	//バトルに使用するパラメータ
-	enParam GetBattleParam() { return m_BattleParam; }
-	void SetBattleParam(enParam battle) { m_BattleParam = battle; }
-	void SetBattlePower(float power) { m_BattleParam.Power = power; }
-	void SetBattleMagic(float magic) { m_BattleParam.Magic = magic; }
-	void SetBattleSpeed(float speed) { m_BattleParam.Speed = speed; }
-	void SetBattleHp   (float hp)    { m_BattleParam.Hp = hp; }
-
+	//バトルに使用する情報
+	void LoadBattleParam(const json& jsondata, int selectno);
 
 protected :	
 	// =======================
@@ -166,6 +167,9 @@ protected:
 	enParam m_Param;
 	//バトル
 	enParam m_BattleParam;
+
+	//バトルするヒーローの名前
+	std::string m_BattleHeroName;
 
 	//ヒーローの適正率構造体
 	enAppropriate m_App;

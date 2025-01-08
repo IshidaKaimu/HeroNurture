@@ -128,10 +128,13 @@ void CJson::SaveNatureData(const std::string& heroname, json& jsondata, std::str
     CreateOrWrite(hierarchy, jsondata );
 }
 
-void CJson::SaveResult(const std::string& heroname, json& jsondata, std::string& hierarchy)
+void CJson::SaveResult(const std::string& heroname, json& jsondata)
 {
     //ヒーローマネージャークラスのインスタンスを変数に代入
     CHeroManager* HeroMng = &CHeroManager::GetInstance();
+
+    //育成結果を保存するファイルの階層
+    std::string SaveHierarchy = "Data\\Hero\\Result\\";
 
     //書き込む情報の格納
     //----パラメータ----
@@ -148,7 +151,32 @@ void CJson::SaveResult(const std::string& heroname, json& jsondata, std::string&
     jsondata["Appropriate"]["Hp"] = HeroMng->GetApp().HpApp;
 
     //ファイルに書き込み
-    PostScript(hierarchy, jsondata);
+    PostScript(SaveHierarchy, jsondata);
 
+}
+
+//バトルに使用するデータの保存
+void CJson::SaveBattleData(json& data, json& writer, int selectno)
+{
+
+    //バトルに使用するデータを保存するファイルの階層
+    std::string SaveHierarchy = "Data\\Hero\\BattleData\\";
+
+    //書き込む情報
+    for (const auto& battledata : data)
+    {
+        if (battledata["Number"] == selectno)
+        {
+            writer["Name"] = "BattleData";
+            writer["HeroName"] = battledata["HeroName"];
+            writer["Parameter"]["Power"] = battledata["Parameter"]["Power"];
+            writer["Parameter"]["Magic"] = battledata["Parameter"]["Magic"];
+            writer["Parameter"]["Speed"] = battledata["Parameter"]["Speed"];
+            writer["Parameter"]["Hp"] = battledata["Parameter"]["Hp"];
+        }
+    }
+
+    //ファイルに書き込み
+    CreateOrWrite(SaveHierarchy, writer);
 }
 

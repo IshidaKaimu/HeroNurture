@@ -29,6 +29,8 @@ class CHeroManager;
 class CKeyManager;
 //テキスト描画クラス
 class WriteText;
+//汎用クラス
+class CUtility;
 
 //Json使用に必要な名前空間の格納
 using json = nlohmann::json;
@@ -121,6 +123,8 @@ private:
 
 	//保存されている育成結果のファイルデータ
 	json m_ResultData;
+	//バトルに使用するデータを格納し、書き込みに用いる変数
+	json m_BattleDataWriter;
 
 	//カメラマネージャクラス
 	CCameraManager* m_pCamera;

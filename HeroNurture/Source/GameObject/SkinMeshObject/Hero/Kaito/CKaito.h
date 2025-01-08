@@ -25,6 +25,9 @@ public:
 	//パラメータ情報読み込み
 	void LoadParamData(const json& jsondata) override;
 
+	//バトルパラメータ情報読み込み
+	void LoadBattleParamData(const json& jsondata) override;
+
 	//更新関数
 	void Update() override;
 

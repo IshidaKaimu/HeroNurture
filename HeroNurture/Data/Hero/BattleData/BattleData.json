@@ -1,0 +1,10 @@
+{
+ "HeroName": "Yui",
+ "Name": "BattleData",
+ "Parameter": {
+  "Hp": 150.0,
+  "Magic": 60.0,
+  "Power": 50.0,
+  "Speed": 90.0
+ }
+}

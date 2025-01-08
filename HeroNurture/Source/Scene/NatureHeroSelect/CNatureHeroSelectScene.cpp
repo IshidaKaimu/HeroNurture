@@ -112,7 +112,7 @@ void CNatureHeroSelectScene::Update()
     CKeyManager* KeyMng = CKeyManager::GetInstance();
 
     //ヒーローマネージャのインスタンスを変数に代入
-    CHeroManager* Hero = &CHeroManager::GetInstance();
+    CHeroManager* HeroMng = &CHeroManager::GetInstance();
 
     //キーマネージャの動作処理
     CKeyManager::GetInstance()->Update();
@@ -158,10 +158,10 @@ void CNatureHeroSelectScene::Update()
         switch (m_SelectNo)
         {
         case 0:
-            Hero->SelectHero(CHeroManager::Yui);
+            HeroMng->SelectHero(CHeroManager::Yui);
             break;
         case 1:
-            Hero->SelectHero(CHeroManager::Kaito);
+            HeroMng->SelectHero(CHeroManager::Kaito);
             break;
         default:
             break;

@@ -181,8 +181,5 @@ public:
 	json m_ParamWriter;
 	//パラメータデータ格納用
 	json m_ParamData;
-
-
-
 };
 

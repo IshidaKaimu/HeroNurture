@@ -56,6 +56,12 @@ void CYui::LoadParamData(const json& jsondata)
 	}
 }
 
+//バトルに使用するデータの読み込み
+void CYui::LoadBattleParamData()
+{
+	LoadBattleParam();
+}
+
 //更新関数
 void CYui::Update()
 {

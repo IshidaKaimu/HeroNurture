@@ -57,7 +57,7 @@ void CSceneManager::Update()
     if (ImGui::Button(JAPANESE("ヒーロー選択"))) { LoadCreate(enSceneList::HeroSelect); }
     if (ImGui::Button(JAPANESE("育成"))) { LoadCreate(enSceneList::Nature); }
     if (ImGui::Button(JAPANESE("修行"))) { LoadCreate(enSceneList::Training); }
-    if (ImGui::Button(JAPANESE("育成結果"))) { LoadCreate(enSceneList::TrainingResult); }
+    if (ImGui::Button(JAPANESE("育成結果"))) { LoadCreate(enSceneList::NatureResult); }
     if (ImGui::Button(JAPANESE("バトルヒーロー選択"))) { LoadCreate(enSceneList::BattleHeroSelect); }
     if (ImGui::Button(JAPANESE("バトル"))) { LoadCreate(enSceneList::Battle); }
     ImGui::End();
@@ -100,7 +100,7 @@ std::unique_ptr<CSceneBase> CSceneManager::Create(enSceneList List)
     case CSceneManager::HeroSelect:       return std::make_unique<CNatureHeroSelectScene>();
     case CSceneManager::Nature:           return std::make_unique<CNatureScene>();
     case CSceneManager::Training:         return std::make_unique<CTraningScene>();
-    case CSceneManager::TrainingResult:   return std::make_unique<CNatureResultScene>();
+    case CSceneManager::NatureResult:     return std::make_unique<CNatureResultScene>();
     case CSceneManager::BattleHeroSelect: return std::make_unique<CBattleHeroSelectScene>();
     case CSceneManager::Battle:           return std::make_unique<CBattleScene>();
     case CSceneManager::Max_S:            return nullptr;
