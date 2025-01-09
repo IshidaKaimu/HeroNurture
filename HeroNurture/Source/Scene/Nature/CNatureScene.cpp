@@ -44,13 +44,13 @@ void CNatureScene::Create()
     {
     case CHeroManager::Yui:
         //ユイ
-        m_pHero->SetHero(CHeroManager::Yui);
+        m_pHero->CreateHero(CHeroManager::Yui);
         //ファイルの作成、読み込み
         LoadHeroData(m_Name.Yui);
         break;
     case CHeroManager::Kaito:
         //カイト
-        m_pHero->SetHero(CHeroManager::Kaito);
+        m_pHero->CreateHero(CHeroManager::Kaito);
         //ファイルの作成、読み込み
         LoadHeroData(m_Name.Kaito);
         break;

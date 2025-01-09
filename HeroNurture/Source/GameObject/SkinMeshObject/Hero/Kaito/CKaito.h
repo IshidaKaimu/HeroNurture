@@ -3,11 +3,22 @@
 #include "SkinMeshObject\CSkinMeshObject.h"
 #include "SkinMeshObject\Hero\CHeroBase.h"
 
+
+// =======================
+// 定数宣言
+// =======================
+//バトルシーンでの初期情報
+const D3DXVECTOR3 BATTLEINIT_POS_KAITO    = { -4.0f,0.0f,0.0f }; //座標
+const D3DXVECTOR3 BATTLEINIT_SCALE_KAITO  = { 0.3f,0.3f,0.3f };//拡縮
+const D3DXVECTOR3 BATTLEINIT_ROTATE_KAITO = { 0.0,D3DXToRadian(-90.0),0.0f};//回転
+//敵になった際の初期情報
+const D3DXVECTOR3 ENEMYINIT_POS_KAITO = { 2.0f,0.0f,0.0f };	//座標
+const D3DXVECTOR3 ENEMYINIT_ROTATE_KAITO = { 0.0f,D3DXToRadian(90.0),0.0f };	//回転
+
 //=====================================
 //カイトクラス
 //制作者：石田櫂夢
 //=====================================
-
 class CKaito
 	:public CHeroBase
 {
@@ -16,8 +27,15 @@ public:
 	virtual ~CKaito() override;
 
 
-	//初期化関数
+	// =======================
+	// 各シーンごとの初期化
+	// =======================
+	//主に使用する初期化関数
 	void Initialize() override;
+	//バトルシーンで使用する初期化
+	void BattleInitialize() override;
+	//敵になった際の初期化関数
+	void EnemyInit() override;
 
 	//データ読み込み関数
 	void LoadMeshData() override;
@@ -26,13 +44,16 @@ public:
 	void LoadParamData(const json& jsondata) override;
 
 	//バトルパラメータ情報読み込み
-	void LoadBattleParamData(const json& jsondata) override;
+	void SetBattleParamData(const json& jsondata) override;
 
 	//更新関数
 	void Update() override;
 
 	//描画関数
 	void Draw() override;
+
+	//デバッグ関数
+	void Debug() override;
 
 	// =======================
 	// 各シーンごとのアニメーション
@@ -44,11 +65,13 @@ public:
 	// 育成シーン		
 	void NatureAnimation(int no) override;
 
-	void SetAnimSpeed(double speed) { m_AnimSpeed = speed; }
+private:
 
+	//アニメーションに関する初期化
+	void AnimInit();
+	void SetAnimSpeed(double speed) { m_AnimSpeed = speed; }
 	//場面切り替え
 	bool SceneChange();
-
 	//アニメーション切り替えフラグ立てる
 	void AnimChange();
 

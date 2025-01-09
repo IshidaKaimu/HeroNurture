@@ -93,7 +93,7 @@ void CNatureResultScene::Update()
     if (KeyMng->IsDown(VK_RIGHT))
     {
         //キー入力で選択を進める
-        if (m_SelectNo < CHeroBase::enCharacterList::max - 1) { m_SelectNo++; }
+        if (m_SelectNo < CHeroBase::enHeroList::Max - 1) { m_SelectNo++; }
         else { m_SelectNo = 0; }
     }
     else if (KeyMng->IsDown(VK_LEFT))
@@ -172,7 +172,6 @@ void CNatureResultScene::DrawResult()
     DrawParamUI(HeroMng->GetParam().Magic, 1);
     DrawParamUI(HeroMng->GetParam().Speed, 2);
     DrawParamUI(HeroMng->GetParam().Hp, 3);
-
 
     //ランクの描画
     CUtility::GetInstance().DrawRank(ParamTotal(), 1, RANK_POSX_NR, RANK_POSY_NR);

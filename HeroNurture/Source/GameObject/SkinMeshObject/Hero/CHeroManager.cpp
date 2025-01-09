@@ -3,7 +3,7 @@
 #include "SkinMeshObject\Hero\Kaito\CKaito.h"
 
 CHeroManager::CHeroManager()
-    : m_Hero         ()
+    : m_pHero         ()
     , m_HeroList     ()
     , m_Traning      ()
     , m_HeroName     ()
@@ -11,7 +11,7 @@ CHeroManager::CHeroManager()
     , m_BeforeStamina()
     , m_AfterStamina ()
 {
-    m_Hero = std::make_unique<CYui>();
+    m_pHero = std::make_unique<CYui>();
 }
 
 CHeroManager::~CHeroManager()
@@ -21,47 +21,73 @@ CHeroManager::~CHeroManager()
 //初期化関数
 void CHeroManager::Initialize()
 {
-    //各ヒーロークラスの初期化
-    m_Hero->Initialize();
+    m_pHero->Initialize();
+}
+
+//バトルシーンのみで使用する初期化
+void CHeroManager::BattleInitialize()
+{
+    m_pHero->BattleInitialize();
 }
 
 //データ読み込み関数
 void CHeroManager::LoadMeshData()
 {
-    //各ヒーロークラスのデータ読み込み
-    m_Hero->LoadMeshData();
+    m_pHero->LoadMeshData();
 }
 
 //パラメータ情報の読み込み
 void CHeroManager::LoadParamData(const json& jsondata)
 {
-    m_Hero->LoadParamData(jsondata);
+    m_pHero->LoadParamData(jsondata);
 }
 
 //更新関数
 void CHeroManager::Update()
 {
-    //各ヒーロークラスの更新関数
-    m_Hero->Update();
+    m_pHero->Update();
 }
 
 //描画関数
 void CHeroManager::Draw()
 {
-    //各ヒーロークラスの更新関数
-    m_Hero->Draw();
+    m_pHero->Draw();
+}
+
+//デバッグ関数
+void CHeroManager::Debug()
+{
+    m_pHero->Debug();
+}
+
+//ヒーロー構築関数
+void CHeroManager::CreateHero(enHeroList list)
+{
+    m_pHero = Create(list);
+}
+
+//各ヒーロークラスのインスタンス生成
+std::unique_ptr<CHeroBase> CHeroManager::Create(enHeroList list)
+{
+    switch (list)
+    {
+    case CHeroManager::Yui:     return std::make_unique<CYui>();
+    case CHeroManager::Kaito:   return std::make_unique<CKaito>();
+    case CHeroManager::Max:     return nullptr;
+    default:                    return nullptr;
+    }
 }
 
 //ヒーロー選択シーンのアニメーション
 void CHeroManager::NatureHeroSelectAnimation()
 {
-    m_Hero->NatureHeroSelectAnimation();
+    m_pHero->NatureHeroSelectAnimation();
 }
 
 //育成シーンのアニメーション
 void CHeroManager::NatureAnimation(int no)
 {
-    m_Hero->NatureAnimation(no);
+    m_pHero->NatureAnimation(no);
 }
 
 //スタミナの減少関数
@@ -110,25 +136,7 @@ std::string CHeroManager::GetHeroName()
     return m_HeroName;
 }
 
-//ヒーロー設定関数
-void CHeroManager::SetHero(enHeroList list)
-{
-    //ヒーローを設定
-    m_Hero = Create(list);
-}
 
 
-//各ヒーロークラスのインスタンス生成
-std::unique_ptr<CHeroBase> CHeroManager::Create(enHeroList list)
-{
-    switch (list)
-    {
-    case CHeroManager::Yui:     return std::make_unique<CYui>();
-    case CHeroManager::Kaito:   return std::make_unique<CKaito>();
-    case CHeroManager::Max:     return nullptr;
-    default:                    return nullptr;
-
-    }
-}
 
 

@@ -8,6 +8,9 @@
 #include "json\CJson.h"
 #include "Utility\CUtility.h"
 
+//Json使用に必要な名前空間の格納
+using json = nlohmann::json;
+
 //=====================================
 // 前方宣言
 //=====================================
@@ -24,12 +27,16 @@ class ImGuiManager;
 class CCameraManager;
 //ヒーロー
 class CHeroManager;
-//ImGui
-class ImGuiManager;
+//敵のヒーロー
+class CEnemyHeroManager;
 
-//Json使用に必要な名前空間の格納
-using json = nlohmann::json;
-
+//=====================================
+// 定数宣言(_B = バトルシーンで用いることを示す)
+//=====================================
+//----カメラ情報----
+//初期座標
+const D3DXVECTOR3 INIT_CAMPOS_B  = { -1.0f,2.0f,-6.0f };
+const D3DXVECTOR3 INIT_CAMLOOK_B = { -1.0f,2.0f,-0.0f };
 
 //=====================================
 // バトルシーンクラス
@@ -62,8 +69,20 @@ private:
 	void LoadBattleData();
 
 private:
-	//ヒーローマネージャークラス
-	std::unique_ptr<CHeroManager> m_pHero;
+	//自分が使うヒーロー
+	CHeroManager* m_pHero;
+	//敵のヒーロー
+	CEnemyHeroManager* m_pEnemyHero;
+
+	//カメラマネージャー
+	CCameraManager* m_pCamera;
+
+	//オブジェクトクラス
+	//----スタティックメッシュ----
+	//地面
+	std::unique_ptr<CGround> m_pGround;
+	//空
+	std::unique_ptr<CSky> m_pSky;
 
 	//jsonクラス
 	std::unique_ptr<CJson> m_pJson;

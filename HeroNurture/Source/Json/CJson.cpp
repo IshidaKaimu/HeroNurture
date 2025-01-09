@@ -158,6 +158,8 @@ void CJson::SaveResult(const std::string& heroname, json& jsondata)
 //バトルに使用するデータの保存
 void CJson::SaveBattleData(json& data, json& writer, int selectno)
 {
+    //ヒーローマネージャークラスのインスタンスを変数に代入
+    CHeroManager* HeroMng = &CHeroManager::GetInstance();
 
     //バトルに使用するデータを保存するファイルの階層
     std::string SaveHierarchy = "Data\\Hero\\BattleData\\";
@@ -168,14 +170,13 @@ void CJson::SaveBattleData(json& data, json& writer, int selectno)
         if (battledata["Number"] == selectno)
         {
             writer["Name"] = "BattleData";
-            writer["HeroName"] = battledata["HeroName"];
+            HeroMng->SetBattleHeroName(battledata["HeroName"]);
             writer["Parameter"]["Power"] = battledata["Parameter"]["Power"];
             writer["Parameter"]["Magic"] = battledata["Parameter"]["Magic"];
             writer["Parameter"]["Speed"] = battledata["Parameter"]["Speed"];
             writer["Parameter"]["Hp"] = battledata["Parameter"]["Hp"];
         }
     }
-
     //ファイルに書き込み
     CreateOrWrite(SaveHierarchy, writer);
 }

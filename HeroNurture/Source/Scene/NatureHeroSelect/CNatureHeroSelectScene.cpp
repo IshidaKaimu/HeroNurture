@@ -121,7 +121,7 @@ void CNatureHeroSelectScene::Update()
     if (KeyMng->IsDown(VK_RIGHT))
     {
         //キー入力で選択を進める
-        if (m_SelectNo < CHeroBase::enCharacterList::max-1) { m_SelectNo++; }
+        if (m_SelectNo < CHeroBase::enHeroList::Max-1) { m_SelectNo++; }
         else { m_SelectNo = 0; }
     }
     else if (KeyMng->IsDown(VK_LEFT))

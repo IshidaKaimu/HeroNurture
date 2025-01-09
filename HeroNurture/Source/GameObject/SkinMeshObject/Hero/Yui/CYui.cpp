@@ -34,6 +34,36 @@ void CYui::Initialize()
 	SceneMng->InitWhiteFade();
 }
 
+//バトルシーンで使用する初期化
+void CYui::BattleInitialize()
+{
+	//アニメーション関連の初期化
+	AnimInit();
+
+	//座標の設定
+	SetPosition(BATTLEINIT_POS_YUI);
+	//拡縮の設定
+	SetScale(BATTLEINIT_SCALE_YUI);
+	//回転の設定
+	SetRotation(BATTLEINIT_ROTATE_YUI);
+
+}
+
+//敵になった際の初期化関数
+void CYui::EnemyInit()
+{
+	//アニメーション関連の初期化
+	AnimInit();
+
+	//座標の設定
+	SetPosition(ENEMYINIT_POS_YUI);
+	//拡縮の設定
+	SetScale(BATTLEINIT_SCALE_YUI);
+	//回転の設定
+	SetRotation(ENEMYINIT_ROTATE_YUI);
+
+}
+
 //メッシュデータ読み込み関数
 void CYui::LoadMeshData()
 {
@@ -57,9 +87,10 @@ void CYui::LoadParamData(const json& jsondata)
 }
 
 //バトルに使用するデータの読み込み
-void CYui::LoadBattleParamData()
+void CYui::SetBattleParamData(const json& jsondata)
 {
-	LoadBattleParam();
+	//バトルに使用するデータの読み込み
+	SetBattleParam(jsondata);
 }
 
 //更新関数
@@ -72,6 +103,17 @@ void CYui::Draw()
 {
 	m_pMesh->SetAnimSpeed(m_AnimSpeed);
 	CSkinMeshObject::Draw();
+}
+
+//デバッグ関数
+void CYui::Debug()
+{
+	ImGui::Begin(JAPANESE("Yui"));
+	ImGui::InputFloat3(JAPANESE("位置"),DebugPos);
+	ImGui::InputFloat3(JAPANESE("拡縮"), DebugScale);
+	ImGui::End();
+	SetPosition(DebugPos);
+	SetScale(DebugScale);
 }
 
 //育成ヒーロー選択シーンのアニメーション
@@ -106,24 +148,21 @@ void CYui::MagicTraningAnimation()
 //素早さトレーニングアニメーション
 void CYui::SpeedTraningAnimation()
 {
-	//クラスインスタンスを変数に代入
-	//シーンマネージャー
-	CSceneManager* SceneMng = CSceneManager::GetInstance();
-	//ヒーローマネージャー
-	CHeroManager* HeroMng = &CHeroManager::GetInstance();
-
-	m_EventCnt++;
-
-	if (m_EventCnt <= 1)
-	{
-		HeroMng->SetPosition(-10.0f, 0.0f, 0.0f);
-	}
-
-	SceneMng->PlayWhiteFade(1, 0.01f, 0.8f);
 }
 //体力トレーニングアニメーション
 void CYui::HpTraningAnimation()
 {
+}
+
+//アニメーションに関する初期化
+void CYui::AnimInit()
+{
+	//アニメーションスピードの設定
+	m_AnimSpeed = 0.01f;
+	//初めのアニメーションの設定
+	m_AnimNo = 3;
+	//登場アニメーション
+	m_pMesh->ChangeAnimSet(m_AnimNo, m_pAnimCtrl);
 }
 
 void CYui::AnimChange()

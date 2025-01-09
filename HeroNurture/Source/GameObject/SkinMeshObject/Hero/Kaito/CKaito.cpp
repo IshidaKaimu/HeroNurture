@@ -3,6 +3,7 @@
 #include "Sound\CSoundManager.h"
 #include "SkinMesh\SkinMeshManager\CSkinMeshManager.h"
 #include "Scene\CSceneManager.h"
+#include "ImGui\ImGuiManager\ImGuiManager.h"
 
 CKaito::CKaito()
 	: m_BonePos		()
@@ -22,12 +23,30 @@ CKaito::~CKaito()
 //初期化関数
 void CKaito::Initialize()
 {
-	//アニメーションスピードの設定
-	m_AnimSpeed = 0.01f;
-	//待機アニメーション
-	m_AnimNo = 0;	
-	//アニメーションを設定
-	m_pMesh->ChangeAnimSet(m_AnimNo, m_pAnimCtrl);
+	//アニメーション関連の初期化
+	AnimInit();
+}
+
+//バトルシーンで使用する初期化
+void CKaito::BattleInitialize()
+{
+	//アニメーション関連の初期化
+	AnimInit();
+
+	SetPosition(BATTLEINIT_POS_KAITO);
+	SetScale(BATTLEINIT_SCALE_KAITO);
+	SetRotation(BATTLEINIT_ROTATE_KAITO);
+}
+
+//敵になった際の初期化関数
+void CKaito::EnemyInit()
+{
+	//アニメーション関連の初期化
+	AnimInit();
+
+	SetPosition(ENEMYINIT_POS_KAITO);
+	SetScale(BATTLEINIT_SCALE_KAITO);
+	SetRotation(ENEMYINIT_ROTATE_KAITO);
 }
 
 //メッシュデータ読み込み関数
@@ -36,6 +55,7 @@ void CKaito::LoadMeshData()
 	//メッシュデータの読み込み
 	AttachMesh(CSkinMeshManager::GetMesh(CSkinMeshManager::Kaito));
 }
+
 //パラメータ情報の読み込み
 void CKaito::LoadParamData(const json& jsondata)
 {
@@ -52,9 +72,10 @@ void CKaito::LoadParamData(const json& jsondata)
 }
 
 //バトルに使用するデータの読み込み
-void CKaito::LoadBattleParamData(const json& jsondata)
+void CKaito::SetBattleParamData(const json& jsondata)
 {
-	LoadBattleParam(jsondata);
+	//バトルに使用するデータの読み込み
+	SetBattleParam(jsondata);
 }
 
 //更新関数
@@ -86,6 +107,17 @@ void CKaito::Draw()
 	CSkinMeshObject::Draw();
 }
 
+//デバッグ関数
+void CKaito::Debug()
+{
+	ImGui::Begin(JAPANESE("Kaito"));
+	ImGui::InputFloat3(JAPANESE("位置"), DebugPos);
+	ImGui::InputFloat3(JAPANESE("拡縮"), DebugScale);
+	ImGui::End();
+	SetPosition(DebugPos);
+	SetScale(DebugScale);
+}
+
 //育成ヒーロー選択シーンのアニメーション
 void CKaito::NatureHeroSelectAnimation()
 {
@@ -101,6 +133,17 @@ void CKaito::NatureAnimation(int no)
 {
 	//アニメーションの経過時間を加算
 	m_AnimTime += m_pMesh->GetAnimSpeed();
+}
+
+//アニメーション関連の初期化
+void CKaito::AnimInit()
+{
+	//アニメーションスピードの設定
+	m_AnimSpeed = 0.01f;
+	//待機アニメーション
+	m_AnimNo = 0;
+	//アニメーションを設定
+	m_pMesh->ChangeAnimSet(m_AnimNo, m_pAnimCtrl);
 }
 
 bool CKaito::SceneChange()

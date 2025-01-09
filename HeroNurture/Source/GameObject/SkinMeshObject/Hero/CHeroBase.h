@@ -24,12 +24,21 @@ constexpr float RECOVERY_STAMINA = 25.0f;
 
 //=====================================
 //ヒーロー基底クラス
+// 制作者:石田櫂夢
 //=====================================
-
 class CHeroBase
 	: public CSkinMeshObject
 {
 public :
+
+	//ヒーローリスト列挙型
+	enum enHeroList :char
+	{
+		Yui,
+		Kaito,
+		Max,
+	};
+
 	//パラメータ構造体
 	struct enParam
 	{
@@ -56,21 +65,19 @@ public :
 		float HpApp;
 	};
 
-	//キャラクターリスト構造体
-	enum enCharacterList : char
-	{
-		Yui,
-		Kaito,
-		max,
-	};
-
 public:
 	CHeroBase();
 	virtual ~CHeroBase() override;
 
-	//初期化関数
-	//ベースなので何もしない
+	// =======================
+	// 各シーンごとの初期化
+	// =======================
+	//主に使用する初期化関数
 	virtual void Initialize() {};
+	//バトルシーンで使用する初期化
+	virtual void BattleInitialize() {};
+	//敵になった際の初期化関数
+	virtual void EnemyInit() {};
 
 	//データ読み込み関数
 	virtual void LoadMeshData() {};
@@ -79,13 +86,16 @@ public:
 	virtual void LoadParamData(const json& jsondata) {};
 
 	//バトルパラメータ情報読み込み
-	virtual void LoadBattleParamData() {};
+	virtual void SetBattleParamData(const json& jsondata) {};
 
 	//更新関数
 	virtual void Update();
 
 	//描画関数
 	virtual void Draw();
+
+	//デバッグ関数
+	virtual void Debug() {};
 
 	// =======================
 	// シーンごとのアニメーション関数
@@ -96,6 +106,7 @@ public:
 	virtual void BattleHeroSelectAnimation() {};
 	//育成シーン
 	virtual void NatureAnimation(int no) {};
+
 	// =======================
 	// トレーニングごとのアニメーション関数
 	// =======================		
@@ -131,6 +142,7 @@ public:
 	enParam GetBattleParam() { return m_BattleParam; }
 	//バトルに使用するヒーローの名前
 	std::string GetBattleHeroName() { return m_BattleHeroName; }
+	void SetBattleHeroName(std::string heroname) { m_BattleHeroName = heroname; }
 	//キャラごとの適正率
 	enAppropriate GetApp()  { return  m_App; }
 	//更新前のパラメータ
@@ -139,8 +151,8 @@ public:
 	//トレーニング失敗フラグ
 	bool GetFailure() { return m_Failure; }
 	void SetFailure(bool failure) { m_Failure = failure; }
-	//バトルに使用する情報
-	void LoadBattleParam(const json& jsondata, int selectno);
+	//バトルに使用するパラメータ情報の設定
+	void SetBattleParam(const json& jsondata);
 
 protected :	
 	// =======================
@@ -180,8 +192,9 @@ protected:
 	//ユーザーネーム
 	std::string m_UserName;
 
-	//イベントシーンに用いるカウント
-	int m_EventCnt;
+	//----デバッグ用----
+	D3DXVECTOR3 DebugPos;
+	D3DXVECTOR3 DebugScale;
 
 private:
 	//パラメータ更新前のパラメータ情報

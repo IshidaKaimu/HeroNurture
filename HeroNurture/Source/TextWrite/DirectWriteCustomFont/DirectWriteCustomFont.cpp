@@ -306,7 +306,7 @@ HRESULT DirectWriteCustomFont::SetFont(FontData set)
 //=================================================================================================================================
 HRESULT DirectWriteCustomFont::SetFont(WCHAR const* fontname, DWRITE_FONT_WEIGHT fontWeight, DWRITE_FONT_STYLE fontStyle,
     DWRITE_FONT_STRETCH fontStretch, FLOAT fontSize, WCHAR const* localeName,
-    DWRITE_TEXT_ALIGNMENT textAlignment, D2D1_COLOR_F Color, D2D1_COLOR_F shadowColor, D2D1_POINT_2F shadowOffset)
+    DWRITE_TEXT_ALIGNMENT textAlignment,DWRITE_PARAGRAPH_ALIGNMENT paragraphAligment ,D2D1_COLOR_F Color, D2D1_COLOR_F shadowColor, D2D1_POINT_2F shadowOffset)
 {
     HRESULT result = S_OK;
 
@@ -314,6 +314,9 @@ HRESULT DirectWriteCustomFont::SetFont(WCHAR const* fontname, DWRITE_FONT_WEIGHT
     if (FAILED(result)) { return result; }
 
     pTextFormat->SetTextAlignment(textAlignment);
+    if (FAILED(result)) { return result; }
+
+    pTextFormat->SetParagraphAlignment(paragraphAligment);
     if (FAILED(result)) { return result; }
 
     pRenderTarget->CreateSolidColorBrush(Color, pBrush.GetAddressOf());

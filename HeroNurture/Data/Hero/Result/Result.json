@@ -627,5 +627,73 @@
             "Power": 30.0,
             "Speed": 114.0
         }
+    },
+    {
+        "Appropriate": {
+            "Hp": 0.0,
+            "Magic": 0.0,
+            "Power": 0.0,
+            "Speed": 0.0
+        },
+        "HeroName": "Yui",
+        "Name": "Result",
+        "Number": 38,
+        "Parameter": {
+            "Hp": 0.0,
+            "Magic": 0.0,
+            "Power": 0.0,
+            "Speed": 0.0
+        }
+    },
+    {
+        "Appropriate": {
+            "Hp": 0.0,
+            "Magic": 10.0,
+            "Power": 0.0,
+            "Speed": 20.0
+        },
+        "HeroName": "Yui",
+        "Name": "Result",
+        "Number": 39,
+        "Parameter": {
+            "Hp": 150.0,
+            "Magic": 60.0,
+            "Power": 50.0,
+            "Speed": 114.0
+        }
+    },
+    {
+        "Appropriate": {
+            "Hp": 0.0,
+            "Magic": 10.0,
+            "Power": 20.0,
+            "Speed": 0.0
+        },
+        "HeroName": "Kaito",
+        "Name": "Result",
+        "Number": 40,
+        "Parameter": {
+            "Hp": 200.0,
+            "Magic": 40.0,
+            "Power": 114.0,
+            "Speed": 40.0
+        }
+    },
+    {
+        "Appropriate": {
+            "Hp": 0.0,
+            "Magic": 10.0,
+            "Power": 0.0,
+            "Speed": 20.0
+        },
+        "HeroName": "Yui",
+        "Name": "Result",
+        "Number": 41,
+        "Parameter": {
+            "Hp": 150.0,
+            "Magic": 60.0,
+            "Power": 30.0,
+            "Speed": 114.0
+        }
     }
 ]

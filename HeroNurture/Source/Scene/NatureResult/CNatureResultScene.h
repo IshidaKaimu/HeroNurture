@@ -33,9 +33,9 @@ using json = nlohmann::json;
 //=====================================
 //-----カメラ情報----
 //カメラ位置
-const D3DXVECTOR3 CAMPOS_NR  = { 0.0, 5.0, -4.0 };
+const D3DXVECTOR3 CAMPOS_NR  = { 0.0f, 5.5f, -4.0f };
 //カメラ注視点
-const D3DXVECTOR3 CAMLOOK_NR = { 2.0, 5.0, 3.0 };
+const D3DXVECTOR3 CAMLOOK_NR = { 2.0f, 5.5f, 3.0f };
 //----育成評価描画関連----
 //最終ランクX座標
 constexpr float RANK_POSX_NR = 900.0f;

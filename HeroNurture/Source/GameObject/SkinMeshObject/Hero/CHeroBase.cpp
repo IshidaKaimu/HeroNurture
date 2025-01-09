@@ -9,7 +9,6 @@ CHeroBase::CHeroBase()
 	: m_Param          ()
 	, m_pJson          ()
 	, m_UserName       ()
-	, m_EventCnt	   ()
 	, m_BeforeParam	   ()
 	, m_Correction	   (1.0)
 	, m_Failure		   (false)
@@ -93,15 +92,14 @@ void CHeroBase::LoadParam( const json& jsondata, const std::string& heroname )
 
 }
 
-//バトルに使用する情報の取得
-void CHeroBase::LoadBattleParam(const json& jsondata, int selectno)
+//バトルに使用するパラメータ情報の設定
+void CHeroBase::SetBattleParam(const json& jsondata)
 {
 	//----パラメータ読み込み----
 	m_BattleParam.Power = jsondata["Parameter"]["Power"].get<float>();
 	m_BattleParam.Magic = jsondata["Parameter"]["Magic"].get<float>();
 	m_BattleParam.Speed = jsondata["Parameter"]["Speed"].get<float>();
 	m_BattleParam.Hp = jsondata["Parameter"]["Hp"].get<float>();
-	return;
 }
 
 //各ヒーローのパラメータ更新

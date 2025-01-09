@@ -8,14 +8,6 @@ class CHeroManager
 {
 
 public:
-	//ヒーローリスト列挙型
-	enum enHeroList :char
-	{
-		Yui,
-		Kaito,
-        Max,
-	};
-
 	//トレーニングリスト
 	enum enTraningList : char
 	{
@@ -34,8 +26,13 @@ public:
 	~CHeroManager();
 
 public:
-	//初期化関数
+	// =======================
+	// 各シーンごとの初期化
+	// =======================
+	//主に使用する初期化
 	void Initialize() override;
+	//バトルシーンで使用する初期化
+	void BattleInitialize() override;
 
 	//データ読み込み関数
 	void LoadMeshData() override;
@@ -49,6 +46,15 @@ public:
 	//描画関数
 	void Draw() override;
 
+	//デバッグ関数
+	void Debug() override;
+
+	//作成するヒーローの設定
+	void CreateHero(enHeroList list);
+
+	//各ヒーロークラスの作成
+	static std::unique_ptr<CHeroBase>Create(enHeroList list);
+
 	// =======================
 	// 各シーンごとのアニメーション
 	// =======================
@@ -57,33 +63,30 @@ public:
 	//育成シーン
 	void NatureAnimation(int no) override;
 
-	//各ヒーロークラスの構築
-	static std::unique_ptr<CHeroBase>Create(enHeroList list);
-
 	// =======================
 	// トレーニングごとのアニメーション関数
 	// =======================		
 	//筋力
-	void PowerTraningAnimation() { m_Hero->PowerTraningAnimation(); }
+	void PowerTraningAnimation() { m_pHero->PowerTraningAnimation(); }
 	//魔力
-	void MagicTraningAnimation() { m_Hero->MagicTraningAnimation(); };
+	void MagicTraningAnimation() { m_pHero->MagicTraningAnimation(); }
 	//体力
-	void SpeedTraningAnimation() { m_Hero->SpeedTraningAnimation(); };
+	void SpeedTraningAnimation() { m_pHero->SpeedTraningAnimation(); }
 	//Hp
-	void HpTraningAnimation() { m_Hero->HpTraningAnimation(); };
+	void HpTraningAnimation() { m_pHero->HpTraningAnimation(); }
 
 
 	// =======================
 	// 各パラメータ上昇関数
 	// =======================
 	//筋力
-	void PowerUp(float stamina) { m_Hero->PowerUp(stamina); }
+	void PowerUp(float stamina) { m_pHero->PowerUp(stamina); }
 	//魔力
-	void MagicUp(float stamina) { m_Hero->MagicUp(stamina); }
+	void MagicUp(float stamina) { m_pHero->MagicUp(stamina); }
 	//素早さ
-	void SpeedUp(float stamina) { m_Hero->SpeedUp(stamina); }
+	void SpeedUp(float stamina) { m_pHero->SpeedUp(stamina); }
 	//体力
-	void HpUp(float stamina) { m_Hero->HpUp(stamina); }
+	void HpUp(float stamina) { m_pHero->HpUp(stamina); }
 
 	// =======================
 	// スタミナゲージ関連関数
@@ -101,24 +104,23 @@ public:
 	// =======================
 	// ゲッター・セッター関数
 	// =======================
-	//ヒーロー設定関数
-	void SetHero(enHeroList list);
 	//選択したヒーロー
 	void SelectHero(enHeroList list) { m_HeroList = list; }
 	enHeroList GetSelectHero() { return m_HeroList; }
 	//バトルに使用するヒーローの名前
-	std::string GetBattleHeroName() { return m_Hero->GetBattleHeroName(); }
+	std::string GetBattleHeroName() { return m_pHero->GetBattleHeroName(); }
+	void SetBattleHeroName(std::string heroname) { return m_pHero->SetBattleHeroName(heroname); }
 	//現在のパラメータ
-	enParam GetParam() { return m_Hero->GetParam(); }	
+	enParam GetParam() { return m_pHero->GetParam(); }	
 	//バトルに使用するパラメータ
-	enParam GetBattleParam() { return m_Hero->GetBattleParam(); }
+	enParam GetBattleParam() { return m_pHero->GetBattleParam(); }
 	//キャラごとの適正率
-	enAppropriate GetApp() { return m_Hero->GetApp(); }
+	enAppropriate GetApp() { return m_pHero->GetApp(); }
 	//更新前のパラメータ
-	enParam GetBeforeParam() { return m_Hero->GetBeforeParam(); }
-	void SetBeforeParam(enParam before) { m_Hero->SetBeforeParam(before); }
+	enParam GetBeforeParam() { return m_pHero->GetBeforeParam(); }
+	void SetBeforeParam(enParam before) { m_pHero->SetBeforeParam(before); }
 	//バトルシーンで使用する情報
-	void LoadBattleParamData(const json& jsondata, int selectno) { m_Hero->LoadBattleParamData(jsondata, selectno); }
+	void SetBattleParamData(const json& jsondata) { m_pHero->SetBattleParamData(jsondata); }
 	//スタミナ
 	float GetStamina() { return m_Stamina; }
 	void  SetStamina(float stamina) { m_Stamina = stamina; }
@@ -131,15 +133,15 @@ public:
 	enTraningList GetTraining() { return m_Traning; }
 	void SetTraning(enTraningList traning) { m_Traning = traning; }
 	//トレーニングに失敗したかのフラグ
-	bool GetFailure() { return m_Hero->GetFailure(); }
+	bool GetFailure() { return m_pHero->GetFailure(); }
 
 private:
 	//他からアクセスすることがないように
 	CHeroManager();
 
-private:
+protected:
 	//ヒーローベースクラス
-	std::unique_ptr<CHeroBase> m_Hero;
+	std::unique_ptr<CHeroBase> m_pHero;
 
 	//ヒーローリスト
 	enHeroList m_HeroList;

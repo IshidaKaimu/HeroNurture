@@ -37,18 +37,19 @@ namespace FontList
 //=============================================================================
 struct FontData
 {
-    std::wstring font;							// フォント名
-    IDWriteFontCollection* fontCollection;		// フォントコレクション
-    DWRITE_FONT_WEIGHT fontWeight;				// フォントの太さ
-    DWRITE_FONT_STYLE fontStyle;				// フォントスタイル
-    DWRITE_FONT_STRETCH fontStretch;			// フォントの幅
-    FLOAT fontSize;								// フォントサイズ
-    WCHAR const* localeName;					// ロケール名
-    DWRITE_TEXT_ALIGNMENT textAlignment;		// テキストの配置
-    D2D1_COLOR_F Color;							// フォントの色
-
-    D2D1_COLOR_F shadowColor;					// 影の色
-    D2D1_POINT_2F shadowOffset;					// 影のオフセット
+    std::wstring font;							  // フォント名
+    IDWriteFontCollection* fontCollection;		  // フォントコレクション
+    DWRITE_FONT_WEIGHT fontWeight;				  // フォントの太さ
+    DWRITE_FONT_STYLE fontStyle;				  // フォントスタイル
+    DWRITE_FONT_STRETCH fontStretch;			  // フォントの幅
+    FLOAT fontSize;								  // フォントサイズ
+    WCHAR const* localeName;					  // ロケール名
+    DWRITE_TEXT_ALIGNMENT textAlignment;		  // テキストの配置(水平)
+    DWRITE_PARAGRAPH_ALIGNMENT paragraphAlignment;// テキストの配置(縦)
+    D2D1_COLOR_F Color;							  // フォントの色
+                                                 
+    D2D1_COLOR_F shadowColor;					  // 影の色
+    D2D1_POINT_2F shadowOffset;					  // 影のオフセット
 
     // デフォルト設定
     FontData()
@@ -96,22 +97,24 @@ public:
     // 第4引数：フォントの幅（DWRITE_FONT_STRETCH_NORMAL,DWRITE_FONT_STRETCH_EXTRA_EXPANDED等）
     // 第5引数：フォントサイズ（20, 30等）
     // 第6引数：ロケール名（L"ja-jp"等）
-    // 第7引数：テキストの配置（DWRITE_TEXT_ALIGNMENT_LEADING：前, 等）
-    // 第8引数：フォントの色（D2D1::ColorF(D2D1::ColorF::Black)：黒, D2D1::ColorF(D2D1::ColorF(0.0f, 0.2f, 0.9f, 1.0f))：RGBA指定等）
-    // 第9引数：影の色（D2D1::ColorF(D2D1::ColorF::Black)：黒, D2D1::ColorF(D2D1::ColorF(0.0f, 0.2f, 0.9f, 1.0f))：RGBA指定等）
-    // 第10引数：影のオフセット（D2D1::Point2F(2.0f, 2.0f)：右下にポイントずらす）
+    // 第7引数：テキストの配置(水平)
+    // 第8引数：テキストの配置(縦)
+    // 第9引数：フォントの色（D2D1::ColorF(D2D1::ColorF::Black)：黒, D2D1::ColorF(D2D1::ColorF(0.0f, 0.2f, 0.9f, 1.0f))：RGBA指定等）
+    // 第10引数：影の色（D2D1::ColorF(D2D1::ColorF::Black)：黒, D2D1::ColorF(D2D1::ColorF(0.0f, 0.2f, 0.9f, 1.0f))：RGBA指定等）
+    // 第11引数：影のオフセット（D2D1::Point2F(2.0f, 2.0f)：右下にポイントずらす）
     HRESULT SetFont
     (
-        WCHAR const* fontname,						// フォント名
-        DWRITE_FONT_WEIGHT		fontWeight,			// フォントの太さ
-        DWRITE_FONT_STYLE		fontStyle,			// フォントスタイル
-        DWRITE_FONT_STRETCH		fontStretch,		// フォントの幅
-        FLOAT					fontSize,			// フォントサイズ
-        WCHAR const* localeName,					// ロケール名
-        DWRITE_TEXT_ALIGNMENT	textAlignment,		// テキストの配置
-        D2D1_COLOR_F			Color,				// フォントの色
-        D2D1_COLOR_F			shadowColor,		// 影の色
-        D2D1_POINT_2F			shadowOffset		// 影のオフセット
+        WCHAR const* fontname,						    // フォント名
+        DWRITE_FONT_WEIGHT		    fontWeight,	        // フォントの太さ
+        DWRITE_FONT_STYLE		    fontStyle,	        // フォントスタイル
+        DWRITE_FONT_STRETCH		    fontStretch,        // フォントの幅
+        FLOAT					    fontSize,	        // フォントサイズ
+        WCHAR const* localeName,					    // ロケール名
+        DWRITE_TEXT_ALIGNMENT	    textAlignment,	    // テキストの配置(水平)
+        DWRITE_PARAGRAPH_ALIGNMENT	paragraphAlignment,	// テキストの配置(縦)
+        D2D1_COLOR_F			    Color,		        // フォントの色
+        D2D1_COLOR_F			    shadowColor,        // 影の色
+        D2D1_POINT_2F			    shadowOffset        // 影のオフセット
     );
 
     // 文字描画
