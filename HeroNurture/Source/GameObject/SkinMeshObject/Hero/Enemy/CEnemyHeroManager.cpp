@@ -23,12 +23,6 @@ void CEnemyHeroManager::LoadMeshData()
     m_pEnemyHero->LoadMeshData();
 }
 
-//バトルに使用するパラメータ情報の設定
-void CEnemyHeroManager::SetBattleParamData(const json& jsondata)
-{
-    m_pEnemyHero->SetBattleParamData(jsondata);
-}
-
 //更新関数
 void CEnemyHeroManager::Update()
 {
@@ -51,6 +45,7 @@ void CEnemyHeroManager::Debug()
 void CEnemyHeroManager::CreateEnemyHero(enHeroList list)
 {
     m_pEnemyHero = Create(list);
+    m_SelectEnemyHero = list;
 }
 
 std::unique_ptr<CHeroBase> CEnemyHeroManager::Create(enHeroList list)
@@ -63,3 +58,19 @@ std::unique_ptr<CHeroBase> CEnemyHeroManager::Create(enHeroList list)
     default:                    return nullptr;
     }
 }
+
+//敵に設定されているヒーローの名前を文字列で返す
+std::string CEnemyHeroManager::GetEnemyHeroName()
+{
+    switch (m_SelectEnemyHero)
+    {
+    case CHeroBase::Yui:
+        m_EnemyHeroName = "Yui";
+        break;
+    case CHeroBase::Kaito:
+        m_EnemyHeroName = "Kaito";
+        break;
+    }
+    return m_EnemyHeroName;
+}
+

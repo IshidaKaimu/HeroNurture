@@ -137,23 +137,6 @@ void CYui::NatureAnimation(int no)
 	m_AnimTime += m_pMesh->GetAnimSpeed();
 }
 
-//筋力トレーニングアニメーション
-void CYui::PowerTraningAnimation()
-{
-}
-//魔力トレーニングアニメーション
-void CYui::MagicTraningAnimation()
-{
-}
-//素早さトレーニングアニメーション
-void CYui::SpeedTraningAnimation()
-{
-}
-//体力トレーニングアニメーション
-void CYui::HpTraningAnimation()
-{
-}
-
 //アニメーションに関する初期化
 void CYui::AnimInit()
 {

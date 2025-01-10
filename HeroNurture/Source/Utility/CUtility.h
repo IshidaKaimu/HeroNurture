@@ -35,7 +35,7 @@ public:
 	void DrawRank(float value, int typeno, float x, float y);
 
 	//’l‚ÌŒ…”‚É‚æ‚é•`‰æˆÊ’u‚Ì•â³
-	D3DXVECTOR2 PosCorrection(float value, float digit, float x, float y);
+	D3DXVECTOR2 PosCorrection(double value, float digit, float x, float y);
 
 private:
 	CUtility();

@@ -36,7 +36,6 @@ CNatureScene::~CNatureScene()
 {
 }
 
-//構築関数
 void CNatureScene::Create()
 {
     //セットされたヒーローのクラスのインスタンス生成
@@ -78,7 +77,6 @@ void CNatureScene::Create()
     CreateNatureUI(m_pStaminaGage,m_pStaminaBack);
 }
 
-//破棄関数
 void CNatureScene::Releace()
 {
     //----破棄----
@@ -88,8 +86,6 @@ void CNatureScene::Releace()
     m_pHero   = nullptr;
 }
 
-
-//データ読み込み関数
 void CNatureScene::LoadData()
 {   
     //セットされたヒーローのクラスのメッシュデータの読み込み
@@ -113,7 +109,6 @@ void CNatureScene::LoadData()
     LoadNatureUI(m_pStaminaGage, m_pStaminaBack);
 }
 
-//初期化関数
 void CNatureScene::Initialize()
 {
     //セットされたヒーローのクラスの初期化
@@ -156,7 +151,6 @@ void CNatureScene::Initialize()
     InitNatureUI(m_pStaminaGage,m_pStaminaBack);
 }
 
-//更新関数
 void CNatureScene::Update()
 {
     //----クラスのインスタンスを変数に代入----
@@ -233,7 +227,6 @@ void CNatureScene::Update()
     Debug();
 }
 
-//描画関数
 void CNatureScene::Draw()
 {
     //----クラスのインスタンスを変数に代入----
@@ -351,7 +344,7 @@ void CNatureScene::InitNatureUI(std::unique_ptr<CUIObject>& gage, std::unique_pt
 void CNatureScene::DrawNatureUI(std::unique_ptr<CUIObject>& gage, std::unique_ptr<CUIObject>& back)
 {
     //スタミナゲージのアニメーション
-    GageAnim();
+    StaminaGageAnim();
     //ゲージ背景
     back->Draw();
     //スタミナゲージ
@@ -397,16 +390,11 @@ void CNatureScene::SelectTraning()
     //それぞれのパラメータの増加
     switch (m_pHero->GetTraining())
     {
-    //筋力
-    case::CHeroManager::PowerTraining: m_pHero->PowerUp(m_pHero->GetStamina()); break;
-    //魔力
-    case::CHeroManager::MagicTraining: m_pHero->MagicUp(m_pHero->GetStamina()); break;
-    //素早さ
-    case::CHeroManager::SpeedTraining: m_pHero->SpeedUp(m_pHero->GetStamina()); break;
-    //体力
-    case::CHeroManager::HpTraining: m_pHero->HpUp(m_pHero->GetStamina()); break;
-    //休息
-    case::CHeroManager::Rest: SceneMng->SetRestFlag(true); break;
+    case::CHeroManager::PowerTraining: m_pHero->PowerUp(m_pHero->GetStamina()); break; //筋力
+    case::CHeroManager::MagicTraining: m_pHero->MagicUp(m_pHero->GetStamina()); break; //魔力
+    case::CHeroManager::SpeedTraining: m_pHero->SpeedUp(m_pHero->GetStamina()); break; //素早さ
+    case::CHeroManager::HpTraining: m_pHero->HpUp(m_pHero->GetStamina()); break;       //体力
+    case::CHeroManager::Rest: SceneMng->SetRestFlag(true); break;                      //休息
     }
 
     //スタミナの減少または回復
@@ -422,7 +410,7 @@ void CNatureScene::SelectTraning()
 
 }
 
-//各種UI初期設定
+//各種トレーニングUI初期設定
 void CNatureScene::UIInit(std::unique_ptr<CUIObject>& ui, float x, float y, float interval, D3DXVECTOR3 scale, int no)
 {
     //位置
@@ -516,14 +504,14 @@ void CNatureScene::DrawRemainingTurn()
     std::wstring Turn = std::to_wstring(CSceneManager::GetInstance()->GetRemainingTurn());
 
     //残りターン数の描画
-    Text->Draw_Text(L"残り", WriteText::Normal, D3DXVECTOR2(0.0, -20.0));
+    Text->Draw_Text(L"残り", WriteText::Normal, D3DXVECTOR2(0.0f, -20.0f));
     Text->Draw_Text(Turn, WriteText::Turn, Utility->PosCorrection(SceneMng->GetRemainingTurn(),2,140,-40.0f));
-    Text->Draw_Text(L"ターン", WriteText::Normal, D3DXVECTOR2(200.0, -20.0));
+    Text->Draw_Text(L"ターン", WriteText::Normal, D3DXVECTOR2(200.0f, -20.0f));
 }
 
 
 //スタミナゲージのアニメーション
-void CNatureScene::GageAnim()
+void CNatureScene::StaminaGageAnim()
 {
     //クラスのインスタンスを変数に代入
     //シーンマネージャー
@@ -549,6 +537,4 @@ void CNatureScene::GageAnim()
         //不自然なゲージの動きをなくす
         m_pStaminaGage->SetDisplay(1.0f, 1.0f);
     }
-
-
 }

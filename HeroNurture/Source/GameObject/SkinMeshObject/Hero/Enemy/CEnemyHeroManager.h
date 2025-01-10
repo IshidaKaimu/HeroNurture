@@ -33,17 +33,26 @@ public:
 
 	//各ヒーロークラスの作成
 	static std::unique_ptr<CHeroBase>Create(enHeroList list);
+private:
+	CEnemyHeroManager();
 
+public:
 	// =======================
 	// ゲッター・セッター関数
 	// =======================	
-	//バトルに使用するパラメータ情報の設定
-	void SetBattleParamData(const json& jsondata) override;
-
-private:
-	CEnemyHeroManager();
+	//バトルに使用するパラメータ情報
+	void SetBattleParamData(const json& jsondata) { m_pEnemyHero->SetBattleParamData(jsondata); };
+	//敵ヒーロー
+	enHeroList GetSelectEnemyHero() { return m_SelectEnemyHero; }
+	//敵ヒーローの名前の文字列
+	std::string GetEnemyHeroName();
 
 private:
 	//ヒーロー基底クラス
 	std::unique_ptr<CHeroBase> m_pEnemyHero;
+	//敵ヒーロー
+	enHeroList m_SelectEnemyHero;
+	//敵ヒーローの名前の文字列
+	std::string m_EnemyHeroName;
+
 };

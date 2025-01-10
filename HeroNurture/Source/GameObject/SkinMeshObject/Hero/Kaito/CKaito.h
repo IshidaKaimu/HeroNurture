@@ -10,10 +10,10 @@
 //バトルシーンでの初期情報
 const D3DXVECTOR3 BATTLEINIT_POS_KAITO    = { -4.0f,0.0f,0.0f }; //座標
 const D3DXVECTOR3 BATTLEINIT_SCALE_KAITO  = { 0.3f,0.3f,0.3f };//拡縮
-const D3DXVECTOR3 BATTLEINIT_ROTATE_KAITO = { 0.0,D3DXToRadian(-90.0),0.0f};//回転
+const D3DXVECTOR3 BATTLEINIT_ROTATE_KAITO = { 0.0,D3DXToRadian(-90.0f),0.0f};//回転
 //敵になった際の初期情報
 const D3DXVECTOR3 ENEMYINIT_POS_KAITO = { 2.0f,0.0f,0.0f };	//座標
-const D3DXVECTOR3 ENEMYINIT_ROTATE_KAITO = { 0.0f,D3DXToRadian(90.0),0.0f };	//回転
+const D3DXVECTOR3 ENEMYINIT_ROTATE_KAITO = { 0.0f,D3DXToRadian(90.0f),0.0f };	//回転
 
 //=====================================
 //カイトクラス
@@ -70,10 +70,6 @@ private:
 	//アニメーションに関する初期化
 	void AnimInit();
 	void SetAnimSpeed(double speed) { m_AnimSpeed = speed; }
-	//場面切り替え
-	bool SceneChange();
-	//アニメーション切り替えフラグ立てる
-	void AnimChange();
 
 protected:
 	D3DXVECTOR3    m_BonePos;			//カイト:ボーン座標

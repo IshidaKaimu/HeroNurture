@@ -4,7 +4,7 @@
 
 CHeroManager::CHeroManager()
     : m_pHero         ()
-    , m_HeroList     ()
+    , m_SelectHero     ()
     , m_Traning      ()
     , m_HeroName     ()
     , m_Stamina      ()
@@ -122,7 +122,7 @@ void CHeroManager::StaminaRecovery()
 //ƒq[ƒ[–¼‚ğ•¶š—ñ‚Å•Ô‚·ŠÖ”
 std::string CHeroManager::GetHeroName()
 {
-    switch (m_HeroList)
+    switch (m_SelectHero)
     {
     case CHeroManager::Yui:
         m_HeroName = "Yui";

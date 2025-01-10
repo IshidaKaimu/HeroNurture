@@ -10,7 +10,7 @@ CHeroBase::CHeroBase()
 	, m_pJson          ()
 	, m_UserName       ()
 	, m_BeforeParam	   ()
-	, m_Correction	   (1.0)
+	, m_Correction	   (1.0f)
 	, m_Failure		   (false)
 {
 	m_pJson = std::make_unique<CJson>();
@@ -124,9 +124,9 @@ void CHeroBase::UpdateParam(const json& jsondata, const std::string& heroname)
 //スタミナ量による補正処理
 void CHeroBase::CorrectionByStamina(float stamina)
 {
-	if (stamina <= 0.5 * MAX_STAMINA)
+	if (stamina <= 0.5f * MAX_STAMINA)
 	{
-		m_Correction = m_Correction * 0.8;
+		m_Correction = m_Correction * 0.8f;
 	}
 	else
 	{
@@ -151,7 +151,7 @@ void CHeroBase::TraningResult(float stamina, float app, float& param)
 	int Succes = CUtility::GenerateRandomValue(0, 100);
 
 	if (Succes >= FailureRate(stamina)) {
-		float AppBonus = INCREASE_VALUE * ( 1.0 + ( app / 100.0 ) );
+		float AppBonus = INCREASE_VALUE * ( 1.0f + ( app / 100.0f ) );
 		param += AppBonus * m_Correction;
 	}
 	else

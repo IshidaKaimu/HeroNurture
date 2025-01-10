@@ -146,19 +146,4 @@ void CKaito::AnimInit()
 	m_pMesh->ChangeAnimSet(m_AnimNo, m_pAnimCtrl);
 }
 
-bool CKaito::SceneChange()
-{
-	if (m_EffPosZ >= 10.0f)
-	{
-		return true;
-	}
-	return false;
-}
-
-void CKaito::AnimChange()
-{
-	m_AnimChange = true;
-}
-
-
 

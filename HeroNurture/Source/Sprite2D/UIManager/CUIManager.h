@@ -24,8 +24,11 @@ public:
 		HpBack,		    //体力トレーニング背景
 		RestBack,		//休息背景
 		TextBox,		//テキストボックス
-		StaminaGage,    //スタミナゲージ表示用画像
-		StaminaBack,    //スタミナゲージ背景用画像
+		StaminaGage,    //スタミナゲージ
+		StaminaBack,    //スタミナゲージ背景
+		HpGage,			//体力ゲージ
+		HpGageBack,     //体力ゲージ背景
+		GageFrame,      //ゲージ枠
 		Max,
 	};
 

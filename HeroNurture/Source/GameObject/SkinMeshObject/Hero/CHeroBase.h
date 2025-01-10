@@ -139,7 +139,7 @@ public:
 	//育成中のパラメータ
 	enParam GetParam()       { return  m_Param; }
 	//バトルに使用するパラメータ
-	enParam GetBattleParam() { return m_BattleParam; }
+	enParam GetBattleParamData() { return m_BattleParam; }
 	//バトルに使用するヒーローの名前
 	std::string GetBattleHeroName() { return m_BattleHeroName; }
 	void SetBattleHeroName(std::string heroname) { m_BattleHeroName = heroname; }

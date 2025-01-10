@@ -169,7 +169,7 @@ void CJson::SaveBattleData(json& data, json& writer, int selectno)
     {
         if (battledata["Number"] == selectno)
         {
-            writer["Name"] = "BattleData";
+            writer["Name"] = "BattleParam";
             HeroMng->SetBattleHeroName(battledata["HeroName"]);
             writer["Parameter"]["Power"] = battledata["Parameter"]["Power"];
             writer["Parameter"]["Magic"] = battledata["Parameter"]["Magic"];

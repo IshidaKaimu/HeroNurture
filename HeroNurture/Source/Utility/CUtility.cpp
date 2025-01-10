@@ -97,7 +97,7 @@ void CUtility::DrawRank(float value, int typeno, float x, float y)
 }
 
 //’l•`‰æ‚ÌŒ…”‚É‚æ‚éˆÊ’u•â³
-D3DXVECTOR2 CUtility::PosCorrection(float value, float digit, float x, float y)
+D3DXVECTOR2 CUtility::PosCorrection(double value, float digit, float x, float y)
 {
     //Œ…”(’l‚ğ•¶š—ñ‚É•ÏŠ·‚µ‚ÄŒ…”‚ğæ“¾)
     int DigitCount = static_cast<int>(std::to_wstring(static_cast<int>(value)).length());

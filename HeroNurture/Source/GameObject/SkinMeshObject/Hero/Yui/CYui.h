@@ -14,10 +14,10 @@ class CSceneManager;
 //バトルシーンでの初期情報
 const D3DXVECTOR3 BATTLEINIT_POS_YUI = { -4.0f,0.0f,0.0f };		//座標
 const D3DXVECTOR3 BATTLEINIT_SCALE_YUI = { 0.04f,0.04f,0.04f }; //拡縮
-const D3DXVECTOR3 BATTLEINIT_ROTATE_YUI = { 0.04f,D3DXToRadian(-90.0),0.04f }; //回転
+const D3DXVECTOR3 BATTLEINIT_ROTATE_YUI = { 0.04f,D3DXToRadian(-90.0f),0.04f }; //回転
 //敵になった際の初期情報
 const D3DXVECTOR3 ENEMYINIT_POS_YUI    = { 2.0f,0.0f,0.0f };
-const D3DXVECTOR3 ENEMYINIT_ROTATE_YUI = { 0.0f,D3DXToRadian(90.0),0.0f };
+const D3DXVECTOR3 ENEMYINIT_ROTATE_YUI = { 0.0f,D3DXToRadian(90.0f),0.0f };
 
 //=====================================
 //ユイクラス
@@ -68,18 +68,6 @@ public:
 	void BattleHeroSelectAnimation() override;
 	// 育成シーン		
 	void NatureAnimation(int no) override;
-	// =======================
-	// トレーニングごとのアニメーション関数
-	// =======================		
-	//筋力
-	void PowerTraningAnimation() override;
-	//魔力
-	void MagicTraningAnimation() override;
-	//体力
-	void SpeedTraningAnimation()override;
-	//Hp
-	void HpTraningAnimation()override;
-
 private:
 	//アニメーションに関する初期化
 	void AnimInit();

@@ -25,7 +25,6 @@ CBattleHeroSelectScene::~CBattleHeroSelectScene()
 {
 }
 
-//構築関数
 void CBattleHeroSelectScene::Create()
 {
 	//----インスタンス生成----
@@ -41,12 +40,10 @@ void CBattleHeroSelectScene::Create()
 	m_pYui = std::make_unique<CYui>();
 }
 
-//破棄関数
 void CBattleHeroSelectScene::Releace()
 {
 }
 
-//データ設定関数
 void CBattleHeroSelectScene::LoadData()
 {
 	//育成結果が保存されているファイルのパス
@@ -64,7 +61,6 @@ void CBattleHeroSelectScene::LoadData()
 	m_pParamBack->AttachSprite(CUIManager::GetSprite(CUIManager::ResultParamList));
 }
 
-//初期化関数
 void CBattleHeroSelectScene::Initialize()
 {
 	//選択番号の初期化
@@ -91,7 +87,6 @@ void CBattleHeroSelectScene::Initialize()
 	m_pParamBack->SetDisplay(1.0f, 1.0f);
 }
 
-//更新関数
 void CBattleHeroSelectScene::Update()
 {
 	//フェードイン処理
@@ -134,7 +129,6 @@ void CBattleHeroSelectScene::Update()
 	}
 }
 
-//描画関数
 void CBattleHeroSelectScene::Draw()
 {
 	//カメラの動作

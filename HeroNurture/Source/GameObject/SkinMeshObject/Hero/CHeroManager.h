@@ -105,22 +105,21 @@ public:
 	// ゲッター・セッター関数
 	// =======================
 	//選択したヒーロー
-	void SelectHero(enHeroList list) { m_HeroList = list; }
-	enHeroList GetSelectHero() { return m_HeroList; }
+	void SelectHero(enHeroList list) { m_SelectHero = list; }
+	enHeroList GetSelectHero() { return m_SelectHero; }
 	//バトルに使用するヒーローの名前
 	std::string GetBattleHeroName() { return m_pHero->GetBattleHeroName(); }
 	void SetBattleHeroName(std::string heroname) { return m_pHero->SetBattleHeroName(heroname); }
 	//現在のパラメータ
 	enParam GetParam() { return m_pHero->GetParam(); }	
-	//バトルに使用するパラメータ
-	enParam GetBattleParam() { return m_pHero->GetBattleParam(); }
+	//バトルに使用するパラメータ情報
+	enParam GetBattleParamData() { return m_pHero->GetBattleParamData(); }
+	void SetBattleParamData(const json& jsondata) { m_pHero->SetBattleParamData(jsondata); }
 	//キャラごとの適正率
 	enAppropriate GetApp() { return m_pHero->GetApp(); }
 	//更新前のパラメータ
 	enParam GetBeforeParam() { return m_pHero->GetBeforeParam(); }
 	void SetBeforeParam(enParam before) { m_pHero->SetBeforeParam(before); }
-	//バトルシーンで使用する情報
-	void SetBattleParamData(const json& jsondata) { m_pHero->SetBattleParamData(jsondata); }
 	//スタミナ
 	float GetStamina() { return m_Stamina; }
 	void  SetStamina(float stamina) { m_Stamina = stamina; }
@@ -143,8 +142,8 @@ protected:
 	//ヒーローベースクラス
 	std::unique_ptr<CHeroBase> m_pHero;
 
-	//ヒーローリスト
-	enHeroList m_HeroList;
+	//選択されているヒーロー
+	enHeroList m_SelectHero;
 
 	//トレーニングリスト
 	enTraningList m_Traning;

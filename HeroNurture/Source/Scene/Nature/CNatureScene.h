@@ -114,7 +114,7 @@ public:
 	//トレーニング選択処理
 	void SelectTraning();
 
-	//UIの初期設定
+	//各トレーニングUIの初期設定
 	void UIInit(std::unique_ptr<CUIObject>& traning,float x, float y, float interval, D3DXVECTOR3 scale, int no);
 
 	// =======================
@@ -132,7 +132,7 @@ public:
 	void DrawRemainingTurn();
 
 	//ゲージアニメーション
-	void GageAnim();
+	void StaminaGageAnim();
 public:
 	//カメラマネージャクラス
 	CCameraManager* m_pCamera;
