@@ -3,6 +3,7 @@
 #include "UIObject\CUIObject.h"
 #include "WriteText\WriteText.h"
 #include "Json\CJson.h"
+#include <type_traits>
 
 //ランクリスト
 enum enRankList : char 
@@ -29,7 +30,9 @@ private:
 public:
 
 	//乱数の生成
-	static int GenerateRandomValue(int min,int max);
+	//テンプレート関数(引数の方に応じて処理を変える)
+	template <typename T>
+	static T GenerateRandomValue(T min,T max);
 
 	//ランクの表示
 	void DrawRank(float value, int typeno, float x, float y);
@@ -44,4 +47,3 @@ private:
 	//ランク列挙型
 	enRankList m_Rank;
 };
-

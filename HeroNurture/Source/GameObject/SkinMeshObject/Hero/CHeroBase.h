@@ -97,6 +97,7 @@ public:
 	//デバッグ関数
 	virtual void Debug() {};
 
+public:
 	// =======================
 	// シーンごとのアニメーション関数
 	// =======================		
@@ -107,19 +108,16 @@ public:
 	//育成シーン
 	virtual void NatureAnimation(int no) {};
 
+    // =======================
+	// 各ヒーローの攻撃関数
 	// =======================
-	// トレーニングごとのアニメーション関数
-	// =======================		
-	//筋力
-	virtual void PowerTraningAnimation() {};
-	//魔力
-	virtual void MagicTraningAnimation() {};
-	//体力
-	virtual void SpeedTraningAnimation() {};
-	//Hp
-	virtual void HpTraningAnimation() {};
+	//攻撃1(筋力による攻撃)
+	virtual float PowerAttack() {};
+	//攻撃1(魔力による攻撃)
+	virtual float MagicAttack() {};
+	//固有攻撃(各ヒーローの一番高いステータスを反映した攻撃)
+	virtual float UniqueAttack() {};
 
-public:
 	// =======================
 	// ステータス上昇関数
 	// =======================		
@@ -132,6 +130,9 @@ public:
 	void SpeedUp( float stamina );
 	//体力
 	void HpUp( float stamina );
+
+	//ダメージ関数
+	void Damage(float damage);
 
 	// =======================
 	// ゲッター・セッター関数
@@ -153,7 +154,9 @@ public:
 	void SetFailure(bool failure) { m_Failure = failure; }
 	//バトルに使用するパラメータ情報の設定
 	void SetBattleParam(const json& jsondata);
-
+	//バトル中のHP
+	float GetHp() { return m_Hp; }
+	void SetHp(float hp) { m_Hp = hp; }
 protected :	
 	// =======================
 	// jsonファイル関連関数
@@ -205,5 +208,10 @@ private:
 
 	//トレーニングが失敗した際に立てるフラグ
 	bool m_Failure;
+
+	//----体力関連の変数----
+	//現在の体力
+	float m_Hp;		//自分
+	float m_EnemyHp;//敵
 
 };

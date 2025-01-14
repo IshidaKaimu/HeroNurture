@@ -2,6 +2,7 @@
 #include "SkinMeshObject\CSkinMeshObject.h"
 #include "SkinMeshObject\Hero\CHeroBase.h"
 #include "ImGui\ImGuiManager\ImGuiManager.h"
+#include "Utility\CUtility.h"
 
 // =======================
 // 前方宣言
@@ -68,6 +69,17 @@ public:
 	void BattleHeroSelectAnimation() override;
 	// 育成シーン		
 	void NatureAnimation(int no) override;
+
+	// =======================
+	// 攻撃関数
+	// =======================
+	//攻撃1
+	float PowerAttack() override;
+	//攻撃2
+	float MagicAttack() override;
+	//固有攻撃
+	float UniqueAttack() override;
+
 private:
 	//アニメーションに関する初期化
 	void AnimInit();

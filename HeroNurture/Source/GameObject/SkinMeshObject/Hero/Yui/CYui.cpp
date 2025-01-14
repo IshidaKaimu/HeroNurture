@@ -137,6 +137,27 @@ void CYui::NatureAnimation(int no)
 	m_AnimTime += m_pMesh->GetAnimSpeed();
 }
 
+//UŒ‚1
+float CYui::PowerAttack()
+{
+	float Damage = m_BattleParam.Power * CUtility::GetInstance().GenerateRandomValue(1.0f, 1.5f);
+	return Damage;
+}
+
+//UŒ‚2
+float CYui::MagicAttack()
+{
+	float Damage = m_BattleParam.Magic * CUtility::GetInstance().GenerateRandomValue(1.0f,1.5f);
+	return Damage;
+}
+
+//ŒÅ—LUŒ‚
+float CYui::UniqueAttack()
+{
+	float Damage = m_BattleParam.Magic * CUtility::GetInstance().GenerateRandomValue(2.0f, 2.5f);
+	return Damage;
+}
+
 //ƒAƒjƒ[ƒVƒ‡ƒ“‚ÉŠÖ‚·‚é‰Šú‰»
 void CYui::AnimInit()
 {

@@ -122,10 +122,6 @@ private:
 	//敵のパラメータのデータ
 	json m_EnemyHeroData;
 
-	//----体力関連の変数----
-	//現在の体力
-	float m_Hp;		//自分
-	float m_EnemyHp;//敵
 	//体力ゲージの変動する幅
 	float m_HpWidth;    //自分
 	float m_EnemyHpWidth;//敵

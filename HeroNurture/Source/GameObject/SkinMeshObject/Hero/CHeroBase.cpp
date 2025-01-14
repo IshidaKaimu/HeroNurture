@@ -12,6 +12,8 @@ CHeroBase::CHeroBase()
 	, m_BeforeParam	   ()
 	, m_Correction	   (1.0f)
 	, m_Failure		   (false)
+	, m_Hp			   ()
+	, m_EnemyHp		   ()
 {
 	m_pJson = std::make_unique<CJson>();
 }
