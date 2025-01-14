@@ -25,6 +25,9 @@ CBattleScene::CBattleScene()
 	, m_HpWidth()
 	, m_EnemyHpWidth()
 	, m_BattleTurn()
+	, m_IsHeroTurn()
+	, m_SelectAttack()
+	, m_Attack()
 {
 }
 
@@ -118,8 +121,8 @@ void CBattleScene::Initialize()
 	m_pCamera->SetLook(INIT_CAMLOOK_B);
 
 	//体力の初期化
-	m_Hp = m_pHero->GetBattleParamData().Hp;
-	m_EnemyHp = m_pEnemyHero->GetBattleParamData().Hp;
+	m_pHero->SetHp(m_pHero->GetBattleParamData().Hp * 10.0f);
+	m_pEnemyHero->SetHp(m_pEnemyHero->GetBattleParamData().Hp * 10.0f);
 
 	//Hpゲージの表示幅以外の設定
 	InitHpGage();
@@ -130,21 +133,17 @@ void CBattleScene::Update()
 	//フェードイン処理
 	if (!FadeIn()) { return; }
 
-	//----クラスのインスタンスを変数に代入----
-	//キーマネージャー
-	CKeyManager* KeyMng = CKeyManager::GetInstance();
-
-	KeyMng->Update();
-
-	if (KeyMng->IsKeep('A'))
+	switch (m_BattlePhase)
 	{
-		m_Hp -= 10.0f;
-		m_EnemyHp -= 10.0f;
-	}
-	else if(KeyMng->IsKeep('S'))
-	{
-		m_Hp += 10.0f;
-		m_EnemyHp += 10.0f;
+	case CBattleScene::MoveSelectPhase: 
+		MoveSelect();	//攻撃の選択
+		break;
+	case CBattleScene::AttackPhase:
+		Attack();		//お互いの攻撃
+		break;
+	case CBattleScene::SetUpPhase:
+		SetUpToNextTurn(); //次のターンの準備
+		break;
 	}
 
 	//デバッグ処理
@@ -153,6 +152,10 @@ void CBattleScene::Update()
 
 void CBattleScene::Draw()
 {
+	//クラスのインスタンスを変数に代入
+	//テキスト描画クラス
+	WriteText* Text = WriteText::GetInstance();
+
 	//カメラの動作
 	CCameraManager::GetInstance().CameraUpdate();
 
@@ -188,6 +191,8 @@ void CBattleScene::Debug()
 	ImGui::Text(JAPANESE("魔力:%f"), m_pEnemyHero->GetBattleParamData().Magic);
 	ImGui::Text(JAPANESE("素早さ:%f"), m_pEnemyHero->GetBattleParamData().Speed);
 	ImGui::Text(JAPANESE("体力:%f"), m_pEnemyHero->GetBattleParamData().Hp);
+	ImGui::Text(JAPANESE("HP%f"), m_pHero->GetHp());
+	ImGui::Text(JAPANESE("敵HP%f"), m_pEnemyHero->GetHp());
 	ImGui::End();
 #endif
 #if DEBUG
@@ -225,12 +230,12 @@ void CBattleScene::DrawHpGage()
 {
 	//----UIオブジェクトの描画----
     //自分のHpゲージ
-	HpGageAnim(m_pHpGage, m_Hp, m_pHero->GetBattleParamData().Hp, m_HpWidth);
+	HpGageAnim(m_pHpGage,m_pHero->GetHp(), m_pHero->GetBattleParamData().Hp, m_HpWidth);
 	m_pHpGageBack->Draw();
 	m_pHpGage->Draw();
 	m_pHpGageFrame->Draw();
 	//敵のHpゲージ
-	HpGageAnim(m_pEnemyHpGage, m_EnemyHp, m_pEnemyHero->GetBattleParamData().Hp, m_EnemyHpWidth);
+	HpGageAnim(m_pEnemyHpGage, m_pEnemyHero->GetHp(), m_pEnemyHero->GetBattleParamData().Hp, m_EnemyHpWidth);
 	m_pEnemyHpGageBack->Draw();
 	m_pEnemyHpGage->Draw();
 	m_pEnemyHpGageFrame->Draw();
@@ -254,7 +259,6 @@ void CBattleScene::InitHpGage()
 	m_pHpGageFrame->SetDisplay(HPGAGE_DISPLAY.x, HPGAGE_DISPLAY.y);
 	//敵のHpゲージ
 	m_pEnemyHpGage->SetPosition(ENEMY_HPGAGE_POS);
-	m_pEnemyHpGage->SetRotation(0.0f, 0.0f, 0.0f);
 	m_pEnemyHpGage->SetScale(0.8f, 0.8f, 0.8f);
 	m_pEnemyHpGage->SetDisplay(1.0f, 1.0f);
 	//敵のHpゲージ背景
@@ -262,13 +266,13 @@ void CBattleScene::InitHpGage()
 	m_pEnemyHpGageBack->SetScale(0.8f, 0.8f, 0.8f);
 	m_pEnemyHpGageBack->SetDisplay(1.0f, 1.0f);
 	//敵のHpゲージ枠
-	m_pEnemyHpGageFrame->SetPosition(800.0f, 10.0f, 0.0f);
+	m_pEnemyHpGageFrame->SetPosition(ENEMY_HPFRAME_POS);
 	m_pEnemyHpGageFrame->SetScale(0.8f, 0.8f, 0.8f);
 	m_pEnemyHpGageFrame->SetDisplay(1.0f, 1.0f);
 }
 
 //体力ゲージのアニメーション
-void CBattleScene::HpGageAnim(std::unique_ptr<CUIObject>& gage, float& hp, float maxhp, float& width)
+void CBattleScene::HpGageAnim(std::unique_ptr<CUIObject>& gage, float hp, float maxhp, float& width)
 {
 	//ゲージ幅の確認
 	float GageScale = 1.0f * hp / maxhp;
@@ -280,4 +284,90 @@ void CBattleScene::HpGageAnim(std::unique_ptr<CUIObject>& gage, float& hp, float
 
 	//ゲージ幅を設定
 	gage->SetDisplay(width, 1.0f);
+}
+
+//行動選択フェーズ中の処理
+void CBattleScene::MoveSelect()
+{
+	//----クラスのインスタンスを変数に代入----
+	//キーマネージャー
+	CKeyManager* KeyMng = CKeyManager::GetInstance();
+	KeyMng->Update();
+
+		//カーソルの移動
+	if (KeyMng->IsDown(VK_RIGHT))
+		{
+			//キー入力で選択を進める
+			if (m_SelectNo < enAttackList::Max - 1) { m_SelectNo++; }
+			else { m_SelectNo = 0; }
+		}
+		else if (KeyMng->IsDown(VK_LEFT))
+		{
+			if (m_SelectNo > 0) { m_SelectNo--; }
+			else { m_SelectNo = enAttackList::Max - 1; }
+		}
+
+		if (KeyMng->IsDown(VK_RETURN))
+		{
+			switch (m_SelectNo)
+			{
+			case 0: m_Attack = enAttackList::PowerAttack; break;
+			case 1: m_Attack = enAttackList::MagicAttack; break;
+			case 2: m_Attack = enAttackList::UniqueAttack; break;
+			}
+			
+			//攻撃フェーズへ遷移
+			m_BattlePhase = enBattlePhase::AttackPhase;
+		}
+}
+
+void CBattleScene::Attack()
+{
+	if (m_IsHeroTurn)
+	{
+		HeroTurn();
+	}
+	else
+	{
+		EnemyHeroTurn();
+	}
+
+	//準備フェーズへ移動
+	m_BattlePhase = enBattlePhase::SetUpPhase;
+}
+
+//次のターンの準備中の処理
+void CBattleScene::SetUpToNextTurn()
+{
+	//自分と敵のスピードを比較
+	if (m_pHero->GetBattleParamData().Speed > m_pEnemyHero->GetBattleParamData().Speed)
+	{
+		//自分のスピードが高ければ自分のターン
+		m_IsHeroTurn = true;
+	}
+	else
+	{
+		//低ければ敵のターン
+		m_IsHeroTurn = false;
+	}
+}
+
+//自分のターンに行う処理
+void CBattleScene::HeroTurn()
+{
+	switch (m_Attack)
+	{
+	case CBattleScene::PowerAttack: m_pEnemyHero->Damage(m_pHero->PowerAttack()); break;
+	case CBattleScene::MagicAttack: m_pEnemyHero->Damage(m_pHero->MagicAttack()); break;
+	case CBattleScene::UniqueAttack: m_pEnemyHero->Damage(m_pHero->UniqueAttack());break;
+	}
+
+	//敵の攻撃に移す
+	m_IsHeroTurn = false;
+}
+
+//敵のターンに行う処理
+void CBattleScene::EnemyHeroTurn()
+{
+	m_IsHeroTurn = true;
 }

@@ -31,7 +31,7 @@ class CHeroBase
 {
 public :
 
-	//ヒーローリスト列挙型
+	//ヒーロー名リスト
 	enum enHeroList :char
 	{
 		Yui,
@@ -112,11 +112,11 @@ public:
 	// 各ヒーローの攻撃関数
 	// =======================
 	//攻撃1(筋力による攻撃)
-	virtual float PowerAttack() {};
+	virtual float PowerAttack() { return 0; }
 	//攻撃1(魔力による攻撃)
-	virtual float MagicAttack() {};
+	virtual float MagicAttack() { return 0; }
 	//固有攻撃(各ヒーローの一番高いステータスを反映した攻撃)
-	virtual float UniqueAttack() {};
+	virtual float UniqueAttack() { return 0; }
 
 	// =======================
 	// ステータス上昇関数
@@ -157,6 +157,7 @@ public:
 	//バトル中のHP
 	float GetHp() { return m_Hp; }
 	void SetHp(float hp) { m_Hp = hp; }
+
 protected :	
 	// =======================
 	// jsonファイル関連関数

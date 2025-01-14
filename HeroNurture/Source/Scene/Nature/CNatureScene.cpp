@@ -170,7 +170,6 @@ void CNatureScene::Update()
     //キーマネージャーの更新処理
     CKeyManager::GetInstance()->Update();
 
-    //筋力トレーニング
     //カーソルの移動
     if (KeyMng->IsDown(VK_RIGHT))
     {

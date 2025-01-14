@@ -70,6 +70,12 @@ void CHeroBase::HpUp( float stamina )
 	TraningResult(stamina, m_App.HpApp, m_Param.Hp);
 }
 
+//ダメージ関数
+void CHeroBase::Damage(float damage)
+{
+	m_Hp -= damage;
+}
+
 //各ヒーローの初期パラメータの取得
 void CHeroBase::LoadParam( const json& jsondata, const std::string& heroname )
 {

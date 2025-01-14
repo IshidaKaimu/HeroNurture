@@ -1,5 +1,4 @@
 #include "CUtility.h"
-#include <random>
 
 CUtility::CUtility()
 {
@@ -9,28 +8,6 @@ CUtility::~CUtility()
 {
 }
 
-//乱数生成
-template <typename T>
-static T CUtility::GenerateRandomValue(T min, T max)
-{
-    //シード値
-    std::random_device rd;
-    //乱数生成器
-    std::mt19937 gen(rd());
-
-    //引数が整数型であった場合
-    if (std::is_integral(T)::value) {
-        //分布に乱数生成器を渡すことで乱数の範囲を指定
-        std::uniform_int_distribution<T> rand_val(min, max);
-        return rand_val(gen);
-    }
-    else if (std::is_floating_point(T)::value)
-    {
-        //分布に乱数生成器を渡すことで乱数の範囲を指定
-        std::uniform_real_distribution<T> rand_val(min, max);
-        return rand_val(gen);
-    }
-}
 
 //ランクの描画
 void CUtility::DrawRank(float value, int typeno, float x, float y)

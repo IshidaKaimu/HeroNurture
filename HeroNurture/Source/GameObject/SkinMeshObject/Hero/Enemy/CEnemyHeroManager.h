@@ -33,6 +33,10 @@ public:
 
 	//各ヒーロークラスの作成
 	static std::unique_ptr<CHeroBase>Create(enHeroList list);
+
+	//ダメージ関数
+	void Damage(float damage) { m_pEnemyHero->Damage(damage); }
+
 private:
 	CEnemyHeroManager();
 
@@ -46,6 +50,9 @@ public:
 	enHeroList GetSelectEnemyHero() { return m_SelectEnemyHero; }
 	//敵ヒーローの名前の文字列
 	std::string GetEnemyHeroName();
+	//バトル中体力
+	float GetHp() { return m_pEnemyHero->GetHp(); }
+	void SetHp(float hp) { m_pEnemyHero->SetHp(hp); }
 
 private:
 	//ヒーロー基底クラス

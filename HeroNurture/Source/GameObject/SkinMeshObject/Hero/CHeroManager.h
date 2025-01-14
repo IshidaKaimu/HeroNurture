@@ -13,7 +13,6 @@ public:
 	{
 		PowerTraining,
 		MagicTraining,
-
 		SpeedTraining,
 		HpTraining,
 		Rest,
@@ -64,19 +63,6 @@ public:
 	void NatureAnimation(int no) override;
 
 	// =======================
-	// トレーニングごとのアニメーション関数
-	// =======================		
-	//筋力
-	void PowerTraningAnimation() { m_pHero->PowerTraningAnimation(); }
-	//魔力
-	void MagicTraningAnimation() { m_pHero->MagicTraningAnimation(); }
-	//体力
-	void SpeedTraningAnimation() { m_pHero->SpeedTraningAnimation(); }
-	//Hp
-	void HpTraningAnimation() { m_pHero->HpTraningAnimation(); }
-
-
-	// =======================
 	// 各パラメータ上昇関数
 	// =======================
 	//筋力
@@ -86,7 +72,17 @@ public:
 	//素早さ
 	void SpeedUp(float stamina) { m_pHero->SpeedUp(stamina); }
 	//体力
-	void HpUp(float stamina) { m_pHero->HpUp(stamina); }
+	void HpUp(float stamina)    { m_pHero->HpUp(stamina); }
+
+	// =======================
+	// 各ヒーローの攻撃関数
+	// =======================
+	//攻撃1(筋力による攻撃)
+	float PowerAttack()  override {  return m_pHero->PowerAttack(); }
+	//攻撃2(魔力による攻撃)
+	float MagicAttack()  override {  return m_pHero->MagicAttack(); }
+	//固有攻撃(各ヒーローの一番高いステータスを反映した攻撃)
+	float UniqueAttack() override {  return m_pHero->UniqueAttack(); }
 
 	// =======================
 	// スタミナゲージ関連関数
@@ -97,6 +93,9 @@ public:
 	void ReduceStamina();
 	//スタミナの回復
 	void StaminaRecovery();
+
+	//ダメージ関数
+	void Damage(float damage) { m_pHero->Damage(damage); }
 
 	//選択しているヒーローを文字列で返す関数
 	std::string GetHeroName();
@@ -133,6 +132,9 @@ public:
 	void SetTraning(enTraningList traning) { m_Traning = traning; }
 	//トレーニングに失敗したかのフラグ
 	bool GetFailure() { return m_pHero->GetFailure(); }
+	//バトル中体力
+	float GetHp() { return m_pHero->GetHp(); }
+	void SetHp( float hp ) { m_pHero->SetHp(hp); }
 
 private:
 	//他からアクセスすることがないように

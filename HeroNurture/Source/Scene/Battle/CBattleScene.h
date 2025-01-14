@@ -47,6 +47,8 @@ const D3DXVECTOR2 HPGAGE_DISPLAY = { 1.0f, 1.0f };
 const D3DXVECTOR3 HPFRAME_POS = { 0.0f, 10.0f, 0.0f };
 //敵のHP
 const D3DXVECTOR3 ENEMY_HPGAGE_POS  = { 800.0f, 16.0f, 0.0f }; //座標
+//敵のHPの枠
+const D3DXVECTOR3 ENEMY_HPFRAME_POS = { 800.0f, 10.0f, 0.0f }; //座標
 
 //=====================================
 // バトルシーンクラス
@@ -55,6 +57,24 @@ const D3DXVECTOR3 ENEMY_HPGAGE_POS  = { 800.0f, 16.0f, 0.0f }; //座標
 class CBattleScene
 	:public CSceneBase
 {
+private:
+	//攻撃の種類
+	enum enAttackList :char
+	{
+		PowerAttack,
+		MagicAttack,
+		UniqueAttack,
+		Max,
+	};
+
+	//バトルのフェーズ
+	enum enBattlePhase
+	{
+		MoveSelectPhase, //攻撃の選択をするフェーズ
+		AttackPhase,	 //お互いに攻撃するフェーズ
+		SetUpPhase,		 //次のターンの準備をするフェーズ
+	};
+
 public:
 	CBattleScene();
 	~CBattleScene();
@@ -85,8 +105,20 @@ private:
 	//体力ゲージ/背景の初期設定
 	void InitHpGage();
 	//体力ゲージのアニメーション
-	void HpGageAnim(std::unique_ptr<CUIObject>& gage, float& hp, float maxhp, float& width);
+	void HpGageAnim(std::unique_ptr<CUIObject>& gage, float hp, float maxhp, float& width);
 
+	//行動選択フェーズ中の処理
+	void MoveSelect();
+	//攻撃フェーズ中の処理
+	void Attack();
+	//次のターン準備中の処理
+	void SetUpToNextTurn();
+
+	//----それぞれのターンに行う処理----
+	//自分
+	void HeroTurn();
+	//敵
+	void EnemyHeroTurn();
 private:
 	//自分が使うヒーロー
 	CHeroManager* m_pHero;
@@ -128,4 +160,16 @@ private:
 
 	//経過ターン数
 	int m_BattleTurn;
+
+	//自分のターンであるかのフラグ
+	bool m_IsHeroTurn;
+
+	//行動を選択済みであるかの判断
+	bool m_SelectAttack;
+
+	//自分が選択する攻撃のリスト
+	enAttackList m_Attack;
+
+	//バトルのフェーズ
+	enBattlePhase m_BattlePhase;
 };
