@@ -15,6 +15,7 @@ const D3DXVECTOR3 BATTLEINIT_ROTATE_KAITO = { 0.0,D3DXToRadian(-90.0f),0.0f};//‰
 const D3DXVECTOR3 ENEMYINIT_POS_KAITO = { 2.0f,0.0f,0.0f };	//À•W
 const D3DXVECTOR3 ENEMYINIT_ROTATE_KAITO = { 0.0f,D3DXToRadian(90.0f),0.0f };	//‰ñ“]
 
+
 //=====================================
 //ƒJƒCƒgƒNƒ‰ƒX
 //§ìÒFÎ“cŸD–²
@@ -64,6 +65,16 @@ public:
 	virtual void BattleHeroSelectAnimation() override;
 	// ˆç¬ƒV[ƒ“		
 	void NatureAnimation(int no) override;
+
+	// =======================
+	// UŒ‚ŠÖ”
+	// =======================
+	//UŒ‚1
+	float PowerAttack() override;
+	//UŒ‚2
+	float MagicAttack() override;
+	//ŒÅ—LUŒ‚
+	float UniqueAttack() override;
 
 private:
 

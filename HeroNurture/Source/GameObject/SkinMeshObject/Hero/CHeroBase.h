@@ -112,9 +112,9 @@ public:
 	// 各ヒーローの攻撃関数
 	// =======================
 	//攻撃1(筋力による攻撃)
-	virtual float PowerAttack() { return 0; }
+	virtual float PowerAttack();
 	//攻撃1(魔力による攻撃)
-	virtual float MagicAttack() { return 0; }
+	virtual float MagicAttack();
 	//固有攻撃(各ヒーローの一番高いステータスを反映した攻撃)
 	virtual float UniqueAttack() { return 0; }
 
@@ -157,6 +157,8 @@ public:
 	//バトル中のHP
 	float GetHp() { return m_Hp; }
 	void SetHp(float hp) { m_Hp = hp; }
+	//MP
+	int GetUniqueGage() { return m_UniqueGage; }
 
 protected :	
 	// =======================
@@ -200,6 +202,12 @@ protected:
 	D3DXVECTOR3 DebugPos;
 	D3DXVECTOR3 DebugScale;
 
+	//現在の体力
+	float m_Hp;
+
+	//現在の固有攻撃ゲージ
+	int m_UniqueGage;
+
 private:
 	//パラメータ更新前のパラメータ情報
 	enParam m_BeforeParam;
@@ -209,10 +217,5 @@ private:
 
 	//トレーニングが失敗した際に立てるフラグ
 	bool m_Failure;
-
-	//----体力関連の変数----
-	//現在の体力
-	float m_Hp;		//自分
-	float m_EnemyHp;//敵
 
 };

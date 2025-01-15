@@ -22,8 +22,9 @@ CBattleScene::CBattleScene()
 	, m_pJson()
 	, m_BattleData()
 	, m_EnemyHeroData()
-	, m_HpWidth()
-	, m_EnemyHpWidth()
+	, m_HpWidth(1.0f)
+	, m_EnemyHpWidth(1.0f)
+	, m_CurrentGageCnt(0)
 	, m_BattleTurn()
 	, m_IsHeroTurn()
 	, m_SelectAttack()
@@ -170,6 +171,17 @@ void CBattleScene::Draw()
 	//空
 	m_pSky->Draw();
 
+	//固有攻撃ゲージの描画
+	ChangeUniqueGage(m_pHero->GetUniqueGage(), D3DXVECTOR3(1.0f, 30.0f, 0.0f));
+	//固有攻撃ゲージ
+	for (const auto& gage : m_pUniqueGages)
+	{
+		if (gage)
+		{
+			gage->Draw();
+		}
+	}
+
 	CSceneManager::GetInstance()->GetDx11()->SetDepth(false);
 	//各Hpゲージの描画
 	DrawHpGage();
@@ -230,12 +242,12 @@ void CBattleScene::DrawHpGage()
 {
 	//----UIオブジェクトの描画----
     //自分のHpゲージ
-	HpGageAnim(m_pHpGage,m_pHero->GetHp(), m_pHero->GetBattleParamData().Hp, m_HpWidth);
+	HpGageAnim(m_pHpGage,m_pHero->GetHp(), m_pHero->GetBattleParamData().Hp * 10.0f, m_HpWidth);
 	m_pHpGageBack->Draw();
 	m_pHpGage->Draw();
 	m_pHpGageFrame->Draw();
 	//敵のHpゲージ
-	HpGageAnim(m_pEnemyHpGage, m_pEnemyHero->GetHp(), m_pEnemyHero->GetBattleParamData().Hp, m_EnemyHpWidth);
+	HpGageAnim(m_pEnemyHpGage, m_pEnemyHero->GetHp(), m_pEnemyHero->GetBattleParamData().Hp * 10.0f, m_EnemyHpWidth);
 	m_pEnemyHpGageBack->Draw();
 	m_pEnemyHpGage->Draw();
 	m_pEnemyHpGageFrame->Draw();
@@ -277,13 +289,41 @@ void CBattleScene::HpGageAnim(std::unique_ptr<CUIObject>& gage, float hp, float 
 	//ゲージ幅の確認
 	float GageScale = 1.0f * hp / maxhp;
 
-	//高ければ
-	if (GageScale < width) { width -= 0.1f; }
-	//低ければ
-	if (GageScale > width) { width += 0.1f; }
+	// 幅を徐々に目標値に近づける
+	if (std::fabs(GageScale - width) < 0.01f) {
+		// 目標値と十分近い場合、直接スナップ
+		width = GageScale;
+	}
+	else {
+		// 緩やかに目標値に近づける
+		width += (GageScale - width) * 0.1f;
+	}
 
 	//ゲージ幅を設定
 	gage->SetDisplay(width, 1.0f);
+}
+
+//固有攻撃ゲージの描画数変動関数
+void CBattleScene::ChangeUniqueGage(int count, D3DXVECTOR3 pos)
+{
+	if (count == m_CurrentGageCnt) return;
+
+	//古いゲージを消去
+	m_pUniqueGages.clear();
+
+	for (int i = 0; i < count; i++)
+	{
+		auto gage = std::make_unique<CUIObject>();
+		gage->AttachSprite(CUIManager::GetSprite(CUIManager::UniqueGage));
+		float xoffset = pos.x + (i * 80.0f);
+		gage->SetPosition(xoffset, pos.y, 0.0f);
+		gage->SetScale(1.0f, 1.0f, 1.0f);
+		gage->SetDisplay(1.0f, 1.0f);
+		m_pUniqueGages.push_back(std::move(gage));
+	}
+
+	//現在の表示数を更新
+	m_CurrentGageCnt = count;
 }
 
 //行動選択フェーズ中の処理
@@ -350,6 +390,8 @@ void CBattleScene::SetUpToNextTurn()
 		//低ければ敵のターン
 		m_IsHeroTurn = false;
 	}
+
+	m_BattlePhase = enBattlePhase::MoveSelectPhase;
 }
 
 //自分のターンに行う処理

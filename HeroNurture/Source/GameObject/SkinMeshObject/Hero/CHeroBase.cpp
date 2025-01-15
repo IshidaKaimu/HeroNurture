@@ -13,7 +13,7 @@ CHeroBase::CHeroBase()
 	, m_Correction	   (1.0f)
 	, m_Failure		   (false)
 	, m_Hp			   ()
-	, m_EnemyHp		   ()
+	, m_UniqueGage	   ()
 {
 	m_pJson = std::make_unique<CJson>();
 }
@@ -33,6 +33,20 @@ void CHeroBase::Draw()
 	CSkinMeshObject::Draw();
 }
 
+
+float CHeroBase::PowerAttack()
+{
+	float Damage = m_BattleParam.Power * CUtility::GetInstance().GenerateRandomValue(1.0f, 1.5f);
+	m_UniqueGage += 1;
+	return Damage;
+}
+
+float CHeroBase::MagicAttack()
+{
+	float Damage = m_BattleParam.Magic * CUtility::GetInstance().GenerateRandomValue(1.0f, 1.5f);
+	m_UniqueGage += 1;
+	return Damage;
+}
 
 //�ؗ͏㏸
 void CHeroBase::PowerUp( float stamina )

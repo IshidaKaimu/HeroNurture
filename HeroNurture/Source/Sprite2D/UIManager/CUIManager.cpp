@@ -48,7 +48,8 @@ HRESULT CUIManager::Load(CDirectX11* Dx11)
 		{UIList::StaminaBack,	 _T("Data\\Texture\\StaminaBack.png")      ,{ 602.0f, 54.0f,  602.0f, 54.0f,  602.0f, 54.0f}},
 		{UIList::HpGage,	     _T("Data\\Texture\\HpGage.png")		   ,{ 602.0f, 54.0f,  602.0f, 54.0f,  602.0f, 54.0f,}},
 		{UIList::HpGageBack,	 _T("Data\\Texture\\HpGageBack.png")       ,{ 602.0f, 54.0f,  602.0f, 54.0f,  602.0f, 54.0f}},
-		{UIList::GageFrame,	     _T("Data\\Texture\\GageFrame.png")        ,{ 602.0f, 70.0f,  602.0f, 70.0f,  602.0f, 70.0f}}
+		{UIList::GageFrame,	     _T("Data\\Texture\\GageFrame.png")        ,{ 602.0f, 70.0f,  602.0f, 70.0f,  602.0f, 70.0f}},
+		{UIList::UniqueGage,	 _T("Data\\Texture\\UniqueGage.png")       ,{ 80.0f,  70.0f, 80.0f, 70.0f, 80.0f, 70.0f}}
 	};
 
 	int list_max = sizeof(SList) / sizeof(SList[0]);

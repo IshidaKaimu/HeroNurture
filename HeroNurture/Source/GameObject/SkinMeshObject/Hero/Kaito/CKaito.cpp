@@ -135,6 +135,23 @@ void CKaito::NatureAnimation(int no)
 	m_AnimTime += m_pMesh->GetAnimSpeed();
 }
 
+float CKaito::PowerAttack()
+{
+	return CHeroBase::PowerAttack();
+}
+
+float CKaito::MagicAttack()
+{
+	return CHeroBase::MagicAttack();
+}
+
+float CKaito::UniqueAttack()
+{
+	float Damage = m_BattleParam.Power * CUtility::GetInstance().GenerateRandomValue(2.0f, 2.5f);
+	m_UniqueGage -= 5;
+	return Damage;
+}
+
 //アニメーション関連の初期化
 void CKaito::AnimInit()
 {

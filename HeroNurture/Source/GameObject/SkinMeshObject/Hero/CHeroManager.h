@@ -135,6 +135,8 @@ public:
 	//バトル中体力
 	float GetHp() { return m_pHero->GetHp(); }
 	void SetHp( float hp ) { m_pHero->SetHp(hp); }
+	//固有攻撃ゲージ
+	int GetUniqueGage() { return m_pHero->GetUniqueGage(); }
 
 private:
 	//他からアクセスすることがないように

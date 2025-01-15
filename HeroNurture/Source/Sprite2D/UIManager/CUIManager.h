@@ -29,6 +29,7 @@ public:
 		HpGage,			//体力ゲージ
 		HpGageBack,     //体力ゲージ背景
 		GageFrame,      //ゲージ枠
+		UniqueGage,		//ユニークゲージ
 		Max,
 	};
 

@@ -49,7 +49,10 @@ const D3DXVECTOR3 HPFRAME_POS = { 0.0f, 10.0f, 0.0f };
 const D3DXVECTOR3 ENEMY_HPGAGE_POS  = { 800.0f, 16.0f, 0.0f }; //座標
 //敵のHPの枠
 const D3DXVECTOR3 ENEMY_HPFRAME_POS = { 800.0f, 10.0f, 0.0f }; //座標
-
+//MPの描画位置
+const D3DXVECTOR2 MP_POS = { 0.0f, 30.0f };
+const D3DXVECTOR2 ENEMY_MP_POS = { 700.0f, 30.0f };
+ 
 //=====================================
 // バトルシーンクラス
 // 制作者:石田櫂夢
@@ -107,6 +110,9 @@ private:
 	//体力ゲージのアニメーション
 	void HpGageAnim(std::unique_ptr<CUIObject>& gage, float hp, float maxhp, float& width);
 
+	//固有攻撃ゲージの描画数変動関数
+	void ChangeUniqueGage(int count, D3DXVECTOR3 pos);
+
 	//行動選択フェーズ中の処理
 	void MoveSelect();
 	//攻撃フェーズ中の処理
@@ -145,6 +151,8 @@ private:
 	std::unique_ptr<CUIObject> m_pEnemyHpGage;	  //ゲージ
 	std::unique_ptr<CUIObject> m_pEnemyHpGageBack;//背景
 	std::unique_ptr<CUIObject> m_pEnemyHpGageFrame;//枠
+	//自分の固有攻撃ゲージ
+	std::vector<std::unique_ptr<CUIObject>> m_pUniqueGages;
 
 	//jsonクラス
 	std::unique_ptr<CJson> m_pJson;
@@ -157,6 +165,9 @@ private:
 	//体力ゲージの変動する幅
 	float m_HpWidth;    //自分
 	float m_EnemyHpWidth;//敵
+
+	//現在表示しているゲージの数
+	int m_CurrentGageCnt;
 
 	//経過ターン数
 	int m_BattleTurn;
