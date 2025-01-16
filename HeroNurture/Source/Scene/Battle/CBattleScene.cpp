@@ -24,7 +24,8 @@ CBattleScene::CBattleScene()
 	, m_EnemyHeroData()
 	, m_HpWidth(1.0f)
 	, m_EnemyHpWidth(1.0f)
-	, m_CurrentGageCnt(0)
+	, m_UniqueGageCnt(0)
+	, m_EnemyUniqueGageCnt(0)
 	, m_BattleTurn()
 	, m_IsHeroTurn()
 	, m_SelectAttack()
@@ -90,7 +91,7 @@ void CBattleScene::LoadData()
 		//敵になっているヒーローのもののみ渡す
 		if (m_pEnemyHero->GetEnemyHeroName() == enemy["HeroName"])
 		{
-			m_pEnemyHero->SetBattleParam(enemy);
+			m_pEnemyHero->SetBattleParamData(enemy);
 		}
 	}
 
@@ -142,9 +143,6 @@ void CBattleScene::Update()
 	case CBattleScene::AttackPhase:
 		Attack();		//お互いの攻撃
 		break;
-	case CBattleScene::SetUpPhase:
-		SetUpToNextTurn(); //次のターンの準備
-		break;
 	}
 
 	//デバッグ処理
@@ -171,16 +169,13 @@ void CBattleScene::Draw()
 	//空
 	m_pSky->Draw();
 
-	//固有攻撃ゲージの描画
-	ChangeUniqueGage(m_pHero->GetUniqueGage(), D3DXVECTOR3(1.0f, 30.0f, 0.0f));
-	//固有攻撃ゲージ
-	for (const auto& gage : m_pUniqueGages)
-	{
-		if (gage)
-		{
-			gage->Draw();
-		}
-	}
+	//----固有攻撃ゲージの描画----
+	//自分
+	ChangeUniqueGage(m_pUniqueGages,m_pHero->GetUniqueGage(), UNIQUEGAGE_POS,80.0f,m_UniqueGageCnt);
+	DrawUniqueGage(m_pUniqueGages);
+	//敵
+	ChangeUniqueGage(m_pEnemyUniqueGages,m_pEnemyHero->GetUniqueGage(), ENEMY_UNIQUEGAGE_POS, -80.0f,m_EnemyUniqueGageCnt);
+	DrawUniqueGage(m_pEnemyUniqueGages);
 
 	CSceneManager::GetInstance()->GetDx11()->SetDepth(false);
 	//各Hpゲージの描画
@@ -191,7 +186,7 @@ void CBattleScene::Draw()
 
 void CBattleScene::Debug()
 {
-#if _DEBUG
+#if DEBUG
 	ImGui::Begin(JAPANESE("パラメータ"));
 	ImGui::Text(JAPANESE("プレイヤー"));
 	ImGui::Text(JAPANESE("筋力:%f"), m_pHero->GetBattleParamData().Power);
@@ -209,9 +204,6 @@ void CBattleScene::Debug()
 #endif
 #if DEBUG
 	CCameraManager::GetInstance().CameraUpdate();
-
-	m_pHero->Debug();
-	m_pEnemyHero->Debug();
 
 	ImGui::Begin(JAPANESE("カメラ位置"));
 	ImGui::InputFloat3(JAPANESE("座標:%f"), m_CamPos);
@@ -303,27 +295,40 @@ void CBattleScene::HpGageAnim(std::unique_ptr<CUIObject>& gage, float hp, float 
 	gage->SetDisplay(width, 1.0f);
 }
 
-//固有攻撃ゲージの描画数変動関数
-void CBattleScene::ChangeUniqueGage(int count, D3DXVECTOR3 pos)
+//固有攻撃ゲージの描画数変動
+void CBattleScene::ChangeUniqueGage(std::vector<std::unique_ptr<CUIObject>>& gages, int count, D3DXVECTOR2 pos, float interval, int& current)
 {
-	if (count == m_CurrentGageCnt) return;
+	if (count == current) return;
 
 	//古いゲージを消去
-	m_pUniqueGages.clear();
+	gages.clear();
 
 	for (int i = 0; i < count; i++)
 	{
 		auto gage = std::make_unique<CUIObject>();
 		gage->AttachSprite(CUIManager::GetSprite(CUIManager::UniqueGage));
-		float xoffset = pos.x + (i * 80.0f);
+		float xoffset = pos.x + (i * interval);
 		gage->SetPosition(xoffset, pos.y, 0.0f);
-		gage->SetScale(1.0f, 1.0f, 1.0f);
+		gage->SetScale(0.8f, 0.8f, 0.8f);
 		gage->SetDisplay(1.0f, 1.0f);
-		m_pUniqueGages.push_back(std::move(gage));
+		gages.push_back(std::move(gage));
 	}
 
 	//現在の表示数を更新
-	m_CurrentGageCnt = count;
+	current = count;
+}
+
+//固有攻撃ゲージの描画
+void CBattleScene::DrawUniqueGage(std::vector<std::unique_ptr<CUIObject>>& gages)
+{
+	//固有攻撃ゲージ
+	for (const auto& gage : gages)
+	{
+		if (gage)
+		{
+			gage->Draw();
+		}
+	}
 }
 
 //行動選択フェーズ中の処理
@@ -333,6 +338,9 @@ void CBattleScene::MoveSelect()
 	//キーマネージャー
 	CKeyManager* KeyMng = CKeyManager::GetInstance();
 	KeyMng->Update();
+
+	m_pHero->MoveSelectAnim();
+	m_pEnemyHero->MoveSelectAnim();
 
 		//カーソルの移動
 	if (KeyMng->IsDown(VK_RIGHT))
@@ -363,17 +371,26 @@ void CBattleScene::MoveSelect()
 
 void CBattleScene::Attack()
 {
+	//速度による行動順の判断
+	SetUpToNextTurn();
+
 	if (m_IsHeroTurn)
 	{
 		HeroTurn();
+		if (m_pEnemyHero->GetHp() > 0.0f) {
+			EnemyHeroTurn();
+		}
 	}
 	else
 	{
 		EnemyHeroTurn();
+		if (m_pHero->GetHp() > 0.0f) {
+			HeroTurn();
+		}
 	}
 
 	//準備フェーズへ移動
-	m_BattlePhase = enBattlePhase::SetUpPhase;
+	m_BattlePhase = enBattlePhase::MoveSelectPhase;
 }
 
 //次のターンの準備中の処理
@@ -390,26 +407,27 @@ void CBattleScene::SetUpToNextTurn()
 		//低ければ敵のターン
 		m_IsHeroTurn = false;
 	}
-
-	m_BattlePhase = enBattlePhase::MoveSelectPhase;
 }
 
 //自分のターンに行う処理
 void CBattleScene::HeroTurn()
 {
+	m_pCamera->SetPos(ATTACK_CAMPOS);
+	m_pCamera->SetLook(ATTACK_CAMLOOK);
+
 	switch (m_Attack)
 	{
 	case CBattleScene::PowerAttack: m_pEnemyHero->Damage(m_pHero->PowerAttack()); break;
 	case CBattleScene::MagicAttack: m_pEnemyHero->Damage(m_pHero->MagicAttack()); break;
 	case CBattleScene::UniqueAttack: m_pEnemyHero->Damage(m_pHero->UniqueAttack());break;
 	}
-
-	//敵の攻撃に移す
-	m_IsHeroTurn = false;
 }
 
 //敵のターンに行う処理
 void CBattleScene::EnemyHeroTurn()
 {
-	m_IsHeroTurn = true;
+	m_pCamera->SetPos(ENEMY_ATTACK_CAMPOS);
+	m_pCamera->SetLook(ENEMY_ATTACK_CAMLOOK);
+
+	m_pHero->Damage(m_pEnemyHero->PowerAttack());
 }

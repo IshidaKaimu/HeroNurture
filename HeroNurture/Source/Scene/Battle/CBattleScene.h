@@ -38,6 +38,10 @@ class CKeyManager;
 //----カメラ情報----
 const D3DXVECTOR3 INIT_CAMPOS_B  = { -1.0f,2.0f,-6.0f }; //初期座標
 const D3DXVECTOR3 INIT_CAMLOOK_B = { -1.0f,2.0f,-0.0f }; //初期注視点
+const D3DXVECTOR3 ATTACK_CAMPOS  = { -1.0f,2.0f,0.0f };
+const D3DXVECTOR3 ATTACK_CAMLOOK = { -2.0f,2.0f,0.0f };
+const D3DXVECTOR3 ENEMY_ATTACK_CAMPOS  = { -2.0f,2.0f,0.0f };
+const D3DXVECTOR3 ENEMY_ATTACK_CAMLOOK = { 2.0f,2.0f,0.0f };
 //----ゲージ情報----
 //HP
 const D3DXVECTOR3 HPGAGE_POS     = { 0.0f, 16.0f, 0.0f }; //座標
@@ -49,9 +53,9 @@ const D3DXVECTOR3 HPFRAME_POS = { 0.0f, 10.0f, 0.0f };
 const D3DXVECTOR3 ENEMY_HPGAGE_POS  = { 800.0f, 16.0f, 0.0f }; //座標
 //敵のHPの枠
 const D3DXVECTOR3 ENEMY_HPFRAME_POS = { 800.0f, 10.0f, 0.0f }; //座標
-//MPの描画位置
-const D3DXVECTOR2 MP_POS = { 0.0f, 30.0f };
-const D3DXVECTOR2 ENEMY_MP_POS = { 700.0f, 30.0f };
+//固有攻撃ゲージの描画位置
+const D3DXVECTOR2 UNIQUEGAGE_POS = { 0.0f, 80.0f };
+const D3DXVECTOR2 ENEMY_UNIQUEGAGE_POS = { 1200.0f, 80.0f };
  
 //=====================================
 // バトルシーンクラス
@@ -110,8 +114,11 @@ private:
 	//体力ゲージのアニメーション
 	void HpGageAnim(std::unique_ptr<CUIObject>& gage, float hp, float maxhp, float& width);
 
-	//固有攻撃ゲージの描画数変動関数
-	void ChangeUniqueGage(int count, D3DXVECTOR3 pos);
+	//----固有攻撃ゲージ関連----
+	//固有攻撃ゲージの描画数変動
+	void ChangeUniqueGage(std::vector<std::unique_ptr<CUIObject>>& gages, int count, D3DXVECTOR2 pos, float interval, int& current);
+	//固有攻撃ゲージの描画
+	void DrawUniqueGage(std::vector<std::unique_ptr<CUIObject>>& gages);
 
 	//行動選択フェーズ中の処理
 	void MoveSelect();
@@ -125,6 +132,7 @@ private:
 	void HeroTurn();
 	//敵
 	void EnemyHeroTurn();
+
 private:
 	//自分が使うヒーロー
 	CHeroManager* m_pHero;
@@ -153,6 +161,8 @@ private:
 	std::unique_ptr<CUIObject> m_pEnemyHpGageFrame;//枠
 	//自分の固有攻撃ゲージ
 	std::vector<std::unique_ptr<CUIObject>> m_pUniqueGages;
+	//敵の固有攻撃ゲージ
+	std::vector<std::unique_ptr<CUIObject>> m_pEnemyUniqueGages;
 
 	//jsonクラス
 	std::unique_ptr<CJson> m_pJson;
@@ -166,8 +176,9 @@ private:
 	float m_HpWidth;    //自分
 	float m_EnemyHpWidth;//敵
 
-	//現在表示しているゲージの数
-	int m_CurrentGageCnt;
+	//現在表示している攻撃ゲージの数
+	int m_UniqueGageCnt;
+	int m_EnemyUniqueGageCnt;
 
 	//経過ターン数
 	int m_BattleTurn;

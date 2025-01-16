@@ -42,10 +42,22 @@ private:
 
 public:
 	// =======================
+	// 各ヒーローの攻撃関数
+	// =======================
+	//攻撃1(筋力による攻撃)
+	float PowerAttack()  override {  return m_pEnemyHero->PowerAttack(); }
+	//攻撃2(魔力による攻撃)
+	float MagicAttack()  override {  return m_pEnemyHero->MagicAttack(); }
+	//固有攻撃(各ヒーローの一番高いステータスを反映した攻撃)
+	float UniqueAttack() override {  return m_pEnemyHero->UniqueAttack(); }
+
+
+	// =======================
 	// ゲッター・セッター関数
 	// =======================	
 	//バトルに使用するパラメータ情報
 	void SetBattleParamData(const json& jsondata) { m_pEnemyHero->SetBattleParamData(jsondata); };
+	enParam GetBattleParamData() { return m_pEnemyHero->GetBattleParamData(); };
 	//敵ヒーロー
 	enHeroList GetSelectEnemyHero() { return m_SelectEnemyHero; }
 	//敵ヒーローの名前の文字列
@@ -53,6 +65,8 @@ public:
 	//バトル中体力
 	float GetHp() { return m_pEnemyHero->GetHp(); }
 	void SetHp(float hp) { m_pEnemyHero->SetHp(hp); }
+	//固有攻撃ゲージ
+	int GetUniqueGage() { return m_pEnemyHero->GetUniqueGage(); }
 
 private:
 	//ヒーロー基底クラス

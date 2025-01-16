@@ -8,13 +8,7 @@
 // 定数宣言
 // =======================
 //バトルシーンでの初期情報
-const D3DXVECTOR3 BATTLEINIT_POS_KAITO    = { -4.0f,0.0f,0.0f }; //座標
-const D3DXVECTOR3 BATTLEINIT_SCALE_KAITO  = { 0.3f,0.3f,0.3f };//拡縮
-const D3DXVECTOR3 BATTLEINIT_ROTATE_KAITO = { 0.0,D3DXToRadian(-90.0f),0.0f};//回転
-//敵になった際の初期情報
-const D3DXVECTOR3 ENEMYINIT_POS_KAITO = { 2.0f,0.0f,0.0f };	//座標
-const D3DXVECTOR3 ENEMYINIT_ROTATE_KAITO = { 0.0f,D3DXToRadian(90.0f),0.0f };	//回転
-
+const D3DXVECTOR3 BATTLE_SCALE_KAITO  = { 0.3f,0.3f,0.3f };//拡縮
 
 //=====================================
 //カイトクラス
@@ -26,7 +20,6 @@ class CKaito
 public:
 	CKaito();
 	virtual ~CKaito() override;
-
 
 	// =======================
 	// 各シーンごとの初期化
@@ -65,6 +58,19 @@ public:
 	virtual void BattleHeroSelectAnimation() override;
 	// 育成シーン		
 	void NatureAnimation(int no) override;
+
+	// =======================
+	// 各バトルフェーズでのアニメーション
+	// =======================
+	// 行動選択中のアニメーション
+	void MoveSelectAnim() override;
+	//----攻撃フェーズ----
+	//攻撃1中のアニメーション
+	void PowerAttackAnim() override;
+	//攻撃2中のアニメーション
+	void MagicAttackAnim() override;
+	//固有攻撃中のアニメーション
+	void UniqueAttackAnim() override;
 
 	// =======================
 	// 攻撃関数

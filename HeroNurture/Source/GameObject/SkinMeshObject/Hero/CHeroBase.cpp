@@ -10,10 +10,10 @@ CHeroBase::CHeroBase()
 	, m_pJson          ()
 	, m_UserName       ()
 	, m_BeforeParam	   ()
+	, m_Hp             ()
+	, m_UniqueGage     ()
 	, m_Correction	   (1.0f)
 	, m_Failure		   (false)
-	, m_Hp			   ()
-	, m_UniqueGage	   ()
 {
 	m_pJson = std::make_unique<CJson>();
 }
@@ -111,7 +111,6 @@ void CHeroBase::LoadParam( const json& jsondata, const std::string& heroname )
 			return;
 		}
 	}
-
 }
 
 //バトルに使用するパラメータ情報の設定

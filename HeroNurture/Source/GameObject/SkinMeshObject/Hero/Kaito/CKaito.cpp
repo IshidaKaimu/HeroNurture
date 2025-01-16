@@ -33,9 +33,9 @@ void CKaito::BattleInitialize()
 	//アニメーション関連の初期化
 	AnimInit();
 
-	SetPosition(BATTLEINIT_POS_KAITO);
-	SetScale(BATTLEINIT_SCALE_KAITO);
-	SetRotation(BATTLEINIT_ROTATE_KAITO);
+	SetPosition(BATTLEINIT_POS);
+	SetScale(BATTLE_SCALE_KAITO);
+	SetRotation(BATTLE_ROTATE);
 }
 
 //敵になった際の初期化関数
@@ -44,9 +44,9 @@ void CKaito::EnemyInit()
 	//アニメーション関連の初期化
 	AnimInit();
 
-	SetPosition(ENEMYINIT_POS_KAITO);
-	SetScale(BATTLEINIT_SCALE_KAITO);
-	SetRotation(ENEMYINIT_ROTATE_KAITO);
+	SetPosition(ENEMYINIT_POS);
+	SetScale(BATTLE_SCALE_KAITO);
+	SetRotation(ENEMY_ROTATE);
 }
 
 //メッシュデータ読み込み関数
@@ -133,6 +133,57 @@ void CKaito::NatureAnimation(int no)
 {
 	//アニメーションの経過時間を加算
 	m_AnimTime += m_pMesh->GetAnimSpeed();
+}
+
+//行動選択中のアニメーション
+void CKaito::MoveSelectAnim()
+{
+	
+	if (m_AnimNo == 0) {
+		//アニメーションの経過時間を加算
+		m_AnimTime += m_pMesh->GetAnimSpeed();
+		m_AnimCnt++;
+	}
+
+	if (m_AnimCnt >= 180)
+	{
+		//斬り下ろしアニメーション
+		m_AnimNo = 2;
+		//アニメーションの経過時間をリセット
+		m_AnimTime = 0;
+		//アニメーションを設定
+		m_pMesh->ChangeAnimSet(m_AnimNo, m_pAnimCtrl);
+		//カウントをリセット
+		m_AnimCnt = 0;
+	}
+
+	if (m_AnimNo == 2)
+	{
+		//アニメーションの経過時間を加算
+		m_AnimTime += m_pMesh->GetAnimSpeed();
+
+		if (m_pMesh->GetAnimPeriod(m_AnimNo) < m_AnimTime)
+		{
+			//待機アニメーション
+			m_AnimNo = 0;
+			//アニメーションの経過時間をリセット
+			m_AnimTime = 0;
+			//アニメーションを設定
+			m_pMesh->ChangeAnimSet(m_AnimNo, m_pAnimCtrl);
+		}
+	}
+}
+
+void CKaito::PowerAttackAnim()
+{
+}
+
+void CKaito::MagicAttackAnim()
+{
+}
+
+void CKaito::UniqueAttackAnim()
+{
 }
 
 float CKaito::PowerAttack()

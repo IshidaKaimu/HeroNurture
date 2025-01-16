@@ -20,6 +20,14 @@ constexpr float MAX_STAMINA = 100.0f;
 constexpr float REDUSE_STAMINA = 25.0f;
 //スタミナの基本回復量
 constexpr float RECOVERY_STAMINA = 25.0f;
+//バトルシーンでの初期座標
+const D3DXVECTOR3 BATTLEINIT_POS = { -4.5f,0.0f,0.0f }; //自分
+const D3DXVECTOR3 ENEMYINIT_POS = { 3.0f,0.0f,0.0f };	//敵
+//バトルシーンでの回転
+const D3DXVECTOR3 BATTLE_ROTATE = { 0.0f,D3DXToRadian(-90.0f),0.0f };//自分
+const D3DXVECTOR3 ENEMY_ROTATE  = { 0.0f,D3DXToRadian(90.0f),0.0f }; //敵
+
+
 
 
 //=====================================
@@ -109,7 +117,7 @@ public:
 	virtual void NatureAnimation(int no) {};
 
     // =======================
-	// 各ヒーローの攻撃関数
+	// 攻撃関数
 	// =======================
 	//攻撃1(筋力による攻撃)
 	virtual float PowerAttack();
@@ -117,6 +125,19 @@ public:
 	virtual float MagicAttack();
 	//固有攻撃(各ヒーローの一番高いステータスを反映した攻撃)
 	virtual float UniqueAttack() { return 0; }
+
+	// =======================
+	// 各バトルフェーズでのアニメーション
+	// =======================
+	// 行動選択中のアニメーション
+	virtual void MoveSelectAnim() {};
+	//----攻撃フェーズ----
+	//攻撃1中のアニメーション
+	virtual void PowerAttackAnim() {};
+	//攻撃2中のアニメーション
+	virtual void MagicAttackAnim() {};
+	//固有攻撃中のアニメーション
+	virtual void UniqueAttackAnim() {};
 
 	// =======================
 	// ステータス上昇関数
@@ -207,6 +228,9 @@ protected:
 
 	//現在の固有攻撃ゲージ
 	int m_UniqueGage;
+
+	//アニメーション用カウント
+	int m_AnimCnt;
 
 private:
 	//パラメータ更新前のパラメータ情報

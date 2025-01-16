@@ -41,11 +41,11 @@ void CYui::BattleInitialize()
 	AnimInit();
 
 	//座標の設定
-	SetPosition(BATTLEINIT_POS_YUI);
+	SetPosition(BATTLEINIT_POS);
 	//拡縮の設定
-	SetScale(BATTLEINIT_SCALE_YUI);
+	SetScale(BATTLE_SCALE_YUI);
 	//回転の設定
-	SetRotation(BATTLEINIT_ROTATE_YUI);
+	SetRotation(BATTLE_ROTATE);
 
 }
 
@@ -56,12 +56,11 @@ void CYui::EnemyInit()
 	AnimInit();
 
 	//座標の設定
-	SetPosition(ENEMYINIT_POS_YUI);
+	SetPosition(ENEMYINIT_POS);
 	//拡縮の設定
-	SetScale(BATTLEINIT_SCALE_YUI);
+	SetScale(BATTLE_SCALE_YUI);
 	//回転の設定
-	SetRotation(ENEMYINIT_ROTATE_YUI);
-
+	SetRotation(ENEMY_ROTATE);
 }
 
 //メッシュデータ読み込み関数
@@ -135,6 +134,26 @@ void CYui::NatureAnimation(int no)
 {
 	//アニメーションの経過時間を加算		
 	m_AnimTime += m_pMesh->GetAnimSpeed();
+}
+
+void CYui::MoveSelectAnim()
+{
+	//初めのアニメーションの設定
+	m_AnimNo = 3;
+	//登場アニメーション
+	m_pMesh->ChangeAnimSet(m_AnimNo, m_pAnimCtrl);
+}
+
+void CYui::PowerAttackAnim()
+{
+}
+
+void CYui::MagicAttackAnim()
+{
+}
+
+void CYui::UniqueAttackAnim()
+{
 }
 
 //攻撃1

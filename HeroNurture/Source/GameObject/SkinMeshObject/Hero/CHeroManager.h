@@ -63,6 +63,20 @@ public:
 	void NatureAnimation(int no) override;
 
 	// =======================
+	// 各バトルフェーズでのアニメーション
+	// =======================
+	// 行動選択中のアニメーション
+	void MoveSelectAnim()  override { m_pHero->MoveSelectAnim(); }
+	//----攻撃フェーズ----
+	//攻撃1中のアニメーション
+	void PowerAttackAnim() override { m_pHero->PowerAttackAnim(); }
+	//攻撃2中のアニメーション
+	void MagicAttackAnim() override { m_pHero->MagicAttackAnim(); }
+	//固有攻撃中のアニメーション
+	void UniqueAttackAnim()override { m_pHero->UniqueAttackAnim(); }
+
+
+	// =======================
 	// 各パラメータ上昇関数
 	// =======================
 	//筋力
