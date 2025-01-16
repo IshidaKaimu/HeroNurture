@@ -14,6 +14,10 @@ CHeroBase::CHeroBase()
 	, m_UniqueGage     ()
 	, m_Correction	   (1.0f)
 	, m_Failure		   (false)
+	, m_MoveX		   ()
+	, m_MoveY		   ()
+	, m_MoveZ		   ()
+	, m_AnimEndFlag	   ()
 {
 	m_pJson = std::make_unique<CJson>();
 }

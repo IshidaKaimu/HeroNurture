@@ -80,6 +80,10 @@ public:
 	void SetHp(float hp) { m_pEnemyHero->SetHp(hp); }
 	//固有攻撃ゲージ
 	int GetUniqueGage() { return m_pEnemyHero->GetUniqueGage(); }
+	//アニメーション終了フラグ
+	bool GetAnimEndFlag() { return m_pEnemyHero->GetAnimEndFlag(); }
+	void SetAnimEndFlag(bool animend) { m_pEnemyHero->SetAnimEndFlag(animend); }
+
 
 private:
 	//ヒーロー基底クラス

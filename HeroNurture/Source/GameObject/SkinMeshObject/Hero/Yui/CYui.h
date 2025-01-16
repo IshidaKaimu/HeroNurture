@@ -99,7 +99,14 @@ private:
 	//アニメーション切り替えフラグ立てる
 	void AnimChange();
 
-protected:
+private:
+	//変動する回転軸
+	float m_MoveRotateY; //Y軸
+	float m_MoveRotateZ; //Z軸
+
+	//Y軸回転の速さ
+	float m_RotateSpeedY;
+
 	bool           m_AnimChange;		//アニメーション切り替えフラグ
 
 };

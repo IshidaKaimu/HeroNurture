@@ -7,6 +7,8 @@
 
 CYui::CYui()
 	: m_AnimChange()
+	, m_MoveRotateY(0.0f)
+	, m_RotateSpeedY(1.0f)
 {
 	SetScale(0.1f, 0.1f, 0.1f);
 }
@@ -46,6 +48,10 @@ void CYui::BattleInitialize()
 	//回転の設定
 	SetRotation(BATTLE_ROTATE);
 
+	//アニメーションの開始地点の固定
+	m_MoveX = m_vPosition.x;
+	m_MoveY = m_vPosition.y;
+	m_MoveZ = m_vPosition.z;
 }
 
 //敵になった際の初期化関数
@@ -143,8 +149,57 @@ void CYui::MoveSelectAnim()
 	}
 }
 
+//攻撃1中のアニメーション
 void CYui::PowerAttackAnim()
 {
+	m_AnimCnt++;
+
+	if (m_AnimCnt >= 60) {
+		m_AnimNo = 4;
+		m_pMesh->ChangeAnimSet(m_AnimNo, m_pAnimCtrl);
+	}
+
+	if(m_AnimNo == 4)
+	{
+		if (m_AnimCnt >= 80) 
+		{
+			if (m_AnimCnt % 30 == 0)
+			{
+				if (m_RotateSpeedY <= 8.0f) {
+					m_RotateSpeedY += 0.001f;
+				}
+			}
+			m_MoveRotateY += m_RotateSpeedY;
+
+			if (m_AnimCnt <= 120) {
+				m_MoveX -= 0.1f;
+				if (m_MoveRotateZ <= 0.5f) {
+					m_MoveRotateZ += 0.005f;
+				}
+			}
+			if (m_AnimCnt >= 150)
+			{
+				if (m_MoveRotateZ >= -0.35f)
+				{
+					m_MoveRotateZ -= 0.005f;
+				}
+			}
+			if (m_MoveRotateZ <= -0.35f)
+			{
+				m_MoveX += 0.1f;
+			}
+			SetRotation(BATTLE_ROTATE.x, m_MoveRotateY, m_MoveRotateZ);
+		}
+	}
+	if (m_MoveX >= 2.5f)
+	{
+		m_AnimEndFlag = true;
+		m_AnimCnt = 0;
+		m_MoveRotateZ = 0.0f;
+		m_RotateSpeedY = 1.0f;
+	}
+
+	SetPosition(m_MoveX, m_MoveY, m_MoveZ);
 }
 
 void CYui::MagicAttackAnim()
