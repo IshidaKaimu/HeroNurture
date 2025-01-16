@@ -342,7 +342,7 @@ void CBattleScene::MoveSelect()
 	m_pHero->MoveSelectAnim();
 	m_pEnemyHero->MoveSelectAnim();
 
-		//カーソルの移動
+	//カーソルの移動
 	if (KeyMng->IsDown(VK_RIGHT))
 		{
 			//キー入力で選択を進める

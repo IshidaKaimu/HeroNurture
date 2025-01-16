@@ -7,7 +7,6 @@
 
 CYui::CYui()
 	: m_AnimChange()
-
 {
 	SetScale(0.1f, 0.1f, 0.1f);
 }
@@ -138,10 +137,10 @@ void CYui::NatureAnimation(int no)
 
 void CYui::MoveSelectAnim()
 {
-	//初めのアニメーションの設定
-	m_AnimNo = 3;
-	//登場アニメーション
-	m_pMesh->ChangeAnimSet(m_AnimNo, m_pAnimCtrl);
+	if (m_AnimNo == 3)
+	{
+		m_AnimTime += m_pMesh->GetAnimSpeed();
+	}
 }
 
 void CYui::PowerAttackAnim()

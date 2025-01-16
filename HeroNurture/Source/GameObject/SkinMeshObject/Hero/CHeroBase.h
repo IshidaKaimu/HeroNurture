@@ -22,13 +22,10 @@ constexpr float REDUSE_STAMINA = 25.0f;
 constexpr float RECOVERY_STAMINA = 25.0f;
 //バトルシーンでの初期座標
 const D3DXVECTOR3 BATTLEINIT_POS = { -4.5f,0.0f,0.0f }; //自分
-const D3DXVECTOR3 ENEMYINIT_POS = { 3.0f,0.0f,0.0f };	//敵
+const D3DXVECTOR3 ENEMYINIT_POS  = { 2.5f,0.0f,0.0f };	//敵
 //バトルシーンでの回転
 const D3DXVECTOR3 BATTLE_ROTATE = { 0.0f,D3DXToRadian(-90.0f),0.0f };//自分
 const D3DXVECTOR3 ENEMY_ROTATE  = { 0.0f,D3DXToRadian(90.0f),0.0f }; //敵
-
-
-
 
 //=====================================
 //ヒーロー基底クラス

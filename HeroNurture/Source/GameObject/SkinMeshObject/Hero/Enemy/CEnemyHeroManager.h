@@ -51,6 +51,19 @@ public:
 	//固有攻撃(各ヒーローの一番高いステータスを反映した攻撃)
 	float UniqueAttack() override {  return m_pEnemyHero->UniqueAttack(); }
 
+	// =======================
+	// 各バトルフェーズでのアニメーション
+	// =======================
+	// 行動選択中のアニメーション
+	void MoveSelectAnim()  override { m_pEnemyHero->MoveSelectAnim(); }
+	//----攻撃フェーズ----
+	//攻撃1中のアニメーション
+	void PowerAttackAnim() override { m_pEnemyHero->PowerAttackAnim(); }
+	//攻撃2中のアニメーション
+	void MagicAttackAnim() override { m_pEnemyHero->MagicAttackAnim(); }
+	//固有攻撃中のアニメーション
+	void UniqueAttackAnim()override { m_pEnemyHero->UniqueAttackAnim(); }
+
 
 	// =======================
 	// ゲッター・セッター関数

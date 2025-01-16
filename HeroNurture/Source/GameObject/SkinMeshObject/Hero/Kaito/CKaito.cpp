@@ -81,7 +81,6 @@ void CKaito::SetBattleParamData(const json& jsondata)
 //更新関数
 void CKaito::Update()
 {
-
 	//--------------------------
 	//スキンメッシュ
 	//--------------------------
@@ -97,7 +96,6 @@ void CKaito::Update()
 	//6:手つき出す
 	//7:ダメージ
 	//8:死亡
-
 }
 
 //描画関数
@@ -138,7 +136,6 @@ void CKaito::NatureAnimation(int no)
 //行動選択中のアニメーション
 void CKaito::MoveSelectAnim()
 {
-	
 	if (m_AnimNo == 0) {
 		//アニメーションの経過時間を加算
 		m_AnimTime += m_pMesh->GetAnimSpeed();
@@ -148,7 +145,7 @@ void CKaito::MoveSelectAnim()
 	if (m_AnimCnt >= 180)
 	{
 		//斬り下ろしアニメーション
-		m_AnimNo = 2;
+		m_AnimNo = 3;
 		//アニメーションの経過時間をリセット
 		m_AnimTime = 0;
 		//アニメーションを設定
@@ -157,7 +154,7 @@ void CKaito::MoveSelectAnim()
 		m_AnimCnt = 0;
 	}
 
-	if (m_AnimNo == 2)
+	if (m_AnimNo == 3)
 	{
 		//アニメーションの経過時間を加算
 		m_AnimTime += m_pMesh->GetAnimSpeed();
