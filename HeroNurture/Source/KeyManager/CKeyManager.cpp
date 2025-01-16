@@ -1,4 +1,5 @@
 #include "CKeyManager.h"
+#include <windows.h>
 
 CKeyManager::CKeyManager()
     :m_OldKeys()

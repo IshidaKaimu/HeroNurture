@@ -175,8 +175,11 @@ public:
 	//バトル中のHP
 	float GetHp() { return m_Hp; }
 	void SetHp(float hp) { m_Hp = hp; }
-	//MP
+	//固有攻撃ゲージ
 	int GetUniqueGage() { return m_UniqueGage; }
+	//アニメーション終了フラグ
+	bool GetAnimEndFlag() { return m_AnimEndFlag; }
+	void SetAnimEndFlag(bool animend) { m_AnimEndFlag = animend; }
 
 protected :	
 	// =======================
@@ -228,6 +231,14 @@ protected:
 
 	//アニメーション用カウント
 	int m_AnimCnt;
+
+	//イベントシーン用の変動させる変数
+	float m_MoveX; //X座標
+	float m_MoveY; //Y座標
+	float m_MoveZ; //Z座標
+
+	//アニメーションが終了したら立てるフラグ
+	bool m_AnimEndFlag;
 
 private:
 	//パラメータ更新前のパラメータ情報

@@ -54,7 +54,7 @@ bool CSceneBase::FadeOut()
 {
     //デバッグフラグが有効の場合、時間短縮のため処理終了
     if( DEBUG_FLG ) {
-        m_FadeAlpha = 0.1f;					//α値を初期化
+        m_FadeAlpha = 0.0f;					//α値を初期化
         m_pFade->SetAlpha(m_FadeAlpha);
         return true;
     }

@@ -204,12 +204,11 @@ void CBattleScene::Debug()
 #endif
 #if DEBUG
 	CCameraManager::GetInstance().CameraUpdate();
-
 	ImGui::Begin(JAPANESE("カメラ位置"));
 	ImGui::InputFloat3(JAPANESE("座標:%f"), m_CamPos);
 	ImGui::InputFloat3(JAPANESE("注視点:%f"), m_CamLook);
-	CCameraManager::GetInstance().SetPos(m_CamPos);
-	CCameraManager::GetInstance().SetLook(m_CamLook);
+	CCameraManager::GetInstance().SetPos(ATTACK_CAMPOS);
+	CCameraManager::GetInstance().SetLook(ATTACK_CAMLOOK);
 	ImGui::End();
 #endif
 
@@ -339,6 +338,9 @@ void CBattleScene::MoveSelect()
 	CKeyManager* KeyMng = CKeyManager::GetInstance();
 	KeyMng->Update();
 
+	m_pCamera->SetPos(INIT_CAMPOS_B);
+	m_pCamera->SetLook(INIT_CAMLOOK_B);
+
 	m_pHero->MoveSelectAnim();
 	m_pEnemyHero->MoveSelectAnim();
 
@@ -377,9 +379,9 @@ void CBattleScene::Attack()
 	if (m_IsHeroTurn)
 	{
 		HeroTurn();
-		if (m_pEnemyHero->GetHp() > 0.0f) {
-			EnemyHeroTurn();
-		}
+		//if (m_pEnemyHero->GetHp() > 0.0f && m_pHero->GetAnimEndFlag()) {
+		//	EnemyHeroTurn();
+		//}
 	}
 	else
 	{
@@ -390,7 +392,14 @@ void CBattleScene::Attack()
 	}
 
 	//準備フェーズへ移動
-	m_BattlePhase = enBattlePhase::MoveSelectPhase;
+	if (m_pHero->GetAnimEndFlag())
+	{
+		m_pHero->BattleInitialize();
+		m_pEnemyHero->Initialize();
+		m_BattlePhase = enBattlePhase::MoveSelectPhase;
+		m_pHero->SetAnimEndFlag(false);
+		m_pEnemyHero->SetAnimEndFlag(false);
+	}
 }
 
 //次のターンの準備中の処理
@@ -417,7 +426,12 @@ void CBattleScene::HeroTurn()
 
 	switch (m_Attack)
 	{
-	case CBattleScene::PowerAttack: m_pEnemyHero->Damage(m_pHero->PowerAttack()); break;
+	case CBattleScene::PowerAttack:
+		m_pHero->PowerAttackAnim();
+		if (m_pHero->GetAnimEndFlag()) {
+			m_pEnemyHero->Damage(m_pHero->PowerAttack());
+		}
+		break;
 	case CBattleScene::MagicAttack: m_pEnemyHero->Damage(m_pHero->MagicAttack()); break;
 	case CBattleScene::UniqueAttack: m_pEnemyHero->Damage(m_pHero->UniqueAttack());break;
 	}

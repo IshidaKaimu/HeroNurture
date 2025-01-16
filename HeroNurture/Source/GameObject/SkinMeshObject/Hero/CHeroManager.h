@@ -151,6 +151,9 @@ public:
 	void SetHp( float hp ) { m_pHero->SetHp(hp); }
 	//固有攻撃ゲージ
 	int GetUniqueGage() { return m_pHero->GetUniqueGage(); }
+	//アニメーション終了フラグ
+	bool GetAnimEndFlag() { return m_pHero->GetAnimEndFlag(); }
+	void SetAnimEndFlag(bool animend) { m_pHero->SetAnimEndFlag(animend); }
 
 private:
 	//他からアクセスすることがないように
