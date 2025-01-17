@@ -266,11 +266,7 @@ void CKaito::DamageAnim(float vector)
 		//アニメーションの経過時間を加算
 		m_AnimTime += m_pMesh->GetAnimSpeed();
 
-		if (m_pMesh->GetAnimPeriod(m_AnimNo) < m_AnimTime)
-		{
-			m_AnimEnd = true;
-			m_AnimChange = false;
-		}
+		m_DamageAnimEnd = true;
 	}
 
 	SetPosition(m_MoveX, m_MoveY, m_MoveZ);

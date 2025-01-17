@@ -158,7 +158,9 @@ void CYui::MoveSelectAnim()
 //攻撃1中のアニメーション
 void CYui::PowerAttackAnim(float vector)
 {
-	m_AnimCnt++;
+	if (!m_AnimEnd) {
+		m_AnimCnt++;
+	}
 
 	if (m_AnimCnt >= 60) {
 		AnimChange(4);

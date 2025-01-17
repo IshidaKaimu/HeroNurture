@@ -402,8 +402,10 @@ void CBattleScene::Attack()
 		EnemyHeroTurn();
 		if (m_pEnemyHero->GetHp() > 0.0f && m_pHero->GetDamageAnimEndFlag()) {
 			//ƒ_ƒ[ƒWˆ—
-			m_pHero->Damage(m_pEnemyHero->PowerAttack());
-			if (m_pHero->GetDamageFlag())
+			if (!m_pHero->GetDamageFlag()) {
+				m_pHero->Damage(m_pEnemyHero->PowerAttack());
+			}
+			else if (m_pHero->GetDamageFlag())
 			{
 				HeroTurn();
 			}
