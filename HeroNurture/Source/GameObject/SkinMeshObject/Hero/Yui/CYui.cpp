@@ -66,6 +66,12 @@ void CYui::EnemyInit()
 	SetScale(BATTLE_SCALE_YUI);
 	//回転の設定
 	SetRotation(ENEMY_ROTATE);
+	
+	//アニメーションの開始地点の固定
+	m_MoveX = m_vPosition.x;
+	m_MoveY = m_vPosition.y;
+	m_MoveZ = m_vPosition.z;
+
 }
 
 //メッシュデータ読み込み関数
@@ -150,13 +156,12 @@ void CYui::MoveSelectAnim()
 }
 
 //攻撃1中のアニメーション
-void CYui::PowerAttackAnim()
+void CYui::PowerAttackAnim(float vector)
 {
 	m_AnimCnt++;
 
 	if (m_AnimCnt >= 60) {
-		m_AnimNo = 4;
-		m_pMesh->ChangeAnimSet(m_AnimNo, m_pAnimCtrl);
+		AnimChange(4);
 	}
 
 	if(m_AnimNo == 4)
@@ -166,13 +171,13 @@ void CYui::PowerAttackAnim()
 			if (m_AnimCnt % 30 == 0)
 			{
 				if (m_RotateSpeedY <= 8.0f) {
-					m_RotateSpeedY += 0.001f;
+					m_RotateSpeedY += 0.05f;
 				}
 			}
 			m_MoveRotateY += m_RotateSpeedY;
 
 			if (m_AnimCnt <= 120) {
-				m_MoveX -= 0.1f;
+				m_MoveX -= 0.1f * vector;
 				if (m_MoveRotateZ <= 0.5f) {
 					m_MoveRotateZ += 0.005f;
 				}
@@ -181,32 +186,33 @@ void CYui::PowerAttackAnim()
 			{
 				if (m_MoveRotateZ >= -0.35f)
 				{
-					m_MoveRotateZ -= 0.005f;
+					m_MoveRotateZ -= 0.01f;
 				}
 			}
-			if (m_MoveRotateZ <= -0.35f)
+			if (m_AnimCnt >= 240)
 			{
-				m_MoveX += 0.1f;
+				m_MoveX += (0.2f * vector);
 			}
-			SetRotation(BATTLE_ROTATE.x, m_MoveRotateY, m_MoveRotateZ);
+
+			SetRotation(BATTLE_ROTATE.x, m_MoveRotateY, m_MoveRotateZ * vector);
 		}
 	}
-	if (m_MoveX >= 2.5f)
+
+	if (m_AnimCnt >= 300)
 	{
-		m_AnimEndFlag = true;
 		m_AnimCnt = 0;
-		m_MoveRotateZ = 0.0f;
-		m_RotateSpeedY = 1.0f;
+		m_MoveRotateZ = 0;
+		m_AnimEnd = true;
 	}
 
 	SetPosition(m_MoveX, m_MoveY, m_MoveZ);
 }
 
-void CYui::MagicAttackAnim()
+void CYui::MagicAttackAnim(float vector)
 {
 }
 
-void CYui::UniqueAttackAnim()
+void CYui::UniqueAttackAnim(float vector)
 {
 }
 
@@ -241,10 +247,10 @@ void CYui::AnimInit()
 	m_pMesh->ChangeAnimSet(m_AnimNo, m_pAnimCtrl);
 }
 
-void CYui::AnimChange()
+//アニメーション切り替え関数
+void CYui::AnimChange(int animno)
 {
-	m_AnimChange = true;
+	CHeroBase::AnimChange(animno);
 }
-
 
 

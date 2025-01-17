@@ -71,3 +71,4 @@ void CSkinMeshObject::DetachMesh()
 	SAFE_RELEASE(m_pAnimCtrl);
 }
 
+

@@ -58,12 +58,16 @@ public:
 	void MoveSelectAnim()  override { m_pEnemyHero->MoveSelectAnim(); }
 	//----攻撃フェーズ----
 	//攻撃1中のアニメーション
-	void PowerAttackAnim() override { m_pEnemyHero->PowerAttackAnim(); }
+	void PowerAttackAnim(float vector) override { m_pEnemyHero->PowerAttackAnim(vector); }
 	//攻撃2中のアニメーション
-	void MagicAttackAnim() override { m_pEnemyHero->MagicAttackAnim(); }
+	void MagicAttackAnim(float vector) override { m_pEnemyHero->MagicAttackAnim(vector); }
 	//固有攻撃中のアニメーション
-	void UniqueAttackAnim()override { m_pEnemyHero->UniqueAttackAnim(); }
+	void UniqueAttackAnim(float vector)override { m_pEnemyHero->UniqueAttackAnim(vector); }
+	//ダメージを受けるときのアニメーション
+	void DamageAnim(float vector)override { m_pEnemyHero->DamageAnim(vector); }
 
+	//バトル中の位置の初期化
+	void BattleInitPos() { m_pEnemyHero->SetPosition(ENEMYINIT_POS); }
 
 	// =======================
 	// ゲッター・セッター関数
@@ -80,9 +84,14 @@ public:
 	void SetHp(float hp) { m_pEnemyHero->SetHp(hp); }
 	//固有攻撃ゲージ
 	int GetUniqueGage() { return m_pEnemyHero->GetUniqueGage(); }
+	//ダメージフラグ
+	bool GetDamageFlag() { return m_pEnemyHero->GetDamageFlag(); }
 	//アニメーション終了フラグ
 	bool GetAnimEndFlag() { return m_pEnemyHero->GetAnimEndFlag(); }
 	void SetAnimEndFlag(bool animend) { m_pEnemyHero->SetAnimEndFlag(animend); }
+	//ダメージアニメーション終了フラグ
+	bool GetDamageAnimEndFlag() { return m_pEnemyHero->GetDamageAnimEndFlag(); }
+	void SetDamageAnimEndFlag(bool damageanimend) { m_pEnemyHero->SetDamageAnimEndFlag(damageanimend); }
 
 
 private:

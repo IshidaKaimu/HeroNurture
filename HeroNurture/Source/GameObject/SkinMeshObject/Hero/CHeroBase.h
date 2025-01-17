@@ -130,11 +130,13 @@ public:
 	virtual void MoveSelectAnim() {};
 	//----攻撃フェーズ----
 	//攻撃1中のアニメーション
-	virtual void PowerAttackAnim() {};
+	virtual void PowerAttackAnim(float vector) {};
 	//攻撃2中のアニメーション
-	virtual void MagicAttackAnim() {};
+	virtual void MagicAttackAnim(float vector) {};
 	//固有攻撃中のアニメーション
-	virtual void UniqueAttackAnim() {};
+	virtual void UniqueAttackAnim(float vector) {};
+	//ダメージアニメーション
+	virtual void DamageAnim(float vector) {};
 
 	// =======================
 	// ステータス上昇関数
@@ -177,9 +179,18 @@ public:
 	void SetHp(float hp) { m_Hp = hp; }
 	//固有攻撃ゲージ
 	int GetUniqueGage() { return m_UniqueGage; }
+	//ダメージフラグ
+	bool GetDamageFlag() { return m_Damage; }
+	void SetDamageFlag(bool damage) { m_Damage = damage; }
 	//アニメーション終了フラグ
-	bool GetAnimEndFlag() { return m_AnimEndFlag; }
-	void SetAnimEndFlag(bool animend) { m_AnimEndFlag = animend; }
+	bool GetAnimEndFlag() { return m_AnimEnd; }
+	void SetAnimEndFlag(bool animend) { m_AnimEnd = animend; }
+	//ダメージアニメーション終了フラグ
+	bool GetDamageAnimEndFlag() { return m_DamageAnimEnd; }
+	void SetDamageAnimEndFlag(bool damageanimend) { m_DamageAnimEnd = damageanimend; }
+
+	//アニメーション切り替え関数
+	virtual void AnimChange(int animno);
 
 protected :	
 	// =======================
@@ -237,8 +248,14 @@ protected:
 	float m_MoveY; //Y座標
 	float m_MoveZ; //Z座標
 
+	//ダメージを受けたとき立てるフラグ
+	bool m_Damage;
+
 	//アニメーションが終了したら立てるフラグ
-	bool m_AnimEndFlag;
+	bool m_AnimEnd;
+
+	//ダメージのアニメーションが終了したら立てるフラグ
+	bool m_DamageAnimEnd;
 
 private:
 	//パラメータ更新前のパラメータ情報

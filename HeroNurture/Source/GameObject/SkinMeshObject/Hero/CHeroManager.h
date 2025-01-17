@@ -63,20 +63,6 @@ public:
 	void NatureAnimation(int no) override;
 
 	// =======================
-	// 各バトルフェーズでのアニメーション
-	// =======================
-	// 行動選択中のアニメーション
-	void MoveSelectAnim()  override { m_pHero->MoveSelectAnim(); }
-	//----攻撃フェーズ----
-	//攻撃1中のアニメーション
-	void PowerAttackAnim() override { m_pHero->PowerAttackAnim(); }
-	//攻撃2中のアニメーション
-	void MagicAttackAnim() override { m_pHero->MagicAttackAnim(); }
-	//固有攻撃中のアニメーション
-	void UniqueAttackAnim()override { m_pHero->UniqueAttackAnim(); }
-
-
-	// =======================
 	// 各パラメータ上昇関数
 	// =======================
 	//筋力
@@ -99,6 +85,21 @@ public:
 	float UniqueAttack() override {  return m_pHero->UniqueAttack(); }
 
 	// =======================
+	// 各バトルフェーズでのアニメーション
+	// =======================
+	// 行動選択フェーズ中のアニメーション
+	void MoveSelectAnim()  override { m_pHero->MoveSelectAnim(); }
+	//----攻撃フェーズ----
+	//攻撃1中のアニメーション
+	void PowerAttackAnim(float vector) override { m_pHero->PowerAttackAnim(vector); }
+	//攻撃2中のアニメーション
+	void MagicAttackAnim(float vector) override { m_pHero->MagicAttackAnim(vector); }
+	//固有攻撃中のアニメーション
+	void UniqueAttackAnim(float vector)override { m_pHero->UniqueAttackAnim(vector); }
+	//ダメージを受けたときのアニメーション
+	void DamageAnim(float vector) override { m_pHero->DamageAnim(vector); }
+
+	// =======================
 	// スタミナゲージ関連関数
 	// =======================	
 	//スタミナの初期化
@@ -110,6 +111,9 @@ public:
 
 	//ダメージ関数
 	void Damage(float damage) { m_pHero->Damage(damage); }
+
+	//バトル中の位置の初期化
+	void BattleInitPos() { m_pHero->SetPosition(BATTLEINIT_POS); }
 
 	//選択しているヒーローを文字列で返す関数
 	std::string GetHeroName();
@@ -151,9 +155,14 @@ public:
 	void SetHp( float hp ) { m_pHero->SetHp(hp); }
 	//固有攻撃ゲージ
 	int GetUniqueGage() { return m_pHero->GetUniqueGage(); }
+	//ダメージフラグ
+	bool GetDamageFlag() { return m_pHero->GetDamageFlag(); }
 	//アニメーション終了フラグ
 	bool GetAnimEndFlag() { return m_pHero->GetAnimEndFlag(); }
 	void SetAnimEndFlag(bool animend) { m_pHero->SetAnimEndFlag(animend); }
+	//ダメージアニメーション終了フラグ
+	bool GetDamageAnimEndFlag() { return m_pHero->GetDamageAnimEndFlag(); }
+	void SetDamageAnimEndFlag(bool damageanimend) { m_pHero->SetDamageAnimEndFlag(damageanimend); }
 
 private:
 	//他からアクセスすることがないように

@@ -36,11 +36,11 @@ class CKeyManager;
 // 定数宣言(_B = バトルシーンで用いることを示す)
 //=====================================
 //----カメラ情報----
-const D3DXVECTOR3 INIT_CAMPOS_B  = { -1.0f,2.0f,-6.0f }; //初期座標
-const D3DXVECTOR3 INIT_CAMLOOK_B = { -1.0f,2.0f,-0.0f }; //初期注視点
+const D3DXVECTOR3 INIT_CAMPOS_B  = { -1.0f,2.0f,-7.0f }; //初期座標
+const D3DXVECTOR3 INIT_CAMLOOK_B = { -1.0f,2.0f,0.0f }; //初期注視点
 const D3DXVECTOR3 ATTACK_CAMPOS  = { -1.0f,2.0f,0.0f };
 const D3DXVECTOR3 ATTACK_CAMLOOK = { -2.0f,2.0f,0.0f };
-const D3DXVECTOR3 ENEMY_ATTACK_CAMPOS  = { -2.0f,2.0f,0.0f };
+const D3DXVECTOR3 ENEMY_ATTACK_CAMPOS  = { -1.0f,2.0f,0.0f };
 const D3DXVECTOR3 ENEMY_ATTACK_CAMLOOK = { 2.0f,2.0f,0.0f };
 //----ゲージ情報----
 //HP
@@ -133,6 +133,9 @@ private:
 	//敵
 	void EnemyHeroTurn();
 
+	//ターンごとの攻撃の設定
+	void SettingAttack(int no , enAttackList attacklist);
+
 private:
 	//自分が使うヒーロー
 	CHeroManager* m_pHero;
@@ -192,6 +195,13 @@ private:
 	//自分が選択する攻撃のリスト
 	enAttackList m_Attack;
 
+	//敵の行動を決める番号
+	int m_EnemyAttackNo;
+
+	//敵の選択する攻撃のリスト
+	enAttackList m_EnemyAttack;
+
 	//バトルのフェーズ
 	enBattlePhase m_BattlePhase;
+
 };

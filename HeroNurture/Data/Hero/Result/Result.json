@@ -63,8 +63,8 @@
         "Parameter": {
             "Hp": 200.0,
             "Magic": 40.0,
-            "Power": 90.0,
-            "Speed": 112.0
+            "Power": 300.0,
+            "Speed": 500.0
         }
     },
     {

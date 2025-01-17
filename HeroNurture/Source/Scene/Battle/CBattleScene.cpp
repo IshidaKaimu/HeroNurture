@@ -30,6 +30,8 @@ CBattleScene::CBattleScene()
 	, m_IsHeroTurn()
 	, m_SelectAttack()
 	, m_Attack()
+	, m_EnemyAttackNo()
+	, m_EnemyAttack()
 {
 }
 
@@ -186,7 +188,7 @@ void CBattleScene::Draw()
 
 void CBattleScene::Debug()
 {
-#if DEBUG
+#if _DEBUG
 	ImGui::Begin(JAPANESE("パラメータ"));
 	ImGui::Text(JAPANESE("プレイヤー"));
 	ImGui::Text(JAPANESE("筋力:%f"), m_pHero->GetBattleParamData().Power);
@@ -359,13 +361,18 @@ void CBattleScene::MoveSelect()
 
 		if (KeyMng->IsDown(VK_RETURN))
 		{
-			switch (m_SelectNo)
-			{
-			case 0: m_Attack = enAttackList::PowerAttack; break;
-			case 1: m_Attack = enAttackList::MagicAttack; break;
-			case 2: m_Attack = enAttackList::UniqueAttack; break;
-			}
+			//自分の攻撃の設定
+			SettingAttack(m_SelectNo, m_Attack);
 			
+			////敵の攻撃の選択
+			//if (m_pEnemyHero->GetUniqueGage() == 5) { m_EnemyAttackNo = CUtility::GenerateRandomValue(0,2);}
+			//else{ m_EnemyAttackNo = CUtility::GenerateRandomValue(0, 1); }
+
+			m_EnemyAttackNo = 0;
+
+			//敵の攻撃の設定
+			SettingAttack(m_EnemyAttackNo, m_EnemyAttack);
+
 			//攻撃フェーズへ遷移
 			m_BattlePhase = enBattlePhase::AttackPhase;
 		}
@@ -379,20 +386,32 @@ void CBattleScene::Attack()
 	if (m_IsHeroTurn)
 	{
 		HeroTurn();
-		//if (m_pEnemyHero->GetHp() > 0.0f && m_pHero->GetAnimEndFlag()) {
-		//	EnemyHeroTurn();
-		//}
+		if (m_pEnemyHero->GetHp() > 0.0f && m_pEnemyHero->GetDamageAnimEndFlag()) {
+			//ダメージ処理
+			if (!m_pEnemyHero->GetDamageFlag()) {
+				m_pEnemyHero->Damage(m_pHero->PowerAttack());
+			}
+			else if (m_pEnemyHero->GetDamageFlag())
+			{
+				EnemyHeroTurn();
+			}
+		}
 	}
 	else
 	{
 		EnemyHeroTurn();
-		if (m_pHero->GetHp() > 0.0f) {
-			HeroTurn();
+		if (m_pEnemyHero->GetHp() > 0.0f && m_pHero->GetDamageAnimEndFlag()) {
+			//ダメージ処理
+			m_pHero->Damage(m_pEnemyHero->PowerAttack());
+			if (m_pHero->GetDamageFlag())
+			{
+				HeroTurn();
+			}
 		}
 	}
 
 	//準備フェーズへ移動
-	if (m_pHero->GetAnimEndFlag())
+	if (m_pHero->GetAnimEndFlag() && m_pEnemyHero->GetAnimEndFlag())
 	{
 		m_pHero->BattleInitialize();
 		m_pEnemyHero->Initialize();
@@ -421,18 +440,26 @@ void CBattleScene::SetUpToNextTurn()
 //自分のターンに行う処理
 void CBattleScene::HeroTurn()
 {
-	m_pCamera->SetPos(ATTACK_CAMPOS);
-	m_pCamera->SetLook(ATTACK_CAMLOOK);
-
+	//自分の攻撃
 	switch (m_Attack)
 	{
 	case CBattleScene::PowerAttack:
-		m_pHero->PowerAttackAnim();
-		if (m_pHero->GetAnimEndFlag()) {
-			m_pEnemyHero->Damage(m_pHero->PowerAttack());
+		//攻撃アニメーションが終わっていなければ
+		if (!m_pHero->GetAnimEndFlag()) 
+		{
+			m_pCamera->SetPos(ATTACK_CAMPOS);
+			m_pCamera->SetLook(ATTACK_CAMLOOK);
+		}
+		m_pHero->PowerAttackAnim(1.0f);
+		if (m_pHero->GetAnimEndFlag()) //攻撃アニメーションが終わったら
+		{
+			m_pCamera->SetPos(ENEMY_ATTACK_CAMPOS);
+			m_pCamera->SetLook(ENEMY_ATTACK_CAMLOOK);
+			m_pHero->BattleInitPos();
+			m_pEnemyHero->DamageAnim(1.0f);//敵のダメージアニメーション
 		}
 		break;
-	case CBattleScene::MagicAttack: m_pEnemyHero->Damage(m_pHero->MagicAttack()); break;
+	case CBattleScene::MagicAttack:  m_pEnemyHero->Damage(m_pHero->MagicAttack()); break;
 	case CBattleScene::UniqueAttack: m_pEnemyHero->Damage(m_pHero->UniqueAttack());break;
 	}
 }
@@ -440,8 +467,39 @@ void CBattleScene::HeroTurn()
 //敵のターンに行う処理
 void CBattleScene::EnemyHeroTurn()
 {
-	m_pCamera->SetPos(ENEMY_ATTACK_CAMPOS);
-	m_pCamera->SetLook(ENEMY_ATTACK_CAMLOOK);
+	//敵の攻撃
+	switch (m_EnemyAttack)
+	{
+	case CBattleScene::PowerAttack:
+		//攻撃アニメーションが終わっていなければ
+		if (!m_pEnemyHero->GetAnimEndFlag())
+		{
+			m_pCamera->SetPos(ENEMY_ATTACK_CAMPOS);
+			m_pCamera->SetLook(ENEMY_ATTACK_CAMLOOK);
+		}
+		//敵の攻撃アニメーション
+		m_pEnemyHero->PowerAttackAnim(-1.0f);
+		if (m_pEnemyHero->GetAnimEndFlag()) //攻撃アニメーションが終わったら
+		{
+			m_pCamera->SetPos(ATTACK_CAMPOS);
+			m_pCamera->SetLook(ATTACK_CAMLOOK);
+			m_pEnemyHero->BattleInitPos();
+			m_pHero->DamageAnim(-1.0f); //敵のダメージアニメーション
+		}
+		break;
+	case CBattleScene::MagicAttack: m_pEnemyHero->Damage(m_pEnemyHero->MagicAttack()); break;
+	case CBattleScene::UniqueAttack: m_pEnemyHero->Damage(m_pEnemyHero->UniqueAttack()); break;
+	}
 
-	m_pHero->Damage(m_pEnemyHero->PowerAttack());
+}
+
+//ターンごとの攻撃の設定
+void CBattleScene::SettingAttack(int no, enAttackList attacklist)
+{
+	switch (no)
+	{
+	case 0: attacklist = enAttackList::PowerAttack; break;
+	case 1: attacklist = enAttackList::MagicAttack; break;
+	case 2: attacklist = enAttackList::UniqueAttack; break;
+	}
 }

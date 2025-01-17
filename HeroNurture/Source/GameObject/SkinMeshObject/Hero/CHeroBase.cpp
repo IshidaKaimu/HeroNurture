@@ -17,7 +17,9 @@ CHeroBase::CHeroBase()
 	, m_MoveX		   ()
 	, m_MoveY		   ()
 	, m_MoveZ		   ()
-	, m_AnimEndFlag	   ()
+	, m_Damage		   ()
+	, m_AnimEnd	       ()
+	, m_DamageAnimEnd  ()
 {
 	m_pJson = std::make_unique<CJson>();
 }
@@ -92,6 +94,15 @@ void CHeroBase::HpUp( float stamina )
 void CHeroBase::Damage(float damage)
 {
 	m_Hp -= damage;
+	m_Damage = true;
+}
+
+//アニメーション切り替え
+void CHeroBase::AnimChange(int animno)
+{
+	m_AnimNo = animno;
+	m_AnimTime = 0;
+	m_pMesh->ChangeAnimSet(m_AnimNo, m_pAnimCtrl);
 }
 
 //各ヒーローの初期パラメータの取得

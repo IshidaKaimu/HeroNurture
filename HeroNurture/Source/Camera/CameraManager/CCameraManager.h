@@ -25,14 +25,18 @@ public:
 	//カメラ情報の取得
 	CAMERA GetCamera() { return GetInstance().m_pCamera.get()->GetCamera(); }
 
-	//----カメラ座標の設定----
+	// =======================
+	// ゲッター・セッター関数
+	// =======================
+	//座標
+	D3DXVECTOR3 GetPos() { return m_pCamera->GetPos(); }
 	void SetPos( D3DXVECTOR3 pos ) { m_pCamera->SetPos(pos); }
 	void SetPos( float x, float y, float z ) { m_pCamera->SetPos(x,y,z); }
 	void SetPosX( float x ) { m_pCamera->SetPosX(x); }
 	void SetPosY( float y ) { m_pCamera->SetPosY(y); }
 	void SetPosZ( float z ) { m_pCamera->SetPosZ(z); }
-
-	//----カメラ注視点の設定----
+	//注視点
+	D3DXVECTOR3 GetLook() { return m_pCamera->GetLook(); }
 	void SetLook(D3DXVECTOR3 look) { m_pCamera->SetLook(look); }
 	void SetLook(float x, float y, float z) { m_pCamera->SetLook (x, y, z); }
 	void SetLookX(float x) { m_pCamera->SetLookX(x); }

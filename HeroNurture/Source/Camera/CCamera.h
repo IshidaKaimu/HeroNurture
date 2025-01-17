@@ -26,15 +26,18 @@ public :
 	//プロジェクション関数
 	void Projection();
 
-	//----カメラ座標の設定----
+	// =======================
+	// ゲッター・セッター関数
+	// =======================
+	//座標
+	D3DXVECTOR3 GetPos() { return m_Camera.Position; }
 	void SetPos(D3DXVECTOR3 pos) { m_Camera.Position = pos; }
 	void SetPos(float x, float y, float z) { m_Camera.Position = D3DXVECTOR3( x, y, z ); }
 	void SetPosX(float x) { m_Camera.Position.x = x; }
 	void SetPosY(float y) { m_Camera.Position.y = y; }
 	void SetPosZ(float z) { m_Camera.Position.z = z; }
-
-
-	//----カメラ注視点の設定----
+	//注視点
+	D3DXVECTOR3 GetLook() { return m_Camera.Look; }
 	void SetLook(D3DXVECTOR3 look) { m_Camera.Look = look; }
 	void SetLook(float x, float y, float z) { m_Camera.Look = D3DXVECTOR3(x, y, z); }
 	void SetLookX(float x) { m_Camera.Look.x = x; }

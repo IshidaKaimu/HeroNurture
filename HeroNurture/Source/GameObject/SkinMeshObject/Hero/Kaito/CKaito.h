@@ -60,19 +60,6 @@ public:
 	void NatureAnimation(int no) override;
 
 	// =======================
-	// 各バトルフェーズでのアニメーション
-	// =======================
-	// 行動選択中のアニメーション
-	void MoveSelectAnim() override;
-	//----攻撃フェーズ----
-	//攻撃1中のアニメーション
-	void PowerAttackAnim() override;
-	//攻撃2中のアニメーション
-	void MagicAttackAnim() override;
-	//固有攻撃中のアニメーション
-	void UniqueAttackAnim() override;
-
-	// =======================
 	// 攻撃関数
 	// =======================
 	//攻撃1
@@ -82,11 +69,29 @@ public:
 	//固有攻撃
 	float UniqueAttack() override;
 
-private:
+	// =======================
+	// 各バトルフェーズでのアニメーション
+	// =======================
+	// 行動選択中のアニメーション
+	void MoveSelectAnim() override;
+	//----攻撃フェーズ----
+	//攻撃1中のアニメーション
+	void PowerAttackAnim(float vector) override;
+	//攻撃2中のアニメーション
+	void MagicAttackAnim(float vector) override;
+	//固有攻撃中のアニメーション
+	void UniqueAttackAnim(float vector) override;
+	//ダメージを受けた時のアニメーション
+	void DamageAnim(float vector) override;
 
+private:
+	//----アニメーション関連----
 	//アニメーションに関する初期化
 	void AnimInit();
+	//アニメーションスピードの設定
 	void SetAnimSpeed(double speed) { m_AnimSpeed = speed; }
+	//アニメーション切り替え関数
+	void AnimChange(int animno) override;
 
 protected:
 	D3DXVECTOR3    m_BonePos;			//カイト:ボーン座標
