@@ -37,6 +37,17 @@ void CKaito::BattleInitialize()
 	SetScale(BATTLE_SCALE_KAITO);
 	SetRotation(BATTLE_ROTATE);
 
+	//アニメーション終了フラグの初期化
+	m_AnimEnd = false;
+	//ダメージアニメーション終了フラグの初期化
+	m_DamageAnimEnd = false;
+	//ダメージフラグの初期化
+	m_Damage = false;
+	//アニメーション切り替えフラグの初期化
+	m_AnimChange = false;
+	//アニメーションカウントの初期化
+	m_AnimCnt = 0;
+
 	//アニメーションの開始地点の固定
 	m_MoveX = m_vPosition.x;
 	m_MoveY = m_vPosition.y;
@@ -53,6 +64,17 @@ void CKaito::EnemyInit()
 	SetPosition(ENEMYINIT_POS);
 	SetScale(BATTLE_SCALE_KAITO);
 	SetRotation(ENEMY_ROTATE);
+
+	//アニメーション終了フラグの初期化
+	m_AnimEnd = false;
+	//ダメージアニメーション終了フラグの初期化
+	m_DamageAnimEnd = false;
+	//ダメージフラグの初期化
+	m_Damage = false;
+	//アニメーション切り替えフラグの初期化
+	m_AnimChange = false;
+	//アニメーションカウントの初期化
+	m_AnimCnt = 0;
 
 	//アニメーションの開始地点の固定
 	m_MoveX = m_vPosition.x;
@@ -148,37 +170,25 @@ void CKaito::NatureAnimation(int no)
 //行動選択中のアニメーション
 void CKaito::MoveSelectAnim()
 {
+
 	if (m_AnimNo == 0) {
 		//アニメーションの経過時間を加算
 		m_AnimTime += m_pMesh->GetAnimSpeed();
 		m_AnimCnt++;
-	}
-
-	if (m_AnimCnt >= 180)
-	{
-		//斬り下ろしアニメーション
-		m_AnimNo = 3;
-		//アニメーションの経過時間をリセット
-		m_AnimTime = 0;
-		//アニメーションを設定
-		m_pMesh->ChangeAnimSet(m_AnimNo, m_pAnimCtrl);
-		//カウントをリセット
-		m_AnimCnt = 0;
+		if (m_AnimCnt >= 180)
+		{
+			AnimChange(3);
+			m_AnimCnt = 0;
+		}
 	}
 
 	if (m_AnimNo == 3)
 	{
-		//アニメーションの経過時間を加算
 		m_AnimTime += m_pMesh->GetAnimSpeed();
 
 		if (m_pMesh->GetAnimPeriod(m_AnimNo) < m_AnimTime)
 		{
-			//待機アニメーション
-			m_AnimNo = 0;
-			//アニメーションの経過時間をリセット
-			m_AnimTime = 0;
-			//アニメーションを設定
-			m_pMesh->ChangeAnimSet(m_AnimNo, m_pAnimCtrl);
+			AnimChange(0);
 		}
 	}
 }
@@ -202,7 +212,45 @@ float CKaito::UniqueAttack()
 
 void CKaito::PowerAttackAnim(float vector)
 {
+	//待機アニメーション時
+	if (m_AnimNo == 3) {
+		AnimChange(0);
+	}
 
+	if (m_AnimNo == 0 && !m_AnimChange)
+	{
+		m_AnimTime += m_pMesh->GetAnimSpeed();
+
+		if (m_pMesh->GetAnimPeriod(m_AnimNo) < m_AnimTime)
+		{
+			AnimChange(2);
+			m_AnimCnt = 0;
+		}
+	}
+
+	if (m_AnimNo == 2)
+	{
+		//アニメーション終了までのカウント
+		if (!m_AnimEnd) {
+			m_AnimCnt++;
+		}
+
+		if (m_pMesh->GetAnimPeriod(m_AnimNo) - 0.8f < m_AnimTime)
+		{
+			m_AnimSpeed = 0.0f;
+		}
+		else
+		{
+			//アニメーションの経過時間を加算
+			m_AnimTime += m_pMesh->GetAnimSpeed();
+		}
+
+		if (m_AnimCnt > 90)
+		{
+			m_AnimCnt = 0;
+			m_AnimEnd = true;
+		}
+	}
 }
 
 void CKaito::MagicAttackAnim(float vector)
@@ -215,11 +263,20 @@ void CKaito::UniqueAttackAnim(float vector)
 
 void CKaito::DamageAnim(float vector)
 {
+	//どのアニメーションの後でも再生速度を変えない
+	m_AnimSpeed = 0.01f;
+
+	//このアニメーションで使用しているアニメーションでない場合
+	bool NotUseAnim = m_AnimNo != 0 && m_AnimNo != 7 && m_AnimNo != 1;
+
 	//待機アニメーション時
-	if ((m_AnimNo == 0 || m_AnimNo == 3) && !m_AnimChange) {
-		m_AnimNo = 7;
-		m_AnimTime = 0;
-		m_pMesh->ChangeAnimSet(m_AnimNo, m_pAnimCtrl);
+	if (NotUseAnim) {
+		AnimChange(0);
+	}
+
+	if (m_AnimNo == 0 && !m_AnimChange)
+	{
+		AnimChange(7);
 	}
 
 	if (m_AnimNo == 7)
@@ -227,16 +284,11 @@ void CKaito::DamageAnim(float vector)
 		//アニメーションの経過時間を加算
 		m_AnimTime += m_pMesh->GetAnimSpeed();
 		//位置を後ろ向きに下げる
-		if (m_AnimCnt <= 120)
-		{
-			m_MoveX += (0.08f * vector);
-		}
+		m_MoveX += (0.08f * vector);
 
-		if (m_pMesh->GetAnimPeriod(m_AnimNo) < m_AnimTime)
+		if (m_pMesh->GetAnimPeriod(m_AnimNo)- 0.2 < m_AnimTime)
 		{
-			m_AnimNo = 1;
-			m_AnimTime = 0;
-			m_pMesh->ChangeAnimSet(m_AnimNo, m_pAnimCtrl);
+			AnimChange(1);
 		}
 	}
 
@@ -265,8 +317,8 @@ void CKaito::DamageAnim(float vector)
 	{
 		//アニメーションの経過時間を加算
 		m_AnimTime += m_pMesh->GetAnimSpeed();
-
 		m_DamageAnimEnd = true;
+		m_AnimChange = false;
 	}
 
 	SetPosition(m_MoveX, m_MoveY, m_MoveZ);

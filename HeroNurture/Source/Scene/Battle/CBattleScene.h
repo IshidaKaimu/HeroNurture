@@ -129,12 +129,14 @@ private:
 
 	//----それぞれのターンに行う処理----
 	//自分
-	void HeroTurn();
+	void HeroTurn();     //行動処理
+	void DrawHeroTurn(); //UI等描画処理
 	//敵
-	void EnemyHeroTurn();
+	void EnemyHeroTurn();     //行動処理
+	void DrawEnemyHeroTurn(); //UI等描画処理
 
 	//ターンごとの攻撃の設定
-	void SettingAttack(int no , enAttackList attacklist);
+	void SettingAttack(int no , enAttackList& attacklist);
 
 private:
 	//自分が使うヒーロー
@@ -186,8 +188,11 @@ private:
 	//経過ターン数
 	int m_BattleTurn;
 
-	//自分のターンであるかのフラグ
+	//ターンの順を決めるフラグ
 	bool m_IsHeroTurn;
+
+	//現在どちらのターンかを判断するフラグ
+	bool m_CurrentTurn;
 
 	//行動を選択済みであるかの判断
 	bool m_SelectAttack;

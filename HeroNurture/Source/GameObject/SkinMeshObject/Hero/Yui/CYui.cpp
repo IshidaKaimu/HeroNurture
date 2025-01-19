@@ -48,6 +48,24 @@ void CYui::BattleInitialize()
 	//回転の設定
 	SetRotation(BATTLE_ROTATE);
 
+	//アニメーションの軸ごとの回転値の初期化
+	m_MoveRotateY = 0.0f; //Y軸
+	m_MoveRotateZ = 0.0f; //Z軸
+
+	//回転スピードの初期化
+	m_RotateSpeedY = 1.0f;
+
+	//アニメーション終了フラグの初期化
+	m_AnimEnd = false;
+	//ダメージアニメーション終了フラグの初期化
+	m_DamageAnimEnd = false;
+	//ダメージフラグの初期化
+	m_Damage = false;
+	//アニメーションカウントの初期化
+	m_AnimCnt = 0;
+	//アニメーション切り替えフラグの初期化
+	m_AnimChange = false;
+
 	//アニメーションの開始地点の固定
 	m_MoveX = m_vPosition.x;
 	m_MoveY = m_vPosition.y;
@@ -67,6 +85,24 @@ void CYui::EnemyInit()
 	//回転の設定
 	SetRotation(ENEMY_ROTATE);
 	
+	//アニメーションの軸ごとの回転値の初期化
+	m_MoveRotateY = 0.0f; //Y軸
+	m_MoveRotateZ = 0.0f; //Z軸
+
+	//回転スピードの初期化
+	m_RotateSpeedY = 1.0f;
+
+	//アニメーション終了フラグの初期化
+	m_AnimEnd = false;
+	//ダメージアニメーション終了フラグの初期化
+	m_DamageAnimEnd = false;
+	//ダメージフラグの初期化
+	m_Damage = false;
+	//アニメーションカウントの初期化
+	m_AnimCnt = 0;
+	//アニメーション切り替えフラグの初期化
+	m_AnimChange = false;
+
 	//アニメーションの開始地点の固定
 	m_MoveX = m_vPosition.x;
 	m_MoveY = m_vPosition.y;
@@ -203,7 +239,6 @@ void CYui::PowerAttackAnim(float vector)
 	if (m_AnimCnt >= 300)
 	{
 		m_AnimCnt = 0;
-		m_MoveRotateZ = 0;
 		m_AnimEnd = true;
 	}
 
@@ -216,6 +251,11 @@ void CYui::MagicAttackAnim(float vector)
 
 void CYui::UniqueAttackAnim(float vector)
 {
+}
+
+void CYui::DamageAnim(float vector)
+{
+	m_DamageAnimEnd = true;
 }
 
 //攻撃1

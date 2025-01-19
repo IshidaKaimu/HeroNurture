@@ -89,7 +89,8 @@ public:
 	void MagicAttackAnim(float vector) override;
 	//固有攻撃中のアニメーション
 	void UniqueAttackAnim(float vector) override;
-
+	//ダメージ中のアニメーション
+	void DamageAnim(float vector) override;
 
 private:
 	//----アニメーション関連----

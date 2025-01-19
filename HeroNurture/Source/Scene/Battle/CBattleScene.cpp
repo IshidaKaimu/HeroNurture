@@ -9,13 +9,13 @@
 #include "Scene\CSceneManager.h"
 
 CBattleScene::CBattleScene()
-	: m_pHero	  (&CHeroManager::GetInstance())
+	: m_pHero(&CHeroManager::GetInstance())
 	, m_pEnemyHero(&CEnemyHeroManager::GetInstance())
-	, m_pCamera   (&CCameraManager::GetInstance())
-	, m_pGround   ()
-	, m_pSky      ()
-	, m_pHpGage   ()
-	, m_pHpGageBack ()
+	, m_pCamera(&CCameraManager::GetInstance())
+	, m_pGround()
+	, m_pSky()
+	, m_pHpGage()
+	, m_pHpGageBack()
 	, m_pHpGageFrame()
 	, m_pEnemyHpGage()
 	, m_pEnemyHpGageFrame()
@@ -28,6 +28,7 @@ CBattleScene::CBattleScene()
 	, m_EnemyUniqueGageCnt(0)
 	, m_BattleTurn()
 	, m_IsHeroTurn()
+	, m_CurrentTurn()
 	, m_SelectAttack()
 	, m_Attack()
 	, m_EnemyAttackNo()
@@ -124,6 +125,9 @@ void CBattleScene::Initialize()
 	m_pCamera->SetPos(INIT_CAMPOS_B);
 	m_pCamera->SetLook(INIT_CAMLOOK_B);
 
+	//行動が選択済みであるかのフラグの初期化
+	m_SelectAttack = false;
+	
 	//体力の初期化
 	m_pHero->SetHp(m_pHero->GetBattleParamData().Hp * 10.0f);
 	m_pEnemyHero->SetHp(m_pEnemyHero->GetBattleParamData().Hp * 10.0f);
@@ -171,6 +175,7 @@ void CBattleScene::Draw()
 	//空
 	m_pSky->Draw();
 
+	CSceneManager::GetInstance()->GetDx11()->SetDepth(false);
 	//----固有攻撃ゲージの描画----
 	//自分
 	ChangeUniqueGage(m_pUniqueGages,m_pHero->GetUniqueGage(), UNIQUEGAGE_POS,80.0f,m_UniqueGageCnt);
@@ -178,12 +183,15 @@ void CBattleScene::Draw()
 	//敵
 	ChangeUniqueGage(m_pEnemyUniqueGages,m_pEnemyHero->GetUniqueGage(), ENEMY_UNIQUEGAGE_POS, -80.0f,m_EnemyUniqueGageCnt);
 	DrawUniqueGage(m_pEnemyUniqueGages);
-
-	CSceneManager::GetInstance()->GetDx11()->SetDepth(false);
 	//各Hpゲージの描画
 	DrawHpGage();
+	//自分、敵それぞれのターンの描画処理
+	if (m_SelectAttack)
+	{
+		if (!m_CurrentTurn) { DrawHeroTurn(); }
+		else { DrawEnemyHeroTurn(); }
+	}
 	CSceneManager::GetInstance()->GetDx11()->SetDepth(true);
-
 }
 
 void CBattleScene::Debug()
@@ -203,6 +211,17 @@ void CBattleScene::Debug()
 	ImGui::Text(JAPANESE("HP%f"), m_pHero->GetHp());
 	ImGui::Text(JAPANESE("敵HP%f"), m_pEnemyHero->GetHp());
 	ImGui::End();
+
+	ImGui::Begin(JAPANESE("カメラ"));
+	ImGui::Text(JAPANESE("カメラ注視点X:%f"), m_pCamera->GetLook().x);
+	ImGui::End();
+
+	ImGui::Begin(JAPANESE("トレーニング選択状況"));
+	if (m_SelectNo == 0) { ImGui::Text(JAPANESE("物理")); }
+	if (m_SelectNo == 1) { ImGui::Text(JAPANESE("魔法")); }
+	if (m_SelectNo == 2) { ImGui::Text(JAPANESE("固有")); }
+	ImGui::End();
+
 #endif
 #if DEBUG
 	CCameraManager::GetInstance().CameraUpdate();
@@ -340,11 +359,13 @@ void CBattleScene::MoveSelect()
 	CKeyManager* KeyMng = CKeyManager::GetInstance();
 	KeyMng->Update();
 
+	m_pHero->MoveSelectAnim();
+	m_pEnemyHero->MoveSelectAnim();
+
+	//カメラ情報の初期化
 	m_pCamera->SetPos(INIT_CAMPOS_B);
 	m_pCamera->SetLook(INIT_CAMLOOK_B);
 
-	m_pHero->MoveSelectAnim();
-	m_pEnemyHero->MoveSelectAnim();
 
 	//カーソルの移動
 	if (KeyMng->IsDown(VK_RIGHT))
@@ -364,9 +385,12 @@ void CBattleScene::MoveSelect()
 			//自分の攻撃の設定
 			SettingAttack(m_SelectNo, m_Attack);
 			
-			////敵の攻撃の選択
-			//if (m_pEnemyHero->GetUniqueGage() == 5) { m_EnemyAttackNo = CUtility::GenerateRandomValue(0,2);}
-			//else{ m_EnemyAttackNo = CUtility::GenerateRandomValue(0, 1); }
+			//選択をしたフラグ
+			m_SelectAttack = true;
+
+			//敵の攻撃の選択
+			if (m_pEnemyHero->GetUniqueGage() == 5) { m_EnemyAttackNo = CUtility::GenerateRandomValue(0,2);}
+			else{ m_EnemyAttackNo = CUtility::GenerateRandomValue(0, 1); }
 
 			m_EnemyAttackNo = 0;
 
@@ -385,41 +409,61 @@ void CBattleScene::Attack()
 
 	if (m_IsHeroTurn)
 	{
-		HeroTurn();
-		if (m_pEnemyHero->GetHp() > 0.0f && m_pEnemyHero->GetDamageAnimEndFlag()) {
-			//ダメージ処理
-			if (!m_pEnemyHero->GetDamageFlag()) {
+		//自分が先行の場合
+		if (!m_pEnemyHero->GetDamageFlag()) 
+		{
+			HeroTurn();
+			if (m_pEnemyHero->GetHp() > 0.0f && m_pEnemyHero->GetDamageAnimEndFlag()) {
+				//ダメージ処理
 				m_pEnemyHero->Damage(m_pHero->PowerAttack());
 			}
-			else if (m_pEnemyHero->GetDamageFlag())
-			{
-				EnemyHeroTurn();
+		}
+		else 
+		{
+			EnemyHeroTurn();
+			if (m_pHero->GetHp() > 0.0f && m_pHero->GetDamageAnimEndFlag()) {
+				//ダメージ処理
+				m_pHero->Damage(m_pEnemyHero->PowerAttack());
 			}
 		}
 	}
 	else
 	{
-		EnemyHeroTurn();
-		if (m_pEnemyHero->GetHp() > 0.0f && m_pHero->GetDamageAnimEndFlag()) {
-			//ダメージ処理
-			if (!m_pHero->GetDamageFlag()) {
+		//敵が先行の場合
+		if (!m_pHero->GetDamageFlag())
+		{
+			EnemyHeroTurn();
+			if (m_pEnemyHero->GetHp() > 0.0f && m_pHero->GetDamageAnimEndFlag()) {
+				//ダメージ処理
 				m_pHero->Damage(m_pEnemyHero->PowerAttack());
 			}
-			else if (m_pHero->GetDamageFlag())
-			{
-				HeroTurn();
+		}
+		else
+		{
+			HeroTurn();
+			if (m_pHero->GetHp() > 0.0f && m_pEnemyHero->GetDamageAnimEndFlag()) {
+				//ダメージ処理
+				m_pEnemyHero->Damage(m_pHero->PowerAttack());
 			}
 		}
 	}
 
 	//準備フェーズへ移動
-	if (m_pHero->GetAnimEndFlag() && m_pEnemyHero->GetAnimEndFlag())
+	if (m_pHero->GetDamageAnimEndFlag() && m_pEnemyHero->GetDamageAnimEndFlag())
 	{
+		//自分、敵の初期化
 		m_pHero->BattleInitialize();
 		m_pEnemyHero->Initialize();
-		m_BattlePhase = enBattlePhase::MoveSelectPhase;
+
+		//行動を未選択とする
+		m_SelectAttack = false;
+
+		//自分、敵のアニメーション終了フラグを下す
 		m_pHero->SetAnimEndFlag(false);
 		m_pEnemyHero->SetAnimEndFlag(false);
+
+		//バトルのフェーズを行動選択に戻す
+		m_BattlePhase = enBattlePhase::MoveSelectPhase;
 	}
 }
 
@@ -442,6 +486,9 @@ void CBattleScene::SetUpToNextTurn()
 //自分のターンに行う処理
 void CBattleScene::HeroTurn()
 {
+	//現在どちらのターンか
+	m_CurrentTurn = false;
+
 	//自分の攻撃
 	switch (m_Attack)
 	{
@@ -466,9 +513,23 @@ void CBattleScene::HeroTurn()
 	}
 }
 
+//自分のターン中のUI等描画処理
+void CBattleScene::DrawHeroTurn()
+{
+	//クラスのインスタンスを変数に代入
+    //テキスト描画クラス
+	WriteText* Text = WriteText::GetInstance();
+
+	Text->Draw_Text(L"HERO TURN", WriteText::B_Big, D3DXVECTOR2(0.0f, 60.0f));
+
+}
+
 //敵のターンに行う処理
 void CBattleScene::EnemyHeroTurn()
 {
+	//現在どちらのターンか
+	m_CurrentTurn = true;
+
 	//敵の攻撃
 	switch (m_EnemyAttack)
 	{
@@ -495,8 +556,18 @@ void CBattleScene::EnemyHeroTurn()
 
 }
 
+//敵のターン中の描画処理
+void CBattleScene::DrawEnemyHeroTurn()
+{
+	//クラスのインスタンスを変数に代入
+	//テキスト描画クラス
+	WriteText* Text = WriteText::GetInstance();
+
+	Text->Draw_Text(L"ENEMYHERO TURN", WriteText::B_Big, D3DXVECTOR2(0.0f, 60.0f));
+}
+
 //ターンごとの攻撃の設定
-void CBattleScene::SettingAttack(int no, enAttackList attacklist)
+void CBattleScene::SettingAttack(int no, enAttackList& attacklist)
 {
 	switch (no)
 	{
