@@ -35,10 +35,7 @@ void CNatureResultScene::Create()
 //データ設定関数
 void CNatureResultScene::LoadData()
 {
-    //----クラスのインスタンスを変数に代入----
-    //ヒーローマネージャー
     CHeroManager* HeroMng = &CHeroManager::GetInstance();
-    //UIマネージャー
     CUIManager* UIMng = CUIManager::GetInstance();
 
     //セットされたヒーローのメッシュ設定
@@ -56,7 +53,6 @@ void CNatureResultScene::Releace()
 //初期化関数
 void CNatureResultScene::Initialize()
 {
-    //ヒーローマネージャのインスタンスを変数に代入
     CHeroManager* Hero = &CHeroManager::GetInstance();
 
     //セットされているヒーローの初期化
@@ -80,10 +76,7 @@ void CNatureResultScene::Update()
     //フェードイン処理
     if (!FadeIn()) { return; }
 
-    //----クラスのインスタンスを変数に代入----
-    //キーマネージャー
     CKeyManager* KeyMng = CKeyManager::GetInstance();
-    //ヒーローマネージャー
     CHeroManager* HeroMng = &CHeroManager::GetInstance();
 
     //キーマネージャの動作処理
@@ -121,8 +114,6 @@ void CNatureResultScene::Update()
 //描画関数
 void CNatureResultScene::Draw()
 {
-    //----クラスのインスタンスを変数に代入----
-    //ヒーローマネージャー
     CHeroManager* Hero = &CHeroManager::GetInstance();
 
     //カメラの動作
@@ -154,10 +145,7 @@ void CNatureResultScene::Debug()
 //育成結果の描画
 void CNatureResultScene::DrawResult()
 {
-    //----クラスのインスタンスを変数に代入----
-    //テキスト描画クラス
     WriteText* Text = WriteText::GetInstance();
-    //ヒーローマネージャー
     CHeroManager* HeroMng = &CHeroManager::GetInstance();
 
     //「育成ランク」テキストの描画
@@ -192,10 +180,7 @@ float CNatureResultScene::ParamTotal()
 //パラメータUIの描画
 void CNatureResultScene::DrawParamUI(float paramvalue, int no)
 {
-    //----クラスのインスタンスを変数に代入----
-    //テキスト描画クラス
     WriteText* Text = WriteText::GetInstance();
-    //汎用クラス
     CUtility* Utility = &CUtility::GetInstance();
 
     //----各パラメータのUIの描画(背景,値,ランク)----

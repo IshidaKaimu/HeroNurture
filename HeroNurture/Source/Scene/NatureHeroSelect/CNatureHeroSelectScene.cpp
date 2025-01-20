@@ -45,13 +45,8 @@ void CNatureHeroSelectScene::Create()
 //データ設定関数
 void CNatureHeroSelectScene::LoadData()
 {
-    //メッシュマネージャーのインスタンスを変数に代入
     CMeshManager* MMng = CMeshManager::GetInstance();
-
-    //スキンメッシュマネージャーのインスタンスを変数に代入
     CSkinMeshManager* SKMng = CSkinMeshManager::GetInstance();
-
-    //ヒーローマネージャーのインスタンスを変数に代入
     CHeroManager* Hero = &CHeroManager::GetInstance();
 
     //----各ヒーロークラスのメッシュデータ設定----
@@ -108,10 +103,7 @@ void CNatureHeroSelectScene::Update()
     //フェードイン処理
     if (!FadeIn()) { return; }
 
-    //キーマネージャのインスタンスを変数に代入
     CKeyManager* KeyMng = CKeyManager::GetInstance();
-
-    //ヒーローマネージャのインスタンスを変数に代入
     CHeroManager* HeroMng = &CHeroManager::GetInstance();
 
     //キーマネージャの動作処理
@@ -173,6 +165,8 @@ void CNatureHeroSelectScene::Update()
 //描画関数
 void CNatureHeroSelectScene::Draw()
 {  
+    CHeroManager* Hero = &CHeroManager::GetInstance();
+
     //カメラの動作
     m_pCamera->CameraUpdate();
     
@@ -181,9 +175,6 @@ void CNatureHeroSelectScene::Draw()
 
     //地面の描画
     m_pGround->Draw();
-
-    //ヒーローマネージャのインスタンスを変数に代入
-    CHeroManager* Hero = &CHeroManager::GetInstance();
 
     //選択中ヒーローの描画・アニメーション・カメラ配置
     switch (m_SelectNo)

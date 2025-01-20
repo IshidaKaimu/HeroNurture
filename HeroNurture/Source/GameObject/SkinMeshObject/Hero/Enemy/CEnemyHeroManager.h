@@ -15,6 +15,8 @@ private:
 public:
 	//初期化関数
 	void Initialize() override;
+	//固有攻撃アニメーション時の初期化
+	virtual void UniqueInit() override;
 
 	//データ読み込み関数
 	void LoadMeshData() override;
@@ -62,7 +64,7 @@ public:
 	//攻撃2中のアニメーション
 	void MagicAttackAnim(float vector) override { m_pEnemyHero->MagicAttackAnim(vector); }
 	//固有攻撃中のアニメーション
-	void UniqueAttackAnim(float vector)override { m_pEnemyHero->UniqueAttackAnim(vector); }
+	void UniqueAttackAnim()override { m_pEnemyHero->UniqueAttackAnim(); }
 	//ダメージを受けるときのアニメーション
 	void DamageAnim(float vector)override { m_pEnemyHero->DamageAnim(vector); }
 

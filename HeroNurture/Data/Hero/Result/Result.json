@@ -831,5 +831,39 @@
             "Power": 50.0,
             "Speed": 90.0
         }
+    },
+    {
+        "Appropriate": {
+            "Hp": 0.0,
+            "Magic": 10.0,
+            "Power": 0.0,
+            "Speed": 20.0
+        },
+        "HeroName": "Yui",
+        "Name": "Result",
+        "Number": 50,
+        "Parameter": {
+            "Hp": 150.0,
+            "Magic": 82.0,
+            "Power": 30.0,
+            "Speed": 90.0
+        }
+    },
+    {
+        "Appropriate": {
+            "Hp": 0.0,
+            "Magic": 10.0,
+            "Power": 20.0,
+            "Speed": 0.0
+        },
+        "HeroName": "Kaito",
+        "Name": "Result",
+        "Number": 51,
+        "Parameter": {
+            "Hp": 220.0,
+            "Magic": 40.0,
+            "Power": 90.0,
+            "Speed": 40.0
+        }
     }
 ]

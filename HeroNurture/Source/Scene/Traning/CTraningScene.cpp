@@ -47,10 +47,7 @@ void CTraningScene::Releace()
 //データ読み込み関数
 void CTraningScene::LoadData()
 {
-    //----クラスのインスタンスを変数に代入----
-    //テキスト描画クラス
     WriteText* Text = WriteText::GetInstance();
-    //ヒーローマネージャークラス
     CHeroManager* HeroMng = &CHeroManager::GetInstance();
 
     //地面のメッシュデータ設定
@@ -155,8 +152,6 @@ void CTraningScene::Update()
 //描画関数
 void CTraningScene::Draw()
 {
-    //クラスのインスタンスを変数に代入----
-    //シーンマネージャー
     CSceneManager* SceneMng = CSceneManager::GetInstance();
 
     m_pGround->Draw();
@@ -181,9 +176,7 @@ void CTraningScene::Draw()
 //配列にテキストを追加する関数
 void CTraningScene::AddText()
 {
-    //テキスト描画クラスのインスタンスを変数に代入
     WriteText* Text = WriteText::GetInstance();
-    //ヒーローマネージャーのインスタンスを変数に代入
     CHeroManager* Hero = &CHeroManager::GetInstance();
 
     //----それぞれのパラメータが変化していた場合の条件文と上昇量・減少量の計算----
@@ -233,12 +226,8 @@ bool CTraningScene::AlreadyAddCheck(std::wstring paramname)
 //トレーニング結果テキストの描画
 void CTraningScene::DrawTraningText()
 {
-    //----クラスのインスタンスを変数に代入----
-    //テキスト描画クラス
     WriteText* Text = WriteText::GetInstance();
-    //ヒーローマネージャークラス
     CHeroManager* HeroMng = &CHeroManager::GetInstance();
-    //シーンマネージャークラス
     CSceneManager* SceneMng = CSceneManager::GetInstance();
 
     //----テキストを変数に代入----
@@ -279,10 +268,7 @@ void CTraningScene::DrawTraningText()
 //パラメータ変化の描画処理
 void CTraningScene::DrawParamChange(const IncParam& param)
 {
-    //----クラスのインスタンスを変数に代入----
-    //テキスト描画クラス
     WriteText* Text = WriteText::GetInstance();
-    //ヒーローマネージャークラス
     CHeroManager* HeroMng = &CHeroManager::GetInstance();
 
     //描画位置の設定

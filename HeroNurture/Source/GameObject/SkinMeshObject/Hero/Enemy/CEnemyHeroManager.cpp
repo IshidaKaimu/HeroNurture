@@ -17,6 +17,12 @@ void CEnemyHeroManager::Initialize()
     m_pEnemyHero->EnemyInit();
 }
 
+//固有攻撃アニメーションシーンでの初期化
+void CEnemyHeroManager::UniqueInit()
+{
+    m_pEnemyHero->UniqueInit();
+}
+
 //メッシュデータの設定
 void CEnemyHeroManager::LoadMeshData()
 {

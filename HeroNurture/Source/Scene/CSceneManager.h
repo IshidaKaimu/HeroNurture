@@ -22,7 +22,7 @@ class CSceneManager
 	: public CSceneBase
 {
 public:
-	//シーンリスト列挙型
+	//シーンリスト
 	enum enSceneList :char
 	{
 		Login,
@@ -32,9 +32,19 @@ public:
 		NatureResult,
 		BattleHeroSelect,
 		Battle,
+		UniqueAttack,
 		Max_S,
 		none,
 	};
+
+
+	//役割リスト
+	enum enRoleList :char
+	{
+		Hero,
+		EnemyHero,
+	};
+
 
 public:
 	static CSceneManager* GetInstance() {
@@ -104,6 +114,9 @@ public:
 	//休息フラグ
 	bool GetRestFlag() { return m_Rest; }
 	void SetRestFlag(bool rest) { m_Rest = rest; }
+	//役割
+	enRoleList GetRole() { return m_RoleList; }
+	void SetRole(enRoleList role) { m_RoleList = role; }
 
 private:
 	CSceneManager();
@@ -111,7 +124,7 @@ private:
 	CSceneManager& operator = (const CSceneManager& rhs) = delete;
 private:
 	//ユニークポインタ
-	std::unique_ptr<CSceneBase> m_Scene;	
+	std::unique_ptr<CSceneBase> m_Scene;
 	//ウィンドウハンドル
     HWND        m_hWnd;
 	//DirectX9
@@ -119,8 +132,11 @@ private:
 	//DirectX11
     CDirectX11* m_pDx11;  
 
+	//役割リスト
+	enRoleList  m_RoleList;
+
 	//残りターン数
-	int        m_Turn;
+	int         m_Turn;
 
 	// =======================
 	// フラグ

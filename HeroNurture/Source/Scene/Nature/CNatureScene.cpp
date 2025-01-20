@@ -153,12 +153,8 @@ void CNatureScene::Initialize()
 
 void CNatureScene::Update()
 {
-    //----クラスのインスタンスを変数に代入----
-    //キーマネージャー
     CKeyManager* KeyMng = CKeyManager::GetInstance();
-    //ヒーローマネージャー
     CHeroManager* HeroMng = &CHeroManager::GetInstance();
-    //シーンマネージャー
     CSceneManager* SceneMng = CSceneManager::GetInstance();
 
     //フェードイン処理
@@ -228,8 +224,6 @@ void CNatureScene::Update()
 
 void CNatureScene::Draw()
 {
-    //----クラスのインスタンスを変数に代入----
-    //シーンマネージャー
     CSceneManager* SceneMng = CSceneManager::GetInstance();
 
     //カメラの更新処理
@@ -378,7 +372,6 @@ void CNatureScene::LoadHeroData( const std::string& heroname )
 //トレーニング選択処理
 void CNatureScene::SelectTraning()
 {
-    //シーンマネージャのインスタンスを変数に代入
     CSceneManager* SceneMng = CSceneManager::GetInstance();
 
     //更新前のパラメータを保存
@@ -435,10 +428,7 @@ void CNatureScene::SaveParam()
 //各種パラメータの描画
 void CNatureScene::DrawParam()
 {
-    //----クラスのインスタンスを変数に代入----
-    //テキスト描画クラス
     WriteText* Text = WriteText::GetInstance();
-    //汎用クラス
     CUtility* Utility = &CUtility::GetInstance();
 
     //----各種パラメータのUI描画(背景,値,ランク)----
@@ -491,12 +481,8 @@ void CNatureScene::DrawTraning()
 //残りターン数の描画
 void CNatureScene::DrawRemainingTurn()
 {
-    //----クラスのインスタンスを変数に代入----
-    //テキスト描画クラス
     WriteText* Text = WriteText::GetInstance();
-    //汎用クラス
     CUtility* Utility = &CUtility::GetInstance();
-    //シーンマネージャー
     CSceneManager* SceneMng = CSceneManager::GetInstance();
 
     //整数をwstring型に変換
@@ -512,8 +498,6 @@ void CNatureScene::DrawRemainingTurn()
 //スタミナゲージのアニメーション
 void CNatureScene::StaminaGageAnim()
 {
-    //クラスのインスタンスを変数に代入
-    //シーンマネージャー
     CSceneManager* SceneMng = CSceneManager::GetInstance();
 
     //ゲージ幅の確認

@@ -108,7 +108,6 @@ bool CJson::Load( json& jsondata, const std::string& filename )
 //育成情報の書き込み
 void CJson::SaveNatureData(const std::string& heroname, json& jsondata, std::string& hierarchy)
 {
-    //ヒーローマネージャークラスのインスタンスを変数に代入
     CHeroManager* HeroMng = &CHeroManager::GetInstance();
 
     //書き込む情報の格納
@@ -130,7 +129,6 @@ void CJson::SaveNatureData(const std::string& heroname, json& jsondata, std::str
 
 void CJson::SaveResult(const std::string& heroname, json& jsondata)
 {
-    //ヒーローマネージャークラスのインスタンスを変数に代入
     CHeroManager* HeroMng = &CHeroManager::GetInstance();
 
     //育成結果を保存するファイルの階層
@@ -158,7 +156,6 @@ void CJson::SaveResult(const std::string& heroname, json& jsondata)
 //バトルに使用するデータの保存
 void CJson::SaveBattleData(json& data, json& writer, int selectno)
 {
-    //ヒーローマネージャークラスのインスタンスを変数に代入
     CHeroManager* HeroMng = &CHeroManager::GetInstance();
 
     //バトルに使用するデータを保存するファイルの階層

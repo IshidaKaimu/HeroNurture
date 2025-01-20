@@ -10,6 +10,10 @@
 //バトルシーンでの初期情報
 const D3DXVECTOR3 BATTLE_SCALE_KAITO  = { 0.3f,0.3f,0.3f };//拡縮
 
+//固有攻撃シーンでの初期情報
+const D3DXVECTOR3 UNIQUE_POS_KAITO = { 0.0f, 0.0f, 0.0f };   //座標
+const D3DXVECTOR3 UNIQUE_ROTATE_KAITO = { 0.0f, 0.0f, 0.0f };   //座標
+
 //=====================================
 //カイトクラス
 //制作者：石田櫂夢
@@ -30,6 +34,8 @@ public:
 	void BattleInitialize() override;
 	//敵になった際の初期化関数
 	void EnemyInit() override;
+	//固有攻撃の際の初期化関数
+	void UniqueInit()  override;
 
 	//データ読み込み関数
 	void LoadMeshData() override;
@@ -80,7 +86,7 @@ public:
 	//攻撃2中のアニメーション
 	void MagicAttackAnim(float vector) override;
 	//固有攻撃中のアニメーション
-	void UniqueAttackAnim(float vector) override;
+	void UniqueAttackAnim() override;
 	//ダメージを受けた時のアニメーション
 	void DamageAnim(float vector) override;
 

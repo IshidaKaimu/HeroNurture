@@ -334,6 +334,7 @@
     <ClInclude Include="Source\Scene\Battle\CBattleScene.h" />
     <ClInclude Include="Source\Scene\BattleHeroSelect\CBattleHeroSelectScene.h" />
     <ClInclude Include="Source\GameObject\SkinMeshObject\Hero\Enemy\CEnemyHeroManager.h" />
+    <ClInclude Include="Source\Scene\Battle\UniqueAttack\CUniqueAttack.h" />
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="Source\BoundingSphere\CBoundingSphere.cpp">
@@ -496,6 +497,7 @@
     <ClCompile Include="Source\Scene\Battle\CBattleScene.cpp" />
     <ClCompile Include="Source\Scene\BattleHeroSelect\CBattleHeroSelectScene.cpp" />
     <ClCompile Include="Source\GameObject\SkinMeshObject\Hero\Enemy\CEnemyHeroManager.cpp" />
+    <ClCompile Include="Source\Scene\Battle\UniqueAttack\CUniqueAttack.cpp" />
   </ItemGroup>
   <ItemGroup>
     <None Include="Source\ImGui\.editorconfig">

@@ -37,7 +37,6 @@ void CUtility::DrawRank(float value, int typeno, float x, float y)
         break;
     }
 
-    //テキスト描画クラスのインスタンスを変数に代入
     WriteText* Text = WriteText::GetInstance();
 
     //それぞれのランクのテキストタイプの変数

@@ -6,7 +6,10 @@
 #include "Scene\NatureResult\CNatureResultScene.h"
 #include "Scene\BattleHeroSelect\CBattleHeroSelectScene.h"
 #include "Scene\Battle\CBattleScene.h"
+#include "Scene\Battle\UniqueAttack\CUniqueAttack.h"
 #include "ImGui\ImGuiManager\ImGuiManager.h"
+
+
 CSceneManager::CSceneManager()
     : m_Scene       ()
     , m_hWnd        ()
@@ -103,6 +106,7 @@ std::unique_ptr<CSceneBase> CSceneManager::Create(enSceneList List)
     case CSceneManager::NatureResult:     return std::make_unique<CNatureResultScene>();
     case CSceneManager::BattleHeroSelect: return std::make_unique<CBattleHeroSelectScene>();
     case CSceneManager::Battle:           return std::make_unique<CBattleScene>();
+    case CSceneManager::UniqueAttack:     return std::make_unique<CUniqueAttack>();
     case CSceneManager::Max_S:            return nullptr;
     case CSceneManager::none:             return nullptr;
     default:                              return nullptr;

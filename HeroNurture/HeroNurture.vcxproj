@@ -121,6 +121,7 @@
       <ForcedIncludeFiles>stdafx.h</ForcedIncludeFiles>
       <AdditionalIncludeDirectories>Source;Source\Effekseer\include;Source\GameObject;Source\DirectX;Source\TextWrite;Global\Global.h;MyMacro\MyMacro.h;stdafx\stdafx.h</AdditionalIncludeDirectories>
       <RuntimeLibrary>MultiThreadedDebug</RuntimeLibrary>
+      <LanguageStandard>stdcpp20</LanguageStandard>
     </ClCompile>
     <Link>
       <SubSystem>Windows</SubSystem>
@@ -140,6 +141,7 @@
       <ForcedIncludeFiles>stdafx.h</ForcedIncludeFiles>
       <AdditionalIncludeDirectories>Source;Source\Effekseer\include;Source\GameObject;Source\DirectX;Source\TextWrite;Global\Global.h;MyMacro\MyMacro.h;stdafx\stdafx.h</AdditionalIncludeDirectories>
       <RuntimeLibrary>MultiThreaded</RuntimeLibrary>
+      <LanguageStandard>stdcpp20</LanguageStandard>
     </ClCompile>
     <Link>
       <SubSystem>Windows</SubSystem>
@@ -240,6 +242,7 @@
     <ClCompile Include="Source\Light\LightManager\CLightManager.cpp" />
     <ClCompile Include="Source\Scene\BattleHeroSelect\CBattleHeroSelectScene.cpp" />
     <ClCompile Include="Source\Scene\Battle\CBattleScene.cpp" />
+    <ClCompile Include="Source\Scene\Battle\UniqueAttack\CUniqueAttack.cpp" />
     <ClCompile Include="Source\Scene\Nature\CNatureScene.cpp" />
     <ClCompile Include="Source\DebugText\CDebugText.cpp" />
     <ClCompile Include="Source\DirectX\CDirectX11.cpp" />
@@ -304,6 +307,7 @@
     <ClInclude Include="Source\Light\LightManager\CLightManager.h" />
     <ClInclude Include="Source\Scene\BattleHeroSelect\CBattleHeroSelectScene.h" />
     <ClInclude Include="Source\Scene\Battle\CBattleScene.h" />
+    <ClInclude Include="Source\Scene\Battle\UniqueAttack\CUniqueAttack.h" />
     <ClInclude Include="Source\Scene\Nature\CNatureScene.h" />
     <ClInclude Include="Source\DebugText\CDebugText.h" />
     <ClInclude Include="Source\DirectX\CDirectX11.h" />

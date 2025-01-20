@@ -32,6 +32,8 @@ public:
 	void Initialize() override;
 	//バトルシーンで使用する初期化
 	void BattleInitialize() override;
+	//固有攻撃アニメーション時の初期化
+	virtual void UniqueInit() override;
 
 	//データ読み込み関数
 	void LoadMeshData() override;
@@ -95,7 +97,7 @@ public:
 	//攻撃2中のアニメーション
 	void MagicAttackAnim(float vector) override { m_pHero->MagicAttackAnim(vector); }
 	//固有攻撃中のアニメーション
-	void UniqueAttackAnim(float vector)override { m_pHero->UniqueAttackAnim(vector); }
+	void UniqueAttackAnim()override { m_pHero->UniqueAttackAnim(); }
 	//ダメージを受けたときのアニメーション
 	void DamageAnim(float vector) override { m_pHero->DamageAnim(vector); }
 
@@ -189,7 +191,5 @@ protected:
 	float m_BeforeStamina;
 	//変化後のスタミナ
 	float m_AfterStamina;
-
-
 };
 

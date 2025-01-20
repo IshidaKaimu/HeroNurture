@@ -111,15 +111,8 @@ HRESULT CMain::Create()
 	//ImGuiの初期化
 	CImGuiManager::Init(m_hWnd, *m_pDx11);
 #endif // DEBUG
-
-
-	//UIマネージャーのインスタンスを変数に代入
 	CUIManager* UIMng = CUIManager::GetInstance();
-
-	//メッシュマネージャーのインスタンスを変数に代入
 	CMeshManager* MMng = CMeshManager::GetInstance();
-
-	//スキンメッシュマネージャーのインスタンスを変数に代入
 	CSkinMeshManager* SMMng = CSkinMeshManager::GetInstance();
 
 	//画像データの読み込み

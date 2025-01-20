@@ -83,6 +83,8 @@ public:
 	virtual void BattleInitialize() {};
 	//敵になった際の初期化関数
 	virtual void EnemyInit() {};
+	//固有攻撃アニメーション時の初期化
+	virtual void UniqueInit() {};
 
 	//データ読み込み関数
 	virtual void LoadMeshData() {};
@@ -134,7 +136,7 @@ public:
 	//攻撃2中のアニメーション
 	virtual void MagicAttackAnim(float vector) {};
 	//固有攻撃中のアニメーション
-	virtual void UniqueAttackAnim(float vector) {};
+	virtual void UniqueAttackAnim() {};
 	//ダメージアニメーション
 	virtual void DamageAnim(float vector) {};
 

@@ -92,12 +92,8 @@ void CBattleHeroSelectScene::Update()
 	//フェードイン処理
 	if (!FadeIn()) { return; }
 
-	//----クラスのインスタンスを変数に代入----
-	//キーマネージャー
 	CKeyManager* KeyMng = CKeyManager::GetInstance();
-	//ヒーローマネージャー
 	CHeroManager* HeroMng = &CHeroManager::GetInstance();
-	//シーンマネージャー
 	CSceneManager* SceneMng = CSceneManager::GetInstance();
 
 	KeyMng->Update();
@@ -145,10 +141,7 @@ void CBattleHeroSelectScene::Debug()
 
 void CBattleHeroSelectScene::DrawResultData()
 {
-	//----クラスのインスタンスを変数に代入----
-	//テキスト描画クラス
 	WriteText* Text = WriteText::GetInstance();
-	//汎用クラス
 	CUtility* Utility = &CUtility::GetInstance();
 
 	//保存されている育成データの数と現在の選択番号を描画
@@ -183,12 +176,8 @@ void CBattleHeroSelectScene::DrawResultData()
 //保存されているヒーローのパラメータを選択番号ごとに描画する
 void CBattleHeroSelectScene::DrawSaveParameter(const json& jsondata, int number)
 {
-	//クラスのインスタンスを変数に代入
-	//テキスト描画クラス
 	WriteText* Text = WriteText::GetInstance();
-	//ヒーローマネージャー
 	CHeroManager* HeroMng = &CHeroManager::GetInstance();
-	//汎用クラス
 	CUtility* Utility = &CUtility::GetInstance();
 
 	//「育成ランク」テキストの描画

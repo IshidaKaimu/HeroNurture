@@ -40,9 +40,6 @@ public:
 		m_pBSphere->SetPosition(m_vPosition);
 	}
 
-	//アニメーション切り替え
-	void ChangeAnim(int animno);
-
 protected:
 	CSkinMesh*                  m_pMesh;
 	CBoundingSphere*            m_pBSphere;

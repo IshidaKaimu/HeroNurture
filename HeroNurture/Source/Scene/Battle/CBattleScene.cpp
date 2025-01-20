@@ -92,7 +92,7 @@ void CBattleScene::LoadData()
 	for (const auto& enemy : m_EnemyHeroData)
 	{
 		//敵になっているヒーローのもののみ渡す
-		if (m_pEnemyHero->GetEnemyHeroName() == enemy["HeroName"])
+		if (m_pEnemyHero->GetEnemyHeroName() == enemy["HeroName"].get<std::string>())
 		{
 			m_pEnemyHero->SetBattleParamData(enemy);
 		}
@@ -157,8 +157,6 @@ void CBattleScene::Update()
 
 void CBattleScene::Draw()
 {
-	//クラスのインスタンスを変数に代入
-	//テキスト描画クラス
 	WriteText* Text = WriteText::GetInstance();
 
 	//カメラの動作
@@ -196,7 +194,7 @@ void CBattleScene::Draw()
 
 void CBattleScene::Debug()
 {
-#if _DEBUG
+#if DEBUG
 	ImGui::Begin(JAPANESE("パラメータ"));
 	ImGui::Text(JAPANESE("プレイヤー"));
 	ImGui::Text(JAPANESE("筋力:%f"), m_pHero->GetBattleParamData().Power);
@@ -232,6 +230,11 @@ void CBattleScene::Debug()
 	CCameraManager::GetInstance().SetLook(ATTACK_CAMLOOK);
 	ImGui::End();
 #endif
+#if _DEBUG
+	m_pHero->Debug();
+	m_pEnemyHero->Debug();
+#endif
+
 
 }
 
@@ -354,8 +357,6 @@ void CBattleScene::DrawUniqueGage(std::vector<std::unique_ptr<CUIObject>>& gages
 //行動選択フェーズ中の処理
 void CBattleScene::MoveSelect()
 {
-	//----クラスのインスタンスを変数に代入----
-	//キーマネージャー
 	CKeyManager* KeyMng = CKeyManager::GetInstance();
 	KeyMng->Update();
 
@@ -504,11 +505,24 @@ void CBattleScene::HeroTurn()
 		{
 			m_pCamera->SetPos(ENEMY_ATTACK_CAMPOS);
 			m_pCamera->SetLook(ENEMY_ATTACK_CAMLOOK);
-			m_pHero->BattleInitPos();
 			m_pEnemyHero->DamageAnim(1.0f);//敵のダメージアニメーション
 		}
 		break;
-	case CBattleScene::MagicAttack:  m_pEnemyHero->Damage(m_pHero->MagicAttack()); break;
+	case CBattleScene::MagicAttack:  
+		//攻撃アニメーションが終わっていなければ
+		if (!m_pHero->GetAnimEndFlag())
+		{
+			m_pCamera->SetPos(ATTACK_CAMPOS);
+			m_pCamera->SetLook(ATTACK_CAMLOOK);
+		}
+		m_pHero->MagicAttackAnim(1.0f);
+		if (m_pHero->GetAnimEndFlag()) //攻撃アニメーションが終わったら
+		{
+			m_pCamera->SetPos(ENEMY_ATTACK_CAMPOS);
+			m_pCamera->SetLook(ENEMY_ATTACK_CAMLOOK);
+			m_pEnemyHero->DamageAnim(1.0f);//敵のダメージアニメーション
+		}
+		break;
 	case CBattleScene::UniqueAttack: m_pEnemyHero->Damage(m_pHero->UniqueAttack());break;
 	}
 }
@@ -516,8 +530,6 @@ void CBattleScene::HeroTurn()
 //自分のターン中のUI等描画処理
 void CBattleScene::DrawHeroTurn()
 {
-	//クラスのインスタンスを変数に代入
-    //テキスト描画クラス
 	WriteText* Text = WriteText::GetInstance();
 
 	Text->Draw_Text(L"HERO TURN", WriteText::B_Big, D3DXVECTOR2(0.0f, 60.0f));
@@ -546,7 +558,6 @@ void CBattleScene::EnemyHeroTurn()
 		{
 			m_pCamera->SetPos(ATTACK_CAMPOS);
 			m_pCamera->SetLook(ATTACK_CAMLOOK);
-			m_pEnemyHero->BattleInitPos();
 			m_pHero->DamageAnim(-1.0f); //敵のダメージアニメーション
 		}
 		break;
@@ -559,8 +570,6 @@ void CBattleScene::EnemyHeroTurn()
 //敵のターン中の描画処理
 void CBattleScene::DrawEnemyHeroTurn()
 {
-	//クラスのインスタンスを変数に代入
-	//テキスト描画クラス
 	WriteText* Text = WriteText::GetInstance();
 
 	Text->Draw_Text(L"ENEMYHERO TURN", WriteText::B_Big, D3DXVECTOR2(0.0f, 60.0f));

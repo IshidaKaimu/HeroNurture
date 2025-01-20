@@ -45,7 +45,6 @@ void CLoginScene::Releace()
 //データ設定関数
 void CLoginScene::LoadData()
 {
-    //メッシュマネージャーのインスタンスを変数に代入
     CMeshManager* MMng = CMeshManager::GetInstance();
     m_pSky->AttachMesh(CMeshManager::GetMesh(CMeshManager::Sky));
     m_pGround->AttachMesh(CMeshManager::GetMesh(CMeshManager::Ground));
@@ -115,7 +114,6 @@ float CLoginScene::Easing(float x)
 //名前入力処理
 void CLoginScene::InputName()
 {
-    //キーマネージャのインスタンスを変数に代入
     CKeyManager* KeyMng = CKeyManager::GetInstance();
 
     //キーマネージャの常に行う処理

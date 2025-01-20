@@ -30,6 +30,12 @@ void CHeroManager::BattleInitialize()
     m_pHero->BattleInitialize();
 }
 
+//固有攻撃の際の初期化
+void CHeroManager::UniqueInit()
+{
+    m_pHero->UniqueInit();
+}
+
 //データ読み込み関数
 void CHeroManager::LoadMeshData()
 {
