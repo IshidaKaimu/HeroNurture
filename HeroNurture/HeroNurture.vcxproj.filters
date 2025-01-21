@@ -257,7 +257,7 @@
     <ClInclude Include="Source\Scene\CSceneManager.h">
       <Filter>Source\Scene</Filter>
     </ClInclude>
-    <ClInclude Include="Source\Scene\Login\CLoginScene.h">
+    <ClInclude Include="Source\Scene\Title\CTitleScene.h">
       <Filter>Source\Scene\Title</Filter>
     </ClInclude>
     <ClInclude Include="Source\Scene\NatureHeroSelect\CNatureHeroSelectScene.h">
@@ -335,6 +335,7 @@
     <ClInclude Include="Source\Scene\BattleHeroSelect\CBattleHeroSelectScene.h" />
     <ClInclude Include="Source\GameObject\SkinMeshObject\Hero\Enemy\CEnemyHeroManager.h" />
     <ClInclude Include="Source\Scene\Battle\UniqueAttack\CUniqueAttack.h" />
+    <ClInclude Include="Source\Scene\ModeSelectScene\CModeSelectScene.h" />
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="Source\BoundingSphere\CBoundingSphere.cpp">
@@ -418,7 +419,7 @@
     <ClCompile Include="Source\Scene\CSceneManager.cpp">
       <Filter>Source\Scene</Filter>
     </ClCompile>
-    <ClCompile Include="Source\Scene\Login\CLoginScene.cpp">
+    <ClCompile Include="Source\Scene\Title\CTitleScene.cpp">
       <Filter>Source\Scene\Title</Filter>
     </ClCompile>
     <ClCompile Include="Source\Scene\NatureHeroSelect\CNatureHeroSelectScene.cpp">
@@ -498,6 +499,7 @@
     <ClCompile Include="Source\Scene\BattleHeroSelect\CBattleHeroSelectScene.cpp" />
     <ClCompile Include="Source\GameObject\SkinMeshObject\Hero\Enemy\CEnemyHeroManager.cpp" />
     <ClCompile Include="Source\Scene\Battle\UniqueAttack\CUniqueAttack.cpp" />
+    <ClCompile Include="Source\Scene\ModeSelectScene\CModeSelectScene.cpp" />
   </ItemGroup>
   <ItemGroup>
     <None Include="Source\ImGui\.editorconfig">

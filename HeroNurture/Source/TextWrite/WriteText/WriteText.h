@@ -57,6 +57,7 @@ public:
         D3DXVECTOR2 pos,            //位置
         bool centering = false,     //中央揃えの有無 ※false:無,true:有
         bool Right_alignment = false//右揃え
+
     );
 
     void SetDx11(CDirectX11& Dx11) { m_pDx11 = &Dx11; }

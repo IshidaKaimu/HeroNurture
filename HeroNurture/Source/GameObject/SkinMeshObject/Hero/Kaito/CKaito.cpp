@@ -36,6 +36,23 @@ void CKaito::BattleInitialize()
 	SetPosition(BATTLEINIT_POS);
 	SetScale(BATTLE_SCALE_KAITO);
 	SetRotation(BATTLE_ROTATE);
+
+	//アニメーション終了フラグの初期化
+	m_AnimEnd = false;
+	//ダメージアニメーション終了フラグの初期化
+	m_DamageAnimEnd = false;
+	//ダメージフラグの初期化
+	m_Damage = false;
+	//アニメーション切り替えフラグの初期化
+	m_AnimChange = false;
+	//アニメーションカウントの初期化
+	m_AnimCnt = 0;
+
+	//アニメーションの開始地点の固定
+	m_MoveX = m_vPosition.x;
+	m_MoveY = m_vPosition.y;
+	m_MoveZ = m_vPosition.z;
+
 }
 
 //敵になった際の初期化関数
@@ -47,6 +64,23 @@ void CKaito::EnemyInit()
 	SetPosition(ENEMYINIT_POS);
 	SetScale(BATTLE_SCALE_KAITO);
 	SetRotation(ENEMY_ROTATE);
+
+	//アニメーション終了フラグの初期化
+	m_AnimEnd = false;
+	//ダメージアニメーション終了フラグの初期化
+	m_DamageAnimEnd = false;
+	//ダメージフラグの初期化
+	m_Damage = false;
+	//アニメーション切り替えフラグの初期化
+	m_AnimChange = false;
+	//アニメーションカウントの初期化
+	m_AnimCnt = 0;
+
+	//アニメーションの開始地点の固定
+	m_MoveX = m_vPosition.x;
+	m_MoveY = m_vPosition.y;
+	m_MoveZ = m_vPosition.z;
+
 }
 
 //固有攻撃の際の初期化関数
@@ -357,23 +391,6 @@ void CKaito::AnimInit()
 	m_AnimNo = 0;
 	//アニメーションを設定
 	m_pMesh->ChangeAnimSet(m_AnimNo, m_pAnimCtrl);
-
-
-	//アニメーション終了フラグの初期化
-	m_AnimEnd = false;
-	//ダメージアニメーション終了フラグの初期化
-	m_DamageAnimEnd = false;
-	//ダメージフラグの初期化
-	m_Damage = false;
-	//アニメーション切り替えフラグの初期化
-	m_AnimChange = false;
-	//アニメーションカウントの初期化
-	m_AnimCnt = 0;
-
-	//アニメーションの開始地点の固定
-	m_MoveX = m_vPosition.x;
-	m_MoveY = m_vPosition.y;
-	m_MoveZ = m_vPosition.z;
 }
 
 //アニメーション切り替え

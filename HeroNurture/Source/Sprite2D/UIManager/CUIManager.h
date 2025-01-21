@@ -9,27 +9,32 @@ public:
 	//UIリスト
 	enum UIList
 	{
-		Fade,		    //シーン遷移時に使うフェード用の画像
-		WhiteFade,	    //白フェード用画像
-		ParamList,      //育成中のパラメータ表
-		ResultParamList,//育成結果表示時のパラメータ表
-		PowerTraning,   //筋力トレーニング
-		MagicTraning,   //魔力トレーニング
-		SpeedTraning,   //素早さトレーニング
-		HpTraning,      //体力トレーニング
-		Rest,           //休息		
-		PowerBack,		//筋力トレーニング背景
-		MagicBack,		//魔力トレーニング背景
-		SpeedBack,		//素早さトレーニング背景
-		HpBack,		    //体力トレーニング背景
-		RestBack,		//休息背景
-		TextBox,		//テキストボックス
-		StaminaGage,    //スタミナゲージ
-		StaminaBack,    //スタミナゲージ背景
-		HpGage,			//体力ゲージ
-		HpGageBack,     //体力ゲージ背景
-		GageFrame,      //ゲージ枠
-		UniqueGage,		//ユニークゲージ
+		Fade,		        //シーン遷移時に使うフェード用の画像
+		WhiteFade,	        //白フェード用画像
+		TitleBack,          //タイトル背景
+		TitleInfoBack,      //タイトル指示テキスト背景
+		ModeSelectLeft,     //モード選択シーン背景左
+		ModeSelectRight,	//モード選択シーン背景右
+		ModeSelectCover,    //モード選択シーン背景かぶせる画像
+		ParamList,          //育成中のパラメータ表
+		ResultParamList,    //育成結果表示時のパラメータ表
+		PowerTraning,       //筋力トレーニング
+		MagicTraning,       //魔力トレーニング
+		SpeedTraning,       //素早さトレーニング
+		HpTraning,          //体力トレーニング
+		Rest,               //休息		
+		PowerBack,		    //筋力トレーニング背景
+		MagicBack,		    //魔力トレーニング背景
+		SpeedBack,		    //素早さトレーニング背景
+		HpBack,		        //体力トレーニング背景
+		RestBack,		    //休息背景
+		TextBox,		    //テキストボックス
+		StaminaGage,        //スタミナゲージ
+		StaminaBack,        //スタミナゲージ背景
+		HpGage,			    //体力ゲージ
+		HpGageBack,         //体力ゲージ背景
+		GageFrame,          //ゲージ枠
+		UniqueGage,		    //ユニークゲージ
 		Max,
 	};
 

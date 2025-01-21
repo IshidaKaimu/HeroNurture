@@ -1,5 +1,5 @@
 #include "CSceneManager.h"
-#include "Scene\Login\CLoginScene.h"
+#include "Scene\Title\CTitleScene.h"
 #include "Scene\Nature\CNatureScene.h"
 #include "Scene\NatureHeroSelect\CNatureHeroSelectScene.h"
 #include "Scene\Traning\CTraningScene.h"
@@ -17,7 +17,7 @@ CSceneManager::CSceneManager()
     , m_pDx11       ( nullptr )
     , m_GageWidth   ( 1.0f )
 {
-    m_Scene = std::make_unique<CLoginScene>();   //make_unique:インスタンスを生成して、使わなくなったら勝手に破棄してくれる
+    m_Scene = std::make_unique<CTitleScene>();   //make_unique:インスタンスを生成して、使わなくなったら勝手に破棄してくれる
 }
 
 
@@ -56,7 +56,7 @@ void CSceneManager::Initialize()
 void CSceneManager::Update()
 {        
     ImGui::Begin(JAPANESE("シーン"));
-    if (ImGui::Button(JAPANESE("ログイン"))) { LoadCreate(enSceneList::Login); }
+    if (ImGui::Button(JAPANESE("ログイン"))) { LoadCreate(enSceneList::Title); }
     if (ImGui::Button(JAPANESE("ヒーロー選択"))) { LoadCreate(enSceneList::HeroSelect); }
     if (ImGui::Button(JAPANESE("育成"))) { LoadCreate(enSceneList::Nature); }
     if (ImGui::Button(JAPANESE("修行"))) { LoadCreate(enSceneList::Training); }
@@ -99,7 +99,7 @@ std::unique_ptr<CSceneBase> CSceneManager::Create(enSceneList List)
     //現在のシーンのインスタンスを返す
     switch (List)
     {
-    case CSceneManager::Login:            return std::make_unique<CLoginScene>();
+    case CSceneManager::Title:            return std::make_unique<CTitleScene>();
     case CSceneManager::HeroSelect:       return std::make_unique<CNatureHeroSelectScene>();
     case CSceneManager::Nature:           return std::make_unique<CNatureScene>();
     case CSceneManager::Training:         return std::make_unique<CTraningScene>();

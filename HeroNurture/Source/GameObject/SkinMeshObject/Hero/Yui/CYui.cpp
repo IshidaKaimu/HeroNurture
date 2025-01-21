@@ -22,12 +22,8 @@ void CYui::Initialize()
 {
 	CSceneManager* SceneMng = CSceneManager::GetInstance();
 
-	//アニメーションスピードの設定
-	m_AnimSpeed = 0.01f;
-	//初めのアニメーションの設定
-	m_AnimNo = 3;
-	//登場アニメーション
-	m_pMesh->ChangeAnimSet(m_AnimNo, m_pAnimCtrl);
+	//アニメーションの初期化
+	AnimInit();
 
 	//白フェードの初期化
 	SceneMng->InitWhiteFade();

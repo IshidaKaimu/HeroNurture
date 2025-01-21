@@ -120,8 +120,11 @@ HRESULT CMain::Create()
 	MMng->Load(m_pDx9, m_pDx11);
 	SMMng->Load(m_pDx9, m_pDx11);
 
-	//ゲームクラスの構築（Loadも含める）.
+	//シーンの構築（Loadも含める）.
 	CSceneManager::GetInstance()->Create(*m_pDx9, *m_pDx11, m_hWnd);
+
+	//シーンの初期化
+	CSceneManager::GetInstance()->Initialize();
 
 	return S_OK;
 }

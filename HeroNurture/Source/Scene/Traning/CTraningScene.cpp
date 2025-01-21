@@ -88,7 +88,6 @@ void CTraningScene::Initialize()
     m_pTextBox->SetPosition(30.0f, 580.0f, 0.0f);
     m_pTextBox->SetScale(1.0f, 0.7f, 1.0f);
     m_pTextBox->SetDisplay(1.0f, 1.0f);
-
 }
 
 //XVŠÖ”

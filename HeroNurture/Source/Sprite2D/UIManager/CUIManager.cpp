@@ -31,6 +31,11 @@ HRESULT CUIManager::Load(CDirectX11* Dx11)
 	{                                                                    //表示サイズ       //元画像サイズ   //1コマ当たりの表示サイズ
 		{UIList::Fade,	         _T("Data\\Texture\\fade.png")			   ,{ 1280.0f, 720.0f, 1280.0f, 720.0f, 0.0f, 0.0f,}},
 		{UIList::WhiteFade,	     _T("Data\\Texture\\WhiteFade.png")		   ,{ 1280.0f, 720.0f, 1280.0f, 720.0f, 0.0f, 0.0f,}},
+		{UIList::TitleBack,      _T("Data\\Texture\\TitleBack.png")	       ,{ 534.0f, 200.0f, 534.0f, 200.0f, 534.0f, 200.0f,}},
+		{UIList::TitleInfoBack,  _T("Data\\Texture\\TitleInfoBack.png")	   ,{ 465.0f, 136.0f, 465.0f, 136.0f, 465.0f, 136.0f,}},
+		{UIList::ModeSelectLeft, _T("Data\\Texture\\TitleInfoBack.png")	   ,{ 465.0f, 136.0f, 465.0f, 136.0f, 465.0f, 136.0f,}},
+		{UIList::ModeSelectRight,_T("Data\\Texture\\TitleInfoBack.png")	   ,{ 465.0f, 136.0f, 465.0f, 136.0f, 465.0f, 136.0f,}},
+		{UIList::ModeSelectCover,_T("Data\\Texture\\TitleInfoBack.png")	   ,{ 465.0f, 136.0f, 465.0f, 136.0f, 465.0f, 136.0f,}},
 		{UIList::PowerTraning,   _T("Data\\Texture\\PowerTraning.png")	   ,{ 290.0, 260.0, 290.0, 260.0, 290.0, 260.0,}},
 		{UIList::MagicTraning,   _T("Data\\Texture\\MagicTraning.png")	   ,{ 290.0, 260.0, 290.0, 260.0, 290.0, 260.0,}},
 		{UIList::SpeedTraning,   _T("Data\\Texture\\SpeedTraning.png")	   ,{ 290.0, 260.0, 290.0, 260.0, 290.0, 260.0,}},

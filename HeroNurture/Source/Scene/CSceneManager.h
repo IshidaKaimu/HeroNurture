@@ -25,7 +25,7 @@ public:
 	//シーンリスト
 	enum enSceneList :char
 	{
-		Login,
+		Title,
 		HeroSelect,
 		Nature,
 		Training,
