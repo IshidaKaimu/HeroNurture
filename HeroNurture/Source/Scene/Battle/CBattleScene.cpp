@@ -138,6 +138,8 @@ void CBattleScene::Initialize()
 
 void CBattleScene::Update()
 {
+	CSceneManager* SceneMng = CSceneManager::GetInstance();
+
 	//フェードイン処理
 	if (!FadeIn()) { return; }
 
@@ -150,6 +152,31 @@ void CBattleScene::Update()
 		Attack();		//お互いの攻撃
 		break;
 	}
+
+	//死亡時処理
+    //自分
+	if (m_pHero->Death())
+	{
+		//勝敗の設定
+		SceneMng->SetBattleResult(CSceneManager::Lose);
+
+		m_SceneTransitionFlg = true;
+	}
+	//敵
+	if (m_pEnemyHero->Death())
+	{
+		//勝敗の設定
+		SceneMng->SetBattleResult(CSceneManager::Win);
+
+		m_SceneTransitionFlg = true;
+	}
+
+	//フェードアウト処理
+	if (m_SceneTransitionFlg && FadeOut())
+	{
+		SceneMng->LoadCreate(CSceneManager::BattleResult);
+	}
+
 
 	//デバッグ処理
 	Debug();
@@ -358,6 +385,8 @@ void CBattleScene::DrawUniqueGage(std::vector<std::unique_ptr<CUIObject>>& gages
 void CBattleScene::MoveSelect()
 {
 	CKeyManager* KeyMng = CKeyManager::GetInstance();
+
+	//キーマネージャーの動作
 	KeyMng->Update();
 
 	m_pHero->MoveSelectAnim();
@@ -523,7 +552,6 @@ void CBattleScene::HeroTurn()
 			m_pEnemyHero->DamageAnim(1.0f);//敵のダメージアニメーション
 		}
 		break;
-	case CBattleScene::UniqueAttack: m_pEnemyHero->Damage(m_pHero->UniqueAttack());break;
 	}
 }
 
@@ -562,7 +590,6 @@ void CBattleScene::EnemyHeroTurn()
 		}
 		break;
 	case CBattleScene::MagicAttack: m_pEnemyHero->Damage(m_pEnemyHero->MagicAttack()); break;
-	case CBattleScene::UniqueAttack: m_pEnemyHero->Damage(m_pEnemyHero->UniqueAttack()); break;
 	}
 
 }
@@ -582,6 +609,5 @@ void CBattleScene::SettingAttack(int no, enAttackList& attacklist)
 	{
 	case 0: attacklist = enAttackList::PowerAttack; break;
 	case 1: attacklist = enAttackList::MagicAttack; break;
-	case 2: attacklist = enAttackList::UniqueAttack; break;
 	}
 }

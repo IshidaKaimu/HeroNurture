@@ -70,7 +70,6 @@ private:
 	{
 		PowerAttack,
 		MagicAttack,
-		UniqueAttack,
 		Max,
 	};
 

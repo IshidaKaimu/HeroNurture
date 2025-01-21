@@ -36,6 +36,9 @@ public:
 	//各ヒーロークラスの作成
 	static std::unique_ptr<CHeroBase>Create(enHeroList list);
 
+	//死亡関数
+	bool Death() { return m_pEnemyHero->GetHp() <= 0.0f; }
+
 	//ダメージ関数
 	void Damage(float damage) { m_pEnemyHero->Damage(damage); }
 

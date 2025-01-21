@@ -107,7 +107,7 @@ void CNatureResultScene::Update()
     {
         CSceneManager::GetInstance()->SetIsDataLoaded(false);
         m_pJson->SaveResult(HeroMng->GetHeroName(), m_ResultWriter);
-        CSceneManager::GetInstance()->LoadCreate(CSceneManager::HeroSelect);
+        CSceneManager::GetInstance()->LoadCreate(CSceneManager::NatureHeroSelect);
     }
 }
 

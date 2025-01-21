@@ -96,11 +96,16 @@ void CTitleScene::Initialize()
 //更新関数
 void CTitleScene::Update()
 {   
+    CSceneManager* SceneMng = CSceneManager::GetInstance();
+    CKeyManager* KeyMng = CKeyManager::GetInstance();
+
+    KeyMng->Update();
+
     //フェードイン処理
     if (!FadeIn()) { return; }
 
     //シーン遷移(仮)
-    if (CKeyManager::GetInstance()->IsDown(VK_RETURN))
+    if (KeyMng->IsDown(VK_RETURN))
     {
         //オープニングシーンへ
         m_SceneTransitionFlg = true;
@@ -108,6 +113,7 @@ void CTitleScene::Update()
     //フェードアウト処理
     if (m_SceneTransitionFlg && FadeOut()) 
     {
+        SceneMng->LoadCreate(CSceneManager::ModeSelect);
     }
 }
 

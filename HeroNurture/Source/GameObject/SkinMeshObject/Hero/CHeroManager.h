@@ -114,6 +114,9 @@ public:
 	//ダメージ関数
 	void Damage(float damage) { m_pHero->Damage(damage); }
 
+	//死亡関数
+	bool Death() { return m_pHero->GetHp() <= 0.0f; }
+
 	//バトル中の位置の初期化
 	void BattleInitPos() { m_pHero->SetPosition(BATTLEINIT_POS); }
 

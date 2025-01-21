@@ -35,7 +35,6 @@ class CHeroBase
 	: public CSkinMeshObject
 {
 public :
-
 	//ヒーロー名リスト
 	enum enHeroList :char
 	{

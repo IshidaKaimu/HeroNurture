@@ -23,22 +23,41 @@ class CUIManager;
 // =======================
 // 定数宣言
 // =======================
-//共通の初期位置
-const D3DXVECTOR3 TITLE_POS = { 0.0f, 0.0f, 1.0f };
-//ユイの初期設定
-const D3DXVECTOR3 TITLE_YUI_SCALE = { 0.04f, 0.04f, 0.04f }; //拡縮
-//カイトの初期設定
-const D3DXVECTOR3 TITLE_KAITO_SCALE = { 0.3f, 0.3f, 0.3f };  //拡縮
+//----各UIの設定----
+//育成モード		
+const D3DXVECTOR3 NATUREMODE_POS = { 0.0f,0.0f,-1.0f };  //座標
+//バトルモード
+const D3DXVECTOR3 BATTLEMODE_POS = { 640.0f,0.0f,-1.0f };//座標
+//被せる画像
+const D3DXVECTOR3 COVER_POS = { 640.0f,0.0f,0.0f };//座標
+constexpr float COVER_ALPHA = 0.8f;
+//共通
+const D3DXVECTOR3 MODE_SCALE = { 1.0f,1.0f,1.0f }; //拡縮
+const D3DXVECTOR2 MODE_DISP  = { 1.0f, 1.0f };     //α値
+constexpr float   MODE_ALPHA = 1.0f;
+//シーン名
+const D3DXVECTOR2 SCENENAME_POS = { 430.0f,0.0f };
+
 
 //=====================================
-// タイトルシーンクラス
+// モードセレクトシーンクラス
+// 作成者:石田櫂夢
 //=====================================
-class CTitleScene
+class CModeSelectScene
 	:public CSceneBase
 {
+private:
+	//モードリスト
+	enum enModeList :char
+	{
+		NatureMode,
+		BattleMode,
+		Max
+	};
+
 public:
-	CTitleScene();
-	~CTitleScene();
+	CModeSelectScene();
+	~CModeSelectScene();
 
 
 	//構築関数
@@ -55,52 +74,19 @@ public:
 	void Draw()		  override;
 
 private:
-
-	//文字の動き
-	float Easing(float x);
-	//アカウント名入力処理
-	void  InputName();	
 	//UIの描画
 	void DrawUI();
-
-	//wstringからstringへの変換
-	std::string WstringToString(std::wstring owstring);
-
 private:
-
-	//カメラクラス
-	CCameraManager* m_pCamera;
-
 	// =======================
 	// オブジェクトクラス
 	// =======================		
-	//----スタティックメッシュ----
-	//空
-	std::unique_ptr<CSky> m_pSky;	
-	//地面
-	std::unique_ptr<CGround> m_pGround;
-
-	//----スキンメッシュ----
-	//ユイ
-	std::unique_ptr<CYui> m_pYui;
-	//カイト
-	std::unique_ptr<CKaito> m_pKaito;
-
 	//----UI----
-	//タイトル背景
-	std::unique_ptr<CUIObject> m_pTitleBack;
-	//タイトル指示テキスト背景
-	std::unique_ptr<CUIObject> m_pTitleInfoBack;
-
-	//ユーザー名入力
-	std::wstring m_UserName;
-
-	//Jsonクラス
-	std::unique_ptr<CJson> m_pJson;
-
-
-	//表示ヒーロー
-	int m_HeroNo;
+	//育成モード
+	std::unique_ptr<CUIObject> m_pNatureMode;
+	//対戦モード
+	std::unique_ptr<CUIObject> m_pBattleMode;
+	//選択されていないほうにかぶせる画像
+	std::unique_ptr<CUIObject> m_pCover;
 
 };
 

@@ -1,12 +1,14 @@
 #include "CSceneManager.h"
 #include "Scene\Title\CTitleScene.h"
 #include "Scene\Nature\CNatureScene.h"
+#include "Scene\ModeSelect\CModeSelectScene.h"
 #include "Scene\NatureHeroSelect\CNatureHeroSelectScene.h"
 #include "Scene\Traning\CTraningScene.h"
 #include "Scene\NatureResult\CNatureResultScene.h"
 #include "Scene\BattleHeroSelect\CBattleHeroSelectScene.h"
 #include "Scene\Battle\CBattleScene.h"
 #include "Scene\Battle\UniqueAttack\CUniqueAttack.h"
+#include "Scene\BattleResult\CBattleResultScene.h"
 #include "ImGui\ImGuiManager\ImGuiManager.h"
 
 
@@ -15,6 +17,8 @@ CSceneManager::CSceneManager()
     , m_hWnd        ()
     , m_pDx9        ( nullptr )
     , m_pDx11       ( nullptr )
+    , m_RoleList    ()
+    , m_BattleResult()
     , m_GageWidth   ( 1.0f )
 {
     m_Scene = std::make_unique<CTitleScene>();   //make_unique:インスタンスを生成して、使わなくなったら勝手に破棄してくれる
@@ -57,12 +61,13 @@ void CSceneManager::Update()
 {        
     ImGui::Begin(JAPANESE("シーン"));
     if (ImGui::Button(JAPANESE("ログイン"))) { LoadCreate(enSceneList::Title); }
-    if (ImGui::Button(JAPANESE("ヒーロー選択"))) { LoadCreate(enSceneList::HeroSelect); }
+    if (ImGui::Button(JAPANESE("ヒーロー選択"))) { LoadCreate(enSceneList::NatureHeroSelect); }
     if (ImGui::Button(JAPANESE("育成"))) { LoadCreate(enSceneList::Nature); }
     if (ImGui::Button(JAPANESE("修行"))) { LoadCreate(enSceneList::Training); }
     if (ImGui::Button(JAPANESE("育成結果"))) { LoadCreate(enSceneList::NatureResult); }
     if (ImGui::Button(JAPANESE("バトルヒーロー選択"))) { LoadCreate(enSceneList::BattleHeroSelect); }
     if (ImGui::Button(JAPANESE("バトル"))) { LoadCreate(enSceneList::Battle); }
+    if (ImGui::Button(JAPANESE("バトル結果"))) { LoadCreate(enSceneList::BattleResult); }
     ImGui::End();
     m_Scene->Update();  //入ってるシーンの動作を行う   
 }
@@ -100,12 +105,14 @@ std::unique_ptr<CSceneBase> CSceneManager::Create(enSceneList List)
     switch (List)
     {
     case CSceneManager::Title:            return std::make_unique<CTitleScene>();
-    case CSceneManager::HeroSelect:       return std::make_unique<CNatureHeroSelectScene>();
+    case CSceneManager::ModeSelect:       return std::make_unique<CModeSelectScene>();
+    case CSceneManager::NatureHeroSelect: return std::make_unique<CNatureHeroSelectScene>();
     case CSceneManager::Nature:           return std::make_unique<CNatureScene>();
     case CSceneManager::Training:         return std::make_unique<CTraningScene>();
     case CSceneManager::NatureResult:     return std::make_unique<CNatureResultScene>();
     case CSceneManager::BattleHeroSelect: return std::make_unique<CBattleHeroSelectScene>();
     case CSceneManager::Battle:           return std::make_unique<CBattleScene>();
+    case CSceneManager::BattleResult:     return std::make_unique<CBattleResultScene>();
     case CSceneManager::UniqueAttack:     return std::make_unique<CUniqueAttack>();
     case CSceneManager::Max_S:            return nullptr;
     case CSceneManager::none:             return nullptr;

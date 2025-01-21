@@ -6,10 +6,13 @@
 
 //----前方宣言---
 class CTitleScene;
+class CModeSelect;
 class CNatureHeroSelectScene;
 class CNatureScene;
 class CTraningScene;
-class CTraningResult;
+class CTraningResultScene;
+class CBattleScene;
+class CBattleResultScene;
 
 //育成ターン数
 constexpr int MAX_TURN = 2;
@@ -26,13 +29,15 @@ public:
 	enum enSceneList :char
 	{
 		Title,
-		HeroSelect,
+		ModeSelect,
+		NatureHeroSelect,
 		Nature,
 		Training,
 		NatureResult,
 		BattleHeroSelect,
 		Battle,
 		UniqueAttack,
+		BattleResult,
 		Max_S,
 		none,
 	};
@@ -45,6 +50,12 @@ public:
 		EnemyHero,
 	};
 
+	//勝敗リスト
+	enum enBattleResultList
+	{
+		Win,
+		Lose,
+	};
 
 public:
 	static CSceneManager* GetInstance() {
@@ -117,6 +128,9 @@ public:
 	//役割
 	enRoleList GetRole() { return m_RoleList; }
 	void SetRole(enRoleList role) { m_RoleList = role; }
+	//勝敗
+	enBattleResultList GetBattleResult() { return m_BattleResult; }
+	void SetBattleResult( enBattleResultList result ) { m_BattleResult = result; }
 
 private:
 	CSceneManager();
@@ -132,11 +146,16 @@ private:
 	//DirectX11
     CDirectX11* m_pDx11;  
 
+	//----列挙型----
 	//役割リスト
 	enRoleList  m_RoleList;
+	//勝敗リスト
+	enBattleResultList m_BattleResult;
 
 	//残りターン数
 	int         m_Turn;
+
+
 
 	// =======================
 	// フラグ

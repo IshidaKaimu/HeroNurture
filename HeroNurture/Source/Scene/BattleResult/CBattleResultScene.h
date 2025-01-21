@@ -5,42 +5,25 @@
 #include "WriteText\WriteText.h"				//テキスト描画クラス
 #include "StaticMeshObject\Ground\CGround.h"	//地面クラス
 #include "SkinMeshObject\Hero\CHeroManager.h"	//プレイヤークラス
-#include "SkinMeshObject\Hero\Yui\CYui.h"       //ユイクラス
-#include "SkinMeshObject\Hero\Kaito\CKaito.h"   //カイトクラス
-#include <memory>
 #include <Windows.h>
 
-// =======================
-// 前方宣言
-// =======================		
-//json
-class CJson;
-//汎用クラス
-class CUtility;
-//UIマネージャー
-class CUIManager;
+//=====================================
+// 定数宣言 
+//=====================================
+//----勝敗テキストUI----
+const D3DXVECTOR2 RESULTTEXT_POS = { 250.0f,300.0f }; //座標
 
-// =======================
-// 前方宣言
-// =======================
-//共通の初期位置
-const D3DXVECTOR3 TITLE_POS = { 0.0f, 0.0f, 1.0f };
-//ユイの初期設定
-const D3DXVECTOR3 TITLE_YUI_SCALE = { 0.04f, 0.04f, 0.04f }; //拡縮
-//カイトの初期設定
-const D3DXVECTOR3 TITLE_KAITO_SCALE = { 0.3f, 0.3f, 0.3f };  //拡縮
 
 //=====================================
-// モードセレクトシーンクラス
-// 作成者:石田櫂夢
+// バトル結果シーンクラス
+// 制作者:石田櫂夢
 //=====================================
-class CModeSelectScene
+class CBattleResultScene
 	:public CSceneBase
 {
 public:
-	CModeSelectScene();
-	~CModeSelectScene();
-
+	CBattleResultScene();
+	~CBattleResultScene();
 
 	//構築関数
 	void Create()	  override;
@@ -58,15 +41,20 @@ public:
 private:
 	//UIの描画
 	void DrawUI();
+
 private:
+	//カメラクラス
+	CCameraManager* m_pCamera;
+
 	// =======================
 	// オブジェクトクラス
 	// =======================		
-	//----UI----
-	//タイトル背景
-	std::unique_ptr<CUIObject> m_pTitleBack;
-	//タイトル指示テキスト背景
-	std::unique_ptr<CUIObject> m_pTitleInfoBack;
+	//----スタティックメッシュ----
+	//空
+	std::unique_ptr<CSky> m_pSky;	
+	//地面
+	std::unique_ptr<CGround> m_pGround;
+
 
 };
 

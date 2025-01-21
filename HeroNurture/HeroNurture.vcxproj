@@ -243,7 +243,7 @@
     <ClCompile Include="Source\Scene\BattleHeroSelect\CBattleHeroSelectScene.cpp" />
     <ClCompile Include="Source\Scene\Battle\CBattleScene.cpp" />
     <ClCompile Include="Source\Scene\Battle\UniqueAttack\CUniqueAttack.cpp" />
-    <ClCompile Include="Source\Scene\ModeSelectScene\CModeSelectScene.cpp" />
+    <ClCompile Include="Source\Scene\ModeSelect\CModeSelectScene.cpp" />
     <ClCompile Include="Source\Scene\Nature\CNatureScene.cpp" />
     <ClCompile Include="Source\DebugText\CDebugText.cpp" />
     <ClCompile Include="Source\DirectX\CDirectX11.cpp" />
@@ -278,6 +278,7 @@
     <ClCompile Include="Source\Scene\Title\CTitleScene.cpp" />
     <ClCompile Include="Source\Scene\NatureResult\CNatureResultScene.cpp" />
     <ClCompile Include="Source\Scene\Traning\CTraningScene.cpp" />
+    <ClCompile Include="Source\Scene\BattleResult\CBattleResultScene.cpp" />
     <ClCompile Include="Source\SkinMesh\CSkinMesh.cpp" />
     <ClCompile Include="Source\SkinMesh\CSkinMeshParser.cpp" />
     <ClCompile Include="Source\SkinMesh\SkinMeshManager\CSkinMeshManager.cpp" />
@@ -309,7 +310,7 @@
     <ClInclude Include="Source\Scene\BattleHeroSelect\CBattleHeroSelectScene.h" />
     <ClInclude Include="Source\Scene\Battle\CBattleScene.h" />
     <ClInclude Include="Source\Scene\Battle\UniqueAttack\CUniqueAttack.h" />
-    <ClInclude Include="Source\Scene\ModeSelectScene\CModeSelectScene.h" />
+    <ClInclude Include="Source\Scene\ModeSelect\CModeSelectScene.h" />
     <ClInclude Include="Source\Scene\Nature\CNatureScene.h" />
     <ClInclude Include="Source\DebugText\CDebugText.h" />
     <ClInclude Include="Source\DirectX\CDirectX11.h" />
@@ -346,6 +347,7 @@
     <ClInclude Include="Source\Scene\Title\CTitleScene.h" />
     <ClInclude Include="Source\Scene\NatureResult\CNatureResultScene.h" />
     <ClInclude Include="Source\Scene\Traning\CTraningScene.h" />
+    <ClInclude Include="Source\Scene\BattleResult\CBattleResultScene.h" />
     <ClInclude Include="Source\Singleton\CSingleton.h" />
     <ClInclude Include="Source\SkinMesh\CSkinMesh.h" />
     <ClInclude Include="Source\SkinMesh\CSkinMeshParser.h" />
