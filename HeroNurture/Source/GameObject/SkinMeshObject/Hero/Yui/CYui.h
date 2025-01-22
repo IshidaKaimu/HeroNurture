@@ -7,7 +7,13 @@
 // =======================
 // 前方宣言
 // =======================
+//----マネージャークラス----
+//シーン
 class CSceneManager;              
+//サウンド
+class CSoundManager;
+//エフェクト
+class CEffect;
 
 // =======================
 // 定数宣言
@@ -115,7 +121,10 @@ private:
 	//Y軸回転の速さ
 	float m_RotateSpeedY;
 
-	bool           m_AnimChange;		//アニメーション切り替えフラグ
+	//アニメーション切り替えフラグ
+	bool  m_AnimChange;	 
 
+	//ダメージSE調整用カウント
+	int m_DamageSECnt;
 };
 

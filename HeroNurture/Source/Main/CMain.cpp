@@ -1,11 +1,12 @@
 #include "CMain.h"
 #include "CDirectX9.h"
 #include "CDirectX11.h"
-#include "Scene/CSceneManager.h"
-#include "Sound/CSoundManager.h"
-#include "StaticMesh/MeshManager/CMeshManager.h"
-#include "Sprite2D/UIManager/CUIManager.h"
-#include "SkinMesh/SkinMeshManager/CSkinMeshManager.h"
+#include "Scene\CSceneManager.h"
+#include "Sound\CSoundManager.h"
+#include "StaticMesh\MeshManager\CMeshManager.h"
+#include "Sprite2D\UIManager\CUIManager.h"
+#include "SkinMesh\SkinMeshManager\CSkinMeshManager.h"
+#include "Effect\CEffect.h"	
 #ifdef _DEBUG
 #include "ImGui/ImGuiManager/ImGuiManager.h"
 #endif // DEBUG
@@ -71,9 +72,12 @@ void CMain::Update()
 	//バックバッファをクリアにする.
 	m_pDx11->ClearBackBuffer();
 
-
 	//描画処理.
 	CSceneManager::GetInstance()->Draw();
+
+	//エフェクトの描画
+	CEffect::GetInstance()->Draw();
+
 
 	////一番上に表示
 	//m_pDx11->SetDepth(false);
@@ -114,11 +118,17 @@ HRESULT CMain::Create()
 	CUIManager* UIMng = CUIManager::GetInstance();
 	CMeshManager* MMng = CMeshManager::GetInstance();
 	CSkinMeshManager* SMMng = CSkinMeshManager::GetInstance();
+	CEffect* Effect = CEffect::GetInstance();
 
 	//画像データの読み込み
 	UIMng->Load(m_pDx11);
 	MMng->Load(m_pDx9, m_pDx11);
 	SMMng->Load(m_pDx9, m_pDx11);
+
+	//Effectクラス
+	CEffect::GetInstance()->Create(m_pDx11->GetDevice(), m_pDx11->GetContext());
+	//エフェクトの読み込み
+	Effect->LoadData();
 
 	//シーンの構築（Loadも含める）.
 	CSceneManager::GetInstance()->Create(*m_pDx9, *m_pDx11, m_hWnd);
@@ -136,7 +146,6 @@ HRESULT CMain::LoadData()
 	if (CSoundManager::GetInstance()->Load(m_hWnd) == false) {
 		return E_FAIL;
 	}
-
 
 	return S_OK;
 }

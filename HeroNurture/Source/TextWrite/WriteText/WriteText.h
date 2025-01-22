@@ -16,6 +16,7 @@ public:
         Select,         //選択肢
         Name,           //名前
         Turn,           //ターン数
+        TurnText,       //ターン数関連テキスト
         Inc,            //上昇値
         Dec,            //減少値
         S_Small,        //Sランク(小)
@@ -32,7 +33,8 @@ public:
         E_Big,          //Eランク(大)
         Success,        //トレーニング結果(成功)
         Failure,        //トレーニング結果(失敗)
-
+        Win,            //バトル勝敗(勝利)
+        Lose,           //バトル勝敗(敗北)
         Max,    //最大値
     };
     //フォントデータ構造体
@@ -85,7 +87,8 @@ private:
         { 60, DWRITE_FONT_WEIGHT_NORMAL, D2D1::ColorF(D2D1::ColorF::Black), 0 },         //初期値
         { 60, DWRITE_FONT_WEIGHT_NORMAL, D2D1::ColorF(D2D1::ColorF::White), 0 },         //選択肢
         { 30, DWRITE_FONT_WEIGHT_NORMAL, D2D1::ColorF(D2D1::ColorF::Black), 0 },         //選択肢内説明
-        { 80, DWRITE_FONT_WEIGHT_NORMAL, D2D1::ColorF(D2D1::ColorF::LightBlue), 0 },     //ターン数
+        { 85, DWRITE_FONT_WEIGHT_NORMAL, D2D1::ColorF(D2D1::ColorF::DarkBlue), 0 },         //ターン数
+        { 80, DWRITE_FONT_WEIGHT_NORMAL, D2D1::ColorF(D2D1::ColorF::Black), 0 },         //ターン数関連テキスト
         { 60, DWRITE_FONT_WEIGHT_NORMAL, D2D1::ColorF(D2D1::ColorF::Orange), 0 },        //上昇値
         { 60, DWRITE_FONT_WEIGHT_NORMAL, D2D1::ColorF(D2D1::ColorF::DarkBlue), 0 },      //減少値
         { 60, DWRITE_FONT_WEIGHT_NORMAL, D2D1::ColorF(D2D1::ColorF::Gold), 0 },          //Sランク(小)
@@ -102,6 +105,8 @@ private:
         { 120, DWRITE_FONT_WEIGHT_NORMAL, D2D1::ColorF(D2D1::ColorF::DarkGray), 0 },     //Eランク(大)
         { 100, DWRITE_FONT_WEIGHT_NORMAL, D2D1::ColorF(D2D1::ColorF::Orange), 1 },       //トレーニング結果(成功)
         { 100, DWRITE_FONT_WEIGHT_NORMAL, D2D1::ColorF(D2D1::ColorF::DarkBlue), 1 },     //トレーニング結果(失敗)
+        { 200, DWRITE_FONT_WEIGHT_NORMAL, D2D1::ColorF(D2D1::ColorF::Orange), 1 },     //バトル勝敗(勝利)
+        { 200, DWRITE_FONT_WEIGHT_NORMAL, D2D1::ColorF(D2D1::ColorF::DarkBlue), 1 },     //バトル勝敗(敗北)
     };
 };
 

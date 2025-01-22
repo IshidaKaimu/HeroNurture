@@ -1,5 +1,7 @@
 #include "CNatureScene.h"
+#if DEBUG
 #include "ImGui\ImGuiManager\ImGuiManager.h"
+#endif
 #include "SkinMesh\SkinMeshManager\CSkinMeshManager.h"
 #include "Camera\CameraManager\CCameraManager.h"
 #include "Light\LightManager\CLightManager.h"
@@ -10,25 +12,28 @@
 #include "KeyManager\CKeyManager.h"
 #include "WriteText\WriteText.h"
 #include "Utility\CUtility.h"
+#include "Sound\CSoundManager.h"
 
 CNatureScene::CNatureScene()
-    : m_pCamera     ( &CCameraManager::GetInstance() )
-    , m_pHero       ( &CHeroManager::GetInstance() )
-    , m_Name        ()
-    , m_pGround     ()
-    , m_pSky        ()
-    , m_pParamBack  ()
+    : m_pCamera      ( &CCameraManager::GetInstance() )
+    , m_pHero        ( &CHeroManager::GetInstance() )
+    , m_Name         ()
+    , m_pGround      ()
+    , m_pSky         ()
+    , m_pParamBack   ()
     , m_pPowerTraning()
     , m_pMagicTraning()
     , m_pSpeedTraning()
-    , m_pHpTraning()
-    , m_pRest()
-    , m_pStaminaGage()
-    , m_pStaminaBack()
-    , m_GageWidth   ( CSceneManager::GetInstance()->GetStaminaWidth() )
-    , m_pJson()
-    , m_ParamWriter ()
-    , m_ParamData   ()
+    , m_pHpTraning   ()
+    , m_pRest        ()
+    , m_pStaminaGage ()
+    , m_pStaminaBack ()
+    , m_pStaminaFrame()
+    , m_pTurnBack    ()
+    , m_GageWidth    ( CSceneManager::GetInstance()->GetStaminaWidth() )
+    , m_pJson        ()
+    , m_ParamWriter  ()
+    , m_ParamData    ()
 {
 }
 
@@ -74,7 +79,7 @@ void CNatureScene::Create()
     m_pRest         = std::make_unique<CUIObject>();
 
     //育成関連のシーンで共通して表示するUIのインスタンス生成
-    CreateNatureUI(m_pStaminaGage,m_pStaminaBack);
+    CreateNatureUI(m_pStaminaGage,m_pStaminaBack,m_pStaminaFrame,m_pTurnBack);
 }
 
 void CNatureScene::Releace()
@@ -106,7 +111,7 @@ void CNatureScene::LoadData()
     m_pRest        ->AttachSprite(CUIManager::GetSprite(CUIManager::Rest));
 
     //スタミナゲージのUIのスプライト設定
-    LoadNatureUI(m_pStaminaGage, m_pStaminaBack);
+    LoadNatureUI(m_pStaminaGage, m_pStaminaBack,m_pStaminaFrame, m_pTurnBack);
 }
 
 void CNatureScene::Initialize()
@@ -148,7 +153,7 @@ void CNatureScene::Initialize()
     UIInit(m_pRest,    TRANING_POSX_N, TRANING_POSY_N, TRANING_INTERVAL_N, TRANING_SCALE_N, 4);
 
     //育成関連のシーンで共通のUIの初期化
-    InitNatureUI(m_pStaminaGage,m_pStaminaBack);
+    InitNatureUI(m_pStaminaGage,m_pStaminaBack,m_pStaminaFrame, m_pTurnBack);
 }
 
 void CNatureScene::Update()
@@ -160,6 +165,15 @@ void CNatureScene::Update()
     //フェードイン処理
     if (!FadeIn()) { return; }
 
+    //モード選択画面のBGM停止
+    CSoundManager::GetInstance()->Stop(CSoundManager::BGM_NatureHeroSelect);
+
+
+    //育成BGMの再生
+    CSoundManager::GetInstance()->PlayLoop(CSoundManager::BGM_Nature);
+    CSoundManager::GetInstance()->Volume(CSoundManager::BGM_Nature, 40);
+
+
     //セットされたヒーローのクラスの更新
     m_pHero->Update();
 
@@ -169,12 +183,20 @@ void CNatureScene::Update()
     //カーソルの移動
     if (KeyMng->IsDown(VK_RIGHT))
     {
+        //選択SEの再生
+        CSoundManager::GetInstance()->PlaySE(CSoundManager::SE_Select);
+        CSoundManager::GetInstance()->Volume(CSoundManager::SE_Select, 40);
+
         //キー入力で選択を進める
         if (m_SelectNo < CHeroManager::enTraningList::Max_T-1) { m_SelectNo++; }
         else { m_SelectNo = 0; }
     }
     else if (KeyMng->IsDown(VK_LEFT))
     {
+        //選択SEの再生
+        CSoundManager::GetInstance()->PlaySE(CSoundManager::SE_Select);
+        CSoundManager::GetInstance()->Volume(CSoundManager::SE_Select, 40);
+
         if (m_SelectNo > 0) { m_SelectNo--; }
         else { m_SelectNo = 4; }
     }
@@ -186,6 +208,10 @@ void CNatureScene::Update()
     //トレーニングの決定
     if (KeyMng->IsDown(VK_RETURN) && !m_SceneTransitionFlg)
     {
+        //決定SEの再生
+        CSoundManager::GetInstance()->PlaySE(CSoundManager::SE_Enter);
+        CSoundManager::GetInstance()->Volume(CSoundManager::SE_Enter, 40);
+
         //選択肢の位置に応じたトレーニングをセット
         switch (m_SelectNo)
         {
@@ -239,7 +265,7 @@ void CNatureScene::Draw()
     SceneMng->GetDx11()->SetDepth(false);
 
     //育成関連シーンで共通のUIの描画
-    DrawNatureUI(m_pStaminaGage, m_pStaminaBack);
+    DrawNatureUI(m_pStaminaGage, m_pStaminaBack, m_pStaminaFrame,m_pTurnBack);
 
     //各トレーニングの描画
     DrawTraning();
@@ -288,23 +314,43 @@ void CNatureScene::Debug()
 }
 
 //育成関連UIのインスタンス生成
-void CNatureScene::CreateNatureUI(std::unique_ptr<CUIObject>& gage, std::unique_ptr<CUIObject>& back)
+void CNatureScene::CreateNatureUI(
+    std::unique_ptr<CUIObject>& gage, 
+    std::unique_ptr<CUIObject>& back, 
+    std::unique_ptr<CUIObject>& frame,
+    std::unique_ptr<CUIObject>& turnback)
 {
     //スタミナゲージ
     gage = std::make_unique<CUIObject>();
     //ゲージ背景
     back = std::make_unique<CUIObject>();
+    //ゲージ枠
+    frame = std::make_unique<CUIObject>();
+    //ターン背景
+    turnback = std::make_unique<CUIObject>();
 }
 //育成関連UIのスプライトデータの読み込み
-void CNatureScene::LoadNatureUI(std::unique_ptr<CUIObject>& gage, std::unique_ptr<CUIObject>& back)
+void CNatureScene::LoadNatureUI(
+    std::unique_ptr<CUIObject>& gage, 
+    std::unique_ptr<CUIObject>& back, 
+    std::unique_ptr<CUIObject>& frame,
+    std::unique_ptr<CUIObject>& turnback)
 {
     //スタミナゲージ
     gage->AttachSprite(CUIManager::GetSprite(CUIManager::StaminaGage));
     //ゲージ背景
     back->AttachSprite(CUIManager::GetSprite(CUIManager::StaminaBack));
+    //ゲージ枠
+    frame->AttachSprite(CUIManager::GetSprite(CUIManager::StaminaFrame));
+    //ターン数背景
+    turnback->AttachSprite(CUIManager::GetSprite(CUIManager::TurnBack));
 }
 //育成関連UIの初期化
-void CNatureScene::InitNatureUI(std::unique_ptr<CUIObject>& gage, std::unique_ptr<CUIObject>& back)
+void CNatureScene::InitNatureUI(
+    std::unique_ptr<CUIObject>& gage,
+    std::unique_ptr<CUIObject>& back,
+    std::unique_ptr<CUIObject>& frame,
+    std::unique_ptr<CUIObject>& turnback)
 {
     //読み込みが初回であるなら
     if (!CSceneManager::GetInstance()->GetIsDataLoaded())
@@ -325,19 +371,33 @@ void CNatureScene::InitNatureUI(std::unique_ptr<CUIObject>& gage, std::unique_pt
     }
 
     //拡縮
-    gage->SetScale(1.0f, 1.0f, 1.0f);     //ゲージ
-    back->SetScale(1.0f, 1.0f, 1.0f);     //ゲージ背景
+    gage->SetScale(1.0f, 1.0f, 1.0f);      //ゲージ
+    back->SetScale(1.0f, 1.0f, 1.0f);      //ゲージ背景
+    frame->SetScale(1.0f, 1.0f, 1.0f);     //ゲージ背景
+    turnback->SetScale(1.0f, 1.0f, 1.0f);  //ターン数背景
     //位置
-    gage->SetPosition(350.0f, 0.0f, 0.0f);//ゲージ
-    back->SetPosition(350.0f, 0.0f, 0.0f);//ゲージ背景
-    //ゲージ背景の幅
-    back->SetDisplay(1.0f, 1.0f);
+    gage->SetPosition(670.0f, 7.0f, 0.0f);    //ゲージ
+    back->SetPosition(670.0f, 7.0f, 0.0f);    //ゲージ背景
+    frame->SetPosition(575.0f, 0.0f, 0.0f);   //ゲージ枠
+    turnback->SetPosition(0.0f, 0.0f, 0.0f);//ゲージ背景
+    //幅
+    back->SetDisplay(1.0f, 1.0f);          //ゲージ背景
+    frame->SetDisplay(1.0f, 1.0f);         //ゲージ枠
+    turnback->SetDisplay(1.0f, 1.0f);      //ターン数背景
 }
 //描画
-void CNatureScene::DrawNatureUI(std::unique_ptr<CUIObject>& gage, std::unique_ptr<CUIObject>& back)
+void CNatureScene::DrawNatureUI(
+    std::unique_ptr<CUIObject>& gage,
+    std::unique_ptr<CUIObject>& back,
+    std::unique_ptr<CUIObject>& frame,
+    std::unique_ptr<CUIObject>& turnback)
 {
     //スタミナゲージのアニメーション
     StaminaGageAnim();
+    //ターン数背景
+    turnback->Draw();
+    //ゲージ枠
+    frame->Draw();
     //ゲージ背景
     back->Draw();
     //スタミナゲージ
@@ -489,9 +549,9 @@ void CNatureScene::DrawRemainingTurn()
     std::wstring Turn = std::to_wstring(CSceneManager::GetInstance()->GetRemainingTurn());
 
     //残りターン数の描画
-    Text->Draw_Text(L"残り", WriteText::Normal, D3DXVECTOR2(0.0f, -20.0f));
-    Text->Draw_Text(Turn, WriteText::Turn, Utility->PosCorrection(SceneMng->GetRemainingTurn(),2,140,-40.0f));
-    Text->Draw_Text(L"ターン", WriteText::Normal, D3DXVECTOR2(200.0f, -20.0f));
+    Text->Draw_Text(L"残り", WriteText::TurnText, D3DXVECTOR2(10.0f,-20.0f));
+    Text->Draw_Text(Turn, WriteText::Turn, Utility->PosCorrection(SceneMng->GetRemainingTurn(),2,180.0f,-10.0f));
+    Text->Draw_Text(L"ターン", WriteText::TurnText, D3DXVECTOR2(240.0f, -20.0f));
 }
 
 

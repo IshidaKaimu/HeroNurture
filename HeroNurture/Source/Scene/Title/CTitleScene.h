@@ -4,7 +4,6 @@
 #include "StaticMeshObject\Sky\CSky.h"			//スカイボックスクラス
 #include "WriteText\WriteText.h"				//テキスト描画クラス
 #include "StaticMeshObject\Ground\CGround.h"	//地面クラス
-#include "SkinMeshObject\Hero\CHeroManager.h"	//プレイヤークラス
 #include "SkinMeshObject\Hero\Yui\CYui.h"       //ユイクラス
 #include "SkinMeshObject\Hero\Kaito\CKaito.h"   //カイトクラス
 #include <memory>
@@ -13,12 +12,12 @@
 // =======================
 // 前方宣言
 // =======================		
-//json
 class CJson;
-//汎用クラス
 class CUtility;
-//UIマネージャー
 class CUIManager;
+class CHeroManager;
+class CSoundManager;
+class CSceneManager;
 
 // =======================
 // 定数宣言

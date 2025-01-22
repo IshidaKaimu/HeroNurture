@@ -1,4 +1,6 @@
 #include "CSceneBase.h"
+#include "Sprite3D\CSprite3D.h"
+#include "Sprite2D\CSprite2D.h"
 #include "Sprite2D\UIManager\CUIManager.h"
 
 CSceneBase::CSceneBase()
@@ -39,7 +41,7 @@ void CSceneBase::Update()
 //描画関数
 void CSceneBase::Draw()
 {
-	//描画
+	////描画
 	m_pFade->Draw();	 //フェード
     m_pWhiteFade->Draw();//白フェード
 }

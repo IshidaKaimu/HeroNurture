@@ -6,9 +6,10 @@
 #include "SkinMeshObject\Hero\CHeroManager.h"
 
 CYui::CYui()
-	: m_AnimChange()
-	, m_MoveRotateY(0.0f)
+	: m_AnimChange  ()
+	, m_MoveRotateY (0.0f)
 	, m_RotateSpeedY(1.0f)
+	, m_DamageSECnt ()
 {
 	SetScale(0.1f, 0.1f, 0.1f);
 }
@@ -94,6 +95,8 @@ void CYui::EnemyInit()
 	m_Damage = false;
 	//アニメーションカウントの初期化
 	m_AnimCnt = 0;
+	//エフェクトカウントの初期化
+	m_EffCnt = 0;
 	//アニメーション切り替えフラグの初期化
 	m_AnimChange = false;
 
@@ -123,6 +126,8 @@ void CYui::UniqueInit()
 	m_Damage = false;
 	//アニメーションカウントの初期化
 	m_AnimCnt = 0;
+	//エフェクトカウントの初期化
+	m_EffCnt = 0;
 	//アニメーション切り替えフラグの初期化
 	m_AnimChange = false;
 
@@ -230,57 +235,87 @@ void CYui::PowerAttackAnim(float vector)
 	//アニメーション終了後に戻す初期位置
 	D3DXVECTOR3 InitPos;
 	
+	//エフェクトハンドルの用意
+	static ::EsHandle hTornado = 2;	//竜巻エフェクト
+
+
 	//敵側か自分かで戻す初期位置を決める
 	if (vector == 1.0f) { InitPos = BATTLEINIT_POS; }
 	else { InitPos = ENEMYINIT_POS; }
 
 
-	if (!m_AnimEnd) {
+	if (!m_AnimEnd) 
+	{
 		m_AnimCnt++;
-	}
 
-	if (m_AnimCnt >= 60) {
-		AnimChange(4);
-	}
+		//竜巻エフェクト
+		CEffect* Eff = CEffect::GetInstance();
+		Eff->Speed(hTornado, 1.0f);
+		Eff->Scale(hTornado, 0.3f, 0.3f, 0.3f);
+		Eff->Rotate(hTornado,0.0f, 0.0f, 0.0f);
 
-	if(m_AnimNo == 4)
-	{
-		if (m_AnimCnt >= 80) 
-		{
-			if (m_AnimCnt % 30 == 0)
-			{
-				if (m_RotateSpeedY <= 8.0f) {
-					m_RotateSpeedY += 0.05f;
-				}
-			}
-			m_MoveRotateY += m_RotateSpeedY;
-
-			if (m_AnimCnt <= 120) {
-				m_MoveX -= 0.1f * vector;
-				if (m_MoveRotateZ <= 0.5f) {
-					m_MoveRotateZ += 0.005f;
-				}
-			}
-			if (m_AnimCnt >= 150)
-			{
-				if (m_MoveRotateZ >= -0.35f)
-				{
-					m_MoveRotateZ -= 0.01f;
-				}
-			}
-			if (m_AnimCnt >= 240)
-			{
-				m_MoveX += (0.2f * vector);
-			}
-
-			SetRotation(BATTLE_ROTATE.x, m_MoveRotateY, m_MoveRotateZ * vector);
+		if (m_AnimCnt >= 60) {
+			AnimChange(4);
 		}
-	}
 
-	if (m_AnimCnt >= 300)
-	{
-		m_AnimCnt = 0;
-		m_AnimEnd = true;
+		if (m_AnimNo == 4)
+		{
+			m_EffCnt++;
+
+			if (m_EffCnt == 1)
+			{
+				//T字SEの再生
+				CSoundManager::GetInstance()->PlaySE(CSoundManager::SE_TPose);
+				CSoundManager::GetInstance()->Volume(CSoundManager::SE_TPose, 80);
+			}
+
+			if (m_EffCnt  == 60) 
+			{
+				//竜巻SEの再生
+				CSoundManager::GetInstance()->PlaySE(CSoundManager::SE_Tornade);
+				CSoundManager::GetInstance()->Volume(CSoundManager::SE_Tornade, 80);
+
+				hTornado = CEffect::Play(CEffect::Yui_Power, D3DXVECTOR3(m_vPosition.x, m_vPosition.y, m_vPosition.z));
+			}
+
+			if (m_AnimCnt >= 80)
+			{
+				if (m_AnimCnt % 30 == 0)
+				{
+					if (m_RotateSpeedY <= 8.0f) {
+						m_RotateSpeedY += 0.05f;
+					}
+				}
+				m_MoveRotateY += m_RotateSpeedY;
+
+				if (m_AnimCnt <= 120) {
+					m_MoveX -= 0.1f * vector;
+					if (m_MoveRotateZ <= 0.5f) {
+						m_MoveRotateZ += 0.005f;
+					}
+				}
+				if (m_AnimCnt >= 150)
+				{
+					if (m_MoveRotateZ >= -0.35f)
+					{
+						m_MoveRotateZ -= 0.01f;
+					}
+				}
+				if (m_AnimCnt >= 240)
+				{
+					m_MoveX += (0.2f * vector);
+				}
+
+				SetRotation(BATTLE_ROTATE.x, m_MoveRotateY, m_MoveRotateZ * vector);
+			}
+		}
+
+		if (m_AnimCnt >= 300)
+		{
+			m_AnimCnt = 0;
+			m_EffCnt = 0;
+			m_AnimEnd = true;
+		}
 	}
 
 	if (!m_AnimEnd) {
@@ -299,11 +334,19 @@ void CYui::PowerAttackAnim(float vector)
 
 		AnimChange(3);
 	}
+
 }
 
 //攻撃2
 void CYui::MagicAttackAnim(float vector)
 {
+	//エフェクトハンドルの用意
+	static ::EsHandle hFireBall = -1;	//火球エフェクト
+	//エフェクトの軸回転
+	float EffRoteZ;
+	if (vector == 1) { EffRoteZ = -90.0f; }
+	else { EffRoteZ = 90.0f; }
+
 	//アニメーション終了後に戻す初期位置
 	D3DXVECTOR3 InitPos;
 
@@ -311,51 +354,68 @@ void CYui::MagicAttackAnim(float vector)
 	if (vector == 1.0f) { InitPos = BATTLEINIT_POS; }
 	else { InitPos = ENEMYINIT_POS; }
 
-
 	//アニメーション終了までのカウント
 	if (!m_AnimEnd)
 	{
 		m_AnimCnt++;
-	}
 
-	if (m_AnimNo == 3)
-	{
-		AnimChange(0);
-	}
 
-	if (m_AnimNo == 0)
-	{
-		//アニメーションの経過時間を加算		
-		m_AnimTime += m_pMesh->GetAnimSpeed();
-
-		if (m_MoveY <= 0.5f) {
-			m_MoveY += 0.02f;
-		}
-		else
+		if (m_AnimNo == 3)
 		{
-		    //アニメーション停止
-		    m_AnimSpeed = 0.0f;
+			AnimChange(0);
+		}
+
+		if (m_AnimNo == 0)
+		{
+			//アニメーションの経過時間を加算		
+			m_AnimTime += m_pMesh->GetAnimSpeed();
+
+			if (m_MoveY <= 0.5f) {
+				m_MoveY += 0.02f;
+			}
+			else
+			{
+				//アニメーション停止
+				m_AnimSpeed = 0.0f;
+
+				m_EffCnt++;
+
+				CEffect* Eff = CEffect::GetInstance();
+				Eff->Speed(hFireBall, 2.0f);
+				Eff->Scale(hFireBall, 0.3f, 0.3f, 0.3f);
+				Eff->Rotate(hFireBall, 0.0f, 0.0f, D3DXToRadian(EffRoteZ));
+
+				if (m_EffCnt == 1) {
+					//火球SEの再生
+					CSoundManager::GetInstance()->PlaySE(CSoundManager::SE_FireBall);
+					CSoundManager::GetInstance()->Volume(CSoundManager::SE_FireBall, 100);
+
+					hFireBall = CEffect::Play(CEffect::Yui_Magic, D3DXVECTOR3(m_vPosition.x - (5.0f * vector), m_vPosition.y + 0.4f, m_vPosition.z));
+				}
+			}
+		}
+
+		if (!m_AnimEnd)
+		{
+			SetPosition(m_MoveX, m_MoveY, m_MoveZ);
+		}
+
+		//カウントが一定を超えたら
+		if (m_AnimCnt >= 200)
+		{
+			//位置の修正
+			SetPositionY(InitPos.y);
+			//変動したY座標の初期化
+			m_MoveY = InitPos.y;
+			//アニメーション終了
+			m_AnimEnd = true;
+			AnimChange(0);
+			//アニメーションカウントの初期化
+			m_AnimCnt = 0;
+			//エフェクトカウントの初期化
+			m_EffCnt = 0;
 		}
 	}
-
-	if (!m_AnimEnd)
-	{
-		SetPosition(m_MoveX, m_MoveY, m_MoveZ);
-	}
-
-	//カウントが一定を超えたら
-	if (m_AnimCnt >= 240)
-	{
-		//位置の修正
-		SetPositionY(InitPos.y);
-		//変動したY座標の初期化
-		m_MoveY = InitPos.y;
-		//アニメーション終了
-		m_AnimEnd = true;
-		AnimChange(0);
-		m_AnimCnt = 0;
-	}
-
 }
 
 void CYui::UniqueAttackAnim()
@@ -367,14 +427,32 @@ void CYui::UniqueAttackAnim()
 
 void CYui::DamageAnim(float vector)
 {
+
 	//どのアニメーションの後でも再生速度を変えない
 	m_AnimSpeed = 0.01f;
+
+	D3DXVECTOR3 InitRotate;
+
+	if (vector != 1.0f) { InitRotate = BATTLE_ROTATE; }
+	else { InitRotate = ENEMY_ROTATE; }
+
+	//回転を合わせる
+	SetRotation(InitRotate);
 
 	//このアニメーションで使用しているアニメーションでない場合
 	bool NotUseAnim = m_AnimNo != 0 && m_AnimNo != 1;
 
+	m_DamageSECnt++;
+
+	if (m_DamageSECnt == 1)
+	{
+		//ダメージSEの再生
+		CSoundManager::GetInstance()->PlaySE(CSoundManager::SE_Damage);
+		CSoundManager::GetInstance()->Volume(CSoundManager::SE_Damage, 80);
+	}
 	//待機アニメーション時
 	if (NotUseAnim && !m_AnimChange) {
+
 		AnimChange(0);
 	}
 
@@ -429,6 +507,7 @@ void CYui::DamageAnim(float vector)
 			m_DamageAnimEnd = true;
 			m_AnimChange = false;
 			m_AnimCnt = 0;
+			m_DamageSECnt = 0;
 		}
 	}
 

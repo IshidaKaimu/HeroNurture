@@ -41,20 +41,20 @@ using json = nlohmann::json;
 //----各ヒーローのカメラ配置・注視点----
 //-----カメラ情報----
 //カメラ位置
-const D3DXVECTOR3 CAMPOS_BS = { 0.0, 5.0, -4.0 };
+const D3DXVECTOR3 CAMPOS_BS = { 0.0f, 5.0f, -4.0f };
 //カメラ注視点
-const D3DXVECTOR3 CAMLOOK_BS = { 2.0, 5.0, 3.0 };
+const D3DXVECTOR3 CAMLOOK_BS = { 2.0f, 5.0f, 3.0f };
 
 //----UI情報----
 //パラメータの背景UI
-const D3DXVECTOR3 PARAMBACK_POS_BS = { 725.0f,125.0f, 0.0f };
-const D3DXVECTOR3 PARAMBACK_SCALE_BS = { 1.1f,1.1f,1.1f };
+const D3DXVECTOR3 PARAMBACK_POS_BS = { 840.0f, 205.0f, 0.0f };
+const D3DXVECTOR3 PARAMBACK_SCALE_BS = { 1.1f, 1.1f, 1.1f };
 //パラメータの数値
-constexpr float PARAMVALUE_POSX_BS = 900.0f; //X座標
+constexpr float PARAMVALUE_POSX_BS = 930.0f; //X座標
 constexpr float PARAMVALUE_POSY_BS = 225.0f; //Y座標
 constexpr float PARAMVALUE_INTERVAL_BS = 130.0f; //配置間隔
 //パラメータランク
-constexpr float PARAMRANK_POSX_BS = 855.0f; //X座標
+constexpr float PARAMRANK_POSX_BS = 885.0f; //X座標
 constexpr float PARAMRANK_POSY_BS = 225.0f; //Y座標
 constexpr float PARAMRANK_INTERVAL_BS = 130.0f; //配置間隔
 //育成ランク
@@ -114,6 +114,9 @@ private:
 	//保存されているヒーローのパラメータを表示する
 	void DrawSaveParameter(const json& jsondata, int number);
 
+	//矢印の描画
+	void DrawArrow();
+
 private:
 	//経過ターン数
 	int m_BattleTurn;
@@ -140,5 +143,12 @@ private:
 	std::unique_ptr<CYui>	m_pYui;
 	//カイト
 	std::unique_ptr<CKaito> m_pKaito;
+
+	//----UI
+	//矢印左
+	std::unique_ptr<CUIObject> m_pLeftArrow;
+	//矢印右
+	std::unique_ptr<CUIObject> m_pRightArrow;
+
 
 };

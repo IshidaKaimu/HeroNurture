@@ -224,45 +224,67 @@ float CKaito::UniqueAttack()
 //攻撃1アニメーション
 void CKaito::PowerAttackAnim(float vector)
 {
+	//エフェクトハンドルの用意
+	static ::EsHandle hSlash = 0;	//斬撃エフェクト
+
+
 	//待機アニメーション時
-	if (!m_AnimEnd) { m_AnimCnt++; }
-
-	//待機中の斬るアニメーションだった場合
-	if(m_AnimNo == 3)
+	if (!m_AnimEnd) 
 	{
-		AnimChange(0);
-	}
+		m_AnimCnt++;
 
-	if (m_AnimNo == 0)
-	{
-		m_AnimTime += m_pMesh->GetAnimSpeed();
-
-		if (m_pMesh->GetAnimPeriod(m_AnimNo) < m_AnimTime)
+		//待機中の斬るアニメーションだった場合
+		if (m_AnimNo == 3)
 		{
-			AnimChange(2);
-			m_AnimCnt = 0;
+			AnimChange(0);
 		}
-	}
 
-	if (m_AnimNo == 2)
-	{
-		//アニメーション終了までのカウント
-		if (!m_AnimEnd) { m_AnimCnt++; }
-
-		if (m_pMesh->GetAnimPeriod(m_AnimNo) - 0.8f < m_AnimTime)
+		if (m_AnimNo == 0)
 		{
-			m_AnimSpeed = 0.0f;
-		}
-		else
-		{
-			//アニメーションの経過時間を加算
 			m_AnimTime += m_pMesh->GetAnimSpeed();
+
+			if (m_pMesh->GetAnimPeriod(m_AnimNo) < m_AnimTime)
+			{
+				AnimChange(2);
+				m_AnimCnt = 0;
+			}
 		}
 
-		if (m_AnimCnt > 90)
+		if (m_AnimNo == 2)
 		{
-			m_AnimCnt = 0;
-			m_AnimEnd = true;
+			//アニメーション終了までのカウント
+			if (!m_AnimEnd) { m_AnimCnt++; }
+
+			m_EffCnt++;
+
+			CEffect* Eff = CEffect::GetInstance();
+			Eff->Speed(hSlash, 1.0f);
+			Eff->Scale(hSlash, 0.6f, 0.6f, 0.6f);
+			Eff->Rotate(hSlash, D3DXToRadian(-80.0f), 0.0f, 90.0f);
+
+			if (m_EffCnt == 1) {
+				//斬撃SEの再生
+				CSoundManager::GetInstance()->PlaySE(CSoundManager::SE_Slash);
+				CSoundManager::GetInstance()->Volume(CSoundManager::SE_Slash, 80);
+				hSlash = CEffect::Play(CEffect::Kaito_Power, D3DXVECTOR3(m_vPosition.x - (-1.0f * vector), m_vPosition.y + 1.5f, m_vPosition.z));
+			}
+
+			if (m_pMesh->GetAnimPeriod(m_AnimNo) - 0.8f < m_AnimTime)
+			{
+				m_AnimSpeed = 0.0f;
+			}
+			else
+			{
+				//アニメーションの経過時間を加算
+				m_AnimTime += m_pMesh->GetAnimSpeed();
+			}
+
+			if (m_AnimCnt > 90)
+			{
+				m_AnimCnt = 0;
+				m_EffCnt = 0;
+				m_AnimEnd = true;
+			}
 		}
 	}
 }
@@ -270,40 +292,70 @@ void CKaito::PowerAttackAnim(float vector)
 //攻撃2アニメーション
 void CKaito::MagicAttackAnim(float vector)
 {
+	//エフェクトハンドルの用意
+	static ::EsHandle hMagicLight = 1;	//光魔法エフェクト
+
+	//エフェクトの軸回転
+	float EffRoteY;
+	if (vector == 1.0f) { EffRoteY = 0.0f; }
+	else { EffRoteY = -180.0f; }
+
 	//どのアニメーションの後でも再生速度を変えない
 	m_AnimSpeed = 0.01f;
 
-	//待機中の斬るアニメーションだった場合
-	if (m_AnimNo == 3)
+	if (!m_AnimEnd)
 	{
-		AnimChange(0);
-	}
-
-	if (m_AnimNo == 0)
-	{
-		m_AnimTime += m_pMesh->GetAnimSpeed();
-
-		if (m_pMesh->GetAnimPeriod(m_AnimNo) < m_AnimTime)
+		//待機中の斬るアニメーションだった場合
+		if (m_AnimNo == 3)
 		{
-			AnimChange(6);
-			m_AnimCnt = 0;
+			AnimChange(0);
 		}
-	}
 
-	if (m_AnimNo == 6)
-	{
-		//アニメーション終了までのカウント
-		if (!m_AnimEnd) { m_AnimCnt++; }
-
-		m_AnimTime += m_pMesh->GetAnimSpeed();
-
-		if (m_pMesh->GetAnimPeriod(m_AnimNo) - 0.6f < m_AnimTime)
+		if (m_AnimNo == 0)
 		{
-			m_AnimSpeed = 0.0f;
+			m_AnimTime += m_pMesh->GetAnimSpeed();
+
+			if (m_pMesh->GetAnimPeriod(m_AnimNo) < m_AnimTime)
+			{
+				AnimChange(6);
+				m_AnimCnt = 0;
+			}
+		}
+
+		if (m_AnimNo == 6)
+		{
+			//アニメーション終了までのカウント
+			if (!m_AnimEnd) { m_AnimCnt++; }
+
+			m_AnimTime += m_pMesh->GetAnimSpeed();
+
+			if (m_pMesh->GetAnimPeriod(m_AnimNo) - 0.6f < m_AnimTime)
+			{
+				m_EffCnt++;
+
+				CEffect* Eff = CEffect::GetInstance();
+				Eff->Speed(hMagicLight, 1.0f);
+				Eff->Scale(hMagicLight, 0.2f, 0.2f, 0.2f);
+				Eff->Rotate(hMagicLight, 0.0f, D3DXToRadian(EffRoteY), 0.0f);
+
+				if (m_EffCnt == 1) {
+					//ダメージSEの再生
+					CSoundManager::GetInstance()->PlaySE(CSoundManager::SE_Thunder);
+					CSoundManager::GetInstance()->Volume(CSoundManager::SE_Thunder, 80);
+
+					hMagicLight = CEffect::Play(CEffect::Kaito_Magic, D3DXVECTOR3(m_vPosition.x - (-2.0f * vector), m_vPosition.y + 1.8f, m_vPosition.z + (0.2f * vector)));
+				}
+
+				m_AnimSpeed = 0.0f;
+			}
+		}
+
+		if (m_EffCnt >= 120)
+		{
 			m_AnimEnd = true;
+			m_EffCnt = 0;
 		}
 	}
-
 }
 
 //固有攻撃アニメーション
@@ -328,15 +380,22 @@ void CKaito::DamageAnim(float vector)
 
 	if (m_AnimNo == 0 && !m_AnimChange)
 	{
+		//ダメージSEの再生
+		CSoundManager::GetInstance()->PlaySE(CSoundManager::SE_Damage);
+		CSoundManager::GetInstance()->Volume(CSoundManager::SE_Damage, 80);
+
 		AnimChange(7);
 	}
 
 	if (m_AnimNo == 7)
 	{
+
 		//アニメーションの経過時間を加算
 		m_AnimTime += m_pMesh->GetAnimSpeed();
 		//位置を後ろ向きに下げる
 		m_MoveX += (0.08f * vector);
+		//アニメーションカウントの初期化
+		m_AnimCnt = 0;
 
 		if (m_pMesh->GetAnimPeriod(m_AnimNo)- 0.2 < m_AnimTime)
 		{
@@ -368,14 +427,18 @@ void CKaito::DamageAnim(float vector)
 	if (m_AnimNo == 0 && m_AnimChange)
 	{
 		//戻ってからアニメーション終了までに間を置く
-		m_AnimCnt++;
+		if (!m_DamageAnimEnd) 
+		{
+			m_AnimCnt++;
+		}
 		//アニメーションの経過時間を加算
 		m_AnimTime += m_pMesh->GetAnimSpeed();
 
-		if (m_AnimCnt >= 60) 
+		if (m_AnimCnt >= 120) 
 		{
 			m_DamageAnimEnd = true;
 			m_AnimChange = false;
+			m_AnimCnt = 0;
 		}
 	}
 

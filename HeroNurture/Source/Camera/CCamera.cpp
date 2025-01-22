@@ -13,6 +13,7 @@ CCamera::~CCamera()
 void CCamera::Update()
 {
 
+#if _DEBUG
 	//カメラ座標のデバックコマンド.
 	float add_value = 0.1f;
 	if (GetAsyncKeyState('W') & 0x8000) {
@@ -33,7 +34,7 @@ void CCamera::Update()
 	if (GetAsyncKeyState('E') & 0x8000) {
 		m_Camera.Position.z -= add_value;
 	}
-
+#endif
 	//プロジェクションの計算
 	Projection();
 

@@ -31,10 +31,16 @@ public:
 		TextBox,		    //テキストボックス
 		StaminaGage,        //スタミナゲージ
 		StaminaBack,        //スタミナゲージ背景
+		StaminaFrame,       //スタミナゲージ背景
 		HpGage,			    //体力ゲージ
 		HpGageBack,         //体力ゲージ背景
 		GageFrame,          //ゲージ枠
+		TurnBack,			//ターン数背景
+		PowerAttack,	    //筋力攻撃アイコン
+		MagicAttack,		//魔法攻撃アイコン
+		AttackCover,        //攻撃アイコンに被せる画像
 		UniqueGage,		    //ユニークゲージ
+		Arrow,              //矢印
 		Max,
 	};
 

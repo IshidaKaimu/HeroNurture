@@ -59,6 +59,7 @@ void CSceneManager::Initialize()
 //更新関数
 void CSceneManager::Update()
 {        
+#if _DEBUG
     ImGui::Begin(JAPANESE("シーン"));
     if (ImGui::Button(JAPANESE("ログイン"))) { LoadCreate(enSceneList::Title); }
     if (ImGui::Button(JAPANESE("ヒーロー選択"))) { LoadCreate(enSceneList::NatureHeroSelect); }
@@ -69,6 +70,7 @@ void CSceneManager::Update()
     if (ImGui::Button(JAPANESE("バトル"))) { LoadCreate(enSceneList::Battle); }
     if (ImGui::Button(JAPANESE("バトル結果"))) { LoadCreate(enSceneList::BattleResult); }
     ImGui::End();
+#endif
     m_Scene->Update();  //入ってるシーンの動作を行う   
 }
 

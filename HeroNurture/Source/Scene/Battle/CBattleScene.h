@@ -31,6 +31,8 @@ class CHeroManager;
 class CEnemyHeroManager;
 //キー入力
 class CKeyManager;
+//エフェクト
+class CEffect;
 
 //=====================================
 // 定数宣言(_B = バトルシーンで用いることを示す)
@@ -56,7 +58,22 @@ const D3DXVECTOR3 ENEMY_HPFRAME_POS = { 800.0f, 10.0f, 0.0f }; //座標
 //固有攻撃ゲージの描画位置
 const D3DXVECTOR2 UNIQUEGAGE_POS = { 0.0f, 80.0f };
 const D3DXVECTOR2 ENEMY_UNIQUEGAGE_POS = { 1200.0f, 80.0f };
- 
+//----行動選択関連----
+//筋力攻撃
+const D3DXVECTOR3 POWER_ATTACK_POS = { 420.0f, 540.0f, 0.0f };
+//魔法攻撃
+const D3DXVECTOR3 MAGIC_ATTACK_POS = { 620.0f, 540.0f, 0.0f };
+//共通
+const D3DXVECTOR3 ATTACK_SCALE = { 0.5f, 0.5f, 0.5f };
+const D3DXVECTOR2 ATTACK_DISP = { 1.0f, 1.0f };
+const float ATTACK_ALPHA = 1.0f;
+//攻撃に被せる画像
+constexpr float ATTACK_COVER_ALPHA = 0.8f;
+//----ターン名UI----
+const D3DXVECTOR2 HERO_TURNTEXT_POS =  { 450.0f, 50.0f };
+const D3DXVECTOR2 ENEMY_TURNTEXT_POS = { 340.0f, 50.0f };
+
+
 //=====================================
 // バトルシーンクラス
 // 制作者:石田櫂夢
@@ -104,6 +121,9 @@ public:
 private:
 	//バトルに使用するデータの読み込み
 	void LoadBattleData();
+
+	//攻撃アイコンの描画
+	void DrawAttack(std::unique_ptr<CUIObject>& icon,D3DXVECTOR3 pos,float alpha);
 
 	//----体力ゲージ関連----
 	//それぞれの体力ゲージの描画
@@ -167,6 +187,12 @@ private:
 	std::vector<std::unique_ptr<CUIObject>> m_pUniqueGages;
 	//敵の固有攻撃ゲージ
 	std::vector<std::unique_ptr<CUIObject>> m_pEnemyUniqueGages;
+	//筋力攻撃アイコン
+	std::unique_ptr<CUIObject> m_pPowerAttack;
+	//魔力攻撃アイコン
+	std::unique_ptr<CUIObject> m_pMagicAttack;
+	//選択されていない攻撃アイコンにかぶせる画像
+	std::unique_ptr<CUIObject> m_pAttackCover;
 
 	//jsonクラス
 	std::unique_ptr<CJson> m_pJson;

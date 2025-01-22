@@ -5,6 +5,7 @@
 #include "WriteText\WriteText.h"
 #include "SkinMeshObject\Hero\CHeroManager.h"
 #include "Sprite2D\UIManager\CUIManager.h"
+#include "Sound\CSoundManager.h"
 
 CTraningScene::CTraningScene()
     : m_pCamera ( &CCameraManager::GetInstance() )
@@ -37,7 +38,7 @@ void CTraningScene::Create()
     m_pTextBox = make_unique<CUIObject>();
 
     //育成関連のシーンで共通するUIのインスタンス生成
-    CNatureScene::CreateNatureUI(m_pStaminaGage,m_pStaminaBack);
+    CNatureScene::CreateNatureUI(m_pStaminaGage,m_pStaminaBack,m_pStaminaFrame, m_pTurnBack);
 
 }
 //破棄関数
@@ -54,7 +55,7 @@ void CTraningScene::LoadData()
     m_pGround->LoadData();
 
     //育成関連のシーンで共通するUIのスプライトデータ設定
-    CNatureScene::LoadNatureUI(m_pStaminaGage,m_pStaminaBack);
+    CNatureScene::LoadNatureUI(m_pStaminaGage,m_pStaminaBack,m_pStaminaFrame, m_pTurnBack);
 
     //トレーニングごとの背景UIのスプライトデータ設定
     switch (HeroMng->GetTraining())
@@ -77,7 +78,7 @@ void CTraningScene::Initialize()
     CSceneManager::GetInstance()->InitWhiteFade();
 
     //育成関連のシーンで共通するUI
-    CNatureScene::InitNatureUI(m_pStaminaGage,m_pStaminaBack);
+    CNatureScene::InitNatureUI(m_pStaminaGage,m_pStaminaBack,m_pStaminaFrame, m_pTurnBack);
 
     //背景画像の設定
     m_pBack->SetPosition(0.0f, 0.0f, 0.0f);
@@ -102,9 +103,33 @@ void CTraningScene::Update()
    //シーンマネージャークラス
    CSceneManager* SceneMng = CSceneManager::GetInstance();
 
+   //ステータス変化SEの再生
+   if (CHeroManager::GetInstance().GetFailure()) {
+       m_SECnt++;
+       if (m_SECnt == 1)
+       {
+           CSoundManager::GetInstance()->PlaySE(CSoundManager::SE_Miss);
+           CSoundManager::GetInstance()->Volume(CSoundManager::SE_Miss, 80);
+       }
+   }
+   else
+   {
+       m_SECnt++;
+       if (m_SECnt == 1)
+       {
+           CSoundManager::GetInstance()->PlaySE(CSoundManager::SE_Up);
+           CSoundManager::GetInstance()->Volume(CSoundManager::SE_Up, 80);
+       }
+   }
+
+
    //テキストの描画を進める
    if (CKeyManager::GetInstance()->IsDown(VK_RETURN) && m_ParamInc.size())
    {
+       //決定SEの再生
+       CSoundManager::GetInstance()->PlaySE(CSoundManager::SE_Enter);
+       CSoundManager::GetInstance()->Volume(CSoundManager::SE_Enter, 80);
+
        m_TextNo++;
    }
 
@@ -146,6 +171,7 @@ void CTraningScene::Update()
        //ターン経過処理
        SceneMng->TurnProgress();
        CSceneManager::GetInstance()->LoadCreate(CSceneManager::Nature);
+       m_SECnt = 0;
    }
 }
 //描画関数
@@ -165,7 +191,7 @@ void CTraningScene::Draw()
     DrawTraningText();
 
     //育成関連のシーンで共通して表示するUI
-    CNatureScene::DrawNatureUI(m_pStaminaGage,m_pStaminaBack);
+    CNatureScene::DrawNatureUI(m_pStaminaGage,m_pStaminaBack,m_pStaminaFrame,m_pTurnBack);
 
     //深度を戻す
     SceneMng->GetDx11()->SetDepth(true);

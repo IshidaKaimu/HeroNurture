@@ -7,32 +7,34 @@
 #include "Sprite2D\UIManager\CUIManager.h"
 #include "KeyManager\CKeyManager.h"
 #include "Scene\CSceneManager.h"
+#include "Effect\CEffect.h"
+#include "Sound\CSoundManager.h"
 
 CBattleScene::CBattleScene()
-	: m_pHero(&CHeroManager::GetInstance())
-	, m_pEnemyHero(&CEnemyHeroManager::GetInstance())
-	, m_pCamera(&CCameraManager::GetInstance())
-	, m_pGround()
-	, m_pSky()
-	, m_pHpGage()
-	, m_pHpGageBack()
-	, m_pHpGageFrame()
-	, m_pEnemyHpGage()
-	, m_pEnemyHpGageFrame()
-	, m_pJson()
-	, m_BattleData()
-	, m_EnemyHeroData()
-	, m_HpWidth(1.0f)
-	, m_EnemyHpWidth(1.0f)
-	, m_UniqueGageCnt(0)
+	: m_pHero			  (&CHeroManager::GetInstance())
+	, m_pEnemyHero		  (&CEnemyHeroManager::GetInstance())
+	, m_pCamera			  (&CCameraManager::GetInstance())
+	, m_pGround			  ()
+	, m_pSky			  ()
+	, m_pHpGage			  ()
+	, m_pHpGageBack       ()
+	, m_pHpGageFrame      ()
+	, m_pEnemyHpGage      ()
+	, m_pEnemyHpGageFrame ()
+	, m_pJson			  ()
+	, m_BattleData		  ()
+	, m_EnemyHeroData     ()
+	, m_HpWidth			  (1.0f)
+	, m_EnemyHpWidth      (1.0f)
+	, m_UniqueGageCnt     (0)
 	, m_EnemyUniqueGageCnt(0)
-	, m_BattleTurn()
-	, m_IsHeroTurn()
-	, m_CurrentTurn()
-	, m_SelectAttack()
-	, m_Attack()
-	, m_EnemyAttackNo()
-	, m_EnemyAttack()
+	, m_BattleTurn        ()
+	, m_IsHeroTurn        ()
+	, m_CurrentTurn		  ()
+	, m_SelectAttack      ()
+	, m_Attack            ()
+	, m_EnemyAttackNo     ()
+	, m_EnemyAttack       ()
 {
 }
 
@@ -70,6 +72,10 @@ void CBattleScene::Create()
 	m_pEnemyHpGage      = std::make_unique<CUIObject>();
 	m_pEnemyHpGageBack  = std::make_unique<CUIObject>();
 	m_pEnemyHpGageFrame = std::make_unique<CUIObject>();
+	//攻撃アイコン
+	m_pPowerAttack = std::make_unique<CUIObject>(); //筋力
+	m_pMagicAttack = std::make_unique<CUIObject>(); //魔力
+	m_pAttackCover = std::make_unique<CUIObject>(); //被せる画像
 }
 
 void CBattleScene::Releace()
@@ -113,6 +119,11 @@ void CBattleScene::LoadData()
 	m_pEnemyHpGage->AttachSprite(CUIManager::GetSprite(CUIManager::HpGage));
 	m_pEnemyHpGageBack->AttachSprite(CUIManager::GetSprite(CUIManager::HpGageBack));
 	m_pEnemyHpGageFrame->AttachSprite(CUIManager::GetSprite(CUIManager::GageFrame));
+	//攻撃アイコン
+	m_pPowerAttack->AttachSprite(CUIManager::GetSprite(CUIManager::PowerAttack)); //筋力
+	m_pMagicAttack->AttachSprite(CUIManager::GetSprite(CUIManager::MagicAttack)); //魔力
+	m_pAttackCover->AttachSprite(CUIManager::GetSprite(CUIManager::AttackCover)); //被せる画像
+
 }
 
 void CBattleScene::Initialize()
@@ -139,6 +150,13 @@ void CBattleScene::Initialize()
 void CBattleScene::Update()
 {
 	CSceneManager* SceneMng = CSceneManager::GetInstance();
+
+	//バトルヒーロー選択BGMを停止
+	CSoundManager::GetInstance()->Stop(CSoundManager::BGM_BattleHeroSelect);
+
+	//バトルBGMの再生
+	CSoundManager::GetInstance()->PlayLoop(CSoundManager::BGM_Battle);
+	CSoundManager::GetInstance()->Volume(CSoundManager::BGM_Battle, 40);
 
 	//フェードイン処理
 	if (!FadeIn()) { return; }
@@ -185,6 +203,7 @@ void CBattleScene::Update()
 void CBattleScene::Draw()
 {
 	WriteText* Text = WriteText::GetInstance();
+	CSceneManager* SceneMng = CSceneManager::GetInstance();
 
 	//カメラの動作
 	CCameraManager::GetInstance().CameraUpdate();
@@ -199,6 +218,7 @@ void CBattleScene::Draw()
 	m_pGround->Draw();
 	//空
 	m_pSky->Draw();
+
 
 	CSceneManager::GetInstance()->GetDx11()->SetDepth(false);
 	//----固有攻撃ゲージの描画----
@@ -216,6 +236,15 @@ void CBattleScene::Draw()
 		if (!m_CurrentTurn) { DrawHeroTurn(); }
 		else { DrawEnemyHeroTurn(); }
 	}
+	//攻撃アイコンの描画
+	DrawAttack(m_pPowerAttack, POWER_ATTACK_POS, ATTACK_ALPHA); //筋力攻撃
+	DrawAttack(m_pMagicAttack, MAGIC_ATTACK_POS, ATTACK_ALPHA); //魔力攻撃
+	//選択によって位置を変えるための変数
+	D3DXVECTOR3 CoverPos;
+	if (m_SelectNo == 0) { CoverPos = MAGIC_ATTACK_POS; }
+	else{ CoverPos = POWER_ATTACK_POS; }
+	DrawAttack(m_pAttackCover, CoverPos, ATTACK_COVER_ALPHA);   //アイコンにかぶせる画像
+
 	CSceneManager::GetInstance()->GetDx11()->SetDepth(true);
 }
 
@@ -277,6 +306,20 @@ void CBattleScene::LoadBattleData()
 
 	//敵のパラメータが保存されているファイルの読み込み
 	if (!m_pJson->Load(m_EnemyHeroData, EnemyParamFilePath)) { return; }
+}
+
+//攻撃アイコンの描画
+void CBattleScene::DrawAttack(std::unique_ptr<CUIObject>& icon, D3DXVECTOR3 pos, float alpha)
+{
+	icon->SetPosition(pos);
+	icon->SetScale(ATTACK_SCALE);
+	icon->SetDisplay(ATTACK_DISP.x,ATTACK_DISP.y);
+	icon->SetAlpha(alpha);
+
+	if (!m_SelectAttack) 
+	{
+		icon->Draw();
+	}
 }
 
 //それぞれの体力ゲージの描画
@@ -371,14 +414,14 @@ void CBattleScene::ChangeUniqueGage(std::vector<std::unique_ptr<CUIObject>>& gag
 //固有攻撃ゲージの描画
 void CBattleScene::DrawUniqueGage(std::vector<std::unique_ptr<CUIObject>>& gages)
 {
-	//固有攻撃ゲージ
-	for (const auto& gage : gages)
-	{
-		if (gage)
-		{
-			gage->Draw();
-		}
-	}
+	////固有攻撃ゲージ
+	//for (const auto& gage : gages)
+	//{
+	//	if (gage)
+	//	{
+	//		gage->Draw();
+	//	}
+	//}
 }
 
 //行動選択フェーズ中の処理
@@ -396,22 +439,37 @@ void CBattleScene::MoveSelect()
 	m_pCamera->SetPos(INIT_CAMPOS_B);
 	m_pCamera->SetLook(INIT_CAMLOOK_B);
 
+	//速度による行動順の判断
+	SetUpToNextTurn();
+
 
 	//カーソルの移動
 	if (KeyMng->IsDown(VK_RIGHT))
 		{
+		    //選択SEの再生
+		    CSoundManager::GetInstance()->PlaySE(CSoundManager::SE_Select);
+		    CSoundManager::GetInstance()->Volume(CSoundManager::SE_Select, 40);
+
 			//キー入力で選択を進める
 			if (m_SelectNo < enAttackList::Max - 1) { m_SelectNo++; }
 			else { m_SelectNo = 0; }
 		}
 		else if (KeyMng->IsDown(VK_LEFT))
 		{
+			//選択SEの再生
+			CSoundManager::GetInstance()->PlaySE(CSoundManager::SE_Select);
+			CSoundManager::GetInstance()->Volume(CSoundManager::SE_Select, 40);
+
 			if (m_SelectNo > 0) { m_SelectNo--; }
 			else { m_SelectNo = enAttackList::Max - 1; }
 		}
 
 		if (KeyMng->IsDown(VK_RETURN))
 		{
+			//決定SEの再生
+			CSoundManager::GetInstance()->PlaySE(CSoundManager::SE_Enter);
+			CSoundManager::GetInstance()->Volume(CSoundManager::SE_Enter, 40);
+
 			//自分の攻撃の設定
 			SettingAttack(m_SelectNo, m_Attack);
 			
@@ -422,7 +480,7 @@ void CBattleScene::MoveSelect()
 			if (m_pEnemyHero->GetUniqueGage() == 5) { m_EnemyAttackNo = CUtility::GenerateRandomValue(0,2);}
 			else{ m_EnemyAttackNo = CUtility::GenerateRandomValue(0, 1); }
 
-			m_EnemyAttackNo = 0;
+			m_EnemyAttackNo = 1;
 
 			//敵の攻撃の設定
 			SettingAttack(m_EnemyAttackNo, m_EnemyAttack);
@@ -434,9 +492,6 @@ void CBattleScene::MoveSelect()
 
 void CBattleScene::Attack()
 {
-	//速度による行動順の判断
-	SetUpToNextTurn();
-
 	if (m_IsHeroTurn)
 	{
 		//自分が先行の場合
@@ -448,7 +503,7 @@ void CBattleScene::Attack()
 				m_pEnemyHero->Damage(m_pHero->PowerAttack());
 			}
 		}
-		else 
+		else if(!m_pEnemyHero->Death())
 		{
 			EnemyHeroTurn();
 			if (m_pHero->GetHp() > 0.0f && m_pHero->GetDamageAnimEndFlag()) {
@@ -560,7 +615,7 @@ void CBattleScene::DrawHeroTurn()
 {
 	WriteText* Text = WriteText::GetInstance();
 
-	Text->Draw_Text(L"HERO TURN", WriteText::B_Big, D3DXVECTOR2(0.0f, 60.0f));
+	Text->Draw_Text(L"HERO TURN", WriteText::D_Small,HERO_TURNTEXT_POS);
 
 }
 
@@ -589,7 +644,22 @@ void CBattleScene::EnemyHeroTurn()
 			m_pHero->DamageAnim(-1.0f); //敵のダメージアニメーション
 		}
 		break;
-	case CBattleScene::MagicAttack: m_pEnemyHero->Damage(m_pEnemyHero->MagicAttack()); break;
+	case CBattleScene::MagicAttack: 
+		//攻撃アニメーションが終わっていなければ
+		if (!m_pEnemyHero->GetAnimEndFlag())
+		{
+			m_pCamera->SetPos(ENEMY_ATTACK_CAMPOS);
+			m_pCamera->SetLook(ENEMY_ATTACK_CAMLOOK);
+		}
+		//敵の攻撃アニメーション
+		m_pEnemyHero->MagicAttackAnim(-1.0f);
+		if (m_pEnemyHero->GetAnimEndFlag()) //攻撃アニメーションが終わったら
+		{
+			m_pCamera->SetPos(ATTACK_CAMPOS);
+			m_pCamera->SetLook(ATTACK_CAMLOOK);
+			m_pHero->DamageAnim(-1.0f); //敵のダメージアニメーション
+		}
+		break;
 	}
 
 }
@@ -599,7 +669,7 @@ void CBattleScene::DrawEnemyHeroTurn()
 {
 	WriteText* Text = WriteText::GetInstance();
 
-	Text->Draw_Text(L"ENEMYHERO TURN", WriteText::B_Big, D3DXVECTOR2(0.0f, 60.0f));
+	Text->Draw_Text(L"ENEMYHERO TURN", WriteText::B_Small, ENEMY_TURNTEXT_POS);
 }
 
 //ターンごとの攻撃の設定

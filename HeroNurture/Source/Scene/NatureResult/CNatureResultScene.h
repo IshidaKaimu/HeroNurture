@@ -33,28 +33,26 @@ using json = nlohmann::json;
 //=====================================
 //-----カメラ情報----
 //カメラ位置
-const D3DXVECTOR3 CAMPOS_NR  = { 0.0f, 5.5f, -4.0f };
+const D3DXVECTOR3 CAMPOS_NR  = { 0.0f, 5.0f, -4.0f };
 //カメラ注視点
-const D3DXVECTOR3 CAMLOOK_NR = { 2.0f, 5.5f, 3.0f };
+const D3DXVECTOR3 CAMLOOK_NR = { 2.0f, 5.0f, 3.0f };
 //----育成評価描画関連----
 //最終ランクX座標
 constexpr float RANK_POSX_NR = 900.0f;
 //最終ランクY座標
 constexpr float RANK_POSY_NR = 30.0f;
 //パラメータランク配置開始地点X座標
-constexpr float PARAMRANK_POSX_NR = 855.0f;
+constexpr float PARAMRANK_POSX_NR = 885.0f;
 //パラメータランク配置開始地点Y座標
 constexpr float PARAMRANK_POSY_NR = 225.0f;
 //各パラメータランク配置間隔
 constexpr float PARAMRANK_INTERVAL_NR = 130.0f;
-//パラメータ背景X座標
-const float PARAMBACK_POSX_NR = 725.0f;
-//パラメータ背景Y座標
-const float PARAMBACK_POSY_NR = 125.0f;
+//パラメータ背景座標
+const D3DXVECTOR3 PARAMBACK_POS_NR = { 840.0f, 205.0f, 0.0f };
 //パラメータ背景拡縮
 const D3DXVECTOR3 PARAMBACK_SCALE_NR = { 1.1f, 1.1f , 1.1f };
 //パラメータの値X座標
-const float PARAMVALUE_POSX_NR = 900.0f;
+const float PARAMVALUE_POSX_NR = 930.0f;
 //パラメータの値Y座標
 const float PARAMVALUE_POSY_NR = 225.0f;
 //パラメータの値配置間隔

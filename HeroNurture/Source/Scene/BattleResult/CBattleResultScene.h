@@ -8,11 +8,21 @@
 #include <Windows.h>
 
 //=====================================
+// 前方宣言 
+//=====================================
+//----マネージャークラス----
+//ヒーロー
+class CHeroManager;
+//敵のヒーロー
+class CEnemyHeroManager;
+//カメラ
+class CCameraManager;
+
+//=====================================
 // 定数宣言 
 //=====================================
 //----勝敗テキストUI----
-const D3DXVECTOR2 RESULTTEXT_POS = { 250.0f,300.0f }; //座標
-
+const D3DXVECTOR2 RESULTTEXT_POS = { 150.0f,220.0f }; //座標
 
 //=====================================
 // バトル結果シーンクラス
@@ -39,6 +49,9 @@ public:
 	void Draw()		  override;
 
 private:
+	//デバッグ
+	void Debug();
+
 	//UIの描画
 	void DrawUI();
 

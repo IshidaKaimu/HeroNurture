@@ -243,6 +243,8 @@ protected:
 
 	//アニメーション用カウント
 	int m_AnimCnt;
+	//エフェクト用カウント
+	int m_EffCnt;
 
 	//イベントシーン用の変動させる変数
 	float m_MoveX; //X座標

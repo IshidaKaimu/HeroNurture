@@ -2,6 +2,8 @@
 #include "Scene\CSceneManager.h"
 #include "KeyManager\CKeyManager.h"
 #include "StaticMesh\MeshManager\CMeshManager.h"
+#include "SkinMeshObject\Hero\CHeroManager.h"
+#include "SkinMeshObject\Hero\Enemy\CEnemyHeroManager.h"
 #include "Sound\CSoundManager.h"
 #include <cmath>
 #include "ImGui\ImGuiManager\ImGuiManager.h"
@@ -38,17 +40,53 @@ void CBattleResultScene::Releace()
 
 void CBattleResultScene::LoadData()
 {
-    CMeshManager* MMng = CMeshManager::GetInstance();
+    CSceneManager* SceneMng = CSceneManager::GetInstance();
+    CHeroManager* HeroMng = &CHeroManager::GetInstance();
+    CEnemyHeroManager* EnemyHeroMng = &CEnemyHeroManager::GetInstance();
+
+
     //----スタティックメッシュ----
     m_pSky->AttachMesh(CMeshManager::GetMesh(CMeshManager::Sky));      //空
     m_pGround->AttachMesh(CMeshManager::GetMesh(CMeshManager::Ground));//地面
+
+    //----スキンメッシュ----
+    switch (SceneMng->GetBattleResult())
+    {
+    case CSceneManager::Win:    
+        HeroMng->LoadMeshData();
+        break;
+    case CSceneManager::Lose:
+        EnemyHeroMng->LoadMeshData();
+        break;
+    default:
+        break;
+    }
 }
 
 void CBattleResultScene::Initialize()
 {
+    CSceneManager* SceneMng = CSceneManager::GetInstance();
+    CHeroManager* HeroMng = &CHeroManager::GetInstance();
+    CEnemyHeroManager* EnemyHeroMng = &CEnemyHeroManager::GetInstance();
+
     //カメラの初期位置
-    m_pCamera->SetPos(5.0f, 4.0f, -5.0f);
-    m_pCamera->SetLook(0.0f, 4.0f, 0.0f);
+
+    switch (SceneMng->GetBattleResult())
+    {
+    case CSceneManager::Win:
+        m_pCamera->SetPos(-2.4f, 2.0f, 1.1f);
+        m_pCamera->SetLook(-5.0f, 2.0f, -1.0f);
+        HeroMng->Initialize();
+        break;
+    case CSceneManager::Lose:
+        m_pCamera->SetPos(-0.3f, 1.8f, 1.8f);
+        m_pCamera->SetLook(2.0f, 2.0f, 1.0f);
+        EnemyHeroMng->Initialize();
+        break;
+    default:
+        break;
+    }
+
 }
 
 //更新関数
@@ -62,9 +100,34 @@ void CBattleResultScene::Update()
     //フェードイン処理
     if (!FadeIn()) { return; }
 
+    //モード選択画面のBGM停止
+    CSoundManager::GetInstance()->Stop(CSoundManager::BGM_Battle);
+
+
+    switch (SceneMng->GetBattleResult())
+    {
+    case CSceneManager::Win:
+        //勝利時BGMの再生
+        CSoundManager::GetInstance()->PlayLoop(CSoundManager::BGM_Win);
+        CSoundManager::GetInstance()->Volume(CSoundManager::BGM_Win, 40);
+        break;
+    case CSceneManager::Lose:
+        //敗北時BGMの再生
+        CSoundManager::GetInstance()->PlayLoop(CSoundManager::BGM_Lose);
+        CSoundManager::GetInstance()->Volume(CSoundManager::BGM_Lose, 40);
+        break;
+    default:
+        break;
+    }
+
+
     //シーン遷移(仮)
     if (KeyMng->IsDown(VK_RETURN))
     {
+        //決定SEの再生
+        CSoundManager::GetInstance()->PlaySE(CSoundManager::SE_Enter);
+        CSoundManager::GetInstance()->Volume(CSoundManager::SE_Enter, 40);
+
         //オープニングシーンへ
         m_SceneTransitionFlg = true;
     }
@@ -77,6 +140,10 @@ void CBattleResultScene::Update()
 
 void CBattleResultScene::Draw()
 {
+    CSceneManager* SceneMng = CSceneManager::GetInstance();
+    CHeroManager* HeroMng = &CHeroManager::GetInstance();
+    CEnemyHeroManager* EnemyHeroMng = &CEnemyHeroManager::GetInstance();
+
     //カメラの動作
     m_pCamera->CameraUpdate();
 
@@ -86,8 +153,39 @@ void CBattleResultScene::Draw()
     //地面の描画
     m_pGround->Draw();
 
+
+    switch (SceneMng->GetBattleResult())
+    {
+    case CSceneManager::Win:
+        HeroMng->MoveSelectAnim();
+        HeroMng->Draw();
+        break;
+    case CSceneManager::Lose:
+        EnemyHeroMng->MoveSelectAnim();
+        EnemyHeroMng->Draw();
+        break;
+    default:
+        break;
+    }
+
+
     //UI
     DrawUI();
+
+    //デバッグ
+    Debug();
+}
+
+void CBattleResultScene::Debug()
+{
+#if DEBUG
+    ImGui::Begin(JAPANESE("カメラ位置"));
+    ImGui::Text(JAPANESE("座標X:%f\n座標Y:%f\n座標Z:%f"), m_pCamera->GetPos().x,m_pCamera->GetPos().y,m_pCamera->GetPos().z);
+    ImGui::InputFloat3(JAPANESE("注視点:%f"), m_CamLook);
+    CCameraManager::GetInstance().SetLook(m_CamLook);
+    ImGui::End();
+#endif
+
 }
 
 //タイトル画面の描画
@@ -99,10 +197,10 @@ void CBattleResultScene::DrawUI()
     switch (SceneMng->GetBattleResult())
     {
     case CSceneManager::Win:
-        Text->Draw_Text(L"WIN", WriteText::Success, RESULTTEXT_POS);
+        Text->Draw_Text(L"WIN", WriteText::Win, RESULTTEXT_POS);
         break;
     case CSceneManager::Lose:
-        Text->Draw_Text(L"LOSE", WriteText::Failure, RESULTTEXT_POS);
+        Text->Draw_Text(L"LOSE", WriteText::Lose, RESULTTEXT_POS);
         break;
     default:
         break;

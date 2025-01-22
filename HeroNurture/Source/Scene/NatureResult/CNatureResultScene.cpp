@@ -59,7 +59,7 @@ void CNatureResultScene::Initialize()
     Hero->Initialize();
 
     //パラメータ背景UI情報の初期化
-    m_pParamList->SetPosition(PARAMBACK_POSX_NR,PARAMBACK_POSY_NR,0.0);
+    m_pParamList->SetPosition(PARAMBACK_POS_NR);
     m_pParamList->SetScale(PARAMBACK_SCALE_NR);
     m_pParamList->SetAlpha(1.0f);
     m_pParamList->SetDisplay(1.0f,1.0f);
@@ -79,25 +79,25 @@ void CNatureResultScene::Update()
     CKeyManager* KeyMng = CKeyManager::GetInstance();
     CHeroManager* HeroMng = &CHeroManager::GetInstance();
 
+    //モード選択画面のBGM停止
+    CSoundManager::GetInstance()->Stop(CSoundManager::BGM_Nature);
+
+
+    //育成結果BGMの再生
+    CSoundManager::GetInstance()->PlayLoop(CSoundManager::BGM_NatureResult);
+    CSoundManager::GetInstance()->Volume(CSoundManager::BGM_NatureResult, 40);
+
+
     //キーマネージャの動作処理
     KeyMng->Update();
-
-    //カーソルの移動
-    if (KeyMng->IsDown(VK_RIGHT))
-    {
-        //キー入力で選択を進める
-        if (m_SelectNo < CHeroBase::enHeroList::Max - 1) { m_SelectNo++; }
-        else { m_SelectNo = 0; }
-    }
-    else if (KeyMng->IsDown(VK_LEFT))
-    {
-        if (m_SelectNo > 0) { m_SelectNo--; }
-        else { m_SelectNo = 1; }
-    }
 
     //シーン遷移(仮)
     if (CKeyManager::GetInstance()->IsDown(VK_RETURN))
     {
+        //決定SEの再生
+        CSoundManager::GetInstance()->PlaySE(CSoundManager::SE_Enter);
+        CSoundManager::GetInstance()->Volume(CSoundManager::SE_Enter, 40);
+
         //オープニングシーンへ
         m_SceneTransitionFlg = true;
     }
@@ -107,7 +107,7 @@ void CNatureResultScene::Update()
     {
         CSceneManager::GetInstance()->SetIsDataLoaded(false);
         m_pJson->SaveResult(HeroMng->GetHeroName(), m_ResultWriter);
-        CSceneManager::GetInstance()->LoadCreate(CSceneManager::NatureHeroSelect);
+        CSceneManager::GetInstance()->LoadCreate(CSceneManager::ModeSelect);
     }
 }
 

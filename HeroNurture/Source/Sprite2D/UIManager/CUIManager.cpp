@@ -48,13 +48,19 @@ HRESULT CUIManager::Load(CDirectX11* Dx11)
 		{UIList::RestBack,	     _T("Data\\Texture\\RestBack.png")		   ,{ 1280.0f, 720.0f, 1280.0f, 720.0f,1280.0f,720.0f}},
 		{UIList::TextBox,	     _T("Data\\Texture\\TextBox.png")		   ,{ 1180.0f, 190.0f, 1180.0f, 190.0f, 1180.0f, 190.0f}},
 		{UIList::ParamList,	     _T("Data\\Texture\\NatureParamList.png")  ,{ 787.0f, 161.0f, 787.0f, 161.0f, 787.0f, 161.0f,}},
-		{UIList::ResultParamList,_T("Data\\Texture\\ResultParamList.png")  ,{ 400.0f, 600.0f, 400.0f, 600.0f, 400.0f, 600.0f,}},
+		{UIList::ResultParamList,_T("Data\\Texture\\ResultParamList.png")  ,{ 178.0f, 472.0f, 178.0f, 472.0f, 178.0f, 472.0f,}},
 		{UIList::StaminaGage,	 _T("Data\\Texture\\Stamina.png")		   ,{ 602.0f, 54.0f,  602.0f, 54.0f,  602.0f, 54.0f,}},
 		{UIList::StaminaBack,	 _T("Data\\Texture\\StaminaBack.png")      ,{ 602.0f, 54.0f,  602.0f, 54.0f,  602.0f, 54.0f}},
+		{UIList::StaminaFrame,	 _T("Data\\Texture\\StaminaFrame.png")     ,{ 700.0f, 72.0f,  700.0f, 72.0f,  700.0f, 72.0f}},
+		{UIList::TurnBack,	     _T("Data\\Texture\\TurnFrame.png")        ,{ 421.0f, 121.0f, 421.0f, 121.0f, 421.0f, 121.0f}},
 		{UIList::HpGage,	     _T("Data\\Texture\\HpGage.png")		   ,{ 602.0f, 54.0f,  602.0f, 54.0f,  602.0f, 54.0f,}},
 		{UIList::HpGageBack,	 _T("Data\\Texture\\HpGageBack.png")       ,{ 602.0f, 54.0f,  602.0f, 54.0f,  602.0f, 54.0f}},
 		{UIList::GageFrame,	     _T("Data\\Texture\\GageFrame.png")        ,{ 602.0f, 70.0f,  602.0f, 70.0f,  602.0f, 70.0f}},
-		{UIList::UniqueGage,	 _T("Data\\Texture\\UniqueGage.png")       ,{ 80.0f,  70.0f, 80.0f, 70.0f, 80.0f, 70.0f}}
+		{UIList::PowerAttack,	 _T("Data\\Texture\\PowerAttack.png")      ,{ 341.0f, 300.0f, 341.0f, 300.0f, 341.0f, 300.0f}},
+		{UIList::MagicAttack,	 _T("Data\\Texture\\MagicAttack.png")      ,{ 340.0f, 300.0f, 340.0f, 300.0f, 340.0f, 300.0f}},
+		{UIList::AttackCover,	 _T("Data\\Texture\\AttackCover.png")      ,{ 341.0f, 300.0f, 341.0f, 300.0f, 341.0f, 300.0f}},
+		{UIList::UniqueGage,	 _T("Data\\Texture\\UniqueGage.png")       ,{ 80.0f,  70.0f,  80.0f, 70.0f,   80.0f,70.0f}},
+		{UIList::Arrow,	         _T("Data\\Texture\\Arrow.png")            ,{ 137.0f, 93.0f,  137.0f, 93.0f,  137.0f, 93.0f}},
 	};
 
 	int list_max = sizeof(SList) / sizeof(SList[0]);

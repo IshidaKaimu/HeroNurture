@@ -12,26 +12,27 @@ public:
 	//サウンドリスト列挙型.
 	enum enList
 	{
-		BGM_Opening,	//オープニングシーン.
-		BGM_BossApe,	//ボス登場シーン.
-		BGM_BossEvo,	//ボス進化シーン.
-		BGM_Special,	//必殺技シーン.
-		BGM_BossDeath,	//ボス撃破シーン.
+		BGM_Title,	          //タイトル
+		BGM_ModeSelect,       //モード選択
+		BGM_NatureHeroSelect, //育成ヒーロー選択
+		BGM_Nature,			  //育成
+		BGM_BattleHeroSelect, //戦闘ヒーロー選択
+		BGM_Battle,			  //戦闘
+		BGM_NatureResult,     //育成結果
+		BGM_Win,	          //戦闘結果(勝利)
+		BGM_Lose,			  //戦闘結果(敗北)
 		
-		SE_Slash,		//斬撃.
-		SE_Root,	    //必殺の軌道.
-		SE_Sp,			//必殺発動時
-		SE_Charge,	    //必殺中貯め
-		SE_EvoNow,		//ボス変身中
-		SE_EvoAf,		//変身後カメラの動き
-		SE_BossVo,		//ボスの声
-		SE_BossDeath,	//ボス死亡
-		SE_DeathNow,	//死亡中フェード
-		SE_BossLoss,	//ボス消滅
-		SE_BeforeDeath,	//ボス爆発前
-		
-		
-
+		SE_Slash,			  //斬撃.		
+		SE_Damage,			  //ダメージ		
+		SE_Select,			  //選択.		
+		SE_Enter,			  //決定.		
+		SE_Tornade,			  //竜巻.		
+		SE_Start,			  //スタート.		
+		SE_FireBall,		  //火球.
+		SE_Thunder,           //電気
+		SE_TPose,             //T字ポーズ
+		SE_Up,                //ステータス(上昇)
+		SE_Miss,              //ステータス(失敗)
 		//音が増えたら「ここ」に追加してください.
 		max,		//最大数.
 	};

@@ -9,6 +9,7 @@
 #include "SkinMeshObject\Hero\CHeroManager.h"
 #include "SkinMeshObject\Hero\Yui\CYui.h"
 #include "SkinMeshObject\Hero\Kaito\CKaito.h"
+#include "Sprite2D\UIManager\CUIManager.h"
 #include <cmath>
 #include <fstream>
 #include <sstream>
@@ -16,8 +17,8 @@
 
 CNatureHeroSelectScene::CNatureHeroSelectScene()
     : m_pCamera (  &CCameraManager::GetInstance() )
-    , m_pSky    ()
-    , m_pGround ()
+    , m_pYui    ()
+    , m_pKaito  ()
     , m_UserName()
 {
 }
@@ -29,17 +30,13 @@ CNatureHeroSelectScene::~CNatureHeroSelectScene()
 //構築関数
 void CNatureHeroSelectScene::Create()
 {
-   //----ヒーロークラスのインスタンス生成----
-   //ユイ
-    m_pYui    = make_unique<CYui>();
-   //カイト
-   m_pKaito   = make_unique<CKaito>();
+   //----スキンメッシュ----
+    m_pYui    = make_unique<CYui>();  //ユイ
+   m_pKaito   = make_unique<CKaito>();//カイト
 
-   //スカイボックスのインスタンス生成
-   m_pSky    = make_unique<CSky>();
-
-   //地面のインスタンス生成
-   m_pGround = make_unique<CGround>();
+   //----UI----
+   m_pLeftArrow = make_unique<CUIObject>();
+   m_pRightArrow = make_unique<CUIObject>();
 }
 
 //データ設定関数
@@ -50,17 +47,12 @@ void CNatureHeroSelectScene::LoadData()
     CHeroManager* Hero = &CHeroManager::GetInstance();
 
     //----各ヒーロークラスのメッシュデータ設定----
-    //ユイ
-    m_pYui->AttachMesh(CSkinMeshManager::GetMesh(CSkinMeshManager::Yui));
-    //カイト
-    m_pKaito->AttachMesh(CSkinMeshManager::GetMesh(CSkinMeshManager::Kaito));
+    m_pYui->AttachMesh(CSkinMeshManager::GetMesh(CSkinMeshManager::Yui));    //ユイ
+    m_pKaito->AttachMesh(CSkinMeshManager::GetMesh(CSkinMeshManager::Kaito));//カイト
 
-    //スカイボックスのメッシュデータ設定
-    m_pSky->AttachMesh(CMeshManager::GetMesh(CMeshManager::Sky));
-
-    //地面のメッシュ設定
-    m_pGround->AttachMesh(CMeshManager::GetMesh(CMeshManager::Ground));
-    
+    //----UI----
+    m_pLeftArrow->AttachSprite(CUIManager::GetSprite(CUIManager::Arrow)); //矢印左
+    m_pRightArrow->AttachSprite(CUIManager::GetSprite(CUIManager::Arrow));//矢印右
 }
 
 //破棄関数
@@ -103,6 +95,13 @@ void CNatureHeroSelectScene::Update()
     //フェードイン処理
     if (!FadeIn()) { return; }
 
+    //モード選択画面のBGM停止
+    CSoundManager::GetInstance()->Stop(CSoundManager::BGM_ModeSelect);
+
+    //育成ヒーローBGMの再生
+    CSoundManager::GetInstance()->PlayLoop(CSoundManager::BGM_NatureHeroSelect);
+    CSoundManager::GetInstance()->Volume(CSoundManager::BGM_NatureHeroSelect, 40);
+
     CKeyManager* KeyMng = CKeyManager::GetInstance();
     CHeroManager* HeroMng = &CHeroManager::GetInstance();
 
@@ -112,12 +111,20 @@ void CNatureHeroSelectScene::Update()
     //カーソルの移動
     if (KeyMng->IsDown(VK_RIGHT))
     {
+        //選択SEの再生
+        CSoundManager::GetInstance()->PlaySE(CSoundManager::SE_Select);
+        CSoundManager::GetInstance()->Volume(CSoundManager::SE_Select, 40);
+
         //キー入力で選択を進める
         if (m_SelectNo < CHeroBase::enHeroList::Max-1) { m_SelectNo++; }
         else { m_SelectNo = 0; }
     }
     else if (KeyMng->IsDown(VK_LEFT))
     {
+        //選択SEの再生
+        CSoundManager::GetInstance()->PlaySE(CSoundManager::SE_Select);
+        CSoundManager::GetInstance()->Volume(CSoundManager::SE_Select, 40);
+
         if (m_SelectNo > 0) { m_SelectNo--; }
         else { m_SelectNo = 1; }
     }
@@ -140,6 +147,10 @@ void CNatureHeroSelectScene::Update()
     //シーン遷移(仮)
     if (CKeyManager::GetInstance()->IsDown(VK_RETURN))
     {
+        //決定SEの再生
+        CSoundManager::GetInstance()->PlaySE(CSoundManager::SE_Enter);
+        CSoundManager::GetInstance()->Volume(CSoundManager::SE_Enter, 40);
+
         //オープニングシーンへ
         m_SceneTransitionFlg = true;
     }
@@ -166,15 +177,10 @@ void CNatureHeroSelectScene::Update()
 void CNatureHeroSelectScene::Draw()
 {  
     CHeroManager* Hero = &CHeroManager::GetInstance();
+    WriteText* Text = WriteText::GetInstance();
 
     //カメラの動作
     m_pCamera->CameraUpdate();
-    
-    //空の描画
-    m_pSky->Draw();
-
-    //地面の描画
-    m_pGround->Draw();
 
     //選択中ヒーローの描画・アニメーション・カメラ配置
     switch (m_SelectNo)
@@ -183,15 +189,44 @@ void CNatureHeroSelectScene::Draw()
         //ユイ
         m_pYui->NatureHeroSelectAnimation();
         m_pYui->Draw();
+        Text->Draw_Text(L"YUI", WriteText::B_Big, HERONAME_POS_NS);
         break;
     case 1:
         //カイト
         m_pKaito->NatureHeroSelectAnimation();
         m_pKaito->Draw();
+        Text->Draw_Text(L"KAITO", WriteText::D_Big, HERONAME_POS_NS);
         break;
     default:
         break;
     }
 
+    //シーン名,指示の描画
+    Text->Draw_Text(L"Nature Hero Select", WriteText::Normal, SCENENAME_POS_NS);    
+    Text->Draw_Text(L"Enterキーで決定", WriteText::Normal, INFOTEXT_POS_NS);
+
+    //矢印の描画
+    DrawArrow();
+}
+
+//矢印の描画
+void CNatureHeroSelectScene::DrawArrow()
+{
+    //設定
+    //左
+    m_pLeftArrow->SetPosition(ARROW_LEFT_POS_NS);
+    m_pLeftArrow->SetScale(ARROW_SCALE);
+    m_pLeftArrow->SetRotation(ARROW_LEFT_ROTATE);
+    m_pLeftArrow->SetDisplay(ARROW_DISP.x, ARROW_DISP.y);
+    m_pLeftArrow->SetAlpha(ARROW_ALPHA);
+    //右
+    m_pRightArrow->SetPosition(ARROW_RIGHT_POS_NS);
+    m_pRightArrow->SetScale(ARROW_SCALE);
+    m_pRightArrow->SetDisplay(ARROW_DISP.x, ARROW_DISP.y);
+    m_pRightArrow->SetAlpha(ARROW_ALPHA);
+
+    //描画
+    m_pLeftArrow->Draw();
+    m_pRightArrow->Draw();
 }
 

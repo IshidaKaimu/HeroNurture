@@ -3,11 +3,13 @@
 #include "KeyManager\CKeyManager.h"
 #include "StaticMesh\MeshManager\CMeshManager.h"
 #include "Sound\CSoundManager.h"
-#include <cmath>
+#include "SkinMeshObject\Hero\CHeroManager.h"
 #include "ImGui\ImGuiManager\ImGuiManager.h"
 #include "Json\CJson.h"
 #include "Utility\CUtility.h"
 #include "Sprite2D\UIManager\CUIManager.h" 
+#include <cmath>
+
 
 CTitleScene::CTitleScene()
     : m_pCamera ( &CCameraManager::GetInstance() )
@@ -101,12 +103,21 @@ void CTitleScene::Update()
 
     KeyMng->Update();
 
+    //タイトルBGMの再生
+    CSoundManager::GetInstance()->PlayLoop(CSoundManager::BGM_Title);
+    CSoundManager::GetInstance()->Volume(CSoundManager::BGM_Title, 40);
+
+
     //フェードイン処理
     if (!FadeIn()) { return; }
 
     //シーン遷移(仮)
     if (KeyMng->IsDown(VK_RETURN))
     {
+        //スタートSEの再生
+        CSoundManager::GetInstance()->PlaySE(CSoundManager::SE_Start);
+        CSoundManager::GetInstance()->Volume(CSoundManager::SE_Start,40);
+
         //オープニングシーンへ
         m_SceneTransitionFlg = true;
     }

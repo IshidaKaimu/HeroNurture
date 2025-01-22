@@ -15,6 +15,8 @@
 class CSceneManager;
 //ライト
 class CLightManager;
+//サウンド
+class CSoundManager;
 //文字描画クラス
 class WriteText;
 //汎用クラス
@@ -99,13 +101,29 @@ protected:
     // 育成関連のシーンで固定するUI関連の関数
     // =======================		
     //インスタンス生成
-	void CreateNatureUI(std::unique_ptr<CUIObject>& gage, std::unique_ptr<CUIObject>& back);
+	void CreateNatureUI(
+		std::unique_ptr<CUIObject>& gage, 
+		std::unique_ptr<CUIObject>& back,
+		std::unique_ptr<CUIObject>& frame,
+		std::unique_ptr<CUIObject>& turnback);
 	//データのロード
-	void LoadNatureUI(std::unique_ptr<CUIObject>& gage, std::unique_ptr<CUIObject>& back);
+	void LoadNatureUI(
+		std::unique_ptr<CUIObject>& gage,
+		std::unique_ptr<CUIObject>& back,
+		std::unique_ptr<CUIObject>& frame,
+		std::unique_ptr<CUIObject>& turnback);
 	//初期化
-	void InitNatureUI(std::unique_ptr<CUIObject>& gage, std::unique_ptr<CUIObject>& back);
+	void InitNatureUI(
+		std::unique_ptr<CUIObject>& gage, 
+		std::unique_ptr<CUIObject>& back, 
+		std::unique_ptr<CUIObject>& frame,
+		std::unique_ptr<CUIObject>& turnback);
 	//描画
-	void DrawNatureUI(std::unique_ptr<CUIObject>& gage, std::unique_ptr<CUIObject>& back);
+	void DrawNatureUI(
+		std::unique_ptr<CUIObject>& gage, 
+		std::unique_ptr<CUIObject>& back, 
+		std::unique_ptr<CUIObject>& frame,
+		std::unique_ptr<CUIObject>& turnback);
 
 public:
 	//各ヒーロー用ファイルの作成・読み込み
@@ -169,8 +187,12 @@ public:
 	std::unique_ptr<CUIObject> m_pStaminaGage;
 	//スタミナゲージ背景
 	std::unique_ptr<CUIObject> m_pStaminaBack;
+	//スタミナゲージ枠
+	std::unique_ptr<CUIObject> m_pStaminaFrame;
 	//スタミナゲージの幅
 	float m_GageWidth;
+	//ターン数の背景
+	std::unique_ptr<CUIObject> m_pTurnBack;
 
 	// =======================
 	// json関連

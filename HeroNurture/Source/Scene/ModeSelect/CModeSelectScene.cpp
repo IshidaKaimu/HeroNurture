@@ -52,20 +52,39 @@ void CModeSelectScene::Update()
     //フェードイン処理
     if (!FadeIn()) { return; }
 
+    //タイトルBGM、戦闘結果BGMの停止
+    CSoundManager::GetInstance()->Stop(CSoundManager::BGM_Title);
+    CSoundManager::GetInstance()->Stop(CSoundManager::BGM_NatureResult);
+    CSoundManager::GetInstance()->Stop(CSoundManager::BGM_Win);
+    CSoundManager::GetInstance()->Stop(CSoundManager::BGM_Lose);
+
+    //モード選択BGMの再生
+    CSoundManager::GetInstance()->PlayLoop(CSoundManager::BGM_ModeSelect);
+    CSoundManager::GetInstance()->Volume(CSoundManager::BGM_ModeSelect, 40);
+
+
     //キーマネージャーの更新
     KeyMng->Update();
 
     //カーソルの移動
     if (KeyMng->IsDown(VK_RIGHT))
     {
+        //選択SEの再生
+        CSoundManager::GetInstance()->PlaySE(CSoundManager::SE_Select);
+        CSoundManager::GetInstance()->Volume(CSoundManager::SE_Select, 40);
+
         //キー入力で選択を進める
-        if (m_SelectNo < enModeList::Max) { m_SelectNo++; }
+        if (m_SelectNo < enModeList::Max-1) { m_SelectNo++; }
         else { m_SelectNo = 0; }
     }
     else if (KeyMng->IsDown(VK_LEFT))
     {
+        //選択SEの再生
+        CSoundManager::GetInstance()->PlaySE(CSoundManager::SE_Select);
+        CSoundManager::GetInstance()->Volume(CSoundManager::SE_Select, 40);
+
         if (m_SelectNo > 0) { m_SelectNo--; }
-        else { m_SelectNo = enModeList::Max; }
+        else { m_SelectNo = enModeList::Max-1; }
     }
 
 
@@ -73,6 +92,10 @@ void CModeSelectScene::Update()
     //シーン遷移(仮)
     if (CKeyManager::GetInstance()->IsDown(VK_RETURN))
     {
+        //決定SEの再生
+        CSoundManager::GetInstance()->PlaySE(CSoundManager::SE_Enter);
+        CSoundManager::GetInstance()->Volume(CSoundManager::SE_Enter, 40);
+
         //オープニングシーンへ
         m_SceneTransitionFlg = true;
     }

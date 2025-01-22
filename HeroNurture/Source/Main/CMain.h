@@ -5,6 +5,11 @@
 //クラスの前方宣言.
 class CDirectX9;
 class CDirectX11;
+class CSceneManager;
+class CUIManager;
+class CSoundManager;
+class CStaticMeshManager;
+class CEffect;
 
 /**************************************************
 *	メインクラス.

@@ -7,17 +7,19 @@
 #include "Camera\CameraManager\CCameraManager.h"
 #include "Scene\CSceneManager.h"
 #include "Utility\CUtility.h"
-
+#include "Sound\CSoundManager.h"
 
 CBattleHeroSelectScene::CBattleHeroSelectScene()
-	: m_BattleTurn()
-	, m_pJson()
-	, m_ResultData()
+	: m_BattleTurn      ()
+	, m_pJson			()
+	, m_ResultData      ()
 	, m_BattleDataWriter()
-	, m_pCamera( &CCameraManager::GetInstance() )
-	, m_pParamBack()
-	, m_pYui()
-	, m_pKaito()
+	, m_pCamera			( &CCameraManager::GetInstance() )
+	, m_pParamBack		()
+	, m_pYui			()
+	, m_pKaito			()
+	, m_pLeftArrow		()
+	, m_pRightArrow		()
 {
 }
 
@@ -38,6 +40,11 @@ void CBattleHeroSelectScene::Create()
 	m_pKaito = std::make_unique<CKaito>();
 	//ユイクラス
 	m_pYui = std::make_unique<CYui>();
+
+	//----UI----
+	m_pLeftArrow = make_unique<CUIObject>();
+	m_pRightArrow = make_unique<CUIObject>();
+
 }
 
 void CBattleHeroSelectScene::Releace()
@@ -57,8 +64,11 @@ void CBattleHeroSelectScene::LoadData()
 	//カイト
 	m_pKaito->AttachMesh(CSkinMeshManager::GetMesh(CSkinMeshManager::Kaito));
 
-	//パラメータ背景UIのスプライトを設定
-	m_pParamBack->AttachSprite(CUIManager::GetSprite(CUIManager::ResultParamList));
+	//----UI----
+	m_pLeftArrow->AttachSprite(CUIManager::GetSprite(CUIManager::Arrow)); //矢印左
+	m_pRightArrow->AttachSprite(CUIManager::GetSprite(CUIManager::Arrow));//矢印右
+	m_pParamBack->AttachSprite(CUIManager::GetSprite(CUIManager::ResultParamList));	//パラメータ背景
+
 }
 
 void CBattleHeroSelectScene::Initialize()
@@ -92,6 +102,13 @@ void CBattleHeroSelectScene::Update()
 	//フェードイン処理
 	if (!FadeIn()) { return; }
 
+	//モード選択画面のBGM停止
+	CSoundManager::GetInstance()->Stop(CSoundManager::BGM_ModeSelect);
+
+	//モード選択BGMの再生
+	CSoundManager::GetInstance()->PlayLoop(CSoundManager::BGM_BattleHeroSelect);
+	CSoundManager::GetInstance()->Volume(CSoundManager::BGM_BattleHeroSelect, 40);
+
 	CKeyManager* KeyMng = CKeyManager::GetInstance();
 	CHeroManager* HeroMng = &CHeroManager::GetInstance();
 	CSceneManager* SceneMng = CSceneManager::GetInstance();
@@ -101,12 +118,20 @@ void CBattleHeroSelectScene::Update()
 	//選択番号の遷移
 	if (KeyMng->IsDown(VK_RIGHT))
 	{
+		//選択SEの再生
+		CSoundManager::GetInstance()->PlaySE(CSoundManager::SE_Select);
+		CSoundManager::GetInstance()->Volume(CSoundManager::SE_Select, 40);
+
 		//キー入力で選択を進める
 		if (m_SelectNo < m_ResultData.size()) { m_SelectNo++; }
 		else { m_SelectNo = 1; }
 	}
 	else if (KeyMng->IsDown(VK_LEFT))
 	{
+		//選択SEの再生
+		CSoundManager::GetInstance()->PlaySE(CSoundManager::SE_Select);
+		CSoundManager::GetInstance()->Volume(CSoundManager::SE_Select, 40);
+
 		if (m_SelectNo > 1) { m_SelectNo--; }
 		else { m_SelectNo = m_ResultData.size(); }
 	}
@@ -114,6 +139,10 @@ void CBattleHeroSelectScene::Update()
 	//フェード開始
 	if (KeyMng->IsDown(VK_RETURN))
 	{
+		//決定SEの再生
+		CSoundManager::GetInstance()->PlaySE(CSoundManager::SE_Enter);
+		CSoundManager::GetInstance()->Volume(CSoundManager::SE_Enter, 40);
+
 		m_SceneTransitionFlg = true;
 	}
 
@@ -132,6 +161,9 @@ void CBattleHeroSelectScene::Draw()
 
 	//保存されている育成評価の表示
 	DrawResultData();
+
+	//矢印の描画
+	DrawArrow();
 }
 
 //デバッグ処理
@@ -210,6 +242,28 @@ void CBattleHeroSelectScene::DrawSaveParameter(const json& jsondata, int number)
 			Utility->DrawRank(ParamTotal, 1, RANK_POSX_BS, RANK_POSY_BS);
 		}
 	}
+
+}
+
+//矢印の描画
+void CBattleHeroSelectScene::DrawArrow()
+{
+	//設定
+    //左
+    m_pLeftArrow->SetPosition(ARROW_LEFT_POS_BS);
+    m_pLeftArrow->SetScale(ARROW_SCALE);
+    m_pLeftArrow->SetRotation(ARROW_LEFT_ROTATE);
+    m_pLeftArrow->SetDisplay(ARROW_DISP.x, ARROW_DISP.y);
+    m_pLeftArrow->SetAlpha(ARROW_ALPHA);
+    //右
+    m_pRightArrow->SetPosition(ARROW_RIGHT_POS_BS);
+    m_pRightArrow->SetScale(ARROW_SCALE);
+    m_pRightArrow->SetDisplay(ARROW_DISP.x, ARROW_DISP.y);
+    m_pRightArrow->SetAlpha(ARROW_ALPHA);
+
+    //描画
+    m_pLeftArrow->Draw();
+    m_pRightArrow->Draw();
 
 }
 

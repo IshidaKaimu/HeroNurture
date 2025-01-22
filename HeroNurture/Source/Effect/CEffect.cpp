@@ -88,16 +88,10 @@ HRESULT CEffect::LoadData()
 	EffectList EList[] =
 	{
 		//u""は、UTF-16エンコーディングの文字列リテラルで、const char16_t*に代入可能
-		{enList::Sword,u"Data\\Effekseer\\Sword.efk"},
-		{enList::Dark, u"Data\\Effekseer\\Dark.efk"},
-		{enList::Aura, u"Data\\Effekseer\\Aura.efk"},
-		{enList::Howling,u"Data\\Effekseer\\ALine.efk"},
-		{enList::Power,u"Data\\Effekseer\\Power.efk"},
-		{enList::Magic,u"Data\\Effekseer\\Magic.efk"},
-		{enList::Root,u"Data\\Effekseer\\Root.efk"},
-		{enList::BigSlash,u"Data\\Effekseer\\BigSlash.efk"},
-		{enList::BossDeath,u"Data\\Effekseer\\BossDeath.efk"},
-		{enList::Extinction,u"Data\\Effekseer\\Extinction.efk"},
+		{enList::Yui_Power,u"Data\\Effekseer\\PowerYui.efk"},
+		{enList::Yui_Magic,u"Data\\Effekseer\\MagicYui.efk"},
+		{enList::Kaito_Power,u"Data\\Effekseer\\Sword.efk"},
+		{enList::Kaito_Magic,u"Data\\Effekseer\\MagicKaito.efk"},
 	};
 	//配列の最大要素数を算出(配列全体のサイズ/配列一つ分のサイズ)
 	int list_max = sizeof( EList ) / sizeof( EList[0] );
@@ -119,21 +113,21 @@ HRESULT CEffect::LoadData()
 	return S_OK;
 }
 
-void CEffect::Draw( const LIGHT& Light )
+void CEffect::Draw()
 {
 
 	//カメラ情報の取得
-	CAMERA camera = CCameraManager::GetInstance().GetCamera();
+	CAMERA Camera = CCameraManager::GetInstance().GetCamera();
 
 	//ビュー行列を設定
-	SetViewMatRix( camera.View );
+	SetViewMatRix( Camera.View );
 
 	//プロジェクション行列を設定
-	SetProjectionMatrix( camera.Proj );
+	SetProjectionMatrix( Camera.Proj );
 
 	//レイヤーパラメータ設定
 	Effekseer::Manager::LayerParameter layerParameter;
-	layerParameter.ViewerPosition = ToEfkVector3( &camera.Position );
+	layerParameter.ViewerPosition = ToEfkVector3( &Camera.Position );
 	m_pManager->SetLayerParameter( 0, layerParameter );
 
 

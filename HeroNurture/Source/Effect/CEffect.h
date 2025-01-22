@@ -42,16 +42,10 @@ public:
 	//エフェクト種類列挙型
 	enum enList
 	{
-		Sword = 0,	//仮で設定
-		Dark,
-		Aura,
-		Howling,
-		Power,
-		Magic,
-		Root,
-		BigSlash,
-		BossDeath,
-		Extinction,
+		Yui_Power,
+		Yui_Magic,
+		Kaito_Power,
+		Kaito_Magic,
 		Max,
 	};
 
@@ -72,7 +66,7 @@ public:
 	HRESULT LoadData();
 
 	//描画
-	void Draw( const LIGHT& Light );
+	void Draw();
 
 	//---------------------------------------
 	//変換系
