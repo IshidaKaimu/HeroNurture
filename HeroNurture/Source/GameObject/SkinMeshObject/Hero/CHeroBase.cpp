@@ -173,11 +173,13 @@ void CHeroBase::CorrectionByStamina(float stamina)
 //失敗率を返す関数
 int CHeroBase::FailureRate(float stamina)
 {
-	if (stamina <= 0) return 99;
-	if (stamina <= 30) return 75;
-	if (stamina <= 50) return 50;
-	if (stamina <= 80) return 20;
-	return 0;
+	if (stamina <= 0.0f) return 1;
+	if (stamina <= 10.0f) return 25;
+	if (stamina <= 25.0f) return 50;
+	if (stamina <= 60.0f) return 65;
+	if (stamina <= 80.0f) return 80;
+	if (stamina <= 90.0f) return 90;
+	return 99;
 }
 
 //トレーニング結果
@@ -186,7 +188,7 @@ void CHeroBase::TraningResult(float stamina, float app, float& param)
 	//この乱数で成功するかを決める
 	int Succes = CUtility::GenerateRandomValue(0, 100);
 
-	if (Succes >= FailureRate(stamina)) {
+	if (Succes < FailureRate(stamina)) {
 		float AppBonus = INCREASE_VALUE * ( 1.0f + ( app / 100.0f ) );
 		param += AppBonus * m_Correction;
 	}

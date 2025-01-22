@@ -15,7 +15,7 @@ class CBattleScene;
 class CBattleResultScene;
 
 //育成ターン数
-constexpr int MAX_TURN = 35;
+constexpr int MAX_TURN = 50;
 
 //=====================================
 //シーンマネージャークラス

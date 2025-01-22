@@ -114,7 +114,7 @@ void CHeroManager::ReduceStamina()
 void CHeroManager::StaminaRecovery()
 {
     if (m_Stamina < 100.0f) {
-        m_Stamina += RECOVERY_STAMINA;
+        m_Stamina += CUtility::GenerateRandomValue(25.0f,50.0f);
     }
     else
     {
