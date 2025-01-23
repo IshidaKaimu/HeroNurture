@@ -477,10 +477,7 @@ void CBattleScene::MoveSelect()
 			m_SelectAttack = true;
 
 			//“G‚ÌUŒ‚‚Ì‘I‘ğ
-			if (m_pEnemyHero->GetUniqueGage() == 5) { m_EnemyAttackNo = CUtility::GenerateRandomValue(0,2);}
-			else{ m_EnemyAttackNo = CUtility::GenerateRandomValue(0, 1); }
-
-			m_EnemyAttackNo = 1;
+			m_EnemyAttackNo = CUtility::GenerateRandomValue(0, 1);
 
 			//“G‚ÌUŒ‚‚Ìİ’è
 			SettingAttack(m_EnemyAttackNo, m_EnemyAttack);
