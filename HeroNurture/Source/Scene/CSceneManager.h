@@ -2,6 +2,7 @@
 #include "CSceneBase.h"
 #include "CDirectX11.h"
 #include "CDirectX9.h"
+#include "Singleton\CSingleton.h"
 #include <memory>
 
 //----前方宣言---
@@ -23,6 +24,8 @@ constexpr int MAX_TURN = 50;
 //=====================================
 class CSceneManager
 	: public CSceneBase
+	, public CSingleton<CSceneManager>
+
 {
 public:
 	//シーンリスト

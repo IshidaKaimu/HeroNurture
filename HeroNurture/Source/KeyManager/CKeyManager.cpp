@@ -35,6 +35,7 @@ void CKeyManager::Update()
         }
     }
 }
+
 //キーを離したとき
 bool CKeyManager::IsUp(int input)
 {
@@ -46,6 +47,7 @@ bool CKeyManager::IsUp(int input)
 
     return false;
 }
+
 //キーを押したとき
 bool CKeyManager::IsDown(int input)
 {
@@ -57,6 +59,7 @@ bool CKeyManager::IsDown(int input)
 
     return false;
 }
+
 //キーを押し続けているとき
 bool CKeyManager::IsKeep(int input)
 {
@@ -68,6 +71,7 @@ bool CKeyManager::IsKeep(int input)
 
     return false;
 }
+
 //IsUp,IsDown,IsKeepで使用している関数
 bool CKeyManager::KeyCore(int input, vector<int> keymax)
 {

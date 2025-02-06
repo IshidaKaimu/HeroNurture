@@ -1,5 +1,5 @@
 #include "CNatureScene.h"
-#if DEBUG
+#if _DEBUG
 #include "ImGui\ImGuiManager\ImGuiManager.h"
 #endif
 #include "SkinMesh\SkinMeshManager\CSkinMeshManager.h"
@@ -158,7 +158,7 @@ void CNatureScene::Initialize()
 
 void CNatureScene::Update()
 {
-    CKeyManager* KeyMng = CKeyManager::GetInstance();
+    CKeyManager* KeyMng = &CKeyManager::GetInstance();
     CHeroManager* HeroMng = &CHeroManager::GetInstance();
     CSceneManager* SceneMng = CSceneManager::GetInstance();
 
@@ -178,7 +178,7 @@ void CNatureScene::Update()
     m_pHero->Update();
 
     //キーマネージャーの更新処理
-    CKeyManager::GetInstance()->Update();
+    CKeyManager::GetInstance().Update();
 
     //カーソルの移動
     if (KeyMng->IsDown(VK_RIGHT))

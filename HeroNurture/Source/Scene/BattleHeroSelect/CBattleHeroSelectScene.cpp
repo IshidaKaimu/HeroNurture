@@ -109,7 +109,7 @@ void CBattleHeroSelectScene::Update()
 	CSoundManager::GetInstance()->PlayLoop(CSoundManager::BGM_BattleHeroSelect);
 	CSoundManager::GetInstance()->Volume(CSoundManager::BGM_BattleHeroSelect, 40);
 
-	CKeyManager* KeyMng = CKeyManager::GetInstance();
+	CKeyManager* KeyMng = &CKeyManager::GetInstance();
 	CHeroManager* HeroMng = &CHeroManager::GetInstance();
 	CSceneManager* SceneMng = CSceneManager::GetInstance();
 

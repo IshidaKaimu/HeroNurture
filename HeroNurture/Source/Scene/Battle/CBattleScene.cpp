@@ -427,7 +427,7 @@ void CBattleScene::DrawUniqueGage(std::vector<std::unique_ptr<CUIObject>>& gages
 //行動選択フェーズ中の処理
 void CBattleScene::MoveSelect()
 {
-	CKeyManager* KeyMng = CKeyManager::GetInstance();
+	CKeyManager* KeyMng = &CKeyManager::GetInstance();
 
 	//キーマネージャーの動作
 	KeyMng->Update();

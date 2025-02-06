@@ -1,10 +1,14 @@
 #pragma once
-#include "Sprite2D/CSprite2D.h"
+#include "Sprite2D\CSprite2D.h"
 #include "CDirectX11.h"
-#include "SkinMeshObject/Hero/CHeroBase.h"
+#include "Singleton\CSingleton.h"
 
 class CUIManager
+	:public CSingleton<CUIManager>
 {
+private:
+	friend class CSingleton<CUIManager>;
+	~CUIManager();
 public:
 	//UIリスト
 	enum UIList
@@ -44,32 +48,19 @@ public:
 		Max,
 	};
 
-	//シングルトン化
-	static CUIManager* GetInstance() {
-		static CUIManager s_Instance;
-		return &s_Instance;
-	}
+private:
+	//他からアクセスされることがないように
+	CUIManager();
 
 public:
-	~CUIManager();
-
 	HRESULT Load(CDirectX11* Dx11);
 
 	void SetDx11(CDirectX11& Dx11) { m_pDx11 = &Dx11; }
 
-	static CSprite2D& GetSprite(UIList list) { return *GetInstance()->m_pSprite2D[list]; }
-
-private:
-	//シングルトン化
-	CUIManager();
-	CUIManager(const CUIManager& rhs) = delete;
-	CUIManager& operator = (const CUIManager& rhs) = delete;
-
+	static CSprite2D& GetSprite(UIList list) { return *GetInstance().m_pSprite2D[list]; }
 private:
 	CDirectX11* m_pDx11;
 
 	CSprite2D* m_pSprite2D[UIList::Max];
-
-	CHeroBase* m_pHero;
 };
 

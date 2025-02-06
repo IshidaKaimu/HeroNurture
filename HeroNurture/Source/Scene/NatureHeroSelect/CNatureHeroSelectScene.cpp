@@ -42,10 +42,6 @@ void CNatureHeroSelectScene::Create()
 //データ設定関数
 void CNatureHeroSelectScene::LoadData()
 {
-    CMeshManager* MMng = CMeshManager::GetInstance();
-    CSkinMeshManager* SKMng = CSkinMeshManager::GetInstance();
-    CHeroManager* Hero = &CHeroManager::GetInstance();
-
     //----各ヒーロークラスのメッシュデータ設定----
     m_pYui->AttachMesh(CSkinMeshManager::GetMesh(CSkinMeshManager::Yui));    //ユイ
     m_pKaito->AttachMesh(CSkinMeshManager::GetMesh(CSkinMeshManager::Kaito));//カイト
@@ -102,11 +98,11 @@ void CNatureHeroSelectScene::Update()
     CSoundManager::GetInstance()->PlayLoop(CSoundManager::BGM_NatureHeroSelect);
     CSoundManager::GetInstance()->Volume(CSoundManager::BGM_NatureHeroSelect, 40);
 
-    CKeyManager* KeyMng = CKeyManager::GetInstance();
+    CKeyManager* KeyMng = &CKeyManager::GetInstance();
     CHeroManager* HeroMng = &CHeroManager::GetInstance();
 
     //キーマネージャの動作処理
-    CKeyManager::GetInstance()->Update();
+    CKeyManager::GetInstance().Update();
 
     //カーソルの移動
     if (KeyMng->IsDown(VK_RIGHT))
@@ -145,7 +141,7 @@ void CNatureHeroSelectScene::Update()
 #endif
 
     //シーン遷移(仮)
-    if (CKeyManager::GetInstance()->IsDown(VK_RETURN))
+    if (CKeyManager::GetInstance().IsDown(VK_RETURN))
     {
         //決定SEの再生
         CSoundManager::GetInstance()->PlaySE(CSoundManager::SE_Enter);

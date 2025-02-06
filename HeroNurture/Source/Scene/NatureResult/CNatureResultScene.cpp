@@ -36,7 +36,6 @@ void CNatureResultScene::Create()
 void CNatureResultScene::LoadData()
 {
     CHeroManager* HeroMng = &CHeroManager::GetInstance();
-    CUIManager* UIMng = CUIManager::GetInstance();
 
     //セットされたヒーローのメッシュ設定
     HeroMng->LoadMeshData();
@@ -76,7 +75,7 @@ void CNatureResultScene::Update()
     //フェードイン処理
     if (!FadeIn()) { return; }
 
-    CKeyManager* KeyMng = CKeyManager::GetInstance();
+    CKeyManager* KeyMng = &CKeyManager::GetInstance();
     CHeroManager* HeroMng = &CHeroManager::GetInstance();
 
     //モード選択画面のBGM停止
@@ -92,7 +91,7 @@ void CNatureResultScene::Update()
     KeyMng->Update();
 
     //シーン遷移(仮)
-    if (CKeyManager::GetInstance()->IsDown(VK_RETURN))
+    if (CKeyManager::GetInstance().IsDown(VK_RETURN))
     {
         //決定SEの再生
         CSoundManager::GetInstance()->PlaySE(CSoundManager::SE_Enter);

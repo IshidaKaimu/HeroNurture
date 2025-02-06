@@ -2,6 +2,11 @@
 #include "SkinMeshObject\Hero\CHeroBase.h"
 #include "Singleton\CSingleton.h"
 #include <memory>
+
+//=====================================
+// ヒーローマネージャークラス
+// 制作者:石田櫂夢
+//=====================================
 class CHeroManager
 	: public CHeroBase
 	, public CSingleton<CHeroManager>

@@ -47,7 +47,6 @@ HRESULT CSkinMeshManager::Load(CDirectX9* pdx9, CDirectX11* pdx11)
 		}
 	}
 
-
 	return S_OK;
 }
 

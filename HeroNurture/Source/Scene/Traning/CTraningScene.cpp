@@ -98,7 +98,7 @@ void CTraningScene::Update()
     if (!FadeIn()) { return; }
 
    //キーマネージャーの更新処理
-   CKeyManager::GetInstance()->Update();
+   CKeyManager::GetInstance().Update();
 
    //シーンマネージャークラス
    CSceneManager* SceneMng = CSceneManager::GetInstance();
@@ -124,7 +124,7 @@ void CTraningScene::Update()
 
 
    //テキストの描画を進める
-   if (CKeyManager::GetInstance()->IsDown(VK_RETURN) && m_ParamInc.size())
+   if (CKeyManager::GetInstance().IsDown(VK_RETURN) && m_ParamInc.size())
    {
        //決定SEの再生
        CSoundManager::GetInstance()->PlaySE(CSoundManager::SE_Enter);
@@ -157,7 +157,7 @@ void CTraningScene::Update()
    else
    {
        //失敗した場合エンターキーで遷移
-       if (CKeyManager::GetInstance()->IsDown(VK_RETURN))
+       if (CKeyManager::GetInstance().IsDown(VK_RETURN))
        {
            m_SceneTransitionFlg = true;
        }

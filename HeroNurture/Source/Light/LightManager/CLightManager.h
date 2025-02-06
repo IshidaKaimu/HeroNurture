@@ -4,17 +4,15 @@
 class CLightManager
 	: public CSingleton<CLightManager>
 {
-public:
+private:
 	//フレンド宣言でアクセス権を与える.
 	friend class CSingleton<CLightManager>;
 	~CLightManager();
 
-	//ライトのデバッグ処理
-	void Debug();
-
 public:
 	//情報の取得
 	LIGHT GetLight() { return m_Light; }
+	
 	//位置の設定
 	void SetPos(const D3DXVECTOR3& pos) { m_Light.Position = pos; }
 	void SetPos(float x, float y,float z)
@@ -26,6 +24,7 @@ public:
 	void SetPosX(float x){ m_Light.Position.x = x; }
 	void SetPosY(float y){ m_Light.Position.y = y; }
 	void SetPosZ(float z){ m_Light.Position.z = z; }
+	
 	//方向の設定
 	void SetDir(const D3DXVECTOR3& dir) { m_Light.vDirection = dir; }
 	void SetDir(float x, float y, float z)
@@ -37,6 +36,10 @@ public:
 	void SetDirX(float x) { m_Light.vDirection.x = x; }
 	void SetDirY(float y) { m_Light.vDirection.y = y; }
 	void SetDirZ(float z) { m_Light.vDirection.z = z; }
+
+	//ライトのデバッグ処理
+	void Debug();
+
 
 private:
 	//他からアクセスされることがないように

@@ -1,11 +1,11 @@
 #pragma once
 #include "CSound.h"		//サウンドクラス.
 
-/**************************************************
-*	サウンドマネージャークラス.
-*	Manager(マネージャー)：管理者.
-*		Singleton(シングルトン：デザインパターンの１つ)で作成.
-**/
+//=====================================
+// サウンドマネージャークラス
+// 制作者:石田櫂夢
+// ※授業内制作
+//=====================================
 class CSoundManager
 {
 public:
@@ -57,22 +57,14 @@ public:
 	void Release();
 
 	//SEを再生する.
-	static void PlaySE( enList list ) {
-		CSoundManager::GetInstance()->m_pSound[list]->PlaySE();
-	}
+	static void PlaySE( enList list )   { CSoundManager::GetInstance()->m_pSound[list]->PlaySE();  }
 	//ループ再生する.
-	static void PlayLoop( enList list ) {
-		CSoundManager::GetInstance()->m_pSound[list]->PlayLoop();
-	}
+	static void PlayLoop( enList list ) { CSoundManager::GetInstance()->m_pSound[list]->PlayLoop();}
 	//停止する.
-	static void Stop( enList list ) {
-		CSoundManager::GetInstance()->m_pSound[list]->Stop();
-	}
+	static void Stop( enList list )     { CSoundManager::GetInstance()->m_pSound[list]->Stop();    }
 
 	//音量の操作
-	static void Volume(enList list,int volume) {
-		CSoundManager::GetInstance()->m_pSound[list]->SetVolume(volume);
-	}
+	static void Volume(enList list, int volume) { CSoundManager::GetInstance()->m_pSound[list]->SetVolume(volume); }
 
 
 private://外部からアクセス不可能.

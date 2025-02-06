@@ -28,7 +28,7 @@ const D3DXVECTOR3 BATTLE_ROTATE = { 0.0f,D3DXToRadian(-90.0f),0.0f };//自分
 const D3DXVECTOR3 ENEMY_ROTATE  = { 0.0f,D3DXToRadian(90.0f),0.0f }; //敵
 
 //=====================================
-//ヒーロー基底クラス
+// ヒーロー基底クラス
 // 制作者:石田櫂夢
 //=====================================
 class CHeroBase

@@ -99,7 +99,7 @@ void CTitleScene::Initialize()
 void CTitleScene::Update()
 {   
     CSceneManager* SceneMng = CSceneManager::GetInstance();
-    CKeyManager* KeyMng = CKeyManager::GetInstance();
+    CKeyManager* KeyMng = &CKeyManager::GetInstance();
 
     KeyMng->Update();
 
@@ -170,7 +170,7 @@ float CTitleScene::Easing(float x)
 //名前入力処理
 void CTitleScene::InputName()
 {
-    CKeyManager* KeyMng = CKeyManager::GetInstance();
+    CKeyManager* KeyMng = &CKeyManager::GetInstance();
 
     //キーマネージャの常に行う処理
     KeyMng->Update();

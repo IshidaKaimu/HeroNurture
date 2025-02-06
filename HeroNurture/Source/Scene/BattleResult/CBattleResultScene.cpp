@@ -93,7 +93,7 @@ void CBattleResultScene::Initialize()
 void CBattleResultScene::Update()
 {
     CSceneManager* SceneMng = CSceneManager::GetInstance();
-    CKeyManager* KeyMng = CKeyManager::GetInstance();
+    CKeyManager* KeyMng = &CKeyManager::GetInstance();
 
     KeyMng->Update();
 

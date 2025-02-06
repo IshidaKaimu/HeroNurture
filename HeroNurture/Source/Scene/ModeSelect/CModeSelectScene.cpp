@@ -46,7 +46,7 @@ void CModeSelectScene::Initialize()
 //更新関数
 void CModeSelectScene::Update()
 {
-    CKeyManager* KeyMng = CKeyManager::GetInstance();
+    CKeyManager* KeyMng = &CKeyManager::GetInstance();
     CSceneManager* SceneMng = CSceneManager::GetInstance();
 
     //フェードイン処理
@@ -90,7 +90,7 @@ void CModeSelectScene::Update()
 
 
     //シーン遷移(仮)
-    if (CKeyManager::GetInstance()->IsDown(VK_RETURN))
+    if (CKeyManager::GetInstance().IsDown(VK_RETURN))
     {
         //決定SEの再生
         CSoundManager::GetInstance()->PlaySE(CSoundManager::SE_Enter);

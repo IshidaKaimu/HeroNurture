@@ -1,12 +1,18 @@
 ﻿#pragma once
-#include "StaticMesh/CStaticMesh.h"
-#include "Sprite3D/CSprite3D.h"
-#include "StaticMeshObject/Character/CCharacter.h"
-#include "SkinMeshObject/Hero/CHeroBase.h"
-#include "StaticMeshObject/Ground/CGround.h"
+#include "StaticMesh\CStaticMesh.h"
+#include "Sprite3D\CSprite3D.h"
+#include "StaticMeshObject\Character\CCharacter.h"
+#include "SkinMeshObject\Hero\CHeroBase.h"
+#include "StaticMeshObject\Ground\CGround.h"
+#include "Singleton\CSingleton.h"
 
 class CMeshManager
+	: public CSingleton<CMeshManager>
 {
+private:
+	friend class CSingleton<CMeshManager>;
+	~CMeshManager();
+
 public:
 	//メッシュリスト		
 	enum MeshList
@@ -25,8 +31,6 @@ public:
 		static CMeshManager s_Instance;
 		return &s_Instance;
 	}
-
-	~CMeshManager();
 
 	HRESULT Load(CDirectX9* pdx9, CDirectX11* pdx11);
 

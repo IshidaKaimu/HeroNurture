@@ -19,7 +19,7 @@
 //	’è”.
 //=================================================
 const TCHAR WND_TITLE[] = _T( "HeroNurture" );
-const TCHAR APP_NAME[]	= _T( "HeroNuture" );
+const TCHAR APP_NAME[]	= _T( "HeroNurture" );
 
 
 /********************************************************************************
@@ -115,9 +115,9 @@ HRESULT CMain::Create()
 	//ImGui‚Ì‰Šú‰»
 	CImGuiManager::Init(m_hWnd, *m_pDx11);
 #endif // DEBUG
-	CUIManager* UIMng = CUIManager::GetInstance();
+	CUIManager* UIMng = &CUIManager::GetInstance();
 	CMeshManager* MMng = CMeshManager::GetInstance();
-	CSkinMeshManager* SMMng = CSkinMeshManager::GetInstance();
+	CSkinMeshManager* SMMng = &CSkinMeshManager::GetInstance();
 	CEffect* Effect = CEffect::GetInstance();
 
 	//‰æ‘œƒf[ƒ^‚Ì“Ç‚İ‚İ
