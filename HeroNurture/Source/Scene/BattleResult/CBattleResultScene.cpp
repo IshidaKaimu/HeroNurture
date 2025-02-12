@@ -70,17 +70,16 @@ void CBattleResultScene::Initialize()
     CEnemyHeroManager* EnemyHeroMng = &CEnemyHeroManager::GetInstance();
 
     //ƒJƒƒ‰‚Ì‰ŠúˆÊ’u
-
     switch (SceneMng->GetBattleResult())
     {
     case CSceneManager::Win:
-        m_pCamera->SetPos(-2.4f, 2.0f, 1.1f);
-        m_pCamera->SetLook(-5.0f, 2.0f, -1.0f);
+        m_pCamera->SetPos(WIN_CAM_POS);
+        m_pCamera->SetLook(WIN_CAM_LOOK);
         HeroMng->Initialize();
         break;
     case CSceneManager::Lose:
-        m_pCamera->SetPos(-0.3f, 1.8f, 1.8f);
-        m_pCamera->SetLook(2.0f, 2.0f, 1.0f);
+        m_pCamera->SetPos(LOSE_CAM_POS);
+        m_pCamera->SetLook(LOSE_CAM_LOOK);
         EnemyHeroMng->Initialize();
         break;
     default:

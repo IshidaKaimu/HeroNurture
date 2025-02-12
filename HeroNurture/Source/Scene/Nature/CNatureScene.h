@@ -40,20 +40,28 @@ const D3DXVECTOR3 CAMERALOOK_KAITO =  { 0.0, 5.0, 0.0 };
 //パラメータ背景
 constexpr float PARAMBACK_POSX_N     = 330.0f; //X座標
 constexpr float PARAMBACK_POSY_N     = 410.0f; //Y座標
-const D3DXVECTOR3 PARAMBACK_SCALE_N = { 0.8f,0.8f,0.8f }; //拡縮
+const D3DXVECTOR3 PARAMBACK_SCALE_N  = { 0.8f,0.8f,0.8f }; //拡縮
 //トレーニングUI
-constexpr float TRANING_POSX_N     = 300.0f; //X座標
-constexpr float TRANING_POSY_N     = 580.0f; //Y座標
-constexpr float TRANING_INTERVAL_N = 180.0f; //配置間隔
-const D3DXVECTOR3 TRANING_SCALE_N  = { 0.5f,0.5f,0.5f }; //拡縮
+constexpr float   TRANING_POSX_N     = 300.0f; //X座標
+constexpr float   TRANING_POSY_N     = 580.0f; //Y座標
+constexpr float   TRANING_INTERVAL_N = 180.0f; //配置間隔
+const D3DXVECTOR3 TRANING_SCALE_N    = { 0.5f,0.5f,0.5f }; //拡縮
 //数値
-constexpr float PARAMVALUE_POSX_N = 425.0f; //X座標
-constexpr float PARAMVALUE_POSY_N = 430.0f; //Y座標
+constexpr float PARAMVALUE_POSX_N     = 425.0f; //X座標
+constexpr float PARAMVALUE_POSY_N     = 430.0f; //Y座標
 constexpr float PARAMVALUE_INTERVAL_N = 150.0f; //配置間隔
 //ランク
-constexpr float RANK_POSX_N = 350.0f; //X座標
-constexpr float RANK_POSY_N = 430.0f; //Y座標
-constexpr float RANK_INTERVAL_N = 150.0f;//配置間隔
+constexpr float RANK_POSX_N     = 350.0f; //X座標
+constexpr float RANK_POSY_N     = 430.0f; //Y座標
+constexpr float RANK_INTERVAL_N = 150.0f; //配置間隔
+//スタミナゲージ
+const D3DXVECTOR3 STAMINA_POS      = { 670.0f, 7.0f, 0.0f }; //ゲージ・ゲージ背景座標
+const D3DXVECTOR3 STAMINAFRAME_POS = { 575.0f, 0.0f, 0.0f }; //ゲージ・ゲージ背景座標
+//ターン数背景
+const D3DXVECTOR3 TURNBACK_POS = { 0.0f, 0.0f, 0.0f };
+//共通
+const D3DXVECTOR3 BASIC_SCALE = { 1.0f, 1.0f, 1.0f }; //拡縮
+const D3DXVECTOR2 BASIC_DISPLAY = { 1.0f,1.0f };
 //位置の補正を入れる桁数
 constexpr int   CORRECTION_DIGIT = 3;
 
@@ -165,9 +173,9 @@ public:
 	// オブジェクトクラス
 	// =======================		
 	//----スタティックメッシュ----
-	//地面クラス
+	//地面
 	std::unique_ptr<CGround> m_pGround;
-	//スカイボックスクラス
+	//空
 	std::unique_ptr<CSky>	 m_pSky;
 	
 	//----UI----	

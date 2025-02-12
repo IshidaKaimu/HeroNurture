@@ -54,11 +54,9 @@ private:
 		BattleMode,
 		Max
 	};
-
 public:
 	CModeSelectScene();
 	~CModeSelectScene();
-
 
 	//構築関数
 	void Create()	  override;
@@ -81,12 +79,9 @@ private:
 	// オブジェクトクラス
 	// =======================		
 	//----UI----
-	//育成モード
-	std::unique_ptr<CUIObject> m_pNatureMode;
-	//対戦モード
-	std::unique_ptr<CUIObject> m_pBattleMode;
-	//選択されていないほうにかぶせる画像
-	std::unique_ptr<CUIObject> m_pCover;
+	std::unique_ptr<CUIObject> m_pNatureMode; //育成モード
+	std::unique_ptr<CUIObject> m_pBattleMode; //対戦モード
+	std::unique_ptr<CUIObject> m_pCover;      //選択されていないほうにかぶせる画像
 
 };
 

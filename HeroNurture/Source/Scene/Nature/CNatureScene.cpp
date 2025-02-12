@@ -138,9 +138,9 @@ void CNatureScene::Initialize()
 
     //----ƒ‰ƒCƒgî•ñ----
     //ˆÊ’u
-    m_Light.Position   = D3DXVECTOR3(0.0f, 1.0f, 0.0f);
+    m_Light.Position   = D3DXVECTOR3(LIGHT_POS);
     //Œü‚«
-    m_Light.vDirection = D3DXVECTOR3(0.0f, 1.0f, 0.0f); //ƒ‰ƒCƒg•ûŒü
+    m_Light.vDirection = D3DXVECTOR3(LIGHT_DIR); 
    
     //----ƒpƒ‰ƒ[ƒ^‚Ì’l‚ðœ‚­UI‚Ì‰ŠúÝ’è----
     //ƒpƒ‰ƒ[ƒ^‚Ì”wŒi
@@ -168,11 +168,9 @@ void CNatureScene::Update()
     //ƒ‚[ƒh‘I‘ð‰æ–Ê‚ÌBGM’âŽ~
     CSoundManager::GetInstance()->Stop(CSoundManager::BGM_NatureHeroSelect);
 
-
     //ˆç¬BGM‚ÌÄ¶
     CSoundManager::GetInstance()->PlayLoop(CSoundManager::BGM_Nature);
     CSoundManager::GetInstance()->Volume(CSoundManager::BGM_Nature, 40);
-
 
     //ƒZƒbƒg‚³‚ê‚½ƒq[ƒ[‚ÌƒNƒ‰ƒX‚ÌXV
     m_pHero->Update();
@@ -370,20 +368,24 @@ void CNatureScene::InitNatureUI(
         gage->SetWidth(CSceneManager::GetInstance()->GetStaminaWidth());
     }
 
-    //Šgk
-    gage->SetScale(1.0f, 1.0f, 1.0f);      //ƒQ[ƒW
-    back->SetScale(1.0f, 1.0f, 1.0f);      //ƒQ[ƒW”wŒi
-    frame->SetScale(1.0f, 1.0f, 1.0f);     //ƒQ[ƒW”wŒi
-    turnback->SetScale(1.0f, 1.0f, 1.0f);  //ƒ^[ƒ“””wŒi
-    //ˆÊ’u
-    gage->SetPosition(670.0f, 7.0f, 0.0f);    //ƒQ[ƒW
-    back->SetPosition(670.0f, 7.0f, 0.0f);    //ƒQ[ƒW”wŒi
-    frame->SetPosition(575.0f, 0.0f, 0.0f);   //ƒQ[ƒW˜g
-    turnback->SetPosition(0.0f, 0.0f, 0.0f);//ƒQ[ƒW”wŒi
-    //•
-    back->SetDisplay(1.0f, 1.0f);          //ƒQ[ƒW”wŒi
-    frame->SetDisplay(1.0f, 1.0f);         //ƒQ[ƒW˜g
-    turnback->SetDisplay(1.0f, 1.0f);      //ƒ^[ƒ“””wŒi
+    //ƒXƒ^ƒ~ƒiƒQ[ƒW
+    gage->SetScale(BASIC_SCALE);            
+    gage->SetPosition(STAMINA_POS);  
+
+    //ƒXƒ^ƒ~ƒiƒQ[ƒW”wŒi
+    back->SetScale(BASIC_SCALE);              
+    back->SetPosition(STAMINA_POS);  
+    back->SetDisplay(BASIC_DISPLAY.x, BASIC_DISPLAY.y);         
+    
+    //ƒXƒ^ƒ~ƒiƒQ[ƒW˜g
+    frame->SetScale(BASIC_SCALE);             
+    frame->SetPosition(STAMINAFRAME_POS);   
+    frame->SetDisplay(BASIC_DISPLAY.x, BASIC_DISPLAY.y);
+
+    //ƒ^[ƒ“””wŒi
+    turnback->SetScale(BASIC_SCALE);          
+    turnback->SetPosition(TURNBACK_POS);  
+    turnback->SetDisplay(BASIC_DISPLAY.x, BASIC_DISPLAY.y);
 }
 //•`‰æ
 void CNatureScene::DrawNatureUI(

@@ -107,7 +107,6 @@ public:
 	void Debug();
 
 private:
-
 	//育成データの各要素描画処理
 	void DrawResultData();
 
@@ -136,7 +135,12 @@ private:
 	// オブジェクトクラス
 	// =======================	
 	//----UI----
+	//パラメータ背景
 	std::unique_ptr<CUIObject> m_pParamBack;
+	//矢印左
+	std::unique_ptr<CUIObject> m_pLeftArrow;
+	//矢印右
+	std::unique_ptr<CUIObject> m_pRightArrow;
 
 	//----スキンメッシュ----
 	//ユイ
@@ -144,11 +148,6 @@ private:
 	//カイト
 	std::unique_ptr<CKaito> m_pKaito;
 
-	//----UI
-	//矢印左
-	std::unique_ptr<CUIObject> m_pLeftArrow;
-	//矢印右
-	std::unique_ptr<CUIObject> m_pRightArrow;
 
 
 };

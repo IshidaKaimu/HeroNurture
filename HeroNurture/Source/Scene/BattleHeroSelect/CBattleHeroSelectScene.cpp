@@ -16,10 +16,10 @@ CBattleHeroSelectScene::CBattleHeroSelectScene()
 	, m_BattleDataWriter()
 	, m_pCamera			( &CCameraManager::GetInstance() )
 	, m_pParamBack		()
+	, m_pLeftArrow      ()
+	, m_pRightArrow		()
 	, m_pYui			()
 	, m_pKaito			()
-	, m_pLeftArrow		()
-	, m_pRightArrow		()
 {
 }
 
@@ -65,10 +65,9 @@ void CBattleHeroSelectScene::LoadData()
 	m_pKaito->AttachMesh(CSkinMeshManager::GetMesh(CSkinMeshManager::Kaito));
 
 	//----UI----
-	m_pLeftArrow->AttachSprite(CUIManager::GetSprite(CUIManager::Arrow)); //矢印左
-	m_pRightArrow->AttachSprite(CUIManager::GetSprite(CUIManager::Arrow));//矢印右
+	m_pLeftArrow->AttachSprite(CUIManager::GetSprite(CUIManager::Arrow));           //矢印左
+	m_pRightArrow->AttachSprite(CUIManager::GetSprite(CUIManager::Arrow));          //矢印右
 	m_pParamBack->AttachSprite(CUIManager::GetSprite(CUIManager::ResultParamList));	//パラメータ背景
-
 }
 
 void CBattleHeroSelectScene::Initialize()

@@ -17,6 +17,10 @@ class CEffect;
 //=====================================
 // 定数宣言
 //=====================================
+//ライト情報
+const D3DXVECTOR3 LIGHT_POS = { 0.0f, 1.0f, 0.0f };
+const D3DXVECTOR3 LIGHT_DIR = { 0.0f, 1.0f, 0.0f };
+
 //----UI----
 //矢印左
 const D3DXVECTOR3 ARROW_LEFT_POS_NS    = { 300.0f, 490.0f, 0.0f };             //育成ヒーロー選択時座標
