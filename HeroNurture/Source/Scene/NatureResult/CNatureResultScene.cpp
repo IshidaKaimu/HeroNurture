@@ -8,9 +8,13 @@
 #include "Camera\CameraManager\CCameraManager.h"
 #include "SkinMeshObject\Hero\CHeroManager.h"
 #include "Json\CJson.h"
+#include "Utility\CUtility.h"
+#include "Rank\CRank.h"
 #include <cmath>
 #include <fstream>
 #include <sstream>
+//定数の名前空間
+using namespace Constant_NatureResultScene;
 
 
 CNatureResultScene::CNatureResultScene()
@@ -58,15 +62,15 @@ void CNatureResultScene::Initialize()
     Hero->Initialize();
 
     //パラメータ背景UI情報の初期化
-    m_pParamList->SetPosition(PARAMBACK_POS_NR);
-    m_pParamList->SetScale(PARAMBACK_SCALE_NR);
+    m_pParamList->SetPosition(PARAMBACK_POS);
+    m_pParamList->SetScale(PARAMBACK_SCALE);
     m_pParamList->SetAlpha(1.0f);
     m_pParamList->SetDisplay(1.0f,1.0f);
 
     //カメラ位置の設定
-    m_pCamera->SetPos(CAMPOS_NR);
+    m_pCamera->SetPos(CAMPOS);
     //カメラ注視点の設定
-    m_pCamera->SetLook(CAMLOOK_NR);
+    m_pCamera->SetLook(CAMLOOK);
 }
 
 //更新関数
@@ -149,7 +153,7 @@ void CNatureResultScene::DrawResult()
 
     //「育成ランク」テキストの描画
     std::wstring ResultText = L"育成ランク";
-    Text->Draw_Text(ResultText, WriteText::Normal, RESULTTEXT_POS_NR, false, true);
+    Text->Draw_Text(ResultText, WriteText::Normal, RESULTTEXT_POS, false, true);
 
     //パラメータの背景の描画
     m_pParamList->Draw();
@@ -161,7 +165,7 @@ void CNatureResultScene::DrawResult()
     DrawParamUI(HeroMng->GetParam().Hp, 3);
 
     //ランクの描画
-    CUtility::GetInstance().DrawRank(ParamTotal(), 1, RANK_POSX_NR, RANK_POSY_NR);
+    CRank::GetInstance().DrawRank(ParamTotal(), 1, RANK_POSX, RANK_POSY);
 }
 
 //パラメータの合計値
@@ -180,9 +184,9 @@ float CNatureResultScene::ParamTotal()
 void CNatureResultScene::DrawParamUI(float paramvalue, int no)
 {
     WriteText* Text = WriteText::GetInstance();
-    CUtility* Utility = &CUtility::GetInstance();
+    CRank* Rank = &CRank::GetInstance();
 
     //----各パラメータのUIの描画(背景,値,ランク)----
-    Text->Draw_Text(std::to_wstring(static_cast<int>(paramvalue)), WriteText::Normal, D3DXVECTOR2(PARAMVALUE_POSX_NR, PARAMVALUE_POSY_NR + (PARAMVALUE_INTERVAL_NR* no)));
-    Utility->DrawRank(paramvalue, 2, PARAMRANK_POSX_NR, PARAMRANK_POSY_NR + (PARAMRANK_INTERVAL_NR * no));
+    Text->Draw_Text(std::to_wstring(static_cast<int>(paramvalue)), WriteText::Normal, D3DXVECTOR2(PARAMVALUE_POSX, PARAMVALUE_POSY + (PARAMVALUE_INTERVAL* no)));
+    Rank->DrawRank(paramvalue, 2, PARAMRANK_POSX, PARAMRANK_POSY + (PARAMRANK_INTERVAL * no));
 }

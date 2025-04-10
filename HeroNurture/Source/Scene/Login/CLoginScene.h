@@ -1,11 +1,6 @@
-#pragma once
 #include "Scene\CSceneBase.h"					//シーンベースクラス
 #include "Camera\CameraManager\CCameraManager.h"//カメラマネージャクラス
-#include "StaticMeshObject\Sky\CSky.h"			//スカイボックスクラス
 #include "WriteText\WriteText.h"				//テキスト描画クラス
-#include "StaticMeshObject\Ground\CGround.h"	//地面クラス
-#include "SkinMeshObject\Hero\Yui\CYui.h"       //ユイクラス
-#include "SkinMeshObject\Hero\Kaito\CKaito.h"   //カイトクラス
 #include <memory>
 #include <Windows.h>
 
@@ -13,35 +8,34 @@
 // 前方宣言
 // =======================		
 class CJson;
-class CUtility;
-class CUIManager;
-class CHeroManager;
+class CKeyManager;
 class CSoundManager;
-class CSceneManager;
+class CUIManager;
 
 // =======================
 // 定数宣言
 // =======================
-namespace Constant_TitleScene
+namespace Constant_LoginScene
 {
-	//共通の初期位置
-	const D3DXVECTOR3 TITLE_POS = { 0.0f, 0.0f, 1.0f };
-	//ユイの初期設定
-	const D3DXVECTOR3 TITLE_YUI_SCALE = { 0.04f, 0.04f, 0.04f }; //拡縮
-	//カイトの初期設定
-	const D3DXVECTOR3 TITLE_KAITO_SCALE = { 0.3f, 0.3f, 0.3f };  //拡縮
+	//名前入力スペースの位置
+	static D3DXVECTOR3 NAMESPACE_POS   = { 300.0f,300.0f,0.0f };
+	//名前入力スペースのスケール
+	static D3DXVECTOR3 NAMESPACE_SCALE = { 0.5f, 0.5f, 1.0f };
+	//名前入力スペースの幅
+	static D3DXVECTOR2 NAMESPACE_DISP  = { 1.0f,1.0f };
+	//名前入力開始位置
+	static D3DXVECTOR3 NAME_STARTPOS   = { 320.0f, 320.0f, 0.0f };
 }
 
 //=====================================
 // タイトルシーンクラス
 //=====================================
-class CTitleScene
+class CLoginScene
 	:public CSceneBase
 {
 public:
-	CTitleScene();
-	~CTitleScene();
-
+	CLoginScene();
+	~CLoginScene();
 
 	//構築関数
 	void Create()	  override;
@@ -57,11 +51,10 @@ public:
 	void Draw()		  override;
 
 private:
-
 	//文字の動き
 	float Easing(float x);
 	//アカウント名入力処理
-	void  InputName();	
+	void  InputName();
 	//UIの描画
 	void DrawUI();
 
@@ -76,26 +69,11 @@ private:
 	// =======================
 	// オブジェクトクラス
 	// =======================		
-	//----スタティックメッシュ----
-	//空
-	std::unique_ptr<CSky> m_pSky;	
-	//地面
-	std::unique_ptr<CGround> m_pGround;
-
-	//----スキンメッシュ----
-	//ユイ
-	std::unique_ptr<CYui> m_pYui;
-	//カイト
-	std::unique_ptr<CKaito> m_pKaito;
-
 	//----UI----
-	//タイトル背景
-	std::unique_ptr<CUIObject> m_pTitleBack;
-	//タイトル指示テキスト背景
-	std::unique_ptr<CUIObject> m_pTitleInfoBack;
-
 	//ユーザー名入力
 	std::wstring m_UserName;
+	//ユーザー名入力スペース
+	std::unique_ptr<CUIObject> m_pNameSpace;
 
 	//Jsonクラス
 	std::unique_ptr<CJson> m_pJson;
@@ -104,4 +82,3 @@ private:
 	int m_HeroNo;
 
 };
-

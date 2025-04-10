@@ -25,13 +25,18 @@ constexpr int MAX_TURN = 50;
 class CSceneManager
 	: public CSceneBase
 	, public CSingleton<CSceneManager>
-
 {
+private:
+	//フレンド宣言
+	//アクセス権を与える
+	friend class CSingleton<CSceneManager>;
+	~CSceneManager();
 public:
 	//シーンリスト
 	enum enSceneList :char
 	{
 		Title,
+		Login,
 		ModeSelect,
 		NatureHeroSelect,
 		Nature,
@@ -44,7 +49,6 @@ public:
 		Max_S,
 		none,
 	};
-
 
 	//役割リスト
 	enum enRoleList :char
@@ -65,8 +69,6 @@ public:
 		static CSceneManager s_Instance;
 		return &s_Instance;
 	}
-
-	~CSceneManager() ;
 
 	//構築関数
     void Create(CDirectX9& pDx9, CDirectX11& pDx11, HWND hwnd);

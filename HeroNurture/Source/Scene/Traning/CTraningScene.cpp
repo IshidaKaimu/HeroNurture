@@ -6,6 +6,9 @@
 #include "SkinMeshObject\Hero\CHeroManager.h"
 #include "Sprite2D\UIManager\CUIManager.h"
 #include "Sound\CSoundManager.h"
+//定数の名前空間
+using namespace Constant_TraningScene;
+
 
 CTraningScene::CTraningScene()
     : m_pCamera ( &CCameraManager::GetInstance() )
@@ -39,7 +42,6 @@ void CTraningScene::Create()
 
     //育成関連のシーンで共通するUIのインスタンス生成
     CNatureScene::CreateNatureUI(m_pStaminaGage,m_pStaminaBack,m_pStaminaFrame, m_pTurnBack);
-
 }
 //破棄関数
 void CTraningScene::Releace()

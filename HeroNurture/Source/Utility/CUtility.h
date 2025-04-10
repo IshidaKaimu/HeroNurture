@@ -6,17 +6,6 @@
 #include <random>
 #include <type_traits>
 
-//ランクリスト
-enum enRankList : char 
-{
-	S,	//Sランク
-	A,	//Aランク
-	B,	//Bランク
-	C,	//Cランク
-	D,  //Dランク
-	E   //Eランク
-};
-
 //=====================================
 //汎用クラス
 //制作者：石田櫂夢
@@ -55,16 +44,9 @@ public:
 
 	}
 
-	//ランクの表示
-	void DrawRank(float value, int typeno, float x, float y);
-
 	//値の桁数による描画位置の補正
 	D3DXVECTOR2 PosCorrection(double value, float digit, float x, float y);
 
 private:
 	CUtility();
-
-private:
-	//ランク列挙型
-	enRankList m_Rank;
 };

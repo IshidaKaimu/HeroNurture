@@ -36,37 +36,39 @@ class CUtility;
 using json = nlohmann::json;
 
 //=====================================
-//  定数宣言 (_BS = トレーニング結果シーンで用いることを示す)
+//  定数宣言
 //=====================================
-//----各ヒーローのカメラ配置・注視点----
-//-----カメラ情報----
-//カメラ位置
-const D3DXVECTOR3 CAMPOS_BS = { 0.0f, 5.0f, -4.0f };
-//カメラ注視点
-const D3DXVECTOR3 CAMLOOK_BS = { 2.0f, 5.0f, 3.0f };
+namespace Constant_BattleHeroSelectScene 
+{
+	//----各ヒーローのカメラ配置・注視点----
+	//-----カメラ情報----
+	//カメラ位置
+	const D3DXVECTOR3 CAMPOS = { 0.0f, 5.0f, -4.0f };
+	//カメラ注視点
+	const D3DXVECTOR3 CAMLOOK = { 2.0f, 5.0f, 3.0f };
 
-//----UI情報----
-//パラメータの背景UI
-const D3DXVECTOR3 PARAMBACK_POS_BS = { 840.0f, 205.0f, 0.0f };
-const D3DXVECTOR3 PARAMBACK_SCALE_BS = { 1.1f, 1.1f, 1.1f };
-//パラメータの数値
-constexpr float PARAMVALUE_POSX_BS = 930.0f; //X座標
-constexpr float PARAMVALUE_POSY_BS = 225.0f; //Y座標
-constexpr float PARAMVALUE_INTERVAL_BS = 130.0f; //配置間隔
-//パラメータランク
-constexpr float PARAMRANK_POSX_BS = 885.0f; //X座標
-constexpr float PARAMRANK_POSY_BS = 225.0f; //Y座標
-constexpr float PARAMRANK_INTERVAL_BS = 130.0f; //配置間隔
-//育成ランク
-constexpr float RANK_POSX_BS = 900.0f; //X座標
-constexpr float RANK_POSY_BS = 30.0f; //Y座標
-//「育成ランク」テキスト座標
-const D3DXVECTOR2 RESULTTEXT_POS_BS = { 895.0f,0.0f };
-//現在の選択番号
-const D3DXVECTOR2 SELECTNO_POS = { 1140.0f, 0.0f };
-//育成データの最大数
-const D3DXVECTOR2 NATUREDATA_MAX_POS = { 1200.0f, 0.0f };
-
+	//----UI情報----
+	//パラメータの背景UI
+	const D3DXVECTOR3 PARAMBACK_POS = { 840.0f, 205.0f, 0.0f };
+	const D3DXVECTOR3 PARAMBACK_SCALE = { 1.1f, 1.1f, 1.1f };
+	//パラメータの数値
+	constexpr float PARAMVALUE_POSX = 930.0f; //X座標
+	constexpr float PARAMVALUE_POSY = 225.0f; //Y座標
+	constexpr float PARAMVALUE_INTERVAL = 130.0f; //配置間隔
+	//パラメータランク
+	constexpr float PARAMRANK_POSX = 885.0f; //X座標
+	constexpr float PARAMRANK_POSY = 225.0f; //Y座標
+	constexpr float PARAMRANK_INTERVAL = 130.0f; //配置間隔
+	//育成ランク
+	constexpr float RANK_POSX = 900.0f; //X座標
+	constexpr float RANK_POSY = 30.0f; //Y座標
+	//「育成ランク」テキスト座標
+	const D3DXVECTOR2 RESULTTEXT_POS = { 895.0f,0.0f };
+	//現在の選択番号
+	const D3DXVECTOR2 SELECTNO_POS = { 1140.0f, 0.0f };
+	//育成データの最大数
+	const D3DXVECTOR2 NATUREDATA_MAX_POS = { 1200.0f, 0.0f };
+}
 //==============================
 // バトルヒーロー選択クラス
 //==============================

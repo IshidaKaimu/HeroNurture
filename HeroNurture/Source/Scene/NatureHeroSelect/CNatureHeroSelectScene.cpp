@@ -14,6 +14,8 @@
 #include <fstream>
 #include <sstream>
 
+//定数の名前空間
+using namespace Constant_NatureHeroSelectScene;
 
 CNatureHeroSelectScene::CNatureHeroSelectScene()
     : m_pCamera (  &CCameraManager::GetInstance() )
@@ -81,7 +83,6 @@ void CNatureHeroSelectScene::Initialize()
     m_pYui->Initialize();
     //カイト
     m_pKaito->Initialize();
-
 }
 
 //更新関数
