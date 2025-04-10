@@ -10,6 +10,8 @@
 #include "Sprite2D\UIManager\CUIManager.h" 
 #include <cmath>
 
+//定数の名前空間
+using namespace Constant_TitleScene;
 
 CTitleScene::CTitleScene()
     : m_pCamera ( &CCameraManager::GetInstance() )
@@ -107,7 +109,6 @@ void CTitleScene::Update()
     CSoundManager::GetInstance()->PlayLoop(CSoundManager::BGM_Title);
     CSoundManager::GetInstance()->Volume(CSoundManager::BGM_Title, 40);
 
-
     //フェードイン処理
     if (!FadeIn()) { return; }
 
@@ -124,7 +125,7 @@ void CTitleScene::Update()
     //フェードアウト処理
     if (m_SceneTransitionFlg && FadeOut()) 
     {
-        SceneMng->LoadCreate(CSceneManager::ModeSelect);
+        SceneMng->LoadCreate(CSceneManager::Login);
     }
 }
 
@@ -167,36 +168,6 @@ float CTitleScene::Easing(float x)
     return c3 * x * x * x - c1 * x * x;
 }
 
-//名前入力処理
-void CTitleScene::InputName()
-{
-    CKeyManager* KeyMng = &CKeyManager::GetInstance();
-
-    //キーマネージャの常に行う処理
-    KeyMng->Update();
-
-    //キー全部を調べる
-    for (int key = 0x30; key <= 0x5A; key++)
-    {
-        if (KeyMng->IsDown(key))
-        {
-            //入力された文字を追加
-            m_UserName += wchar_t(key);
-        }
-    }
-
-    //テキストが空ではないなら
-    if (!m_UserName.empty()) 
-    {
-        //バックスペースが押されたら
-        if (KeyMng->IsDown(VK_BACK))
-        {
-            //最後の文字を削除
-            m_UserName.pop_back();
-        }
-    }
-}
-
 //タイトル画面の描画
 void CTitleScene::DrawUI()
 {
@@ -220,7 +191,6 @@ void CTitleScene::DrawUI()
 
     Text->Draw_Text(L"HeroNature", WriteText::B_Big, D3DXVECTOR2(305.0f, 165.0f));   //タイトル
     Text->Draw_Text(L"Press Enter", WriteText::B_Small, D3DXVECTOR2(480.0f, 450.0f)); //指示
-
 }
 
 //wstringをstringに変換

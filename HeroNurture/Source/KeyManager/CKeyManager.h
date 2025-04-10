@@ -16,7 +16,6 @@ private:
 	~CKeyManager();
 
 public:
-	
 	//XVˆ—
 	void Update();
 

@@ -20,16 +20,18 @@ class CUIManager;
 //========================
 // 定数宣言
 //=======================
-//----テキストの位置----
-//パラメータの種類
-const D3DXVECTOR2 PARAMTEXT_OFFSET  = { 80.0f,600.0f };
-//値
-const D3DXVECTOR2 VALUETEXT_OFFSET  = { 275.0f,600.0f };
-//トレーニング結果
-const D3DXVECTOR2 RESULTTEXT_OFFSET = { 500.0f,100.0f };
-//SEの再生タイミング
-const int PLAY_SE = 1;
-
+namespace Constant_TraningScene
+{
+	//----テキストの位置----
+	//パラメータの種類
+	const D3DXVECTOR2 PARAMTEXT_OFFSET = { 80.0f,600.0f };
+	//値
+	const D3DXVECTOR2 VALUETEXT_OFFSET = { 275.0f,600.0f };
+	//トレーニング結果
+	const D3DXVECTOR2 RESULTTEXT_OFFSET = { 500.0f,100.0f };
+	//SEの再生タイミング
+	const int PLAY_SE = 1;
+}
 
 //========================
 //上昇したパラメータのリスト

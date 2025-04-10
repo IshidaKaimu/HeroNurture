@@ -27,48 +27,50 @@ using json = nlohmann::json;
 
 // =======================
 // 定数宣言
-// =======================		
-//----各ヒーローごとのカメラ位置/注視点---
-//ユイ
-const D3DXVECTOR3 CAMERAPOS_YUI  = { 0.0, 5.0, -4.0 };
-const D3DXVECTOR3 CAMERALOOK_YUI = { 0.0, 5.0, 0.0 };
-//カイト
-const D3DXVECTOR3 CAMERAPOS_KAITO  =  { 0.0, 5.0, -4.5 };
-const D3DXVECTOR3 CAMERALOOK_KAITO =  { 0.0, 5.0, 0.0 };
+// =======================	
+namespace Constant_NatureScene
+{
+	//----各ヒーローごとのカメラ位置/注視点---
+	//ユイ
+	const D3DXVECTOR3 CAMERAPOS_YUI = { 0.0, 5.0, -4.0 };
+	const D3DXVECTOR3 CAMERALOOK_YUI = { 0.0, 5.0, 0.0 };
+	//カイト
+	const D3DXVECTOR3 CAMERAPOS_KAITO = { 0.0, 5.0, -4.5 };
+	const D3DXVECTOR3 CAMERALOOK_KAITO = { 0.0, 5.0, 0.0 };
 
-//----UI情報(_N = 育成シーンで用いることを示す)----
-//パラメータ背景
-constexpr float PARAMBACK_POSX_N     = 330.0f; //X座標
-constexpr float PARAMBACK_POSY_N     = 410.0f; //Y座標
-const D3DXVECTOR3 PARAMBACK_SCALE_N  = { 0.8f,0.8f,0.8f }; //拡縮
-//トレーニングUI
-constexpr float   TRANING_POSX_N     = 300.0f; //X座標
-constexpr float   TRANING_POSY_N     = 580.0f; //Y座標
-constexpr float   TRANING_INTERVAL_N = 180.0f; //配置間隔
-const D3DXVECTOR3 TRANING_SCALE_N    = { 0.5f,0.5f,0.5f }; //拡縮
-//数値
-constexpr float PARAMVALUE_POSX_N     = 425.0f; //X座標
-constexpr float PARAMVALUE_POSY_N     = 430.0f; //Y座標
-constexpr float PARAMVALUE_INTERVAL_N = 150.0f; //配置間隔
-//ランク
-constexpr float RANK_POSX_N     = 350.0f; //X座標
-constexpr float RANK_POSY_N     = 430.0f; //Y座標
-constexpr float RANK_INTERVAL_N = 150.0f; //配置間隔
-//スタミナゲージ
-const D3DXVECTOR3 STAMINA_POS      = { 670.0f, 7.0f, 0.0f }; //ゲージ・ゲージ背景座標
-const D3DXVECTOR3 STAMINAFRAME_POS = { 575.0f, 0.0f, 0.0f }; //ゲージ・ゲージ背景座標
-//ターン数背景
-const D3DXVECTOR3 TURNBACK_POS = { 0.0f, 0.0f, 0.0f };
-//共通
-const D3DXVECTOR3 BASIC_SCALE = { 1.0f, 1.0f, 1.0f }; //拡縮
-const D3DXVECTOR2 BASIC_DISPLAY = { 1.0f,1.0f };
-//位置の補正を入れる桁数
-constexpr int   CORRECTION_DIGIT = 3;
+	//----UI情報(_N = 育成シーンで用いることを示す)----
+	//パラメータ背景
+	constexpr float PARAMBACK_POSX = 330.0f; //X座標
+	constexpr float PARAMBACK_POSY = 410.0f; //Y座標
+	const D3DXVECTOR3 PARAMBACK_SCALE = { 0.8f,0.8f,0.8f }; //拡縮
+	//トレーニングUI
+	constexpr float   TRANING_POSX = 300.0f; //X座標
+	constexpr float   TRANING_POSY = 580.0f; //Y座標
+	constexpr float   TRANING_INTERVAL = 180.0f; //配置間隔
+	const D3DXVECTOR3 TRANING_SCALE = { 0.5f,0.5f,0.5f }; //拡縮
+	//数値
+	constexpr float PARAMVALUE_POSX = 425.0f; //X座標
+	constexpr float PARAMVALUE_POSY = 430.0f; //Y座標
+	constexpr float PARAMVALUE_INTERVAL = 150.0f; //配置間隔
+	//ランク
+	constexpr float RANK_POSX = 350.0f; //X座標
+	constexpr float RANK_POSY = 430.0f; //Y座標
+	constexpr float RANK_INTERVAL = 150.0f; //配置間隔
+	//スタミナゲージ
+	const D3DXVECTOR3 STAMINA_POS = { 670.0f, 7.0f, 0.0f }; //ゲージ・ゲージ背景座標
+	const D3DXVECTOR3 STAMINAFRAME_POS = { 575.0f, 0.0f, 0.0f }; //ゲージ・ゲージ背景座標
+	//ターン数背景
+	const D3DXVECTOR3 TURNBACK_POS = { 0.0f, 0.0f, 0.0f };
+	//共通
+	const D3DXVECTOR3 BASIC_SCALE = { 1.0f, 1.0f, 1.0f }; //拡縮
+	const D3DXVECTOR2 BASIC_DISPLAY = { 1.0f,1.0f };
+	//位置の補正を入れる桁数
+	constexpr int   CORRECTION_DIGIT = 3;
 
-//----スタミナゲージ----
-//スタミナの最大値
-constexpr float STAMINA_MAX = 100.0f;
-
+	//----スタミナゲージ----
+	//スタミナの最大値
+	constexpr float STAMINA_MAX = 100.0f;
+}
 //ヒーロー名構造体
 struct HeroName
 {

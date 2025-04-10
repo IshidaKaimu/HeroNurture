@@ -7,7 +7,11 @@
 #include "Camera\CameraManager\CCameraManager.h"
 #include "Scene\CSceneManager.h"
 #include "Utility\CUtility.h"
+#include "Rank\CRank.h"
 #include "Sound\CSoundManager.h"
+
+//定数宣言の名前空間
+using namespace Constant_BattleHeroSelectScene;
 
 CBattleHeroSelectScene::CBattleHeroSelectScene()
 	: m_BattleTurn      ()
@@ -82,14 +86,14 @@ void CBattleHeroSelectScene::Initialize()
 	m_pKaito->Initialize();
 
 	//カメラ情報の設定
-	m_pCamera->SetPos(CAMPOS_BS);
-	m_pCamera->SetLook(CAMLOOK_BS);
+	m_pCamera->SetPos(CAMPOS);
+	m_pCamera->SetLook(CAMLOOK);
 
 	//パラメータ背景UIの設定
 	//位置
-	m_pParamBack->SetPosition(PARAMBACK_POS_BS);
+	m_pParamBack->SetPosition(PARAMBACK_POS);
 	//拡縮
-	m_pParamBack->SetScale(PARAMBACK_SCALE_BS);
+	m_pParamBack->SetScale(PARAMBACK_SCALE);
 	//α値
 	m_pParamBack->SetAlpha(1.0f);
 	//幅
@@ -209,11 +213,11 @@ void CBattleHeroSelectScene::DrawSaveParameter(const json& jsondata, int number)
 {
 	WriteText* Text = WriteText::GetInstance();
 	CHeroManager* HeroMng = &CHeroManager::GetInstance();
-	CUtility* Utility = &CUtility::GetInstance();
+	CRank* Rank = &CRank::GetInstance();
 
 	//「育成ランク」テキストの描画
 	std::wstring ResultText = L"育成ランク";
-	Text->Draw_Text(ResultText, WriteText::Normal, RESULTTEXT_POS_BS, false, true);
+	Text->Draw_Text(ResultText, WriteText::Normal, RESULTTEXT_POS, false, true);
 
 	for (const auto& data : jsondata)
 	{
@@ -228,17 +232,17 @@ void CBattleHeroSelectScene::DrawSaveParameter(const json& jsondata, int number)
 			float ParamTotal = Power + Magic + Speed + Hp;
 
 			//各パラメータの描画
-			Text->Draw_Text(std::to_wstring(static_cast<int>(Power)), WriteText::Normal, D3DXVECTOR2(PARAMVALUE_POSX_BS, PARAMVALUE_POSY_BS));
-			Utility->DrawRank(Power, 2,PARAMRANK_POSX_BS, PARAMRANK_POSY_BS);
-			Text->Draw_Text(std::to_wstring(static_cast<int>(Magic)), WriteText::Normal, D3DXVECTOR2(PARAMVALUE_POSX_BS, PARAMVALUE_POSY_BS + PARAMVALUE_INTERVAL_BS));
-			Utility->DrawRank(Magic, 2, PARAMRANK_POSX_BS, PARAMRANK_POSY_BS + PARAMRANK_INTERVAL_BS);
-			Text->Draw_Text(std::to_wstring(static_cast<int>(Speed)), WriteText::Normal, D3DXVECTOR2(PARAMVALUE_POSX_BS, PARAMVALUE_POSY_BS + (PARAMVALUE_INTERVAL_BS * 2)));
-			Utility->DrawRank(Speed, 2, PARAMRANK_POSX_BS, PARAMRANK_POSY_BS + (PARAMRANK_INTERVAL_BS * 2));
-			Text->Draw_Text(std::to_wstring(static_cast<int>(Hp)), WriteText::Normal, D3DXVECTOR2(PARAMVALUE_POSX_BS, PARAMVALUE_POSY_BS + (PARAMVALUE_INTERVAL_BS * 3)));
-			Utility->DrawRank(Hp, 2, PARAMRANK_POSX_BS, PARAMRANK_POSY_BS + (PARAMRANK_INTERVAL_BS * 3));
+			Text->Draw_Text(std::to_wstring(static_cast<int>(Power)), WriteText::Normal, D3DXVECTOR2(PARAMVALUE_POSX, PARAMVALUE_POSY));
+			Rank->DrawRank(Power, 2,PARAMRANK_POSX, PARAMRANK_POSY);
+			Text->Draw_Text(std::to_wstring(static_cast<int>(Magic)), WriteText::Normal, D3DXVECTOR2(PARAMVALUE_POSX, PARAMVALUE_POSY + PARAMVALUE_INTERVAL));
+			Rank->DrawRank(Magic, 2, PARAMRANK_POSX, PARAMRANK_POSY + PARAMRANK_INTERVAL);
+			Text->Draw_Text(std::to_wstring(static_cast<int>(Speed)), WriteText::Normal, D3DXVECTOR2(PARAMVALUE_POSX, PARAMVALUE_POSY + (PARAMVALUE_INTERVAL * 2)));
+			Rank->DrawRank(Speed, 2, PARAMRANK_POSX, PARAMRANK_POSY + (PARAMRANK_INTERVAL * 2));
+			Text->Draw_Text(std::to_wstring(static_cast<int>(Hp)), WriteText::Normal, D3DXVECTOR2(PARAMVALUE_POSX, PARAMVALUE_POSY + (PARAMVALUE_INTERVAL * 3)));
+			Rank->DrawRank(Hp, 2, PARAMRANK_POSX, PARAMRANK_POSY + (PARAMRANK_INTERVAL * 3));
 			
 			//育成ランクの描画
-			Utility->DrawRank(ParamTotal, 1, RANK_POSX_BS, RANK_POSY_BS);
+			Rank->DrawRank(ParamTotal, 1, RANK_POSX, RANK_POSY);
 		}
 	}
 

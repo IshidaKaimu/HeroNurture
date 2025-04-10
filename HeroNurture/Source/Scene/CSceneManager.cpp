@@ -1,5 +1,6 @@
 #include "CSceneManager.h"
 #include "Scene\Title\CTitleScene.h"
+#include "Scene\Login\CLoginScene.h"
 #include "Scene\Nature\CNatureScene.h"
 #include "Scene\ModeSelect\CModeSelectScene.h"
 #include "Scene\NatureHeroSelect\CNatureHeroSelectScene.h"
@@ -10,7 +11,6 @@
 #include "Scene\Battle\UniqueAttack\CUniqueAttack.h"
 #include "Scene\BattleResult\CBattleResultScene.h"
 #include "ImGui\ImGuiManager\ImGuiManager.h"
-
 
 CSceneManager::CSceneManager()
     : m_Scene       ()
@@ -61,14 +61,15 @@ void CSceneManager::Update()
 {        
 #if _DEBUG
     ImGui::Begin(JAPANESE("シーン"));
-    if (ImGui::Button(JAPANESE("ログイン"))) { LoadCreate(enSceneList::Title); }
-    if (ImGui::Button(JAPANESE("ヒーロー選択"))) { LoadCreate(enSceneList::NatureHeroSelect); }
-    if (ImGui::Button(JAPANESE("育成"))) { LoadCreate(enSceneList::Nature); }
-    if (ImGui::Button(JAPANESE("修行"))) { LoadCreate(enSceneList::Training); }
-    if (ImGui::Button(JAPANESE("育成結果"))) { LoadCreate(enSceneList::NatureResult); }
+    if (ImGui::Button(JAPANESE("タイトル")))           { LoadCreate(enSceneList::Title); }
+    if (ImGui::Button(JAPANESE("ログイン")))           { LoadCreate(enSceneList::Login); }
+    if (ImGui::Button(JAPANESE("ヒーロー選択")))       { LoadCreate(enSceneList::NatureHeroSelect); }
+    if (ImGui::Button(JAPANESE("育成")))               { LoadCreate(enSceneList::Nature); }
+    if (ImGui::Button(JAPANESE("修行")))               { LoadCreate(enSceneList::Training); }
+    if (ImGui::Button(JAPANESE("育成結果")))           { LoadCreate(enSceneList::NatureResult); }
     if (ImGui::Button(JAPANESE("バトルヒーロー選択"))) { LoadCreate(enSceneList::BattleHeroSelect); }
-    if (ImGui::Button(JAPANESE("バトル"))) { LoadCreate(enSceneList::Battle); }
-    if (ImGui::Button(JAPANESE("バトル結果"))) { LoadCreate(enSceneList::BattleResult); }
+    if (ImGui::Button(JAPANESE("バトル")))             { LoadCreate(enSceneList::Battle); }
+    if (ImGui::Button(JAPANESE("バトル結果")))         { LoadCreate(enSceneList::BattleResult); }
     ImGui::End();
 #endif
     m_Scene->Update();  //入ってるシーンの動作を行う   
@@ -80,7 +81,7 @@ void CSceneManager::Draw()
     m_Scene->Draw();       //入ってるシーンの描画を行う
 
     m_pDx11->SetDepth(false);
-    CSceneBase::Draw();  //シーンベース
+    CSceneBase::Draw();    //シーンベース
     m_pDx11->SetDepth(true);
 }
 
@@ -97,7 +98,6 @@ void CSceneManager::LoadCreate(enSceneList List)
     m_Scene->LoadData();
     //各シーンの初期化
     m_Scene->Initialize();
-
 }
 
 //構築関数
@@ -107,6 +107,7 @@ std::unique_ptr<CSceneBase> CSceneManager::Create(enSceneList List)
     switch (List)
     {
     case CSceneManager::Title:            return std::make_unique<CTitleScene>();
+    case CSceneManager::Login:            return std::make_unique<CLoginScene>();
     case CSceneManager::ModeSelect:       return std::make_unique<CModeSelectScene>();
     case CSceneManager::NatureHeroSelect: return std::make_unique<CNatureHeroSelectScene>();
     case CSceneManager::Nature:           return std::make_unique<CNatureScene>();

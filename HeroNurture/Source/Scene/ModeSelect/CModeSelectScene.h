@@ -23,21 +23,23 @@ class CUIManager;
 // =======================
 // 定数宣言
 // =======================
-//----各UIの設定----
-//育成モード		
-const D3DXVECTOR3 NATUREMODE_POS = { 0.0f,0.0f,-1.0f };  //座標
-//バトルモード
-const D3DXVECTOR3 BATTLEMODE_POS = { 640.0f,0.0f,-1.0f };//座標
-//被せる画像
-const D3DXVECTOR3 COVER_POS = { 640.0f,0.0f,0.0f };//座標
-constexpr float COVER_ALPHA = 0.8f;
-//共通
-const D3DXVECTOR3 MODE_SCALE = { 1.0f,1.0f,1.0f }; //拡縮
-const D3DXVECTOR2 MODE_DISP  = { 1.0f, 1.0f };     //α値
-constexpr float   MODE_ALPHA = 1.0f;
-//シーン名
-const D3DXVECTOR2 SCENENAME_POS = { 430.0f,0.0f };
-
+namespace Constant_ModeSelectScene 
+{
+	//----各UIの設定----
+	//育成モード		
+	const D3DXVECTOR3 NATUREMODE_POS = { 0.0f,0.0f,-1.0f };  //座標
+	//バトルモード
+	const D3DXVECTOR3 BATTLEMODE_POS = { 640.0f,0.0f,-1.0f };//座標
+	//被せる画像
+	const D3DXVECTOR3 COVER_POS = { 640.0f,0.0f,0.0f };//座標
+	constexpr float COVER_ALPHA = 0.8f;
+	//共通
+	const D3DXVECTOR3 MODE_SCALE = { 1.0f,1.0f,1.0f }; //拡縮
+	const D3DXVECTOR2 MODE_DISP = { 1.0f, 1.0f };     //α値
+	constexpr float   MODE_ALPHA = 1.0f;
+	//シーン名
+	const D3DXVECTOR2 SCENENAME_POS = { 430.0f,0.0f };
+}
 
 //=====================================
 // モードセレクトシーンクラス

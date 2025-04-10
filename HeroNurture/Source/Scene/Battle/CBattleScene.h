@@ -35,44 +35,46 @@ class CKeyManager;
 class CEffect;
 
 //=====================================
-// 定数宣言(_B = バトルシーンで用いることを示す)
+// 定数宣言
 //=====================================
-//----カメラ情報----
-const D3DXVECTOR3 INIT_CAMPOS_B  = { -1.0f,2.0f,-7.0f }; //初期座標
-const D3DXVECTOR3 INIT_CAMLOOK_B = { -1.0f,2.0f,0.0f }; //初期注視点
-const D3DXVECTOR3 ATTACK_CAMPOS  = { -1.0f,2.0f,0.0f };
-const D3DXVECTOR3 ATTACK_CAMLOOK = { -2.0f,2.0f,0.0f };
-const D3DXVECTOR3 ENEMY_ATTACK_CAMPOS  = { -1.0f,2.0f,0.0f };
-const D3DXVECTOR3 ENEMY_ATTACK_CAMLOOK = { 2.0f,2.0f,0.0f };
-//----ゲージ情報----
-//HP
-const D3DXVECTOR3 HPGAGE_POS     = { 0.0f, 16.0f, 0.0f }; //座標
-const D3DXVECTOR3 HPGAGE_SCALE   = { 0.8f, 0.8f, 0.8f };  //拡縮
-const D3DXVECTOR2 HPGAGE_DISPLAY = { 1.0f, 1.0f };
-//HPの枠
-const D3DXVECTOR3 HPFRAME_POS = { 0.0f, 10.0f, 0.0f };
-//敵のHP
-const D3DXVECTOR3 ENEMY_HPGAGE_POS  = { 800.0f, 16.0f, 0.0f }; //座標
-//敵のHPの枠
-const D3DXVECTOR3 ENEMY_HPFRAME_POS = { 800.0f, 10.0f, 0.0f }; //座標
-//固有攻撃ゲージの描画位置
-const D3DXVECTOR2 UNIQUEGAGE_POS = { 0.0f, 80.0f };
-const D3DXVECTOR2 ENEMY_UNIQUEGAGE_POS = { 1200.0f, 80.0f };
-//----行動選択関連----
-//筋力攻撃
-const D3DXVECTOR3 POWER_ATTACK_POS = { 420.0f, 540.0f, 0.0f };
-//魔法攻撃
-const D3DXVECTOR3 MAGIC_ATTACK_POS = { 620.0f, 540.0f, 0.0f };
-//共通
-const D3DXVECTOR3 ATTACK_SCALE = { 0.5f, 0.5f, 0.5f };
-const D3DXVECTOR2 ATTACK_DISP = { 1.0f, 1.0f };
-const float ATTACK_ALPHA = 1.0f;
-//攻撃に被せる画像
-constexpr float ATTACK_COVER_ALPHA = 0.8f;
-//----ターン名UI----
-const D3DXVECTOR2 HERO_TURNTEXT_POS =  { 450.0f, 50.0f };
-const D3DXVECTOR2 ENEMY_TURNTEXT_POS = { 340.0f, 50.0f };
-
+namespace Constant_BattleScene 
+{
+	//----カメラ情報----
+	const D3DXVECTOR3 INIT_CAMPOS = { -1.0f,2.0f,-7.0f }; //初期座標
+	const D3DXVECTOR3 INIT_CAMLOOK = { -1.0f,2.0f,0.0f }; //初期注視点
+	const D3DXVECTOR3 ATTACK_CAMPOS = { -1.0f,2.0f,0.0f };
+	const D3DXVECTOR3 ATTACK_CAMLOOK = { -2.0f,2.0f,0.0f };
+	const D3DXVECTOR3 ENEMY_ATTACK_CAMPOS = { -1.0f,2.0f,0.0f };
+	const D3DXVECTOR3 ENEMY_ATTACK_CAMLOOK = { 2.0f,2.0f,0.0f };
+	//----ゲージ情報----
+	//HP
+	const D3DXVECTOR3 HPGAGE_POS = { 0.0f, 16.0f, 0.0f }; //座標
+	const D3DXVECTOR3 HPGAGE_SCALE = { 0.8f, 0.8f, 0.8f };  //拡縮
+	const D3DXVECTOR2 HPGAGE_DISPLAY = { 1.0f, 1.0f };
+	//HPの枠
+	const D3DXVECTOR3 HPFRAME_POS = { 0.0f, 10.0f, 0.0f };
+	//敵のHP
+	const D3DXVECTOR3 ENEMY_HPGAGE_POS = { 800.0f, 16.0f, 0.0f }; //座標
+	//敵のHPの枠
+	const D3DXVECTOR3 ENEMY_HPFRAME_POS = { 800.0f, 10.0f, 0.0f }; //座標
+	//固有攻撃ゲージの描画位置
+	const D3DXVECTOR2 UNIQUEGAGE_POS = { 0.0f, 80.0f };
+	const D3DXVECTOR2 ENEMY_UNIQUEGAGE_POS = { 1200.0f, 80.0f };
+	//----行動選択関連----
+	//筋力攻撃
+	const D3DXVECTOR3 POWER_ATTACK_POS = { 420.0f, 540.0f, 0.0f };
+	//魔法攻撃
+	const D3DXVECTOR3 MAGIC_ATTACK_POS = { 620.0f, 540.0f, 0.0f };
+	//共通
+	const D3DXVECTOR3 ATTACK_SCALE = { 0.5f, 0.5f, 0.5f };
+	const D3DXVECTOR2 ATTACK_DISP = { 1.0f, 1.0f };
+	const float ATTACK_ALPHA = 1.0f;
+	//攻撃に被せる画像
+	constexpr float ATTACK_COVER_ALPHA = 0.8f;
+	//----ターン名UI----
+	const D3DXVECTOR2 HERO_TURNTEXT_POS = { 450.0f, 50.0f };
+	const D3DXVECTOR2 ENEMY_TURNTEXT_POS = { 340.0f, 50.0f };
+}
 
 //=====================================
 // バトルシーンクラス

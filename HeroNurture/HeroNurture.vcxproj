@@ -240,9 +240,11 @@
     <ClCompile Include="Source\GameObject\SkinMeshObject\Hero\CHeroManager.cpp" />
     <ClCompile Include="Source\GameObject\SkinMeshObject\Hero\Yui\CYui.cpp" />
     <ClCompile Include="Source\Light\LightManager\CLightManager.cpp" />
+    <ClCompile Include="Source\Rank\CRank.cpp" />
     <ClCompile Include="Source\Scene\BattleHeroSelect\CBattleHeroSelectScene.cpp" />
     <ClCompile Include="Source\Scene\Battle\CBattleScene.cpp" />
     <ClCompile Include="Source\Scene\Battle\UniqueAttack\CUniqueAttack.cpp" />
+    <ClCompile Include="Source\Scene\Login\CLoginScene.cpp" />
     <ClCompile Include="Source\Scene\ModeSelect\CModeSelectScene.cpp" />
     <ClCompile Include="Source\Scene\Nature\CNatureScene.cpp" />
     <ClCompile Include="Source\DebugText\CDebugText.cpp" />
@@ -307,9 +309,11 @@
     <ClInclude Include="Source\GameObject\SkinMeshObject\Hero\Enemy\CEnemyHeroManager.h" />
     <ClInclude Include="Source\GameObject\SkinMeshObject\Hero\Yui\CYui.h" />
     <ClInclude Include="Source\Light\LightManager\CLightManager.h" />
+    <ClInclude Include="Source\Rank\CRank.h" />
     <ClInclude Include="Source\Scene\BattleHeroSelect\CBattleHeroSelectScene.h" />
     <ClInclude Include="Source\Scene\Battle\CBattleScene.h" />
     <ClInclude Include="Source\Scene\Battle\UniqueAttack\CUniqueAttack.h" />
+    <ClInclude Include="Source\Scene\Login\CLoginScene.h" />
     <ClInclude Include="Source\Scene\ModeSelect\CModeSelectScene.h" />
     <ClInclude Include="Source\Scene\Nature\CNatureScene.h" />
     <ClInclude Include="Source\DebugText\CDebugText.h" />

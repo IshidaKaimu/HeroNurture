@@ -6,7 +6,6 @@
 #include "StaticMeshObject\Ground\CGround.h"
 #include "SkinMeshObject\Hero\CHeroBase.h"
 #include "json.hpp"
-
 //=====================================
 // 前方宣言
 //=====================================
@@ -19,20 +18,22 @@ class CUIManager;
 //サウンド
 class CSoundManager;
 
-
 // =======================
-// 定数宣言 (_NS = トレーニング結果シーンで用いることを示す)
+// 定数宣言
 // =======================	
-//----各ヒーローのカメラ配置・注視点----
-static const D3DXVECTOR3 CAMPOS_NS  = { 0.0f, 5.2f, -2.8f };
-static const D3DXVECTOR3 CAMLOOK_NS = { 0.0f, 6.2f,  3.0f };
-//----UI----
-//シーン名表示位置
-const D3DXVECTOR2 SCENENAME_POS_NS = { 350.0f, -10.0f };
-//ヒーロー名表示位置
-const D3DXVECTOR2 HERONAME_POS_NS = { 350.0f,450.0f };
-//指示テキスト表示位置
-const D3DXVECTOR2 INFOTEXT_POS_NS = { 850.0f, 600.0f };
+namespace Constant_NatureHeroSelectScene 
+{
+	//----各ヒーローのカメラ配置・注視点----
+	static const D3DXVECTOR3 CAMPOS_NS = { 0.0f, 5.2f, -2.8f };
+	static const D3DXVECTOR3 CAMLOOK_NS = { 0.0f, 6.2f,  3.0f };
+	//----UI----
+	//シーン名表示位置
+	const D3DXVECTOR2 SCENENAME_POS_NS = { 350.0f, -10.0f };
+	//ヒーロー名表示位置
+	const D3DXVECTOR2 HERONAME_POS_NS = { 350.0f,450.0f };
+	//指示テキスト表示位置
+	const D3DXVECTOR2 INFOTEXT_POS_NS = { 850.0f, 600.0f };
+}
 
 class CNatureHeroSelectScene
 	:public CSceneBase

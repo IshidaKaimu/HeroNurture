@@ -10,6 +10,9 @@
 #include "Effect\CEffect.h"
 #include "Sound\CSoundManager.h"
 
+//定数の名前空間
+using namespace Constant_BattleScene;
+
 CBattleScene::CBattleScene()
 	: m_pHero			  (&CHeroManager::GetInstance())
 	, m_pEnemyHero		  (&CEnemyHeroManager::GetInstance())
@@ -133,8 +136,8 @@ void CBattleScene::Initialize()
 	//敵のヒーローの初期化
 	m_pEnemyHero->Initialize();
 	//カメラ情報の初期化
-	m_pCamera->SetPos(INIT_CAMPOS_B);
-	m_pCamera->SetLook(INIT_CAMLOOK_B);
+	m_pCamera->SetPos(INIT_CAMPOS);
+	m_pCamera->SetLook(INIT_CAMLOOK);
 
 	//行動が選択済みであるかのフラグの初期化
 	m_SelectAttack = false;
@@ -436,8 +439,8 @@ void CBattleScene::MoveSelect()
 	m_pEnemyHero->MoveSelectAnim();
 
 	//カメラ情報の初期化
-	m_pCamera->SetPos(INIT_CAMPOS_B);
-	m_pCamera->SetLook(INIT_CAMLOOK_B);
+	m_pCamera->SetPos(INIT_CAMPOS);
+	m_pCamera->SetLook(INIT_CAMLOOK);
 
 	//速度による行動順の判断
 	SetUpToNextTurn();

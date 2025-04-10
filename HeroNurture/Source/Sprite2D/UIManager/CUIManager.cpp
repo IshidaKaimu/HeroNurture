@@ -61,6 +61,7 @@ HRESULT CUIManager::Load(CDirectX11* Dx11)
 		{UIList::AttackCover,	 _T("Data\\Texture\\AttackCover.png")      ,{ 341.0f, 300.0f, 341.0f, 300.0f, 341.0f, 300.0f}},
 		{UIList::UniqueGage,	 _T("Data\\Texture\\UniqueGage.png")       ,{ 80.0f,  70.0f,  80.0f, 70.0f,   80.0f,70.0f}},
 		{UIList::Arrow,	         _T("Data\\Texture\\Arrow.png")            ,{ 137.0f, 93.0f,  137.0f, 93.0f,  137.0f, 93.0f}},
+		{UIList::NameSpace,	     _T("Data\\Texture\\NameSpace.png")        ,{ 1347.0f, 336.0f, 1347.0f, 336.0f, 1347.0f, 336.0f}},
 	};
 
 	int list_max = sizeof(SList) / sizeof(SList[0]);
