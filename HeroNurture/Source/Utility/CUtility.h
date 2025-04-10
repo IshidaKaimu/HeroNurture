@@ -6,7 +6,6 @@
 #include <random>
 #include <type_traits>
 
-
 //ƒ‰ƒ“ƒNƒŠƒXƒg
 enum enRankList : char 
 {

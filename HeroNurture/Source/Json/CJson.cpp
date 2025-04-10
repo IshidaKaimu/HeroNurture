@@ -27,6 +27,7 @@ void CJson::CreateOrWrite( const std::string& hierarchy, json& jsondata)
     writing_file.close();
 }
 
+
 //ファイルに追記(ナンバリング機能有り)
 void CJson::PostScript(const std::string& hierarchy, json& jsondata)
 {

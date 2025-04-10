@@ -8,7 +8,6 @@ CUtility::~CUtility()
 {
 }
 
-
 //ƒ‰ƒ“ƒN‚Ì•`‰æ
 void CUtility::DrawRank(float value, int typeno, float x, float y)
 {

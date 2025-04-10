@@ -10,6 +10,9 @@
 #include "Json\CJson.h"
 #include "Utility\CUtility.h"
 #include "Sprite2D\UIManager\CUIManager.h" 
+//’è”‚Ì–¼‘O‹óŠÔ
+using namespace Constant_BattleResultScene;
+
 
 CBattleResultScene::CBattleResultScene()
     : m_pCamera(&CCameraManager::GetInstance())
