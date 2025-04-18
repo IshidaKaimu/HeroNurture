@@ -34,6 +34,9 @@ CNatureScene::CNatureScene()
     , m_pStaminaBack ()
     , m_pStaminaFrame()
     , m_pTurnBack    ()
+    , m_pSafeBack    ()
+    , m_pAnxietyBack ()
+    , m_pDangerBack  ()
     , m_GageWidth    ( CSceneManager::GetInstance()->GetStaminaWidth() )
     , m_pJson        ()
     , m_ParamWriter  ()
@@ -81,6 +84,10 @@ void CNatureScene::Create()
     m_pSpeedTraning = std::make_unique<CUIObject>();
     m_pHpTraning    = std::make_unique<CUIObject>();
     m_pRest         = std::make_unique<CUIObject>();
+    //失敗率背景
+    m_pSafeBack     = std::make_unique<CUIObject>();
+    m_pAnxietyBack  = std::make_unique<CUIObject>();
+    m_pDangerBack   = std::make_unique<CUIObject>();
 
     //育成関連のシーンで共通して表示するUIのインスタンス生成
     CreateNatureUI(m_pStaminaGage,m_pStaminaBack,m_pStaminaFrame,m_pTurnBack);
@@ -113,6 +120,10 @@ void CNatureScene::LoadData()
     m_pSpeedTraning->AttachSprite(CUIManager::GetSprite(CUIManager::SpeedTraning));
     m_pHpTraning   ->AttachSprite(CUIManager::GetSprite(CUIManager::HpTraning));
     m_pRest        ->AttachSprite(CUIManager::GetSprite(CUIManager::Rest));
+    //各失敗率背景のスプライト設定
+    m_pSafeBack->AttachSprite(CUIManager::GetSprite(CUIManager::Safe));
+    m_pAnxietyBack->AttachSprite(CUIManager::GetSprite(CUIManager::Anxiety));
+    m_pDangerBack->AttachSprite(CUIManager::GetSprite(CUIManager::Danger));
 
     //スタミナゲージのUIのスプライト設定
     LoadNatureUI(m_pStaminaGage, m_pStaminaBack,m_pStaminaFrame, m_pTurnBack);
@@ -150,11 +161,16 @@ void CNatureScene::Initialize()
     //パラメータの背景
     UIInit(m_pParamBack, PARAMBACK_POSX, PARAMBACK_POSY, 0, PARAMBACK_SCALE, 0);
     //各種トレーニング
-    UIInit(m_pPowerTraning, TRANING_POSX, TRANING_POSY, 0, TRANING_SCALE, 0);
-    UIInit(m_pMagicTraning, TRANING_POSX, TRANING_POSY, TRANING_INTERVAL, TRANING_SCALE, 1);
-    UIInit(m_pSpeedTraning, TRANING_POSX, TRANING_POSY, TRANING_INTERVAL, TRANING_SCALE, 2);
-    UIInit(m_pHpTraning,    TRANING_POSX, TRANING_POSY, TRANING_INTERVAL, TRANING_SCALE, 3);
+    UIInit(m_pPowerTraning, TRANING_POSX, TRANING_POSY, 0, TRANING_SCALE, 0);                //筋力
+    UIInit(m_pMagicTraning, TRANING_POSX, TRANING_POSY, TRANING_INTERVAL, TRANING_SCALE, 1); //魔力
+    UIInit(m_pSpeedTraning, TRANING_POSX, TRANING_POSY, TRANING_INTERVAL, TRANING_SCALE, 2); //素早さ
+    UIInit(m_pHpTraning,    TRANING_POSX, TRANING_POSY, TRANING_INTERVAL, TRANING_SCALE, 3); //体力
     UIInit(m_pRest, TRANING_POSX, TRANING_POSY, TRANING_INTERVAL, TRANING_SCALE, 4);
+    //各失敗率背景
+    FailureRateBackInit(m_pSafeBack,D3DXVECTOR3(20.0f,400.0f,0.0f));
+    FailureRateBackInit(m_pAnxietyBack,D3DXVECTOR3(20.0f,400.0f,0.0f));
+    FailureRateBackInit(m_pDangerBack,D3DXVECTOR3(20.0f,400.0f,0.0f));
+
 
     //育成関連のシーンで共通のUIの初期化
     InitNatureUI(m_pStaminaGage,m_pStaminaBack,m_pStaminaFrame, m_pTurnBack);
@@ -253,6 +269,7 @@ void CNatureScene::Update()
 void CNatureScene::Draw()
 {
     CSceneManager* SceneMng = CSceneManager::GetInstance();
+    WriteText* Text = WriteText::GetInstance();
 
     //カメラの更新処理
     m_pCamera->CameraUpdate();
@@ -274,6 +291,17 @@ void CNatureScene::Draw()
 
     //各パラメータUIの描画
     DrawParam();
+
+    //失敗率の取得
+    int FailureRate = 100 - m_pHero->GetSuccessRate(m_pHero->GetStamina());
+    //失敗率に応じた背景の描画
+    if (FailureRate <= SAFE) { m_pSafeBack->Draw(); }
+    if (FailureRate > SAFE && FailureRate <= ANXIETY) { m_pAnxietyBack->Draw(); }
+    if (FailureRate > ANXIETY) { m_pDangerBack->Draw(); }
+    //「失敗率」テキスト描画
+    Text->Draw_Text(L"失敗率", WriteText::Select, D3DXVECTOR2(FAILURETEXT_POS));
+    //失敗率の描画
+    Text->Draw_Text(std::to_wstring(FailureRate) + L"%", WriteText::Select, D3DXVECTOR2(FAILURERATE_POS));
 
     //深度を戻す
     SceneMng->GetDx11()->SetDepth(true);
@@ -484,6 +512,15 @@ void CNatureScene::UIInit(std::unique_ptr<CUIObject>& ui, float x, float y, floa
     ui->SetAlpha(1.0f);
     //幅、高さ
     ui->SetDisplay(1.0f, 1.0f);
+}
+
+//失敗率背景の初期設定
+void CNatureScene::FailureRateBackInit(std::unique_ptr<CUIObject>& back, D3DXVECTOR3 pos)
+{
+    back->SetPosition(FAILUREBACK_POS);
+    back->SetScale(FAILUREBACK_SCALE);
+    back->SetAlpha(FAILUREBACK_ALPHA);
+    back->SetDisplay(FAILUREBACK_DISP.x, FAILUREBACK_DISP.y);
 }
 
 

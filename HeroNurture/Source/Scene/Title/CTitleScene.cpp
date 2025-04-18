@@ -44,8 +44,8 @@ void CTitleScene::Create()
     m_pKaito = std::make_unique<CKaito>();
 
     //----UI----
-    //タイトル背景
-    m_pTitleBack = std::make_unique<CUIObject>();
+    //選択矢印
+    m_pSelectArrow = std::make_unique<CUIObject>();
 }
 
 void CTitleScene::Releace()
@@ -55,17 +55,18 @@ void CTitleScene::Releace()
 
 void CTitleScene::LoadData()
 {
-    CMeshManager* MMng = CMeshManager::GetInstance();
+    CMeshManager* MeshMng = CMeshManager::GetInstance();
+    CUIManager* UiMng = &CUIManager::GetInstance();
     //----スタティックメッシュ----
-    m_pSky->AttachMesh(CMeshManager::GetMesh(CMeshManager::Sky));      //空
-    m_pGround->AttachMesh(CMeshManager::GetMesh(CMeshManager::Ground));//地面
+    m_pSky->AttachMesh(MeshMng->GetMesh(CMeshManager::Sky));      //空
+    m_pGround->AttachMesh(MeshMng->GetMesh(CMeshManager::Ground));//地面
 
     //----タイトル画面に表示するヒーローのメッシュ設定----
     m_pYui->LoadMeshData();  //ユイ
     m_pKaito->LoadMeshData();//カイト
 
     //----UI----
-    m_pTitleBack->AttachSprite(CUIManager::GetSprite(CUIManager::TitleBack));
+    m_pSelectArrow->AttachSprite(UiMng->GetSprite(CUIManager::SelectArrow)); //選択肢矢印
 }
 
 void CTitleScene::Initialize()
@@ -93,6 +94,11 @@ void CTitleScene::Initialize()
     default:
         break;
     }
+
+    //選択肢矢印の初期設定
+    m_pSelectArrow->SetPosition(SELECTARROW_POS);                       //座標
+    m_pSelectArrow->SetScale(SELECTARROW_SCALE);                        //拡縮
+    m_pSelectArrow->SetDisplay(SELECTARROW_DISP.x, SELECTARROW_DISP.y); //幅
 }
 
 //更新関数
@@ -110,21 +116,8 @@ void CTitleScene::Update()
     //フェードイン処理
     if (!FadeIn()) { return; }
 
-    //シーン遷移(仮)
-    if (KeyMng->IsDown(VK_RETURN))
-    {
-        //スタートSEの再生
-        CSoundManager::GetInstance()->PlaySE(CSoundManager::SE_Start);
-        CSoundManager::GetInstance()->Volume(CSoundManager::SE_Start,40);
-
-        //オープニングシーンへ
-        m_SceneTransitionFlg = true;
-    }
-    //フェードアウト処理
-    if (m_SceneTransitionFlg && FadeOut()) 
-    {
-        SceneMng->LoadCreate(CSceneManager::Login);
-    }
+    //選択矢印の動き
+    MoveArrow();
 
     //シーン遷移(仮)
     if (KeyMng->IsDown(VK_RETURN))
@@ -139,7 +132,13 @@ void CTitleScene::Update()
     //フェードアウト処理
     if (m_SceneTransitionFlg && FadeOut()) 
     {
-        SceneMng->LoadCreate(CSceneManager::Login);
+        switch (m_SelectNo)
+        {
+        case 0: SceneMng->LoadCreate(CSceneManager::CreateAcount); break;
+        case 1: SceneMng->LoadCreate(CSceneManager::Login);        break;
+        case 2: DestroyWindow(SceneMng->GetWnd());                 break;
+        default:                                                   break;
+        }
     }
 
     #ifdef DEBUG
@@ -180,11 +179,12 @@ void CTitleScene::Draw()
 
 void CTitleScene::Debug()
 {
+#ifdef DEBUG
     ImGui::Begin(JAPANESE("カメラ"));
     ImGui::InputFloat3(JAPANESE("カメラ座標"), m_CamPos);
     ImGui::InputFloat3(JAPANESE("注視点"), m_CamLook);
     ImGui::InputFloat3(JAPANESE("カイト座標"), m_KaitoPos);
-    ImGui::InputFloat3(JAPANESE("ユイ座標"),   m_YuiPos);
+    ImGui::InputFloat3(JAPANESE("ユイ座標"), m_YuiPos);
     ImGui::InputFloat3(JAPANESE("カイト回転"), m_KaitoRot);
     ImGui::InputFloat3(JAPANESE("ユイ回転"), m_YuiRot);
     //CCameraManager::GetInstance().SetPos(m_CamPos);
@@ -195,12 +195,19 @@ void CTitleScene::Debug()
     m_pYui->SetRotation(m_YuiRot);
     ImGui::End();
 
+#endif // DEBUG
 }
 
 //タイトル画面の描画
 void CTitleScene::DrawUI()
 {
     WriteText* Text = WriteText::GetInstance();
+
+    //選択矢印
+    m_pSelectArrow->SetPosition(SELECTARROW_POS.x + m_MoveArrow, SELECTARROW_POS.y + (SELECT_INTERVAL * m_SelectNo), SELECTARROW_POS.z);
+
+    //選択矢印の描画
+    m_pSelectArrow->Draw();
 
     //タイトル
     Text->Draw_Text(L"HeroNature", WriteText::B_Big, D3DXVECTOR2(TITLE_POS)); 
@@ -210,4 +217,57 @@ void CTitleScene::DrawUI()
     Text->Draw_Text(L"ログイン", WriteText::Select, D3DXVECTOR2(SELECT_POS.x,SELECT_POS.y + SELECT_INTERVAL));
     //「ゲーム終了」テキスト
     Text->Draw_Text(L"ゲーム終了", WriteText::Select, D3DXVECTOR2(SELECT_POS.x,SELECT_POS.y + SELECT_INTERVAL*2));
+}
+
+//矢印の動き
+void CTitleScene::MoveArrow()
+{
+    CKeyManager* KeyMng = &CKeyManager::GetInstance();
+    //選択肢移動
+    if (KeyMng->IsDown(VK_DOWN))
+    {
+        if (m_SelectNo < 2)
+        {
+            m_SelectNo++;
+        }
+        else
+        {
+            m_SelectNo = 2;
+        }
+    }
+
+    if (KeyMng->IsDown(VK_UP))
+    {
+        if (m_SelectNo > 0)
+        {
+            m_SelectNo--;
+        }
+        else
+        {
+            m_SelectNo = 0;
+        }
+    }
+
+
+    if (m_MoveArrow <= SELECTARROW_RANGE && !m_SwitchArrowFlag)
+    {
+        m_MoveArrow += 0.1f;
+    }
+    else
+    {
+        m_SwitchArrowFlag = true;
+    }
+
+    if (m_SwitchArrowFlag)
+    {
+        if (m_MoveArrow >= 0.0f)
+        {
+            m_MoveArrow -= 0.1f;
+        }
+        else
+        {
+            m_SwitchArrowFlag = false;
+        }
+    }
+
 }

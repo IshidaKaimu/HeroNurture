@@ -29,6 +29,8 @@ namespace Constant_LoginScene
 	static D3DXVECTOR3 NAME_STARTPOS   = { 320.0f, 320.0f, 0.0f };
 	//名前最大文字数
 	static const int NAME_MAXLENGTH    = 8;
+	//シーン名位置
+	static const D3DXVECTOR2 SCENENAME_POS = { 0.0f, -20.0f };
 }
 
 //=====================================
@@ -55,13 +57,6 @@ public:
 	void Draw()		  override;
 
 private:
-	//文字の動き
-	float Easing(float x);
-	//アカウント名入力処理
-	void  InputName();
-	//UIの描画
-	void DrawUI();
-
 	//wstringからstringへの変換
 	std::string WstringToString(std::wstring owstring);
 

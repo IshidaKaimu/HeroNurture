@@ -365,16 +365,16 @@ void CBattleScene::InitHpGage()
 	m_pHpGageFrame->SetDisplay(HPGAGE_DISPLAY.x, HPGAGE_DISPLAY.y);
 	//敵のHpゲージ
 	m_pEnemyHpGage->SetPosition(ENEMY_HPGAGE_POS);
-	m_pEnemyHpGage->SetScale(0.8f, 0.8f, 0.8f);
-	m_pEnemyHpGage->SetDisplay(1.0f, 1.0f);
+	m_pEnemyHpGage->SetScale(HPGAGE_SCALE);
+	m_pEnemyHpGage->SetDisplay(HPGAGE_DISPLAY.x, HPGAGE_DISPLAY.y);
 	//敵のHpゲージ背景
 	m_pEnemyHpGageBack->SetPosition(ENEMY_HPGAGE_POS);
-	m_pEnemyHpGageBack->SetScale(0.8f, 0.8f, 0.8f);
-	m_pEnemyHpGageBack->SetDisplay(1.0f, 1.0f);
+	m_pEnemyHpGageBack->SetScale(HPGAGE_SCALE);
+	m_pEnemyHpGageBack->SetDisplay(HPGAGE_DISPLAY.x, HPGAGE_DISPLAY.y);
 	//敵のHpゲージ枠
 	m_pEnemyHpGageFrame->SetPosition(ENEMY_HPFRAME_POS);
-	m_pEnemyHpGageFrame->SetScale(0.8f, 0.8f, 0.8f);
-	m_pEnemyHpGageFrame->SetDisplay(1.0f, 1.0f);
+	m_pEnemyHpGageFrame->SetScale(HPGAGE_SCALE);
+	m_pEnemyHpGageFrame->SetDisplay(HPGAGE_DISPLAY.x, HPGAGE_DISPLAY.y);
 }
 
 //体力ゲージのアニメーション
@@ -423,14 +423,14 @@ void CBattleScene::ChangeUniqueGage(std::vector<std::unique_ptr<CUIObject>>& gag
 //固有攻撃ゲージの描画
 void CBattleScene::DrawUniqueGage(std::vector<std::unique_ptr<CUIObject>>& gages)
 {
-	////固有攻撃ゲージ
-	//for (const auto& gage : gages)
-	//{
-	//	if (gage)
-	//	{
-	//		gage->Draw();
-	//	}
-	//}
+	//固有攻撃ゲージ
+	for (const auto& gage : gages)
+	{
+		if (gage)
+		{
+			gage->Draw();
+		}
+	}
 }
 
 //行動選択フェーズ中の処理
@@ -505,7 +505,7 @@ void CBattleScene::Attack()
 		{
 			HeroTurn();
 			if (m_pEnemyHero->GetHp() > 0.0f && m_pEnemyHero->GetDamageAnimEndFlag()) {
-				//ダメージ処理
+				//敵へのダメージ処理
 				switch (m_Attack)
 				{
 				case CBattleScene::PowerAttack:
@@ -523,7 +523,7 @@ void CBattleScene::Attack()
 		{
 			EnemyHeroTurn();
 			if (m_pHero->GetHp() > 0.0f && m_pHero->GetDamageAnimEndFlag()) {
-				//ダメージ処理
+				//自分へのダメージ処理
 				switch (m_EnemyAttack)
 				{
 				case CBattleScene::PowerAttack:
@@ -538,14 +538,14 @@ void CBattleScene::Attack()
 			}
 		}
 	}
-	else
+	else if(!m_pHero->Death())
 	{
 		//敵が先行の場合
 		if (!m_pHero->GetDamageFlag())
 		{
 			EnemyHeroTurn();
 			if (m_pEnemyHero->GetHp() > 0.0f && m_pHero->GetDamageAnimEndFlag()) {
-				//ダメージ処理
+				//自分へのダメージ処理
 				switch (m_EnemyAttack)
 				{
 				case CBattleScene::PowerAttack:
@@ -561,7 +561,7 @@ void CBattleScene::Attack()
 		{
 			HeroTurn();
 			if (m_pHero->GetHp() > 0.0f && m_pEnemyHero->GetDamageAnimEndFlag()) {
-				//ダメージ処理
+				//敵へのダメージ処理
 				switch (m_Attack)
 				{
 				case CBattleScene::PowerAttack:

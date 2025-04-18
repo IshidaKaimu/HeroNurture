@@ -93,6 +93,9 @@ void CLoginScene::Draw()
     //名前入力スペースの描画
     m_pNameSpace->Draw();
 
+    //シーン名の描画
+    Text->Draw_Text(L"ログイン", WriteText::D_Big, D3DXVECTOR2(0.0f, -20.0f));
+
     if (m_UserName.empty())
     {
         //入力された文字の描画

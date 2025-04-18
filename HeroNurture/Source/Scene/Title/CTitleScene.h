@@ -41,6 +41,12 @@ namespace Constant_TitleScene
 	const D3DXVECTOR2 SELECT_POS	  = { 900.0f, 400.0f };
 	//選択肢テキスト同士の間隔
 	constexpr float   SELECT_INTERVAL = 80.0f;
+	//選択矢印の初期設定
+	const D3DXVECTOR3 SELECTARROW_POS   = { 810.0f, 425.0f, 0.0f }; //座標
+	const D3DXVECTOR3 SELECTARROW_SCALE = { 0.7f, 0.7f, 0.7f };		//拡縮
+	const D3DXVECTOR2 SELECTARROW_DISP  = { 1.0f, 1.0f };
+	//選択矢印の動きの範囲
+	const float SELECTARROW_RANGE = 3.0f;
 }
 
 //=====================================
@@ -70,10 +76,11 @@ public:
 	void Debug();
 
 private:
-	//アカウント名入力処理
-	void  InputName();	
 	//UIの描画
 	void DrawUI();
+
+	//選択矢印を動かす
+	void MoveArrow();
 
 private:
 
@@ -92,18 +99,16 @@ private:
 	//----スキンメッシュ----
 	//ユイ
 	std::unique_ptr<CYui> m_pYui;
-	D3DXVECTOR3 m_YuiPos;
-	D3DXVECTOR3 m_YuiRot;
 	//カイト
 	std::unique_ptr<CKaito> m_pKaito;
-	D3DXVECTOR3 m_KaitoPos;
-	D3DXVECTOR3 m_KaitoRot;
-
 
 	//----UI----
-	//タイトル背景
-	std::unique_ptr<CUIObject> m_pTitleBack;
-		
+	//選択矢印
+	std::unique_ptr<CUIObject> m_pSelectArrow;
+	//矢印の位置を動かす値
+	float m_MoveArrow;
+	//矢印の動きを切り替えるフラグ
+	bool m_SwitchArrowFlag;
 
 	//表示ヒーロー
 	int m_HeroNo;

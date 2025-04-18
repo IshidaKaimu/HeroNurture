@@ -29,6 +29,8 @@ namespace Constant_CreateAcountScene
 	static D3DXVECTOR3 NAME_STARTPOS = { 320.0f, 320.0f, 0.0f };
 	//名前最大文字数
 	static const int NAME_MAXLENGTH = 8;
+	//シーン名位置
+	static const D3DXVECTOR2 SCENENAME_POS = { 0.0f, -20.0f };
 }
 
 //=====================================
@@ -77,7 +79,7 @@ private:
 	//Jsonクラス
 	std::unique_ptr<CJson> m_pJson;
 
-	//表示ヒーロー
-	int m_HeroNo;
+	//名前を重複を表示するフラグ
+	bool m_Duplication;
 
 };

@@ -196,6 +196,9 @@ void CBattleHeroSelectScene::DrawResultData()
 		}
 	}
 	//パラメータ背景の描画
+	m_pParamBack->SetPosition(PARAMBACK_POS);
+	m_pParamBack->SetScale(PARAMBACK_SCALE);
+	m_pParamBack->SetDisplay(1.0f, 1.0f);
 	m_pParamBack->Draw();
 
 	//選択中の育成データのパラメータの描画

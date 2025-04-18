@@ -9,6 +9,13 @@
 using namespace Constant_CreateAcountScene;
 
 CCreateAcountScene::CCreateAcountScene()
+    : m_pCamera    ()
+    , m_SorceDir   ()
+    , m_DestDir    ()
+    , m_UserName   ()
+    , m_pNameSpace ()
+    , m_pJson      ()
+    , m_Duplication()
 {
 }
 
@@ -48,6 +55,7 @@ void CCreateAcountScene::Update()
 
     CKeyManager* KeyMng = &CKeyManager::GetInstance();
     CSceneManager* SceneMng = CSceneManager::GetInstance();
+    WriteText* Text = WriteText::GetInstance();
 
     //リアルタイム入力処理
     CUtility::GetInstance().InputText(m_UserName,NAME_MAXLENGTH);
@@ -75,10 +83,18 @@ void CCreateAcountScene::Update()
                     m_DestDir,      //コピー先のパス
                     std::filesystem::copy_options::recursive    //フォルダ内のファイル等もコピー
                 );
-            }
+                
+                //重複の表示をなくす
+                m_Duplication = false;
 
-            //オープニングシーンへ
-            m_SceneTransitionFlg = true;
+                //オープニングシーンへ
+                m_SceneTransitionFlg = true;
+            }
+            else
+            {
+                //重複していることを表示する
+                m_Duplication = true;
+            }
         }
     }
     //フェードアウト処理
@@ -95,6 +111,10 @@ void CCreateAcountScene::Draw()
     //名前入力スペースの描画
     m_pNameSpace->Draw();
 
+    //シーン名の描画
+    Text->Draw_Text(L"アカウント作成", WriteText::D_Big, D3DXVECTOR2(0.0f, -20.0f));
+
+    //何も入力されていなければ
     if (m_UserName.empty())
     {
         //入力された文字の描画
@@ -103,5 +123,10 @@ void CCreateAcountScene::Draw()
 
     //入力された文字の描画
     Text->Draw_Text(m_UserName, WriteText::InputName, D3DXVECTOR2(NAME_STARTPOS.x, NAME_STARTPOS.y));
+
+    if (m_Duplication)
+    {
+        Text->Draw_Text(L"※このアカウント名は既に使用されています", WriteText::Error, D3DXVECTOR2(300.0f, 450.0f));
+    }
 }
 

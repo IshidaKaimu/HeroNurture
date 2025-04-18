@@ -47,6 +47,9 @@ public:
 		Arrow,              //矢印
 		SelectArrow,		//選択肢矢印
 		NameSpace,			//名前入力スペース
+		Safe,				//失敗率アイコン(30%以下)
+		Anxiety,			//失敗率アイコン(30%以上70%以下)
+		Danger,				//失敗率アイコン(70%以上)
 		Max,
 	};
 

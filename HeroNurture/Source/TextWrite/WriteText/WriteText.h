@@ -32,11 +32,12 @@ public:
         C_Big,          //Cランク(大)
         D_Big,          //Dランク(大)
         E_Big,          //Eランク(大)
+        Error,          //エラーメッセージ
         Success,        //トレーニング結果(成功)
         Failure,        //トレーニング結果(失敗)
         Win,            //バトル勝敗(勝利)
         Lose,           //バトル勝敗(敗北)
-        Max,    //最大値
+        Max,            //最大値
     };
     //フォントデータ構造体
     struct FONTDATA
@@ -105,6 +106,7 @@ private:
         { 120, DWRITE_FONT_WEIGHT_NORMAL, D2D1::ColorF(D2D1::ColorF::LightGreen), 0 },   //Cランク(大)
         { 120, DWRITE_FONT_WEIGHT_NORMAL, D2D1::ColorF(D2D1::ColorF::LightBlue), 0 },    //Dランク(大)
         { 120, DWRITE_FONT_WEIGHT_NORMAL, D2D1::ColorF(D2D1::ColorF::DarkGray), 0 },     //Eランク(大)
+        { 50, DWRITE_FONT_WEIGHT_NORMAL, D2D1::ColorF(D2D1::ColorF::IndianRed), 0 },     //Eランク(大)
         { 100, DWRITE_FONT_WEIGHT_NORMAL, D2D1::ColorF(D2D1::ColorF::Orange), 1 },       //トレーニング結果(成功)
         { 100, DWRITE_FONT_WEIGHT_NORMAL, D2D1::ColorF(D2D1::ColorF::DarkBlue), 1 },     //トレーニング結果(失敗)
         { 200, DWRITE_FONT_WEIGHT_NORMAL, D2D1::ColorF(D2D1::ColorF::Orange), 1 },       //バトル勝敗(勝利)

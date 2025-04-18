@@ -158,6 +158,8 @@ public:
 	//トレーニング
 	enTraningList GetTraining() { return m_Traning; }
 	void SetTraning(enTraningList traning) { m_Traning = traning; }
+	//失敗率
+	int GetSuccessRate(float stamina) { return m_pHero->SuccessRate(stamina); }
 	//トレーニングに失敗したかのフラグ
 	bool GetFailure() { return m_pHero->GetFailure(); }
 	//バトル中体力
