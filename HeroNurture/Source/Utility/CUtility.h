@@ -1,8 +1,7 @@
 #pragma once
 #include "Singleton\CSingleton.h"
-#include "UIObject\CUIObject.h"
 #include "WriteText\WriteText.h"
-#include "Json\CJson.h"
+#include "KeyManager\CKeyManager.h"
 #include <random>
 #include <type_traits>
 
@@ -46,6 +45,12 @@ public:
 
 	//’l‚ÌŒ…”‚É‚æ‚é•`‰æˆÊ’u‚Ì•â³
 	D3DXVECTOR2 PosCorrection(double value, float digit, float x, float y);
+
+	//•¶š‚Ì“ü—Í
+	void InputText(std::wstring& text,int maxlength);
+
+	//wstringŒ^‚ğstringŒ^‚É•ÏŠ·
+	std::string WstringToString(std::wstring owstring);
 
 private:
 	CUtility();

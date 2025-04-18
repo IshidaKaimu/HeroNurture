@@ -104,6 +104,10 @@ public:
 	virtual void Debug() {};
 
 public:
+	
+	//トレーニングの失敗率を返す関数
+	int SuccessRate(float stamina);
+
 	// =======================
 	// シーンごとのアニメーション関数
 	// =======================		
@@ -205,8 +209,6 @@ protected :
 private:
 	//残りスタミナ量による補正関数
 	void CorrectionByStamina(float stamina);
-	//失敗率を返す関数
-	int FailureRate(float stamina);
 	//トレーニング結果関数
 	void TraningResult(float stamina, float app, float& param);
 

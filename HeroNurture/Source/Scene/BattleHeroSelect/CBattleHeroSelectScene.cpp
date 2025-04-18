@@ -48,7 +48,6 @@ void CBattleHeroSelectScene::Create()
 	//----UI----
 	m_pLeftArrow = make_unique<CUIObject>();
 	m_pRightArrow = make_unique<CUIObject>();
-
 }
 
 void CBattleHeroSelectScene::Releace()
@@ -57,8 +56,13 @@ void CBattleHeroSelectScene::Releace()
 
 void CBattleHeroSelectScene::LoadData()
 {
+	CSceneManager* SceneMng = CSceneManager::GetInstance();
+	
+	//設定されているユーザー名の取得
+	std::string UserName = SceneMng->GetStringName();
+
 	//育成結果が保存されているファイルのパス
-	std::string ResultDataPath = "Data\\Hero\\Result\\Result";
+	std::string ResultDataPath = "Data\\Acount\\" + UserName + "\\Result\\Result";
 	//育成結果のファイルをロード
 	m_pJson->Load(m_ResultData,ResultDataPath);
 
@@ -89,15 +93,6 @@ void CBattleHeroSelectScene::Initialize()
 	m_pCamera->SetPos(CAMPOS);
 	m_pCamera->SetLook(CAMLOOK);
 
-	//パラメータ背景UIの設定
-	//位置
-	m_pParamBack->SetPosition(PARAMBACK_POS);
-	//拡縮
-	m_pParamBack->SetScale(PARAMBACK_SCALE);
-	//α値
-	m_pParamBack->SetAlpha(1.0f);
-	//幅
-	m_pParamBack->SetDisplay(1.0f, 1.0f);
 }
 
 void CBattleHeroSelectScene::Update()
@@ -201,6 +196,9 @@ void CBattleHeroSelectScene::DrawResultData()
 		}
 	}
 	//パラメータ背景の描画
+	m_pParamBack->SetPosition(PARAMBACK_POS);
+	m_pParamBack->SetScale(PARAMBACK_SCALE);
+	m_pParamBack->SetDisplay(1.0f, 1.0f);
 	m_pParamBack->Draw();
 
 	//選択中の育成データのパラメータの描画

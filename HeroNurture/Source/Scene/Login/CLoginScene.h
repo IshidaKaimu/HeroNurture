@@ -1,6 +1,7 @@
 #include "Scene\CSceneBase.h"					//シーンベースクラス
 #include "Camera\CameraManager\CCameraManager.h"//カメラマネージャクラス
 #include "WriteText\WriteText.h"				//テキスト描画クラス
+#include <filesystem>
 #include <memory>
 #include <Windows.h>
 
@@ -11,6 +12,7 @@ class CJson;
 class CKeyManager;
 class CSoundManager;
 class CUIManager;
+class CUtility;
 
 // =======================
 // 定数宣言
@@ -25,10 +27,14 @@ namespace Constant_LoginScene
 	static D3DXVECTOR2 NAMESPACE_DISP  = { 1.0f,1.0f };
 	//名前入力開始位置
 	static D3DXVECTOR3 NAME_STARTPOS   = { 320.0f, 320.0f, 0.0f };
+	//名前最大文字数
+	static const int NAME_MAXLENGTH    = 8;
+	//シーン名位置
+	static const D3DXVECTOR2 SCENENAME_POS = { 0.0f, -20.0f };
 }
 
 //=====================================
-// タイトルシーンクラス
+// ログインシーンクラス
 //=====================================
 class CLoginScene
 	:public CSceneBase
@@ -51,34 +57,23 @@ public:
 	void Draw()		  override;
 
 private:
-	//文字の動き
-	float Easing(float x);
-	//アカウント名入力処理
-	void  InputName();
-	//UIの描画
-	void DrawUI();
-
 	//wstringからstringへの変換
 	std::string WstringToString(std::wstring owstring);
 
 private:
-
-	//カメラクラス
-	CCameraManager* m_pCamera;
+	//存在の有無を確認したいフォルダのパス
+	std::filesystem::path m_TargetPath;
 
 	// =======================
 	// オブジェクトクラス
 	// =======================		
 	//----UI----
-	//ユーザー名入力
+	//ユーザー名
 	std::wstring m_UserName;
 	//ユーザー名入力スペース
 	std::unique_ptr<CUIObject> m_pNameSpace;
 
 	//Jsonクラス
 	std::unique_ptr<CJson> m_pJson;
-
-	//表示ヒーロー
-	int m_HeroNo;
 
 };

@@ -1,5 +1,6 @@
 #include "CSceneManager.h"
 #include "Scene\Title\CTitleScene.h"
+#include "CreateAcount\CCreateAcountScene.h"
 #include "Scene\Login\CLoginScene.h"
 #include "Scene\Nature\CNatureScene.h"
 #include "Scene\ModeSelect\CModeSelectScene.h"
@@ -17,9 +18,13 @@ CSceneManager::CSceneManager()
     , m_hWnd        ()
     , m_pDx9        ( nullptr )
     , m_pDx11       ( nullptr )
+    , m_Turn        ()
+    , m_UserName    ()
+    , m_GageWidth   (1.0f)
     , m_RoleList    ()
     , m_BattleResult()
-    , m_GageWidth   ( 1.0f )
+    , m_Rest        ()
+    , m_IsDataLoaded()
 {
     m_Scene = std::make_unique<CTitleScene>();   //make_unique:インスタンスを生成して、使わなくなったら勝手に破棄してくれる
 }
@@ -62,6 +67,7 @@ void CSceneManager::Update()
 #if _DEBUG
     ImGui::Begin(JAPANESE("シーン"));
     if (ImGui::Button(JAPANESE("タイトル")))           { LoadCreate(enSceneList::Title); }
+    if (ImGui::Button(JAPANESE("アカウント作成")))     { LoadCreate(enSceneList::CreateAcount); }
     if (ImGui::Button(JAPANESE("ログイン")))           { LoadCreate(enSceneList::Login); }
     if (ImGui::Button(JAPANESE("ヒーロー選択")))       { LoadCreate(enSceneList::NatureHeroSelect); }
     if (ImGui::Button(JAPANESE("育成")))               { LoadCreate(enSceneList::Nature); }
@@ -107,6 +113,7 @@ std::unique_ptr<CSceneBase> CSceneManager::Create(enSceneList List)
     switch (List)
     {
     case CSceneManager::Title:            return std::make_unique<CTitleScene>();
+    case CSceneManager::CreateAcount:     return std::make_unique<CCreateAcountScene>();
     case CSceneManager::Login:            return std::make_unique<CLoginScene>();
     case CSceneManager::ModeSelect:       return std::make_unique<CModeSelectScene>();
     case CSceneManager::NatureHeroSelect: return std::make_unique<CNatureHeroSelectScene>();

@@ -1,0 +1,20 @@
+[
+ {
+  "HeroName": "Yui", 
+  "Parameter": {
+  "Hp": 250.0,
+  "Magic": 350.0,
+  "Power": 250.0,
+  "Speed": 450.0
+  }
+ },
+ {
+  "HeroName": "Kaito", 
+  "Parameter": {
+  "Hp": 300.0,
+  "Magic": 250.0,
+  "Power": 450.0,
+  "Speed": 200.0
+  }
+ }
+]

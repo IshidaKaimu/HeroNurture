@@ -3,7 +3,9 @@
 #include "CDirectX11.h"
 #include "CDirectX9.h"
 #include "Singleton\CSingleton.h"
+#include "Utility\CUtility.h"
 #include <memory>
+
 
 //----前方宣言---
 class CTitleScene;
@@ -36,6 +38,7 @@ public:
 	enum enSceneList :char
 	{
 		Title,
+		CreateAcount,
 		Login,
 		ModeSelect,
 		NatureHeroSelect,
@@ -112,29 +115,33 @@ public:
 
 	//---ゲッター・セッター---
     //DirectX9
-    CDirectX9* GetDx9() { return m_pDx9; }
+    CDirectX9* GetDx9()			 { return m_pDx9; }
 	void SetDx9( CDirectX9& Dx9) { m_pDx9 = &Dx9; }
     //DirectX11
-	CDirectX11* GetDx11() { return m_pDx11; }
+	CDirectX11* GetDx11()		   { return m_pDx11; }
 	void SetDx11(CDirectX11& Dx11) { m_pDx11 = &Dx11; }
     //ウィンドウハンドル
-    HWND GetWnd() { return m_hWnd; }
+    HWND GetWnd()			{ return m_hWnd; }
     void SetWnd(HWND m_wnd) { m_hWnd = m_wnd; }
 	//読み込み回数制限フラグ
 	bool GetIsDataLoaded() { return m_IsDataLoaded; }
 	//ターン数
 	int GetRemainingTurn() { return m_Turn; }
 	//スタミナゲージの幅
-	float GetStaminaWidth() { return m_GageWidth; }
+	float GetStaminaWidth()			   { return m_GageWidth; }
 	void  SetStaminaWidth(float width) { m_GageWidth = width; }
+	//ユーザー名
+	std::wstring GetName()			{ return m_UserName; } //wstring型
+	std::string GetStringName()		{ return CUtility::GetInstance().WstringToString(m_UserName); } //string型
+	void SetName(std::wstring name) { m_UserName = name; }
 	//休息フラグ
-	bool GetRestFlag() { return m_Rest; }
+	bool GetRestFlag()			{ return m_Rest; }
 	void SetRestFlag(bool rest) { m_Rest = rest; }
 	//役割
-	enRoleList GetRole() { return m_RoleList; }
+	enRoleList GetRole()		  { return m_RoleList; }
 	void SetRole(enRoleList role) { m_RoleList = role; }
 	//勝敗
-	enBattleResultList GetBattleResult() { return m_BattleResult; }
+	enBattleResultList GetBattleResult()			  { return m_BattleResult; }
 	void SetBattleResult( enBattleResultList result ) { m_BattleResult = result; }
 
 private:
@@ -150,6 +157,12 @@ private:
     CDirectX9*  m_pDx9;
 	//DirectX11
     CDirectX11* m_pDx11;  
+	//残りターン数
+	int         m_Turn;
+	//ユーザー名
+	std::wstring m_UserName;
+	//スタミナゲージの幅
+	float m_GageWidth;
 
 	//----列挙型----
 	//役割リスト
@@ -157,19 +170,9 @@ private:
 	//勝敗リスト
 	enBattleResultList m_BattleResult;
 
-	//残りターン数
-	int         m_Turn;
-
-	// =======================
-	// フラグ
-	// =======================		
+	//----列挙型----
 	//休息を選択したかのフラグ
 	bool m_Rest;
 	//データ読み込みが初回かどうかのフラグ
 	bool m_IsDataLoaded;
-
-
-	//スタミナゲージの幅
-	float m_GageWidth;
-
 };

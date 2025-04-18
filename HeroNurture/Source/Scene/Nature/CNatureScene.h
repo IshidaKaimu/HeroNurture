@@ -38,34 +38,48 @@ namespace Constant_NatureScene
 	const D3DXVECTOR3 CAMERAPOS_KAITO = { 0.0, 5.0, -4.5 };
 	const D3DXVECTOR3 CAMERALOOK_KAITO = { 0.0, 5.0, 0.0 };
 
-	//----UI情報(_N = 育成シーンで用いることを示す)----
+	//----UI情報----
 	//パラメータ背景
-	constexpr float PARAMBACK_POSX = 330.0f; //X座標
-	constexpr float PARAMBACK_POSY = 410.0f; //Y座標
+	constexpr float PARAMBACK_POSX = 330.0f;			    //X座標
+	constexpr float PARAMBACK_POSY = 410.0f;			    //Y座標
 	const D3DXVECTOR3 PARAMBACK_SCALE = { 0.8f,0.8f,0.8f }; //拡縮
 	//トレーニングUI
-	constexpr float   TRANING_POSX = 300.0f; //X座標
-	constexpr float   TRANING_POSY = 580.0f; //Y座標
-	constexpr float   TRANING_INTERVAL = 180.0f; //配置間隔
+	constexpr float   TRANING_POSX = 200.0f;		      //X座標
+	constexpr float   TRANING_POSY = 580.0f;		      //Y座標
+	constexpr float   TRANING_INTERVAL = 180.0f;	      //配置間隔
 	const D3DXVECTOR3 TRANING_SCALE = { 0.5f,0.5f,0.5f }; //拡縮
 	//数値
-	constexpr float PARAMVALUE_POSX = 425.0f; //X座標
-	constexpr float PARAMVALUE_POSY = 430.0f; //Y座標
+	constexpr float PARAMVALUE_POSX = 425.0f;	  //X座標
+	constexpr float PARAMVALUE_POSY = 430.0f;	  //Y座標
 	constexpr float PARAMVALUE_INTERVAL = 150.0f; //配置間隔
 	//ランク
-	constexpr float RANK_POSX = 350.0f; //X座標
-	constexpr float RANK_POSY = 430.0f; //Y座標
+	constexpr float RANK_POSX = 350.0f;     //X座標
+	constexpr float RANK_POSY = 430.0f;     //Y座標
 	constexpr float RANK_INTERVAL = 150.0f; //配置間隔
 	//スタミナゲージ
-	const D3DXVECTOR3 STAMINA_POS = { 670.0f, 7.0f, 0.0f }; //ゲージ・ゲージ背景座標
+	const D3DXVECTOR3 STAMINA_POS = { 670.0f, 7.0f, 0.0f };		 //ゲージ・ゲージ背景座標
 	const D3DXVECTOR3 STAMINAFRAME_POS = { 575.0f, 0.0f, 0.0f }; //ゲージ・ゲージ背景座標
 	//ターン数背景
 	const D3DXVECTOR3 TURNBACK_POS = { 0.0f, 0.0f, 0.0f };
 	//共通
 	const D3DXVECTOR3 BASIC_SCALE = { 1.0f, 1.0f, 1.0f }; //拡縮
-	const D3DXVECTOR2 BASIC_DISPLAY = { 1.0f,1.0f };
+	const D3DXVECTOR2 BASIC_DISPLAY = { 1.0f,1.0f };	  //幅
 	//位置の補正を入れる桁数
-	constexpr int   CORRECTION_DIGIT = 3;
+	constexpr int CORRECTION_DIGIT = 3;
+	//失敗率背景
+	const D3DXVECTOR3 FAILUREBACK_POS   = { 30.0f, 350.0f, 0.0f }; //座標
+	const D3DXVECTOR3 FAILUREBACK_SCALE = { 0.7f, 0.7f, 0.7f };	   //拡縮
+	const D3DXVECTOR2 FAILUREBACK_DISP  = { 1.0f, 1.0f };		   //幅
+	constexpr float   FAILUREBACK_ALPHA = 1.0f;					   //α値
+	//失敗率
+	const D3DXVECTOR3 FAILURERATE_POS   = { 100.0f, 420.0f, 0.0f };  //座標
+	//「失敗率」テキスト
+	const D3DXVECTOR3 FAILURETEXT_POS   = { 50.0f, 360.0f, 0.0f };  //座標
+
+
+	//失敗率基準値
+	constexpr int SAFE = 30;	//安全
+	constexpr int ANXIETY = 70; //警告
 
 	//----スタミナゲージ----
 	//スタミナの最大値
@@ -145,6 +159,9 @@ public:
 	//各トレーニングUIの初期設定
 	void UIInit(std::unique_ptr<CUIObject>& traning,float x, float y, float interval, D3DXVECTOR3 scale, int no);
 
+	//各失敗率背景の初期設定
+	void FailureRateBackInit(std::unique_ptr<CUIObject>& back, D3DXVECTOR3 pos);
+
 	// =======================
 	// パラメータ関連関数
 	// =======================		
@@ -203,6 +220,12 @@ public:
 	float m_GageWidth;
 	//ターン数の背景
 	std::unique_ptr<CUIObject> m_pTurnBack;
+	//失敗率背景(30%以下)
+	std::unique_ptr<CUIObject> m_pSafeBack;
+	//失敗率背景(30%以上70%以下)
+	std::unique_ptr<CUIObject> m_pAnxietyBack;
+	//失敗率背景(70%以上)
+	std::unique_ptr<CUIObject> m_pDangerBack;
 
 	// =======================
 	// json関連

@@ -88,7 +88,6 @@ void CBattleResultScene::Initialize()
     default:
         break;
     }
-
 }
 
 //更新関数
@@ -105,7 +104,6 @@ void CBattleResultScene::Update()
     //モード選択画面のBGM停止
     CSoundManager::GetInstance()->Stop(CSoundManager::BGM_Battle);
 
-
     switch (SceneMng->GetBattleResult())
     {
     case CSceneManager::Win:
@@ -121,7 +119,6 @@ void CBattleResultScene::Update()
     default:
         break;
     }
-
 
     //シーン遷移(仮)
     if (KeyMng->IsDown(VK_RETURN))
@@ -155,7 +152,6 @@ void CBattleResultScene::Draw()
     //地面の描画
     m_pGround->Draw();
 
-
     switch (SceneMng->GetBattleResult())
     {
     case CSceneManager::Win:
@@ -169,7 +165,6 @@ void CBattleResultScene::Draw()
     default:
         break;
     }
-
 
     //UI
     DrawUI();

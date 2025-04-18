@@ -43,14 +43,9 @@ void CTitleScene::Create()
     //カイト
     m_pKaito = std::make_unique<CKaito>();
 
-    //json
-    m_pJson = std::make_unique<CJson>();
-
     //----UI----
-    //タイトル背景
-    m_pTitleBack = std::make_unique<CUIObject>();
-    //タイトル指示テキスト背景
-    m_pTitleInfoBack = std::make_unique<CUIObject>();
+    //選択矢印
+    m_pSelectArrow = std::make_unique<CUIObject>();
 }
 
 void CTitleScene::Releace()
@@ -60,25 +55,25 @@ void CTitleScene::Releace()
 
 void CTitleScene::LoadData()
 {
-    CMeshManager* MMng = CMeshManager::GetInstance();
+    CMeshManager* MeshMng = CMeshManager::GetInstance();
+    CUIManager* UiMng = &CUIManager::GetInstance();
     //----スタティックメッシュ----
-    m_pSky->AttachMesh(CMeshManager::GetMesh(CMeshManager::Sky));      //空
-    m_pGround->AttachMesh(CMeshManager::GetMesh(CMeshManager::Ground));//地面
+    m_pSky->AttachMesh(MeshMng->GetMesh(CMeshManager::Sky));      //空
+    m_pGround->AttachMesh(MeshMng->GetMesh(CMeshManager::Ground));//地面
 
     //----タイトル画面に表示するヒーローのメッシュ設定----
     m_pYui->LoadMeshData();  //ユイ
     m_pKaito->LoadMeshData();//カイト
 
     //----UI----
-    m_pTitleBack->AttachSprite(CUIManager::GetSprite(CUIManager::TitleBack));
-    m_pTitleInfoBack->AttachSprite(CUIManager::GetSprite(CUIManager::TitleInfoBack));
+    m_pSelectArrow->AttachSprite(UiMng->GetSprite(CUIManager::SelectArrow)); //選択肢矢印
 }
 
 void CTitleScene::Initialize()
 {
     //カメラの初期位置
-    m_pCamera->SetPos(5.0f, 4.0f, -5.0f);
-    m_pCamera->SetLook(0.0f, 4.0f, 0.0f);
+    m_pCamera->SetPos(CAM_POS);
+    m_pCamera->SetLook(CAM_LOOK);
 
     //どちらのヒーローを表示するか、乱数で設定
     m_HeroNo = CUtility::GetInstance().GenerateRandomValue(0,1);
@@ -88,13 +83,22 @@ void CTitleScene::Initialize()
     {
     case 0:
         m_pYui->Initialize();
+        m_pYui->SetPosition(YUI_POS);
+        m_pYui->SetRotation(YUI_ROT);
         break;
     case 1:
         m_pKaito->Initialize();
+        m_pKaito->SetPosition(KAITO_POS);
+        m_pKaito->SetRotation(KAITO_ROT);
         break;
     default:
         break;
     }
+
+    //選択肢矢印の初期設定
+    m_pSelectArrow->SetPosition(SELECTARROW_POS);                       //座標
+    m_pSelectArrow->SetScale(SELECTARROW_SCALE);                        //拡縮
+    m_pSelectArrow->SetDisplay(SELECTARROW_DISP.x, SELECTARROW_DISP.y); //幅
 }
 
 //更新関数
@@ -112,6 +116,9 @@ void CTitleScene::Update()
     //フェードイン処理
     if (!FadeIn()) { return; }
 
+    //選択矢印の動き
+    MoveArrow();
+
     //シーン遷移(仮)
     if (KeyMng->IsDown(VK_RETURN))
     {
@@ -125,8 +132,19 @@ void CTitleScene::Update()
     //フェードアウト処理
     if (m_SceneTransitionFlg && FadeOut()) 
     {
-        SceneMng->LoadCreate(CSceneManager::Login);
+        switch (m_SelectNo)
+        {
+        case 0: SceneMng->LoadCreate(CSceneManager::CreateAcount); break;
+        case 1: SceneMng->LoadCreate(CSceneManager::Login);        break;
+        case 2: DestroyWindow(SceneMng->GetWnd());                 break;
+        default:                                                   break;
+        }
     }
+
+    #ifdef DEBUG
+        //デバッグ処理
+        Debug();
+    #endif
 }
 
 void CTitleScene::Draw()
@@ -159,13 +177,25 @@ void CTitleScene::Draw()
     DrawUI();
 }
 
-//イージング
-float CTitleScene::Easing(float x)
+void CTitleScene::Debug()
 {
-    const float c1 = 1.70158f;
-    const float c3 = c1 + 1.0f;
+#ifdef DEBUG
+    ImGui::Begin(JAPANESE("カメラ"));
+    ImGui::InputFloat3(JAPANESE("カメラ座標"), m_CamPos);
+    ImGui::InputFloat3(JAPANESE("注視点"), m_CamLook);
+    ImGui::InputFloat3(JAPANESE("カイト座標"), m_KaitoPos);
+    ImGui::InputFloat3(JAPANESE("ユイ座標"), m_YuiPos);
+    ImGui::InputFloat3(JAPANESE("カイト回転"), m_KaitoRot);
+    ImGui::InputFloat3(JAPANESE("ユイ回転"), m_YuiRot);
+    //CCameraManager::GetInstance().SetPos(m_CamPos);
+    //CCameraManager::GetInstance().SetLook(m_CamLook);
+    m_pKaito->SetPosition(m_KaitoPos);
+    m_pYui->SetPosition(m_YuiPos);
+    m_pKaito->SetRotation(m_KaitoRot);
+    m_pYui->SetRotation(m_YuiRot);
+    ImGui::End();
 
-    return c3 * x * x * x - c1 * x * x;
+#endif // DEBUG
 }
 
 //タイトル画面の描画
@@ -173,44 +203,71 @@ void CTitleScene::DrawUI()
 {
     WriteText* Text = WriteText::GetInstance();
 
-    //タイトル背景UI初期設定
-    m_pTitleBack->SetPosition(260.0f, 200.0f,0.0f);
-    m_pTitleBack->SetScale(1.5f, 0.8f, 1.5f);
-    m_pTitleBack->SetDisplay(1.0f, 1.0f);
-    m_pTitleBack->SetAlpha(0.9f);
-    //タイトル指示テキスト背景
-    m_pTitleInfoBack->SetPosition(420.0f, 445.0f, 0.0f);
-    m_pTitleInfoBack->SetScale(1.0f, 1.0f, 1.0f);
-    m_pTitleInfoBack->SetDisplay(1.0f, 1.0f);
-    m_pTitleInfoBack->SetAlpha(0.9f);
+    //選択矢印
+    m_pSelectArrow->SetPosition(SELECTARROW_POS.x + m_MoveArrow, SELECTARROW_POS.y + (SELECT_INTERVAL * m_SelectNo), SELECTARROW_POS.z);
 
-    //タイトル背景描画
-    m_pTitleBack->Draw();
-    //タイトル指示テキスト背景描画
-    m_pTitleInfoBack->Draw();
+    //選択矢印の描画
+    m_pSelectArrow->Draw();
 
-    Text->Draw_Text(L"HeroNature", WriteText::B_Big, D3DXVECTOR2(305.0f, 165.0f));   //タイトル
-    Text->Draw_Text(L"Press Enter", WriteText::B_Small, D3DXVECTOR2(480.0f, 450.0f)); //指示
+    //タイトル
+    Text->Draw_Text(L"HeroNature", WriteText::B_Big, D3DXVECTOR2(TITLE_POS)); 
+    //「アカウント作成」テキスト
+    Text->Draw_Text(L"アカウント作成", WriteText::Select, D3DXVECTOR2(SELECT_POS));
+    //「ログイン」テキスト
+    Text->Draw_Text(L"ログイン", WriteText::Select, D3DXVECTOR2(SELECT_POS.x,SELECT_POS.y + SELECT_INTERVAL));
+    //「ゲーム終了」テキスト
+    Text->Draw_Text(L"ゲーム終了", WriteText::Select, D3DXVECTOR2(SELECT_POS.x,SELECT_POS.y + SELECT_INTERVAL*2));
 }
 
-//wstringをstringに変換
-std::string CTitleScene::WstringToString(std::wstring owstring)
+//矢印の動き
+void CTitleScene::MoveArrow()
 {
-    //wstringからSJIS
-    int iBufferSize = 
-        WideCharToMultiByte( CP_OEMCP, 0, owstring.c_str(), -1, (char * )NULL, 0, NULL, NULL );
+    CKeyManager* KeyMng = &CKeyManager::GetInstance();
+    //選択肢移動
+    if (KeyMng->IsDown(VK_DOWN))
+    {
+        if (m_SelectNo < 2)
+        {
+            m_SelectNo++;
+        }
+        else
+        {
+            m_SelectNo = 2;
+        }
+    }
 
-    //バッファの取得
-    CHAR* cpMultiByte = new CHAR[ iBufferSize ];
+    if (KeyMng->IsDown(VK_UP))
+    {
+        if (m_SelectNo > 0)
+        {
+            m_SelectNo--;
+        }
+        else
+        {
+            m_SelectNo = 0;
+        }
+    }
 
-    //wstringからSJIS
-    WideCharToMultiByte(CP_OEMCP, 0, owstring.c_str(), -1, cpMultiByte, iBufferSize, NULL, NULL);
 
-    //stringの生成
-    std::string oRet( cpMultiByte, cpMultiByte + iBufferSize -1 );
+    if (m_MoveArrow <= SELECTARROW_RANGE && !m_SwitchArrowFlag)
+    {
+        m_MoveArrow += 0.1f;
+    }
+    else
+    {
+        m_SwitchArrowFlag = true;
+    }
 
-    //バッファの破棄
-    delete [] cpMultiByte;
+    if (m_SwitchArrowFlag)
+    {
+        if (m_MoveArrow >= 0.0f)
+        {
+            m_MoveArrow -= 0.1f;
+        }
+        else
+        {
+            m_SwitchArrowFlag = false;
+        }
+    }
 
-    return (oRet);
 }
