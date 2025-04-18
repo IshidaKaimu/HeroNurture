@@ -415,11 +415,16 @@ void CNatureScene::DrawNatureUI(
 //各ヒーローのデータ読み込み
 void CNatureScene::LoadHeroData( const std::string& heroname )
 {
+    CSceneManager* SceneMng = CSceneManager::GetInstance();
+
+    //設定されているユーザー名の取得
+    std::string UserName = SceneMng->GetStringName();
+
     //読み込むファイルのパス
     //初回の読み込み時に読み込む初期ステータスファイル
-    std::string InitFilePath = "Data\\Hero\\HeroData";
+    std::string InitFilePath = "Data\\Acount\\" + UserName + "\\HeroData";
     //パラメータ情報更新時に読み込むファイル
-    std::string ParamFilePath = "Data\\Hero\\Parameter\\" + heroname;
+    std::string ParamFilePath = "Data\\Acount\\" + UserName + "\\Parameter\\" + heroname;
 
     //jsonに保存されたデータの読み込み
     //読み込み回数に応じて読み込むファイルを変える
@@ -485,8 +490,13 @@ void CNatureScene::UIInit(std::unique_ptr<CUIObject>& ui, float x, float y, floa
 //ヒーローごとのパラメータ書き込み
 void CNatureScene::SaveParam()
 {
+    CSceneManager* SceneMng = CSceneManager::GetInstance();
+
+    //設定されているユーザー名の取得
+    std::string UserName = SceneMng->GetStringName();
+
     //トレーニング実行時にパラメータ情報を書き込むファイルの階層
-    std::string ParamFileHierarchy = "Data\\Hero\\Parameter\\";
+    std::string ParamFileHierarchy = "Data\\Acount\\" + UserName + "\\Parameter\\";
     //セットされたヒーローのパラメータ情報の書き込み
     m_pJson->SaveNatureData(m_pHero->GetHeroName(), m_ParamWriter, ParamFileHierarchy);
 }

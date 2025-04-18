@@ -133,7 +133,7 @@ void CJson::SaveResult(const std::string& heroname, json& jsondata)
     CHeroManager* HeroMng = &CHeroManager::GetInstance();
 
     //育成結果を保存するファイルの階層
-    std::string SaveHierarchy = "Data\\Hero\\Result\\";
+    std::string SaveHierarchy = "Data\\Acount\\Hero\\Result\\";
 
     //書き込む情報の格納
     //----パラメータ----
@@ -160,7 +160,7 @@ void CJson::SaveBattleData(json& data, json& writer, int selectno)
     CHeroManager* HeroMng = &CHeroManager::GetInstance();
 
     //バトルに使用するデータを保存するファイルの階層
-    std::string SaveHierarchy = "Data\\Hero\\BattleData\\";
+    std::string SaveHierarchy = "Data\\Acount\\Hero\\BattleData\\";
 
     //書き込む情報
     for (const auto& battledata : data)

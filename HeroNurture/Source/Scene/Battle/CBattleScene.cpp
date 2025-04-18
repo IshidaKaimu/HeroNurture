@@ -300,9 +300,15 @@ void CBattleScene::Debug()
 //バトルに使用するデータの読み込み
 void CBattleScene::LoadBattleData()
 {
+	CSceneManager* SceneMng = CSceneManager::GetInstance();
+
+	//設定されているユーザー名の取得
+	std::string UserName = SceneMng->GetStringName();
+
+
 	//読み込むファイルのパス
-	std::string BattleParamFilePath = "Data\\Hero\\BattleData\\BattleParam";//バトルに使用するパラメータ
-	std::string EnemyParamFilePath = "Data\\Hero\\BattleData\\EnemyParam";  //敵のパラメータ
+	std::string BattleParamFilePath = "Data\\Acount\\"+ UserName +"\\BattleData\\BattleParam";//バトルに使用するパラメータ
+	std::string EnemyParamFilePath = "Data\\Acount\\" + UserName + "\\BattleData\\EnemyParam";  //敵のパラメータ
 
 	//バトルに使用するデータのファイルを読み込み
 	if (!m_pJson->Load(m_BattleData, BattleParamFilePath)) { return; }

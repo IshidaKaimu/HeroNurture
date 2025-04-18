@@ -68,8 +68,6 @@ public:
 	void Draw()		  override;
 
 private:
-	////トレーニングごとのアニメーション
-	//void TraningAnimation();
 	//パラメータが上昇していたら配列にテキストを追加する処理
 	void AddText();
 	//配列に既に追加している情報ではないかの確認

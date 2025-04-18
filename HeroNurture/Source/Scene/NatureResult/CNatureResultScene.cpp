@@ -13,9 +13,9 @@
 #include <cmath>
 #include <fstream>
 #include <sstream>
+
 //’è”‚Ì–¼‘O‹óŠÔ
 using namespace Constant_NatureResultScene;
-
 
 CNatureResultScene::CNatureResultScene()
     : m_pCamera(&CCameraManager::GetInstance())

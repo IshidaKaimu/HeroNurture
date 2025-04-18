@@ -45,6 +45,7 @@ public:
 		AttackCover,        //攻撃アイコンに被せる画像
 		UniqueGage,		    //ユニークゲージ
 		Arrow,              //矢印
+		SelectArrow,		//選択肢矢印
 		NameSpace,			//名前入力スペース
 		Max,
 	};

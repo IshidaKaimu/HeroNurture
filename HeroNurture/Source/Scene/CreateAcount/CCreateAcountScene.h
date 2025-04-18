@@ -1,9 +1,9 @@
 #include "Scene\CSceneBase.h"					//シーンベースクラス
 #include "Camera\CameraManager\CCameraManager.h"//カメラマネージャクラス
 #include "WriteText\WriteText.h"				//テキスト描画クラス
-#include <filesystem>
 #include <memory>
 #include <Windows.h>
+#include <filesystem>
 
 // =======================
 // 前方宣言
@@ -17,29 +17,29 @@ class CUtility;
 // =======================
 // 定数宣言
 // =======================
-namespace Constant_LoginScene
+namespace Constant_CreateAcountScene
 {
 	//名前入力スペースの位置
-	static D3DXVECTOR3 NAMESPACE_POS   = { 300.0f,300.0f,0.0f };
+	static D3DXVECTOR3 NAMESPACE_POS = { 300.0f,300.0f,0.0f };
 	//名前入力スペースのスケール
 	static D3DXVECTOR3 NAMESPACE_SCALE = { 0.5f, 0.5f, 1.0f };
 	//名前入力スペースの幅
-	static D3DXVECTOR2 NAMESPACE_DISP  = { 1.0f,1.0f };
+	static D3DXVECTOR2 NAMESPACE_DISP = { 1.0f,1.0f };
 	//名前入力開始位置
-	static D3DXVECTOR3 NAME_STARTPOS   = { 320.0f, 320.0f, 0.0f };
+	static D3DXVECTOR3 NAME_STARTPOS = { 320.0f, 320.0f, 0.0f };
 	//名前最大文字数
-	static const int NAME_MAXLENGTH    = 8;
+	static const int NAME_MAXLENGTH = 8;
 }
 
 //=====================================
-// ログインシーンクラス
+// アカウント作成シーンクラス
 //=====================================
-class CLoginScene
+class CCreateAcountScene
 	:public CSceneBase
 {
 public:
-	CLoginScene();
-	~CLoginScene();
+	CCreateAcountScene();
+	~CCreateAcountScene();
 
 	//構築関数
 	void Create()	  override;
@@ -55,30 +55,29 @@ public:
 	void Draw()		  override;
 
 private:
-	//文字の動き
-	float Easing(float x);
-	//アカウント名入力処理
-	void  InputName();
-	//UIの描画
-	void DrawUI();
 
-	//wstringからstringへの変換
-	std::string WstringToString(std::wstring owstring);
+	//カメラクラス
+	CCameraManager* m_pCamera;
 
-private:
-	//存在の有無を確認したいフォルダのパス
-	std::filesystem::path m_TargetPath;
+	//----フォルダ----
+	//コピー元ファイルのパス
+	std::filesystem::path m_SorceDir;
+	//コピー先ファイルのパス
+	std::filesystem::path m_DestDir;
 
 	// =======================
 	// オブジェクトクラス
 	// =======================		
 	//----UI----
-	//ユーザー名
+	//ユーザー名入力
 	std::wstring m_UserName;
 	//ユーザー名入力スペース
 	std::unique_ptr<CUIObject> m_pNameSpace;
 
 	//Jsonクラス
 	std::unique_ptr<CJson> m_pJson;
+
+	//表示ヒーロー
+	int m_HeroNo;
 
 };

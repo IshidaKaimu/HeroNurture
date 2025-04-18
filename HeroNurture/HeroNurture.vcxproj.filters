@@ -339,6 +339,7 @@
     <ClInclude Include="Source\Scene\BattleResult\CBattleResultScene.h" />
     <ClInclude Include="Source\Rank\CRank.h" />
     <ClInclude Include="Source\Scene\Login\CLoginScene.h" />
+    <ClInclude Include="Source\Scene\CreateAcount\CCreateAcountScene.h" />
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="Source\BoundingSphere\CBoundingSphere.cpp">
@@ -506,6 +507,7 @@
     <ClCompile Include="Source\Scene\BattleResult\CBattleResultScene.cpp" />
     <ClCompile Include="Source\Rank\CRank.cpp" />
     <ClCompile Include="Source\Scene\Login\CLoginScene.cpp" />
+    <ClCompile Include="Source\Scene\CreateAcount\CCreateAcountScene.cpp" />
   </ItemGroup>
   <ItemGroup>
     <None Include="Source\ImGui\.editorconfig">
