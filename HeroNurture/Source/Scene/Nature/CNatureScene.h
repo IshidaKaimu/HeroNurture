@@ -32,11 +32,11 @@ namespace Constant_NatureScene
 {
 	//----各ヒーローごとのカメラ位置/注視点---
 	//ユイ
-	const D3DXVECTOR3 CAMERAPOS_YUI = { 0.0, 5.0, -4.0 };
-	const D3DXVECTOR3 CAMERALOOK_YUI = { 0.0, 5.0, 0.0 };
+	const D3DXVECTOR3 CAMERAPOS_YUI  = { 0.0, 5.0, -4.0 }; //座標
+	const D3DXVECTOR3 CAMERALOOK_YUI = { 0.0, 5.0, 0.0 };  //注視点
 	//カイト
-	const D3DXVECTOR3 CAMERAPOS_KAITO = { 0.0, 5.0, -4.5 };
-	const D3DXVECTOR3 CAMERALOOK_KAITO = { 0.0, 5.0, 0.0 };
+	const D3DXVECTOR3 CAMERAPOS_KAITO  = { 0.0, 5.0, -4.5 }; //座標
+	const D3DXVECTOR3 CAMERALOOK_KAITO = { 0.0, 5.0, 0.0 };  //注視点
 
 	//----UI情報----
 	//パラメータ背景
@@ -53,17 +53,17 @@ namespace Constant_NatureScene
 	constexpr float PARAMVALUE_POSY = 430.0f;	  //Y座標
 	constexpr float PARAMVALUE_INTERVAL = 150.0f; //配置間隔
 	//ランク
-	constexpr float RANK_POSX = 350.0f;     //X座標
-	constexpr float RANK_POSY = 430.0f;     //Y座標
+	constexpr float RANK_POSX	  = 350.0f; //X座標
+	constexpr float RANK_POSY	  = 430.0f; //Y座標
 	constexpr float RANK_INTERVAL = 150.0f; //配置間隔
 	//スタミナゲージ
-	const D3DXVECTOR3 STAMINA_POS = { 670.0f, 7.0f, 0.0f };		 //ゲージ・ゲージ背景座標
-	const D3DXVECTOR3 STAMINAFRAME_POS = { 575.0f, 0.0f, 0.0f }; //ゲージ・ゲージ背景座標
+	const D3DXVECTOR3 STAMINA_POS	   = { 670.0f, 7.0f, 0.0f }; //ゲージ・ゲージ背景座標
+	const D3DXVECTOR3 STAMINAFRAME_POS = { 575.0f, 0.0f, 0.0f }; //ゲージ枠座標
 	//ターン数背景
-	const D3DXVECTOR3 TURNBACK_POS = { 0.0f, 0.0f, 0.0f };
+	const D3DXVECTOR3 TURNBACK_POS = { 0.0f, 0.0f, 0.0f };//座標
 	//共通
-	const D3DXVECTOR3 BASIC_SCALE = { 1.0f, 1.0f, 1.0f }; //拡縮
-	const D3DXVECTOR2 BASIC_DISPLAY = { 1.0f,1.0f };	  //幅
+	const D3DXVECTOR3 BASIC_SCALE   = { 1.0f, 1.0f, 1.0f }; //拡縮
+	const D3DXVECTOR2 BASIC_DISPLAY = { 1.0f,1.0f };	    //幅
 	//位置の補正を入れる桁数
 	constexpr int CORRECTION_DIGIT = 3;
 	//失敗率背景
@@ -72,9 +72,9 @@ namespace Constant_NatureScene
 	const D3DXVECTOR2 FAILUREBACK_DISP  = { 1.0f, 1.0f };		   //幅
 	constexpr float   FAILUREBACK_ALPHA = 1.0f;					   //α値
 	//失敗率
-	const D3DXVECTOR3 FAILURERATE_POS   = { 100.0f, 420.0f, 0.0f };  //座標
+	const D3DXVECTOR3 FAILURERATE_POS   = { 95.0f, 430.0f, 0.0f };//座標
 	//「失敗率」テキスト
-	const D3DXVECTOR3 FAILURETEXT_POS   = { 50.0f, 360.0f, 0.0f };  //座標
+	const D3DXVECTOR3 FAILURETEXT_POS   = { 55.0f, 370.0f, 0.0f }; //座標
 
 
 	//失敗率基準値
