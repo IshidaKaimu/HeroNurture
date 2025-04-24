@@ -29,8 +29,6 @@ CBattleScene::CBattleScene()
 	, m_EnemyHeroData     ()
 	, m_HpWidth			  (1.0f)
 	, m_EnemyHpWidth      (1.0f)
-	, m_UniqueGageCnt     (0)
-	, m_EnemyUniqueGageCnt(0)
 	, m_BattleTurn        ()
 	, m_IsHeroTurn        ()
 	, m_CurrentTurn		  ()
@@ -222,20 +220,15 @@ void CBattleScene::Draw()
 	//空
 	m_pSky->Draw();
 
-
 	CSceneManager::GetInstance()->GetDx11()->SetDepth(false);
-	//----固有攻撃ゲージの描画----
-	//自分
-	ChangeUniqueGage(m_pUniqueGages,m_pHero->GetUniqueGage(), UNIQUEGAGE_POS,80.0f,m_UniqueGageCnt);
-	DrawUniqueGage(m_pUniqueGages);
-	//敵
-	ChangeUniqueGage(m_pEnemyUniqueGages,m_pEnemyHero->GetUniqueGage(), ENEMY_UNIQUEGAGE_POS, -80.0f,m_EnemyUniqueGageCnt);
-	DrawUniqueGage(m_pEnemyUniqueGages);
+	
 	//各Hpゲージの描画
 	DrawHpGage();
+
 	//自分、敵それぞれのターンの描画処理
 	if (m_SelectAttack)
 	{
+		//敵のターンでなければ
 		if (!m_CurrentTurn) { DrawHeroTurn(); }
 		else { DrawEnemyHeroTurn(); }
 	}
@@ -397,42 +390,6 @@ void CBattleScene::HpGageAnim(std::unique_ptr<CUIObject>& gage, float hp, float 
 	gage->SetDisplay(width, 1.0f);
 }
 
-//固有攻撃ゲージの描画数変動
-void CBattleScene::ChangeUniqueGage(std::vector<std::unique_ptr<CUIObject>>& gages, int count, D3DXVECTOR2 pos, float interval, int& current)
-{
-	if (count == current) return;
-
-	//古いゲージを消去
-	gages.clear();
-
-	for (int i = 0; i < count; i++)
-	{
-		auto gage = std::make_unique<CUIObject>();
-		gage->AttachSprite(CUIManager::GetSprite(CUIManager::UniqueGage));
-		float xoffset = pos.x + (i * interval);
-		gage->SetPosition(xoffset, pos.y, 0.0f);
-		gage->SetScale(0.8f, 0.8f, 0.8f);
-		gage->SetDisplay(1.0f, 1.0f);
-		gages.push_back(std::move(gage));
-	}
-
-	//現在の表示数を更新
-	current = count;
-}
-
-//固有攻撃ゲージの描画
-void CBattleScene::DrawUniqueGage(std::vector<std::unique_ptr<CUIObject>>& gages)
-{
-	//固有攻撃ゲージ
-	for (const auto& gage : gages)
-	{
-		if (gage)
-		{
-			gage->Draw();
-		}
-	}
-}
-
 //行動選択フェーズ中の処理
 void CBattleScene::MoveSelect()
 {
@@ -514,8 +471,6 @@ void CBattleScene::Attack()
 				case CBattleScene::MagicAttack:
 					m_pEnemyHero->Damage(m_pHero->MagicAttack());
 					break;
-				case CBattleScene::Max:
-					break;
 				}
 			}
 		}
@@ -531,8 +486,6 @@ void CBattleScene::Attack()
 					break;
 				case CBattleScene::MagicAttack:
 					m_pHero->Damage(m_pEnemyHero->MagicAttack());
-					break;
-				case CBattleScene::Max:
 					break;
 				}
 			}

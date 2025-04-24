@@ -30,7 +30,7 @@ private:
 	~CRank();
 public:
 	//ƒ‰ƒ“ƒN‚Ì•\Ž¦
-	void DrawRank(float value, int typeno, float x, float y);
+	void DrawRank(float value, int typeno, D3DXVECTOR2 pos);
 
 private:
 	CRank();

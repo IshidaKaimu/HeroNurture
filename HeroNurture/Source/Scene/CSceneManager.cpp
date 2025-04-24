@@ -69,6 +69,7 @@ void CSceneManager::Update()
     if (ImGui::Button(JAPANESE("タイトル")))           { LoadCreate(enSceneList::Title); }
     if (ImGui::Button(JAPANESE("アカウント作成")))     { LoadCreate(enSceneList::CreateAcount); }
     if (ImGui::Button(JAPANESE("ログイン")))           { LoadCreate(enSceneList::Login); }
+    if (ImGui::Button(JAPANESE("モード選択")))         { LoadCreate(enSceneList::ModeSelect); }
     if (ImGui::Button(JAPANESE("ヒーロー選択")))       { LoadCreate(enSceneList::NatureHeroSelect); }
     if (ImGui::Button(JAPANESE("育成")))               { LoadCreate(enSceneList::Nature); }
     if (ImGui::Button(JAPANESE("修行")))               { LoadCreate(enSceneList::Training); }

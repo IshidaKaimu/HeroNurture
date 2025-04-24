@@ -385,7 +385,8 @@ void CYui::MagicAttackAnim(float vector)
 				Eff->Scale(hFireBall, 0.3f, 0.3f, 0.3f);
 				Eff->Rotate(hFireBall, 0.0f, 0.0f, D3DXToRadian(EffRoteZ));
 
-				if (m_EffCnt == 1) {
+				if (m_EffCnt == 1)
+				{
 					//火球SEの再生
 					CSoundManager::GetInstance()->PlaySE(CSoundManager::SE_FireBall);
 					CSoundManager::GetInstance()->Volume(CSoundManager::SE_FireBall, 100);
@@ -416,13 +417,6 @@ void CYui::MagicAttackAnim(float vector)
 			m_EffCnt = 0;
 		}
 	}
-}
-
-void CYui::UniqueAttackAnim()
-{
-	SetPosition(UNIQUE_POS_YUI);
-	SetScale(BATTLE_SCALE_YUI);
-	SetRotation(UNIQUE_ROTATE_YUI);
 }
 
 void CYui::DamageAnim(float vector)
@@ -525,14 +519,6 @@ float CYui::PowerAttack()
 float CYui::MagicAttack()
 {
 	return CHeroBase::MagicAttack();
-}
-
-//固有攻撃
-float CYui::UniqueAttack()
-{
-	float Damage = m_BattleParam.Magic * CUtility::GetInstance().GenerateRandomValue(2.0f, 2.5f);
-	m_UniqueGage -= 5;
-	return Damage;
 }
 
 //アニメーションに関する初期化

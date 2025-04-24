@@ -31,8 +31,6 @@ namespace Constant_NatureHeroSelectScene
 	const D3DXVECTOR2 SCENENAME_POS_NS = { 350.0f, -10.0f };
 	//ヒーロー名表示位置
 	const D3DXVECTOR2 HERONAME_POS_NS = { 350.0f,450.0f };
-	//指示テキスト表示位置
-	const D3DXVECTOR2 INFOTEXT_POS_NS = { 850.0f, 600.0f };
 }
 
 class CNatureHeroSelectScene

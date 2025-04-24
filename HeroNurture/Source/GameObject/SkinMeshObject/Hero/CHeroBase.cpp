@@ -4,14 +4,12 @@
 #include <fstream>
 #include <codecvt>
 
-
 CHeroBase::CHeroBase()	
 	: m_Param          ()
 	, m_pJson          ()
 	, m_UserName       ()
 	, m_BeforeParam	   ()
 	, m_Hp             ()
-	, m_UniqueGage     ()
 	, m_Correction	   (1.0f)
 	, m_Failure		   (false)
 	, m_MoveX		   ()
@@ -43,14 +41,12 @@ void CHeroBase::Draw()
 float CHeroBase::PowerAttack()
 {
 	float Damage = m_BattleParam.Power * CUtility::GetInstance().GenerateRandomValue(1.0f, 1.5f);
-	m_UniqueGage += 1;
 	return Damage;
 }
 
 float CHeroBase::MagicAttack()
 {
 	float Damage = m_BattleParam.Magic * CUtility::GetInstance().GenerateRandomValue(1.0f, 1.5f);
-	m_UniqueGage += 1;
 	return Damage;
 }
 

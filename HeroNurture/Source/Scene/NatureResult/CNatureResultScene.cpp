@@ -165,7 +165,7 @@ void CNatureResultScene::DrawResult()
     DrawParamUI(HeroMng->GetParam().Hp, 3);
 
     //ランクの描画
-    CRank::GetInstance().DrawRank(ParamTotal(), 1, RANK_POSX, RANK_POSY);
+    CRank::GetInstance().DrawRank(ParamTotal(), 1, RANK_POS);
 }
 
 //パラメータの合計値
@@ -187,6 +187,6 @@ void CNatureResultScene::DrawParamUI(float paramvalue, int no)
     CRank* Rank = &CRank::GetInstance();
 
     //----各パラメータのUIの描画(背景,値,ランク)----
-    Text->Draw_Text(std::to_wstring(static_cast<int>(paramvalue)), WriteText::Normal, D3DXVECTOR2(PARAMVALUE_POSX, PARAMVALUE_POSY + (PARAMVALUE_INTERVAL* no)));
-    Rank->DrawRank(paramvalue, 2, PARAMRANK_POSX, PARAMRANK_POSY + (PARAMRANK_INTERVAL * no));
+    Text->Draw_Text(std::to_wstring(static_cast<int>(paramvalue)), WriteText::Normal, D3DXVECTOR2(PARAMVALUE_POS.x, PARAMVALUE_POS.y + (PARAMVALUE_INTERVAL* no)));
+    Rank->DrawRank(paramvalue, 2, D3DXVECTOR2(PARAMRANK_POS.x, PARAMRANK_POS.y + (PARAMRANK_INTERVAL * no)));
 }

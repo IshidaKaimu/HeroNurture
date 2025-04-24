@@ -9,7 +9,7 @@ CRank::~CRank()
 }
 
 //ランクの描画
-void CRank::DrawRank(float value, int typeno, float x, float y)
+void CRank::DrawRank(float value, int typeno,D3DXVECTOR2 pos)
 {
     //各ランクの基準値の設定
     switch (typeno)
@@ -72,12 +72,12 @@ void CRank::DrawRank(float value, int typeno, float x, float y)
     //各ランクの描画
     switch (m_Rank)
     {
-    case S:Text->Draw_Text(L"S", TypeS, D3DXVECTOR2(x, y)); break;
-    case A:Text->Draw_Text(L"A", TypeA, D3DXVECTOR2(x, y)); break;
-    case B:Text->Draw_Text(L"B", TypeB, D3DXVECTOR2(x, y)); break;
-    case C:Text->Draw_Text(L"C", TypeC, D3DXVECTOR2(x, y)); break;
-    case D:Text->Draw_Text(L"D", TypeD, D3DXVECTOR2(x, y)); break;
-    case E:Text->Draw_Text(L"E", TypeE, D3DXVECTOR2(x, y)); break;
+    case S:Text->Draw_Text(L"S", TypeS, pos); break;
+    case A:Text->Draw_Text(L"A", TypeA, pos); break;
+    case B:Text->Draw_Text(L"B", TypeB, pos); break;
+    case C:Text->Draw_Text(L"C", TypeC, pos); break;
+    case D:Text->Draw_Text(L"D", TypeD, pos); break;
+    case E:Text->Draw_Text(L"E", TypeE, pos); break;
     default:break;
     }
 }

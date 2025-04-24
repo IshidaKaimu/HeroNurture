@@ -154,6 +154,8 @@ void CBattleHeroSelectScene::Update()
 
 void CBattleHeroSelectScene::Draw()
 {
+	WriteText* Text = WriteText::GetInstance();
+
 	//カメラの動作
 	m_pCamera->CameraUpdate();
 
@@ -162,6 +164,12 @@ void CBattleHeroSelectScene::Draw()
 
 	//矢印の描画
 	DrawArrow();
+
+	//操作方法指示バーの描画
+	DrawControlBar();
+	//操作方法指示「←→ 選択」テキストの描画
+	Text->Draw_Text(L"←→ 選択", WriteText::Control, SELECTTEXT_POS);
+
 }
 
 //デバッグ処理
@@ -175,7 +183,7 @@ void CBattleHeroSelectScene::DrawResultData()
 	CUtility* Utility = &CUtility::GetInstance();
 
 	//保存されている育成データの数と現在の選択番号を描画
-	Text->Draw_Text(std::to_wstring(m_SelectNo) + L"/", WriteText::Normal, Utility->PosCorrection(m_SelectNo,2,SELECTNO_POS.x, SELECTNO_POS.y));
+	Text->Draw_Text(std::to_wstring(m_SelectNo) + L"/", WriteText::Normal, Utility->PosCorrection(m_SelectNo,2,SELECTNO_POS));
 	Text->Draw_Text(std::to_wstring(m_ResultData.size()), WriteText::Normal, NATUREDATA_MAX_POS);
 
 	for (const auto& data : m_ResultData)
@@ -230,17 +238,17 @@ void CBattleHeroSelectScene::DrawSaveParameter(const json& jsondata, int number)
 			float ParamTotal = Power + Magic + Speed + Hp;
 
 			//各パラメータの描画
-			Text->Draw_Text(std::to_wstring(static_cast<int>(Power)), WriteText::Normal, D3DXVECTOR2(PARAMVALUE_POSX, PARAMVALUE_POSY));
-			Rank->DrawRank(Power, 2,PARAMRANK_POSX, PARAMRANK_POSY);
-			Text->Draw_Text(std::to_wstring(static_cast<int>(Magic)), WriteText::Normal, D3DXVECTOR2(PARAMVALUE_POSX, PARAMVALUE_POSY + PARAMVALUE_INTERVAL));
-			Rank->DrawRank(Magic, 2, PARAMRANK_POSX, PARAMRANK_POSY + PARAMRANK_INTERVAL);
-			Text->Draw_Text(std::to_wstring(static_cast<int>(Speed)), WriteText::Normal, D3DXVECTOR2(PARAMVALUE_POSX, PARAMVALUE_POSY + (PARAMVALUE_INTERVAL * 2)));
-			Rank->DrawRank(Speed, 2, PARAMRANK_POSX, PARAMRANK_POSY + (PARAMRANK_INTERVAL * 2));
-			Text->Draw_Text(std::to_wstring(static_cast<int>(Hp)), WriteText::Normal, D3DXVECTOR2(PARAMVALUE_POSX, PARAMVALUE_POSY + (PARAMVALUE_INTERVAL * 3)));
-			Rank->DrawRank(Hp, 2, PARAMRANK_POSX, PARAMRANK_POSY + (PARAMRANK_INTERVAL * 3));
+			Text->Draw_Text(std::to_wstring(static_cast<int>(Power)), WriteText::Normal, PARAMVALUE_POS);
+			Rank->DrawRank(Power, 2,PARAMRANK_POS);
+			Text->Draw_Text(std::to_wstring(static_cast<int>(Magic)), WriteText::Normal, D3DXVECTOR2(PARAMVALUE_POS.x, PARAMVALUE_POS.y + PARAMVALUE_INTERVAL));
+			Rank->DrawRank(Magic, 2, D3DXVECTOR2(PARAMRANK_POS.x, PARAMRANK_POS.y + PARAMRANK_INTERVAL));
+			Text->Draw_Text(std::to_wstring(static_cast<int>(Speed)), WriteText::Normal, D3DXVECTOR2(PARAMVALUE_POS.x, PARAMVALUE_POS.y + (PARAMVALUE_INTERVAL * 2)));
+			Rank->DrawRank(Speed, 2, D3DXVECTOR2(PARAMRANK_POS.x, PARAMRANK_POS.y + (PARAMRANK_INTERVAL * 2)));
+			Text->Draw_Text(std::to_wstring(static_cast<int>(Hp)), WriteText::Normal, D3DXVECTOR2(PARAMVALUE_POS.x, PARAMVALUE_POS.y + (PARAMVALUE_INTERVAL * 3)));
+			Rank->DrawRank(Hp, 2, D3DXVECTOR2(PARAMRANK_POS.x, PARAMRANK_POS.y + (PARAMRANK_INTERVAL * 3)));
 			
 			//育成ランクの描画
-			Rank->DrawRank(ParamTotal, 1, RANK_POSX, RANK_POSY);
+			Rank->DrawRank(ParamTotal, 1, RANK_POS);
 		}
 	}
 

@@ -330,23 +330,7 @@ LRESULT CALLBACK CMain::MsgProc(
 		//アプリケーションの終了をWindowsに通知する.
 		PostQuitMessage( 0 );
 		break;
-
-	case WM_KEYDOWN://キーボードが押されたとき.
-		//キー別の処理.
-		switch( static_cast<char>( wParam ) ) {
-		case VK_ESCAPE:	//ESCｷｰ.
-			if( MessageBox( nullptr,
-				_T( "ゲームを終了しますか？" ),
-				_T( "警告" ), MB_YESNO ) == IDYES )
-			{
-				//ウィンドウを破棄する.
-				DestroyWindow( hWnd );
-			}
-			break;
-		}
-		break;
 	}
-
 	//メインに返す情報.
 	return DefWindowProc( hWnd, uMsg, wParam, lParam );
 }
