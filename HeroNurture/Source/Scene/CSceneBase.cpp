@@ -2,6 +2,7 @@
 #include "Sprite3D\CSprite3D.h"
 #include "Sprite2D\CSprite2D.h"
 #include "Sprite2D\UIManager\CUIManager.h"
+#include "WriteText\WriteText.h"
 
 CSceneBase::CSceneBase()
     : m_Light     ()
@@ -22,6 +23,9 @@ CSceneBase::CSceneBase()
     m_pWhiteFade = std::make_unique<CUIObject>();
     m_pWhiteFade->AttachSprite(CUIManager::GetSprite(CUIManager::WhiteFade));
     m_pWhiteFade->SetAlpha(m_WhiteFadeAlpha);
+    //操作方法指示バー
+    m_pControlBar = std::make_unique<CUIObject>();
+    m_pControlBar->AttachSprite(CUIManager::GetSprite(CUIManager::ControlBar));
 }
 
 CSceneBase::~CSceneBase()
@@ -107,6 +111,25 @@ bool CSceneBase::FadeIn()
     m_pFade->SetAlpha(m_FadeAlpha);
 
     return false;
+}
+
+//操作方法指示バーテンプレートの描画
+void CSceneBase::DrawControlBar()
+{
+    WriteText* Text = WriteText::GetInstance();
+
+    //操作方法指示バーの設定
+    m_pControlBar->SetPosition(CONTROLBAR_POS);                     //座標
+    m_pControlBar->SetScale(CONTROLBAR_SCALE);                      //拡縮
+    m_pControlBar->SetDisplay(CONTROLBAR_DISP.x, CONTROLBAR_DISP.y);//幅
+
+    //操作方法指示バー描画
+    m_pControlBar->Draw();
+
+    //操作方法指示「Enter 決定」テキストの描画
+    Text->Draw_Text(L"Enter 決定", WriteText::Control, ENTERTEXT_POS);
+    //操作方法指示「Esc 戻る」テキストの描画
+    Text->Draw_Text(L"Esc 戻る", WriteText::Control, ESCAPETEXT_POS);
 }
 
 //白フェード関連の初期化

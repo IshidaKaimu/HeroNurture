@@ -40,27 +40,29 @@ namespace Constant_NatureScene
 
 	//----UI情報----
 	//パラメータ背景
-	constexpr float PARAMBACK_POSX = 330.0f;			    //X座標
-	constexpr float PARAMBACK_POSY = 410.0f;			    //Y座標
-	const D3DXVECTOR3 PARAMBACK_SCALE = { 0.8f,0.8f,0.8f }; //拡縮
+	const D3DXVECTOR3 PARAMBACK_POS   = { 330.0f,410.0f,0.0f }; //座標
+	const D3DXVECTOR3 PARAMBACK_SCALE = { 0.8f,0.8f,0.8f };   //拡縮
 	//トレーニングUI
-	constexpr float   TRANING_POSX = 200.0f;		      //X座標
-	constexpr float   TRANING_POSY = 580.0f;		      //Y座標
-	constexpr float   TRANING_INTERVAL = 180.0f;	      //配置間隔
-	const D3DXVECTOR3 TRANING_SCALE = { 0.5f,0.5f,0.5f }; //拡縮
+	const D3DXVECTOR3 TRANING_POS = { 200.0f,580.0f,0.0f };  //X座標
+	constexpr float   TRANING_INTERVAL = 180.0f;	         //配置間隔
+	const D3DXVECTOR3 TRANING_SCALE = { 0.5f,0.5f,0.5f };    //拡縮
 	//数値
-	constexpr float PARAMVALUE_POSX = 425.0f;	  //X座標
-	constexpr float PARAMVALUE_POSY = 430.0f;	  //Y座標
-	constexpr float PARAMVALUE_INTERVAL = 150.0f; //配置間隔
+	const D3DXVECTOR2 PARAMVALUE_POS = { 425.0f,430.0f };    //座標
+	constexpr float PARAMVALUE_INTERVAL = 150.0f;			 //配置間隔
 	//ランク
-	constexpr float RANK_POSX	  = 350.0f; //X座標
-	constexpr float RANK_POSY	  = 430.0f; //Y座標
-	constexpr float RANK_INTERVAL = 150.0f; //配置間隔
+	const D3DXVECTOR2 RANK_POS = { 350.0f,430.0f };     //座標
+	constexpr float RANK_INTERVAL = 150.0f;				      //配置間隔
 	//スタミナゲージ
 	const D3DXVECTOR3 STAMINA_POS	   = { 670.0f, 7.0f, 0.0f }; //ゲージ・ゲージ背景座標
 	const D3DXVECTOR3 STAMINAFRAME_POS = { 575.0f, 0.0f, 0.0f }; //ゲージ枠座標
 	//ターン数背景
-	const D3DXVECTOR3 TURNBACK_POS = { 0.0f, 0.0f, 0.0f };//座標
+	const D3DXVECTOR3 TURNBACK_POS = { 0.0f, 0.0f, 0.0f };  //座標
+	//ターン数
+	const D3DXVECTOR2 TURN_POS = { 180.0f,-10.0f };
+	//「残り」テキスト
+	const D3DXVECTOR2 REMAININGTEXT_POS = { 10.0f,-20.0f };
+	//「ターン」テキスト
+	const D3DXVECTOR2 TURNTEXT_POS = { 240.0f, -20.0f };
 	//共通
 	const D3DXVECTOR3 BASIC_SCALE   = { 1.0f, 1.0f, 1.0f }; //拡縮
 	const D3DXVECTOR2 BASIC_DISPLAY = { 1.0f,1.0f };	    //幅
@@ -157,7 +159,7 @@ public:
 	void SelectTraning();
 
 	//各トレーニングUIの初期設定
-	void UIInit(std::unique_ptr<CUIObject>& traning,float x, float y, float interval, D3DXVECTOR3 scale, int no);
+	void UIInit(std::unique_ptr<CUIObject>& traning, D3DXVECTOR3 pos, float interval, D3DXVECTOR3 scale, int no);
 
 	//各失敗率背景の初期設定
 	void FailureRateBackInit(std::unique_ptr<CUIObject>& back, D3DXVECTOR3 pos);

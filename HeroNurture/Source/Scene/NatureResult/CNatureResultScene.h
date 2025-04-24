@@ -38,26 +38,20 @@ namespace Constant_NatureResultScene
 	//カメラ注視点
 	const D3DXVECTOR3 CAMLOOK = { 2.0f, 5.0f, 3.0f };
 	//----育成評価描画関連----
-	//最終ランクX座標
-	constexpr float RANK_POSX = 900.0f;
-	//最終ランクY座標
-	constexpr float RANK_POSY = 30.0f;
+	//最終ランク
+	const D3DXVECTOR2 RANK_POS = { 900.0f,30.0f };
 	//パラメータランク配置開始地点X座標
-	constexpr float PARAMRANK_POSX = 885.0f;
-	//パラメータランク配置開始地点Y座標
-	constexpr float PARAMRANK_POSY = 225.0f;
+	const D3DXVECTOR2 PARAMRANK_POS    = { 885.0f,225.0f };
 	//各パラメータランク配置間隔
 	constexpr float PARAMRANK_INTERVAL = 130.0f;
 	//パラメータ背景座標
-	const D3DXVECTOR3 PARAMBACK_POS = { 840.0f, 205.0f, 0.0f };
+	const D3DXVECTOR3 PARAMBACK_POS   = { 840.0f, 205.0f, 0.0f };
 	//パラメータ背景拡縮
 	const D3DXVECTOR3 PARAMBACK_SCALE = { 1.1f, 1.1f , 1.1f };
 	//パラメータの値X座標
-	const float PARAMVALUE_POSX = 930.0f;
-	//パラメータの値Y座標
-	const float PARAMVALUE_POSY = 225.0f;
+	const D3DXVECTOR3 PARAMVALUE_POS  = { 930.0f,225.0f,0.0f };
 	//パラメータの値配置間隔
-	const float PARAMVALUE_INTERVAL = 130.0f;
+	constexpr float PARAMVALUE_INTERVAL = 130.0f;
 	//「育成ランク」テキスト座標
 	const D3DXVECTOR2 RESULTTEXT_POS = { 895.0f,0.0f };
 }

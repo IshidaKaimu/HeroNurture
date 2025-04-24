@@ -20,6 +20,7 @@ public:
 		ModeSelectLeft,     //モード選択シーン背景左
 		ModeSelectRight,	//モード選択シーン背景右
 		ModeSelectCover,    //モード選択シーン背景かぶせる画像
+		ControlBar,			//操作方法指示バー
 		ParamList,          //育成中のパラメータ表
 		ResultParamList,    //育成結果表示時のパラメータ表
 		PowerTraning,       //筋力トレーニング

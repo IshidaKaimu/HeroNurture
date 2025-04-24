@@ -75,14 +75,32 @@ void CLoginScene::Update()
         if (!m_UserName.empty() && std::filesystem::exists(m_TargetPath)) {
             //名前の登録
             SceneMng->SetName(m_UserName);
-            //モード選択シーンへ
+            //フェード開始
             m_SceneTransitionFlg = true;
         }
     }
+
+    //前の画面に戻る
+    if (KeyMng->IsDown(VK_ESCAPE))
+    {
+        //スタートSEの再生
+        CSoundManager::GetInstance()->PlaySE(CSoundManager::SE_Start);
+        CSoundManager::GetInstance()->Volume(CSoundManager::SE_Start, 40);
+
+        //選択番号を変更する
+        m_SelectNo = 1;
+        //フェード開始
+        m_SceneTransitionFlg = true;
+    }
+
     //フェードアウト処理
     if (m_SceneTransitionFlg && FadeOut())
     {
-        SceneMng->LoadCreate(CSceneManager::ModeSelect);
+        switch (m_SelectNo)
+        {
+        case 0: SceneMng->LoadCreate(CSceneManager::ModeSelect); break;
+        case 1: SceneMng->LoadCreate(CSceneManager::Title); break;
+        }
     }
 }
 
@@ -104,6 +122,9 @@ void CLoginScene::Draw()
 
     //入力された文字の描画
     Text->Draw_Text(m_UserName, WriteText::InputName, D3DXVECTOR2(NAME_STARTPOS.x, NAME_STARTPOS.y));
+
+    //操作方法指示バーの描画
+    DrawControlBar();
 }
 
 

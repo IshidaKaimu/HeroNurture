@@ -35,10 +35,12 @@ namespace Constant_ModeSelectScene
 	constexpr float COVER_ALPHA = 0.8f;
 	//共通
 	const D3DXVECTOR3 MODE_SCALE = { 1.0f,1.0f,1.0f }; //拡縮
-	const D3DXVECTOR2 MODE_DISP = { 1.0f, 1.0f };     //α値
-	constexpr float   MODE_ALPHA = 1.0f;
+	const D3DXVECTOR2 MODE_DISP  = { 1.0f, 1.0f };     //幅
+	constexpr float   MODE_ALPHA = 1.0f;			   //α値
 	//シーン名
-	const D3DXVECTOR2 SCENENAME_POS = { 430.0f,0.0f };
+	const D3DXVECTOR2 SCENENAME_POS  = { 430.0f,0.0f };
+	//「←→ 選択」テキスト
+	const D3DXVECTOR2 SELECTTEXT_POS  = { 800.0f, 675.0f }; //座標
 }
 
 //=====================================
@@ -84,6 +86,6 @@ private:
 	std::unique_ptr<CUIObject> m_pNatureMode; //育成モード
 	std::unique_ptr<CUIObject> m_pBattleMode; //対戦モード
 	std::unique_ptr<CUIObject> m_pCover;      //選択されていないほうにかぶせる画像
-
+	std::unique_ptr<CUIObject> m_pControlBar;  //操作方法指示バー
 };
 

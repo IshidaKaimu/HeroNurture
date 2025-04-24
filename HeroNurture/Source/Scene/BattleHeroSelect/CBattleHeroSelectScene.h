@@ -43,31 +43,31 @@ namespace Constant_BattleHeroSelectScene
 	//----各ヒーローのカメラ配置・注視点----
 	//-----カメラ情報----
 	//カメラ位置
-	const D3DXVECTOR3 CAMPOS = { 0.0f, 5.0f, -4.0f };
+	const D3DXVECTOR3 CAMPOS  = { 0.0f, 5.0f, -4.0f };
 	//カメラ注視点
 	const D3DXVECTOR3 CAMLOOK = { 2.0f, 5.0f, 3.0f };
 
 	//----UI情報----
 	//パラメータの背景UI
-	const D3DXVECTOR3 PARAMBACK_POS = { 840.0f, 205.0f, 0.0f };
+	const D3DXVECTOR3 PARAMBACK_POS   = { 840.0f, 165.0f, 0.0f };
 	const D3DXVECTOR3 PARAMBACK_SCALE = { 1.1f, 1.1f, 1.1f };
 	//パラメータの数値
-	constexpr float PARAMVALUE_POSX = 930.0f; //X座標
-	constexpr float PARAMVALUE_POSY = 225.0f; //Y座標
-	constexpr float PARAMVALUE_INTERVAL = 130.0f; //配置間隔
+	const D3DXVECTOR2 PARAMVALUE_POS    = { 930.0f,185.0f }; //座標
+	constexpr float PARAMVALUE_INTERVAL = 130.0f;	         //配置間隔
 	//パラメータランク
-	constexpr float PARAMRANK_POSX = 885.0f; //X座標
-	constexpr float PARAMRANK_POSY = 225.0f; //Y座標
-	constexpr float PARAMRANK_INTERVAL = 130.0f; //配置間隔
+	const D3DXVECTOR2 PARAMRANK_POS    = { 885.0f, 185.0f }; //座標
+	constexpr float PARAMRANK_INTERVAL = 130.0f;		     //配置間隔
 	//育成ランク
-	constexpr float RANK_POSX = 900.0f; //X座標
-	constexpr float RANK_POSY = 30.0f; //Y座標
+	const D3DXVECTOR2 RANK_POS = { 900.0f,-5.0f };			 //座標
 	//「育成ランク」テキスト座標
-	const D3DXVECTOR2 RESULTTEXT_POS = { 895.0f,0.0f };
+	const D3DXVECTOR2 RESULTTEXT_POS = { 895.0f,-20.0f };
 	//現在の選択番号
 	const D3DXVECTOR2 SELECTNO_POS = { 1140.0f, 0.0f };
 	//育成データの最大数
 	const D3DXVECTOR2 NATUREDATA_MAX_POS = { 1200.0f, 0.0f };
+	//「←→ 選択」テキスト
+	const D3DXVECTOR2 SELECTTEXT_POS = { 800.0f, 675.0f }; //座標
+
 }
 //==============================
 // バトルヒーロー選択クラス

@@ -83,14 +83,6 @@ void CKaito::EnemyInit()
 
 }
 
-//固有攻撃の際の初期化関数
-void CKaito::UniqueInit()
-{
-	SetPosition(UNIQUE_POS_KAITO);
-	SetScale(BATTLE_SCALE_KAITO);
-	SetRotation(UNIQUE_ROTATE_KAITO);
-}
-
 //メッシュデータ読み込み関数
 void CKaito::LoadMeshData()
 {
@@ -211,14 +203,6 @@ float CKaito::PowerAttack()
 float CKaito::MagicAttack()
 {
 	return CHeroBase::MagicAttack();
-}
-
-//固有攻撃
-float CKaito::UniqueAttack()
-{
-	float Damage = m_BattleParam.Power * CUtility::GetInstance().GenerateRandomValue(2.0f, 2.5f);
-	m_UniqueGage -= 5;
-	return Damage;
 }
 
 //攻撃1アニメーション

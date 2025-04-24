@@ -87,8 +87,6 @@ public:
 	//バトル中体力
 	float GetHp() { return m_pEnemyHero->GetHp(); }
 	void SetHp(float hp) { m_pEnemyHero->SetHp(hp); }
-	//固有攻撃ゲージ
-	int GetUniqueGage() { return m_pEnemyHero->GetUniqueGage(); }
 	//ダメージフラグ
 	bool GetDamageFlag() { return m_pEnemyHero->GetDamageFlag(); }
 	//アニメーション終了フラグ

@@ -44,7 +44,7 @@ public:
 	}
 
 	//’l‚ÌŒ…”‚É‚æ‚é•`‰æˆÊ’u‚Ì•â³
-	D3DXVECTOR2 PosCorrection(double value, float digit, float x, float y);
+	D3DXVECTOR2 PosCorrection(double value, float digit,D3DXVECTOR2 pos);
 
 	//•¶š‚Ì“ü—Í
 	void InputText(std::wstring& text,int maxlength);

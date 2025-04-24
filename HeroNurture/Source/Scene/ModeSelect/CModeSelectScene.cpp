@@ -12,6 +12,10 @@
 using namespace Constant_ModeSelectScene;
 
 CModeSelectScene::CModeSelectScene()
+    :m_pNatureMode()
+    ,m_pBattleMode()
+    ,m_pCover     ()
+    ,m_pControlBar()
 {
     //ライト情報
     m_Light.vDirection = D3DXVECTOR3(0.0f, 1.0f, 0.0f); //ライト方向
@@ -26,7 +30,8 @@ void CModeSelectScene::Create()
     //----UI----
     m_pNatureMode = std::make_unique<CUIObject>(); //育成モード
     m_pBattleMode = std::make_unique<CUIObject>(); //バトルモード
-    m_pCover      = std::make_unique<CUIObject>(); //カバー
+    m_pCover      = std::make_unique<CUIObject>(); //選択されていないモードにかぶせる画像
+    m_pControlBar = std::make_unique<CUIObject>(); //操作方法指示バー
 }
 
 void CModeSelectScene::Releace()
@@ -39,6 +44,7 @@ void CModeSelectScene::LoadData()
     m_pNatureMode->AttachSprite(CUIManager::GetSprite(CUIManager::ModeSelectLeft));
     m_pBattleMode->AttachSprite(CUIManager::GetSprite(CUIManager::ModeSelectRight));
     m_pCover->AttachSprite(CUIManager::GetSprite(CUIManager::ModeSelectCover));
+    m_pControlBar->AttachSprite(CUIManager::GetSprite(CUIManager::ControlBar));
 }
 
 void CModeSelectScene::Initialize()
@@ -91,12 +97,23 @@ void CModeSelectScene::Update()
 
 
 
-    //シーン遷移(仮)
-    if (CKeyManager::GetInstance().IsDown(VK_RETURN))
+
+    //モード決定
+    if (KeyMng->IsDown(VK_RETURN))
     {
         //決定SEの再生
         CSoundManager::GetInstance()->PlaySE(CSoundManager::SE_Enter);
         CSoundManager::GetInstance()->Volume(CSoundManager::SE_Enter, 40);
+
+        //選択したモードのシーンへ
+        m_SceneTransitionFlg = true;
+    }
+
+    //前のシーンへ戻る
+    if (KeyMng->IsDown(VK_ESCAPE))
+    {
+        //ログイン画面へ
+        m_SelectNo = 2;
 
         //オープニングシーンへ
         m_SceneTransitionFlg = true;
@@ -108,12 +125,13 @@ void CModeSelectScene::Update()
         switch (m_SelectNo)
         {
         case 0:
-            SceneMng->LoadCreate(CSceneManager::NatureHeroSelect);           //育成モード
+            SceneMng->LoadCreate(CSceneManager::NatureHeroSelect); //育成ヒーロー選択画面へ
             break;
         case 1:
-            SceneMng->LoadCreate(CSceneManager::BattleHeroSelect); //バトルモード
+            SceneMng->LoadCreate(CSceneManager::BattleHeroSelect); //バトルヒーロー選択画面へ
             break;
-        default:
+        case 2:
+            SceneMng->LoadCreate(CSceneManager::Login); //ログイン画面へ
             break;
         }
     }
@@ -141,6 +159,12 @@ void CModeSelectScene::DrawUI()
     m_pBattleMode->SetScale(MODE_SCALE);                //拡縮
     m_pBattleMode->SetDisplay(MODE_DISP.x,MODE_DISP.y); //幅
     m_pBattleMode->SetAlpha(MODE_ALPHA);                //α値
+    //操作方法指示バー
+    m_pControlBar->SetPosition(CONTROLBAR_POS);                     //座標
+    m_pControlBar->SetScale(CONTROLBAR_SCALE);                      //拡縮
+    m_pControlBar->SetDisplay(CONTROLBAR_DISP.x, CONTROLBAR_DISP.y);//幅
+    m_pControlBar->SetAlpha(MODE_ALPHA);                            //α値
+
 
     //選択されていない方に被せる画像
     //位置
@@ -161,12 +185,17 @@ void CModeSelectScene::DrawUI()
     m_pCover->SetAlpha(COVER_ALPHA);              //α値
 
     CSceneManager::GetInstance()->GetDx11()->SetDepth(false);
+
     //育成モード描画
     m_pNatureMode->Draw();
     //バトルモード描画
     m_pBattleMode->Draw();
     //選択されていない方に被せる画像
     m_pCover->Draw();
+    //操作方法指示バーテンプレートの描画
+    DrawControlBar();
+    //操作方法指示「←→ 選択」テキストの描画
+    Text->Draw_Text(L"←→ 選択", WriteText::Control, SELECTTEXT_POS);
     //シーン名の描画
     Text->Draw_Text(L"MODE SELECT", WriteText::Normal, SCENENAME_POS);
     CSceneManager::GetInstance()->GetDx11()->SetDepth(true);

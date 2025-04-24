@@ -61,7 +61,7 @@ void CCreateAcountScene::Update()
     CUtility::GetInstance().InputText(m_UserName,NAME_MAXLENGTH);
 
     //コピー元フォルダのパス
-    m_SorceDir = "Data\\Acount\\Hero";
+    m_SorceDir = "Data\\Acount\\Base";
     //コピー先フォルダのパス
     m_DestDir = "Data\\Acount\\" + CUtility::GetInstance().WstringToString(m_UserName);
 
@@ -97,6 +97,13 @@ void CCreateAcountScene::Update()
             }
         }
     }
+
+    //前の画面に戻す
+    if (KeyMng->IsDown(VK_ESCAPE))
+    {
+        m_SceneTransitionFlg = true;
+    }
+
     //フェードアウト処理
     if (m_SceneTransitionFlg && FadeOut())
     {
@@ -128,5 +135,8 @@ void CCreateAcountScene::Draw()
     {
         Text->Draw_Text(L"※このアカウント名は既に使用されています", WriteText::Error, D3DXVECTOR2(300.0f, 450.0f));
     }
+
+    //操作方法指示バーの描画
+    DrawControlBar();
 }
 

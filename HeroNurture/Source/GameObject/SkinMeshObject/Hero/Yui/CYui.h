@@ -21,10 +21,6 @@ class CEffect;
 //バトルシーンでの拡縮
 const D3DXVECTOR3 BATTLE_SCALE_YUI = { 0.04f,0.04f,0.04f }; //拡縮
 
-//固有攻撃シーンでの初期情報
-const D3DXVECTOR3 UNIQUE_POS_YUI = { 0.0f, 0.0f, 0.0f };   //座標
-const D3DXVECTOR3 UNIQUE_ROTATE_YUI = { 0.0f, 0.0f, 0.0f };   //回転
-
 //=====================================
 //ユイクラス
 //制作者：石田櫂夢
@@ -85,8 +81,6 @@ public:
 	float PowerAttack() override;
 	//攻撃2
 	float MagicAttack() override;
-	//固有攻撃
-	float UniqueAttack() override;
 
 
 	// =======================
@@ -99,8 +93,6 @@ public:
 	void PowerAttackAnim(float vector) override;
 	//攻撃2中のアニメーション
 	void MagicAttackAnim(float vector) override;
-	//固有攻撃中のアニメーション
-	void UniqueAttackAnim() override;
 	//ダメージ中のアニメーション
 	void DamageAnim(float vector) override;
 

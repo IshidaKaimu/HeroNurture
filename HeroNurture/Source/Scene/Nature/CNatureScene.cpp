@@ -159,13 +159,13 @@ void CNatureScene::Initialize()
    
     //----パラメータの値を除くUIの初期設定----
     //パラメータの背景
-    UIInit(m_pParamBack, PARAMBACK_POSX, PARAMBACK_POSY, 0, PARAMBACK_SCALE, 0);
+    UIInit(m_pParamBack, PARAMBACK_POS, 0, PARAMBACK_SCALE, 0);
     //各種トレーニング
-    UIInit(m_pPowerTraning, TRANING_POSX, TRANING_POSY, 0, TRANING_SCALE, 0);                //筋力
-    UIInit(m_pMagicTraning, TRANING_POSX, TRANING_POSY, TRANING_INTERVAL, TRANING_SCALE, 1); //魔力
-    UIInit(m_pSpeedTraning, TRANING_POSX, TRANING_POSY, TRANING_INTERVAL, TRANING_SCALE, 2); //素早さ
-    UIInit(m_pHpTraning,    TRANING_POSX, TRANING_POSY, TRANING_INTERVAL, TRANING_SCALE, 3); //体力
-    UIInit(m_pRest, TRANING_POSX, TRANING_POSY, TRANING_INTERVAL, TRANING_SCALE, 4);
+    UIInit(m_pPowerTraning, TRANING_POS, 0, TRANING_SCALE, 0);                //筋力
+    UIInit(m_pMagicTraning, TRANING_POS, TRANING_INTERVAL, TRANING_SCALE, 1); //魔力
+    UIInit(m_pSpeedTraning, TRANING_POS, TRANING_INTERVAL, TRANING_SCALE, 2); //素早さ
+    UIInit(m_pHpTraning,    TRANING_POS, TRANING_INTERVAL, TRANING_SCALE, 3); //体力
+    UIInit(m_pRest,         TRANING_POS, TRANING_INTERVAL, TRANING_SCALE, 4); //休息
     //各失敗率背景
     FailureRateBackInit(m_pSafeBack,D3DXVECTOR3(20.0f,400.0f,0.0f));
     FailureRateBackInit(m_pAnxietyBack,D3DXVECTOR3(20.0f,400.0f,0.0f));
@@ -502,10 +502,10 @@ void CNatureScene::SelectTraning()
 }
 
 //各種トレーニングUI初期設定
-void CNatureScene::UIInit(std::unique_ptr<CUIObject>& ui, float x, float y, float interval, D3DXVECTOR3 scale, int no)
+void CNatureScene::UIInit(std::unique_ptr<CUIObject>& ui, D3DXVECTOR3 pos, float interval, D3DXVECTOR3 scale, int no)
 {
     //位置
-    ui->SetPosition(x + (interval * no), y, 0.0f);
+    ui->SetPosition(pos.x + (interval * no), pos.y, 0.0f);
     //拡縮
     ui->SetScale(scale);
     //α値
@@ -548,17 +548,17 @@ void CNatureScene::DrawParam()
     //背景
     m_pParamBack->Draw();
     //筋力
-    Text->Draw_Text(std::to_wstring(static_cast<int>(m_pHero->GetParam().Power)), WriteText::Normal, Utility->PosCorrection(m_pHero->GetParam().Power,CORRECTION_DIGIT,PARAMVALUE_POSX, PARAMVALUE_POSY));
-    CRank::GetInstance().DrawRank(m_pHero->GetParam().Power, 2, RANK_POSX, RANK_POSY);
+    Text->Draw_Text(std::to_wstring(static_cast<int>(m_pHero->GetParam().Power)), WriteText::Normal, Utility->PosCorrection(m_pHero->GetParam().Power,CORRECTION_DIGIT,PARAMVALUE_POS));
+    CRank::GetInstance().DrawRank(m_pHero->GetParam().Power, 2, RANK_POS);
     //魔力
-    Text->Draw_Text(std::to_wstring(static_cast<int>(m_pHero->GetParam().Magic)), WriteText::Normal, Utility->PosCorrection(m_pHero->GetParam().Magic, CORRECTION_DIGIT, PARAMVALUE_POSX + PARAMVALUE_INTERVAL, PARAMVALUE_POSY));
-    CRank::GetInstance().DrawRank(m_pHero->GetParam().Magic, 2, RANK_POSX + RANK_INTERVAL, RANK_POSY);
+    Text->Draw_Text(std::to_wstring(static_cast<int>(m_pHero->GetParam().Magic)), WriteText::Normal, Utility->PosCorrection(m_pHero->GetParam().Magic, CORRECTION_DIGIT, D3DXVECTOR2(PARAMVALUE_POS.x + PARAMVALUE_INTERVAL, PARAMVALUE_POS.y)));
+    CRank::GetInstance().DrawRank(m_pHero->GetParam().Magic, 2, D3DXVECTOR2(RANK_POS.x + RANK_INTERVAL, RANK_POS.y));
     //素早さ
-    Text->Draw_Text(std::to_wstring(static_cast<int>(m_pHero->GetParam().Speed)), WriteText::Normal, Utility->PosCorrection(m_pHero->GetParam().Speed, CORRECTION_DIGIT, PARAMVALUE_POSX + (PARAMVALUE_INTERVAL * 2), PARAMVALUE_POSY));
-    CRank::GetInstance().DrawRank(m_pHero->GetParam().Speed, 2, RANK_POSX + (RANK_INTERVAL * 2), RANK_POSY);
+    Text->Draw_Text(std::to_wstring(static_cast<int>(m_pHero->GetParam().Speed)), WriteText::Normal, Utility->PosCorrection(m_pHero->GetParam().Speed, CORRECTION_DIGIT, D3DXVECTOR2(PARAMVALUE_POS.x + (PARAMVALUE_INTERVAL * 2), PARAMVALUE_POS.y)));
+    CRank::GetInstance().DrawRank(m_pHero->GetParam().Speed, 2, D3DXVECTOR2(RANK_POS.x + (RANK_INTERVAL * 2), RANK_POS.y));
     //体力
-    Text->Draw_Text(std::to_wstring(static_cast<int>(m_pHero->GetParam().Hp)), WriteText::Normal, Utility->PosCorrection(m_pHero->GetParam().Hp, CORRECTION_DIGIT, PARAMVALUE_POSX + (PARAMVALUE_INTERVAL * 3), PARAMVALUE_POSY));
-    CRank::GetInstance().DrawRank(m_pHero->GetParam().Hp, 2, RANK_POSX + (RANK_INTERVAL * 3), RANK_POSY);
+    Text->Draw_Text(std::to_wstring(static_cast<int>(m_pHero->GetParam().Hp)), WriteText::Normal, Utility->PosCorrection(m_pHero->GetParam().Hp, CORRECTION_DIGIT, D3DXVECTOR2(PARAMVALUE_POS.x + (PARAMVALUE_INTERVAL * 3), PARAMVALUE_POS.y)));
+    CRank::GetInstance().DrawRank(m_pHero->GetParam().Hp, 2, D3DXVECTOR2(RANK_POS.x + (RANK_INTERVAL * 3), RANK_POS.y));
 }
 
 //各種トレーニングの描画
@@ -568,20 +568,20 @@ void CNatureScene::DrawTraning()
     float PosUp = 20.0f;
 
     //筋力トレーニング選択時
-    if (m_SelectNo == 0) { m_pPowerTraning->SetPositionY(TRANING_POSY - PosUp); }
-    else { m_pPowerTraning->SetPositionY(TRANING_POSY); }
+    if (m_SelectNo == 0) { m_pPowerTraning->SetPositionY(TRANING_POS.y - PosUp); }
+    else { m_pPowerTraning->SetPositionY(TRANING_POS.y); }
     //魔力トレーニング選択時
-    if (m_SelectNo == 1) { m_pMagicTraning->SetPositionY(TRANING_POSY - PosUp); }
-    else { m_pMagicTraning->SetPositionY(TRANING_POSY); }
+    if (m_SelectNo == 1) { m_pMagicTraning->SetPositionY(TRANING_POS.y - PosUp); }
+    else { m_pMagicTraning->SetPositionY(TRANING_POS.y); }
     //素早さトレーニング選択時
-    if (m_SelectNo == 2) { m_pSpeedTraning->SetPositionY(TRANING_POSY  - PosUp); }
-    else { m_pSpeedTraning->SetPositionY(TRANING_POSY); }
+    if (m_SelectNo == 2) { m_pSpeedTraning->SetPositionY(TRANING_POS.y  - PosUp); }
+    else { m_pSpeedTraning->SetPositionY(TRANING_POS.y); }
     //体力トレーニング選択時
-    if (m_SelectNo == 3) { m_pHpTraning->SetPositionY(TRANING_POSY - PosUp); }
-    else { m_pHpTraning->SetPositionY(TRANING_POSY); }
+    if (m_SelectNo == 3) { m_pHpTraning->SetPositionY(TRANING_POS.y - PosUp); }
+    else { m_pHpTraning->SetPositionY(TRANING_POS.y); }
     //休息選択時
-    if (m_SelectNo == 4) { m_pRest->SetPositionY(TRANING_POSY - PosUp); }
-    else { m_pRest->SetPositionY(TRANING_POSY); }
+    if (m_SelectNo == 4) { m_pRest->SetPositionY(TRANING_POS.y - PosUp); }
+    else { m_pRest->SetPositionY(TRANING_POS.y); }
 
     m_pPowerTraning->Draw();
     m_pMagicTraning->Draw();
@@ -601,9 +601,9 @@ void CNatureScene::DrawRemainingTurn()
     std::wstring Turn = std::to_wstring(CSceneManager::GetInstance()->GetRemainingTurn());
 
     //残りターン数の描画
-    Text->Draw_Text(L"残り", WriteText::TurnText, D3DXVECTOR2(10.0f,-20.0f));
-    Text->Draw_Text(Turn, WriteText::Turn, Utility->PosCorrection(SceneMng->GetRemainingTurn(),2,180.0f,-10.0f));
-    Text->Draw_Text(L"ターン", WriteText::TurnText, D3DXVECTOR2(240.0f, -20.0f));
+    Text->Draw_Text(L"残り", WriteText::TurnText, REMAININGTEXT_POS);
+    Text->Draw_Text(Turn, WriteText::Turn, Utility->PosCorrection(SceneMng->GetRemainingTurn(),2,TURN_POS));
+    Text->Draw_Text(L"ターン", WriteText::TurnText, TURNTEXT_POS);
 }
 
 

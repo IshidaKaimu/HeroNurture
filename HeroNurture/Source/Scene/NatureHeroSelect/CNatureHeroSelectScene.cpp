@@ -88,7 +88,6 @@ void CNatureHeroSelectScene::Initialize()
 //更新関数
 void CNatureHeroSelectScene::Update()
 {
-
     //フェードイン処理
     if (!FadeIn()) { return; }
 
@@ -200,7 +199,9 @@ void CNatureHeroSelectScene::Draw()
 
     //シーン名,指示の描画
     Text->Draw_Text(L"Nature Hero Select", WriteText::Normal, SCENENAME_POS_NS);    
-    Text->Draw_Text(L"Enterキーで決定", WriteText::Normal, INFOTEXT_POS_NS);
+
+    //操作方法指示バーの描画
+    DrawControlBar();
 
     //矢印の描画
     DrawArrow();

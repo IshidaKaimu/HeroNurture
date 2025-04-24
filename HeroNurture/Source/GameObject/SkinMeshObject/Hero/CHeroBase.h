@@ -10,22 +10,17 @@ using json = nlohmann::json;
 // =======================
 // 定数宣言
 // =======================
-//----トレーニング関連----		
-//トレーニングの基本上昇値
-constexpr float INCREASE_VALUE = 20.0f;
-//----スタミナゲージ関連----
-//スタミナの最大値
-constexpr float MAX_STAMINA = 100.0f;
-//スタミナの基本減少量
-constexpr float REDUSE_STAMINA = 25.0f;
-//スタミナの基本回復量
-constexpr float RECOVERY_STAMINA = 25.0f;
-//バトルシーンでの初期座標
-const D3DXVECTOR3 BATTLEINIT_POS = { -4.5f,0.0f,0.0f }; //自分
-const D3DXVECTOR3 ENEMYINIT_POS  = { 2.5f,0.0f,0.0f };	//敵
-//バトルシーンでの回転
-const D3DXVECTOR3 BATTLE_ROTATE = { 0.0f,D3DXToRadian(-90.0f),0.0f };//自分
-const D3DXVECTOR3 ENEMY_ROTATE  = { 0.0f,D3DXToRadian(90.0f),0.0f }; //敵
+ //----トレーニング関連----		
+ constexpr float INCREASE_VALUE = 20.0f; //基本上昇値
+ //----スタミナゲージ関連----
+ constexpr float MAX_STAMINA = 100.0f; //最大値
+ constexpr float REDUSE_STAMINA = 25.0f;  //減少量
+ constexpr float RECOVERY_STAMINA = 25.0f;  //回復量
+ //----バトルシーン----
+ const D3DXVECTOR3 BATTLEINIT_POS = { -4.5f,0.0f,0.0f }; //初期座標(自分)
+ const D3DXVECTOR3 ENEMYINIT_POS = { 2.5f,0.0f,0.0f };	//初期座標(敵)
+ const D3DXVECTOR3 BATTLE_ROTATE = { 0.0f,D3DXToRadian(-90.0f),0.0f };//回転(自分)
+ const D3DXVECTOR3 ENEMY_ROTATE = { 0.0f,D3DXToRadian(90.0f),0.0f }; //回転(敵)
 
 //=====================================
 // ヒーロー基底クラス
@@ -182,8 +177,6 @@ public:
 	//バトル中のHP
 	float GetHp() { return m_Hp; }
 	void SetHp(float hp) { m_Hp = hp; }
-	//固有攻撃ゲージ
-	int GetUniqueGage() { return m_UniqueGage; }
 	//ダメージフラグ
 	bool GetDamageFlag() { return m_Damage; }
 	void SetDamageFlag(bool damage) { m_Damage = damage; }
@@ -239,9 +232,6 @@ protected:
 
 	//現在の体力
 	float m_Hp;
-
-	//現在の固有攻撃ゲージ
-	int m_UniqueGage;
 
 	//アニメーション用カウント
 	int m_AnimCnt;
