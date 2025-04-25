@@ -34,6 +34,7 @@ HRESULT CSkinMeshManager::Load(CDirectX9* pdx9, CDirectX11* pdx11)
 		{ SkinMeshList::Kaito,         _T("Data\\Mesh\\Skin\\Kaito\\kaito_s.x") },
 		{ SkinMeshList::Boss,          _T("Data\\Mesh\\Skin\\Boss\\ultemate_s.x") },
 		{ SkinMeshList::FastBoss,      _T("Data\\Mesh\\Skin\\FastBoss\\a_s.x") },
+		{ SkinMeshList::RaccoonDog,    _T("Data\\Mesh\\Skin\\BigRaccoonDog\\bigraccoon.x") },
 	};
 
 	int list_max = sizeof(SKMList) / sizeof(SKMList[0]);

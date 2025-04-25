@@ -21,7 +21,7 @@ public:
 		Kaito,
 		Boss,
 		FastBoss,
-		Ground,
+		RaccoonDog,
 
 		Max,
 	};

@@ -236,11 +236,13 @@
     <ClCompile Include="Source\Camera\CameraManager\CCameraManager.cpp" />
     <ClCompile Include="Source\Camera\CCamera.cpp" />
     <ClCompile Include="Source\GameObject\SkinMeshObject\Hero\Enemy\CEnemyHeroManager.cpp" />
+    <ClCompile Include="Source\GameObject\SkinMeshObject\Event\RaccoonDog\CRaccoonDog.cpp" />
     <ClCompile Include="Source\Json\CJson.cpp" />
     <ClCompile Include="Source\GameObject\SkinMeshObject\Hero\CHeroManager.cpp" />
     <ClCompile Include="Source\GameObject\SkinMeshObject\Hero\Yui\CYui.cpp" />
     <ClCompile Include="Source\Light\LightManager\CLightManager.cpp" />
     <ClCompile Include="Source\Rank\CRank.cpp" />
+    <ClCompile Include="Source\Scene\Appearance\CAppearanceScene.cpp" />
     <ClCompile Include="Source\Scene\BattleHeroSelect\CBattleHeroSelectScene.cpp" />
     <ClCompile Include="Source\Scene\Battle\CBattleScene.cpp" />
     <ClCompile Include="Source\Scene\Battle\UniqueAttack\CUniqueAttack.cpp" />
@@ -309,8 +311,10 @@
     <ClInclude Include="Source\GameObject\SkinMeshObject\Hero\CHeroManager.h" />
     <ClInclude Include="Source\GameObject\SkinMeshObject\Hero\Enemy\CEnemyHeroManager.h" />
     <ClInclude Include="Source\GameObject\SkinMeshObject\Hero\Yui\CYui.h" />
+    <ClInclude Include="Source\GameObject\SkinMeshObject\Event\RaccoonDog\CRaccoonDog.h" />
     <ClInclude Include="Source\Light\LightManager\CLightManager.h" />
     <ClInclude Include="Source\Rank\CRank.h" />
+    <ClInclude Include="Source\Scene\Appearance\CAppearanceScene.h" />
     <ClInclude Include="Source\Scene\BattleHeroSelect\CBattleHeroSelectScene.h" />
     <ClInclude Include="Source\Scene\Battle\CBattleScene.h" />
     <ClInclude Include="Source\Scene\Battle\UniqueAttack\CUniqueAttack.h" />

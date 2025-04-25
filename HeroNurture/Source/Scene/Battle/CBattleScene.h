@@ -40,12 +40,12 @@ class CEffect;
 namespace Constant_BattleScene 
 {
 	//----カメラ情報----
-	const D3DXVECTOR3 INIT_CAMPOS = { -1.0f,2.0f,-7.0f };		//初期座標
-	const D3DXVECTOR3 INIT_CAMLOOK = { -1.0f,2.0f,0.0f };		//初期注視点
+	const D3DXVECTOR3 INIT_CAMPOS	= { -1.0f,2.0f,-7.0f };		//初期座標
+	const D3DXVECTOR3 INIT_CAMLOOK  = { -1.0f,2.0f,0.0f };		//初期注視点
 	const D3DXVECTOR3 ATTACK_CAMPOS = { -1.0f,2.0f,0.0f };		//攻撃時座標(自分)
-	const D3DXVECTOR3 ATTACK_CAMLOOK = { -2.0f,2.0f,0.0f };		//攻撃時注視点(自分)
-	const D3DXVECTOR3 ENEMY_ATTACK_CAMPOS = { -1.0f,2.0f,0.0f };//攻撃時座標(敵)
-	const D3DXVECTOR3 ENEMY_ATTACK_CAMLOOK = { 2.0f,2.0f,0.0f };//攻撃時注視点(敵)
+	const D3DXVECTOR3 ATTACK_CAMLOOK	   = { -2.0f,2.0f,0.0f }; //攻撃時注視点(自分)
+	const D3DXVECTOR3 ENEMY_ATTACK_CAMPOS  = { -1.0f,2.0f,0.0f }; //攻撃時座標(敵)
+	const D3DXVECTOR3 ENEMY_ATTACK_CAMLOOK = { 2.0f,2.0f,0.0f };  //攻撃時注視点(敵)
 	//----ゲージ情報----
 	//HP
 	const D3DXVECTOR3 HPGAGE_POS = { 0.0f, 16.0f, 0.0f }; //座標
@@ -54,7 +54,7 @@ namespace Constant_BattleScene
 	//HPの枠
 	const D3DXVECTOR3 HPFRAME_POS = { 0.0f, 10.0f, 0.0f };
 	//敵のHP
-	const D3DXVECTOR3 ENEMY_HPGAGE_POS = { 800.0f, 16.0f, 0.0f };  //座標
+	const D3DXVECTOR3 ENEMY_HPGAGE_POS  = { 800.0f, 16.0f, 0.0f };  //座標
 	//敵のHPの枠
 	const D3DXVECTOR3 ENEMY_HPFRAME_POS = { 800.0f, 10.0f, 0.0f }; //座標
 	//----行動選択----

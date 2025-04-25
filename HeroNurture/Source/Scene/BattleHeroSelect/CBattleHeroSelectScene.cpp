@@ -148,7 +148,8 @@ void CBattleHeroSelectScene::Update()
 	{
 		//選択した育成データをバトルに使用するデータとして書き込み
 		m_pJson->SaveBattleData(m_ResultData,m_BattleDataWriter,m_SelectNo);
-		SceneMng->LoadCreate(CSceneManager::Battle);
+		//ヒーロー登場シーンへ
+		SceneMng->LoadCreate(CSceneManager::Appearance);
 	}
 }
 

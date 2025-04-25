@@ -14,6 +14,8 @@ class CNatureHeroSelectScene;
 class CNatureScene;
 class CTraningScene;
 class CTraningResultScene;
+class CBattleHeroSelectScene;
+class CAppearanceScene;
 class CBattleScene;
 class CBattleResultScene;
 
@@ -46,6 +48,7 @@ public:
 		Training,
 		NatureResult,
 		BattleHeroSelect,
+		Appearance,
 		Battle,
 		UniqueAttack,
 		BattleResult,
