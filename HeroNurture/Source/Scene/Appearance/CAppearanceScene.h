@@ -13,6 +13,9 @@ namespace Constant_AppearanceScene
 	//カイト
 	const D3DXVECTOR3 KAITO_CAMPOS  = { 1.0f, 4.0f, 0.0f }; //座標
 	const D3DXVECTOR3 KAITO_CAMLOOK = { 1.0f, 4.0f, 0.0f }; //注視点
+	//----イベントシーン----
+	constexpr float CAM_FLICK_DISTANCE  = 25.0f; //タヌキにカメラがはじかれた距離
+	constexpr float CAM_FLICK_SPEED		= 0.7f;  //タヌキにカメラがはじかれる速度
 
 }
 
@@ -97,6 +100,9 @@ private:
 	//----スタティックメッシュ----
 	//地面
 	std::unique_ptr<CGround> m_pGround;
+
+	//カメラを動かす値
+	D3DXVECTOR3 m_MoveCam;
 
 };
 

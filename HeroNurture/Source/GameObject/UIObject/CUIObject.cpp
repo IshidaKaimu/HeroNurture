@@ -12,6 +12,7 @@ CUIObject::~CUIObject()
 	DetachSprite();
 }
 
+
 //XVŠÖ”
 void CUIObject::Update()
 {
