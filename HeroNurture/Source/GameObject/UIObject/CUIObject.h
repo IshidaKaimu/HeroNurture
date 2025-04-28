@@ -1,7 +1,6 @@
 #pragma once
-
 #include "CGameObject.h"
-#include "Sprite2D/CSprite2D.h"
+#include "Sprite2D\CSprite2D.h"
 #include "Global\Global.h"
 
 /************************************************************
