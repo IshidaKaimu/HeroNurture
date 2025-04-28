@@ -140,7 +140,7 @@ void CBattleResultScene::Update()
 void CBattleResultScene::Draw()
 {
     CSceneManager* SceneMng = CSceneManager::GetInstance();
-    CHeroManager* HeroMng = &CHeroManager::GetInstance();
+    CHeroManager* HeroMng   = &CHeroManager::GetInstance();
     CEnemyHeroManager* EnemyHeroMng = &CEnemyHeroManager::GetInstance();
 
     //ƒJƒƒ‰‚Ì“®ì

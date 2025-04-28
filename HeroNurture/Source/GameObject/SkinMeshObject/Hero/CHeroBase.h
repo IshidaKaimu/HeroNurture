@@ -226,10 +226,6 @@ protected:
 	//ユーザーネーム
 	std::string m_UserName;
 
-	//----デバッグ用----
-	D3DXVECTOR3 DebugPos;
-	D3DXVECTOR3 DebugScale;
-
 	//現在の体力
 	float m_Hp;
 

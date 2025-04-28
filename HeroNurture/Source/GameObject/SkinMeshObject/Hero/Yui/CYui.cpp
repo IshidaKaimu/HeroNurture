@@ -174,7 +174,9 @@ void CYui::Update()
 //描画関数
 void CYui::Draw()
 {
+	//アニメーションスピードの設定
 	m_pMesh->SetAnimSpeed(m_AnimSpeed);
+	//描画
 	CSkinMeshObject::Draw();
 }
 

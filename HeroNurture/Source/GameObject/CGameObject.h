@@ -31,7 +31,7 @@ public:
 	}
 	//Zç¿ïWê›íËä÷êî.
 	void SetPositionZ(float z) {
-		m_vPosition.x = z;
+		m_vPosition.z = z;
 	}
 	void SetPosition(const D3DXVECTOR3& pos) {
 		m_vPosition = pos;

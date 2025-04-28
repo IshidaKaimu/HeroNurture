@@ -82,6 +82,7 @@ void CBattleScene::Create()
 void CBattleScene::Releace()
 {
 	m_pHero = nullptr;
+	m_pEnemyHero = nullptr;
 }
 
 void CBattleScene::LoadData()

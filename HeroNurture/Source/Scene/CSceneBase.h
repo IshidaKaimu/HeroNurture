@@ -96,11 +96,17 @@ protected:
 	//ライト情報
 	LIGHT       m_Light;
 
-	//----デバッグ用カメラ情報----
-	//位置
-	D3DXVECTOR3 m_CamPos;
-	//注視点
-	D3DXVECTOR3	m_CamLook;
+	//----デバッグ用情報----
+	//オブジェクト位置
+	D3DXVECTOR3 m_DebugPos;
+	//オブジェクト回転
+	D3DXVECTOR3 m_DebugRotate;
+	//UI位置
+	D3DXVECTOR2 m_DebugUiPos;
+	//カメラ位置
+	D3DXVECTOR3 m_DebugCamPos;
+	//カメラ注視点
+	D3DXVECTOR3	m_DebugCamLook;
 
 	//----フラグ----
 	//シーン遷移用

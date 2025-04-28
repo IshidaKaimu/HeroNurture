@@ -230,6 +230,8 @@ void CNatureScene::Update()
         CSoundManager::GetInstance()->PlaySE(CSoundManager::SE_Enter);
         CSoundManager::GetInstance()->Volume(CSoundManager::SE_Enter, 40);
 
+        m_SceneTransitionFlg = true;
+
         //選択肢の位置に応じたトレーニングをセット
         switch (m_SelectNo)
         {
@@ -239,10 +241,7 @@ void CNatureScene::Update()
         case 3:  m_pHero->SetTraning(CHeroManager::HpTraining); break;
         case 4:  m_pHero->SetTraning(CHeroManager::Rest); break;
         }
-        //パラメータ処理
-        SelectTraning();
 
-        m_SceneTransitionFlg = true;
     }
 
     if (SceneMng->GetRemainingTurn() <= 0) 
@@ -250,10 +249,13 @@ void CNatureScene::Update()
         m_SceneTransitionFlg = true;
     }
 
+    //フェードが終わったら
     if (m_SceneTransitionFlg && FadeOut())
     {
         if (SceneMng->GetRemainingTurn() > 0)
         {
+            //パラメータ処理
+            SelectTraning();
             SceneMng->LoadCreate(CSceneManager::Training);
         }
         else

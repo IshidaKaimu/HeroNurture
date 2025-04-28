@@ -340,6 +340,8 @@
     <ClInclude Include="Source\Rank\CRank.h" />
     <ClInclude Include="Source\Scene\Login\CLoginScene.h" />
     <ClInclude Include="Source\Scene\CreateAcount\CCreateAcountScene.h" />
+    <ClInclude Include="Source\Scene\Appearance\CAppearanceScene.h" />
+    <ClInclude Include="Source\GameObject\SkinMeshObject\Event\RaccoonDog\CRaccoonDog.h" />
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="Source\BoundingSphere\CBoundingSphere.cpp">
@@ -508,6 +510,8 @@
     <ClCompile Include="Source\Rank\CRank.cpp" />
     <ClCompile Include="Source\Scene\Login\CLoginScene.cpp" />
     <ClCompile Include="Source\Scene\CreateAcount\CCreateAcountScene.cpp" />
+    <ClCompile Include="Source\Scene\Appearance\CAppearanceScene.cpp" />
+    <ClCompile Include="Source\GameObject\SkinMeshObject\Event\RaccoonDog\CRaccoonDog.cpp" />
   </ItemGroup>
   <ItemGroup>
     <None Include="Source\ImGui\.editorconfig">
