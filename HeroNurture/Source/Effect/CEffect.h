@@ -46,6 +46,7 @@ public:
 		Yui_Magic,
 		Kaito_Power,
 		Kaito_Magic,
+		Steam,
 		Max,
 	};
 

@@ -75,6 +75,9 @@ void CAppearanceScene::Initialize()
 
 	//タヌキの初期化
 	m_pRaccoonDog->Initialize();
+
+	//カメラを動かす値の初期値
+	m_MoveCam = { 0.0f, 0.0f, 0.0f };
 }
 
 void CAppearanceScene::Update()
@@ -82,11 +85,15 @@ void CAppearanceScene::Update()
 	CKeyManager* KeyMng = &CKeyManager::GetInstance();
 	CSceneManager* SceneMng = CSceneManager::GetInstance();
 
+
 	//フェードイン処理
 	if (!FadeIn()) { return; }
 
 	//タヌキのユイ登場時アニメーション
-	m_pRaccoonDog->AppearanceAnim(m_pCamera->GetPos().z);
+	m_pRaccoonDog->AppearanceAnim(YUI_CAMPOS.z);
+
+	//ユイの登場アニメーション
+	YuiAppearance();
 
 	//シーン遷移(仮)
 	if (KeyMng->IsDown(VK_RETURN))
@@ -137,6 +144,24 @@ void CAppearanceScene::Debug()
 
 void CAppearanceScene::YuiAppearance()
 {
+	//動かすカメラの値をセット
+	m_pCamera->SetPos(YUI_CAMPOS.x + m_MoveCam.x, YUI_CAMPOS.y + m_MoveCam.y, YUI_CAMPOS.z + m_MoveCam.z);
+
+	switch (m_Cut)
+	{
+	case 0:
+		if (m_pRaccoonDog->GetPosition().z <= YUI_CAMPOS.z)
+		{
+			if (m_MoveCam.z >= -CAM_FLICK_DISTANCE)
+			{
+				m_MoveCam.z -= CAM_FLICK_SPEED;
+			}
+		}
+		break;
+	case 1:
+
+		break;
+	}
 }
 
 void CAppearanceScene::KaitoAppearance()
