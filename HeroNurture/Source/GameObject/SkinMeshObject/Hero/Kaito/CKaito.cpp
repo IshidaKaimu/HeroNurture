@@ -56,7 +56,7 @@ void CKaito::BattleInitialize()
 }
 
 //敵になった際の初期化関数
-void CKaito::EnemyInit()
+void CKaito::EnemyInitialize()
 {
 	//アニメーション関連の初期化
 	AnimInit();

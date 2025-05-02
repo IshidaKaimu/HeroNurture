@@ -18,8 +18,14 @@ class CEffect;
 // =======================
 // 定数宣言
 // =======================
-//バトルシーンでの拡縮
-const D3DXVECTOR3 BATTLE_SCALE_YUI = { 0.04f,0.04f,0.04f }; //拡縮
+namespace Constant_Yui 
+{
+	//バトル開始時登場シーン
+	const D3DXVECTOR3 APPEALANCE_POS = { 0.0f, 1.0f, -5.0f }; //初期座標
+	const float APPEALANCE_SPEED	 =  0.05f;				  //移動速度
+	//バトルシーン
+	const D3DXVECTOR3 BATTLE_SCALE   = { 0.04f,0.04f,0.04f }; //拡縮
+}
 
 //=====================================
 //ユイクラス
@@ -40,9 +46,9 @@ public:
 	//バトルシーンで使用する初期化
 	void BattleInitialize() override;
 	//敵になった際の初期化関数
-    void EnemyInit()  override;
-	//固有攻撃の際の初期化関数
-    void UniqueInit()  override;
+    void EnemyInitialize()  override;
+	//登場シーンの初期化
+	void AppearanceInitialize() override;
 
 	//データ読み込み関数
 	void LoadMeshData() override;
@@ -70,7 +76,9 @@ public:
 	void NatureHeroSelectAnimation() override;
 	//バトルヒーロー選択シーン
 	void BattleHeroSelectAnimation() override;
-	// 育成シーン		
+	//バトル開始時登場シーン
+	void AppearanceAnimation() override;
+	//育成シーン		
 	void NatureAnimation(int no) override;
 
 

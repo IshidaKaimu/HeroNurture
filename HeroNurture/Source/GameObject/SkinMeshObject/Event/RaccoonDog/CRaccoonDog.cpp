@@ -35,7 +35,7 @@ void CRaccoonDog::AppearanceAnim(float camz)
 	//煙エフェクト
 	CEffect* Eff = CEffect::GetInstance();
 	Eff->Speed(hSteam, 1.0f);
-	Eff->Scale(hSteam, 2.0f, 2.0f, 2.0f);
+	Eff->Scale(hSteam, 0.1f, 0.1f, 0.1f);
 	Eff->Rotate(hSteam, 0.0f, 0.0f, 0.0f);
 
 	//アニメーションの経過時間を加算		
@@ -63,14 +63,15 @@ void CRaccoonDog::AppearanceAnim(float camz)
 		m_pMesh->ChangeAnimSet(m_AnimNo, m_pAnimCtrl);
 		m_AnimCnt++;
 
-		if (m_AnimCnt == 1)
+		if (m_AnimCnt == STEAM_TIME)
 		{
-			Eff->Play(CEffect::enList::Steam, m_vPosition);
+			//煙エフェクトの再生
+			hSteam = Eff->Play(CEffect::enList::Steam, D3DXVECTOR3(m_vPosition.x,m_vPosition.y,m_vPosition.z - STEAM_DELAY));
 		}
 	}
 
 	//カメラに到達してから数秒後
-	if (m_AnimCnt > 120)
+	if (m_AnimCnt > HIDDEN_TIME)
 	{
 		//非表示にする
 		m_HiddenFlag = true;

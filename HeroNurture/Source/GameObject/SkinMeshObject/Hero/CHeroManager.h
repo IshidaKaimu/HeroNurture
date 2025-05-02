@@ -34,26 +34,26 @@ public:
 	// 各シーンごとの初期化
 	// =======================
 	//主に使用する初期化
-	void Initialize() override;
+	void Initialize()					{ m_pHero->Initialize(); }
 	//バトルシーンで使用する初期化
-	void BattleInitialize() override;
-	//固有攻撃アニメーション時の初期化
-	virtual void UniqueInit() override;
+	void BattleInitialize()				{ m_pHero->BattleInitialize(); }
+	//バトル開始時登場シーンでの初期化
+	void AppearanceInitialize()			{ m_pHero->AppearanceInitialize(); };
 
 	//データ読み込み関数
-	void LoadMeshData() override;
+	void LoadMeshData() { m_pHero->LoadMeshData(); }
 
 	//パラメータ情報の読み込み
-	void LoadParamData(const json& jsondata) override;
+	void LoadParamData(const json& jsondata) { m_pHero->LoadParamData(jsondata); }
 
 	//更新関数
-	void Update() override;
+	void Update() { m_pHero->Update(); }
 
 	//描画関数
-	void Draw() override;
+	void Draw()   { m_pHero->Draw(); }
 
 	//デバッグ関数
-	void Debug() override;
+	void Debug()  { m_pHero->Debug(); }
 
 	//作成するヒーローの設定
 	void CreateHero(enHeroList list);
@@ -65,9 +65,11 @@ public:
 	// 各シーンごとのアニメーション
 	// =======================
     //ヒーロー選択シーン 
-	void NatureHeroSelectAnimation() override;
+	void NatureHeroSelectAnimation() { m_pHero->NatureHeroSelectAnimation(); } 
 	//育成シーン
-	void NatureAnimation(int no) override;
+	void NatureAnimation(int no)	 { m_pHero->NatureAnimation(no); }
+	//バトル開始時登場シーン
+	void AppearanceAnimation()		 { m_pHero->AppearanceAnimation(); };
 
 	// =======================
 	// 各パラメータ上昇関数

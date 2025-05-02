@@ -11,15 +11,20 @@ class CEffect;
 // =======================
 namespace Constant_RaccoonDog 
 {
-	//初期設定
+	//----初期設定----
 	const D3DXVECTOR3 INIT_POS       = { 0.0f, 4.5f, 30.0f };	//座標
 	const D3DXVECTOR3 INIT_SCALE     = { 0.04f, 0.04f, 0.04f }; //拡縮
 	const D3DXVECTOR3 INIT_ROTATE    = { D3DXToRadian(-110.0f), D3DXToRadian(90.0f), D3DXToRadian(-2.0f) };//回転
 	const D3DXVECTOR3 UPRIGHT_ROTATE = { D3DXToRadian(-100.0f), D3DXToRadian(90.0f), D3DXToRadian(-2.0f) };//直立時の回転
-	//アニメーション関連
+	//----アニメーション関連----
+	//タヌキ
 	constexpr float MOVE_SPEED = 0.2f; //移動速度
 	constexpr float MAX_UP     = 5.0f; //上下の動きの高さ上限
 	constexpr float UP_SPEED   = 0.04f;//上下の動きの速さ
+	constexpr int   HIDDEN_TIME= 140;  //非表示にするタイミング
+	//煙エフェクト
+	constexpr int   STEAM_TIME = 120;  //再生までの時間
+	constexpr float STEAM_DELAY= 5.0f; //タヌキからずらす値
 }
 
 
@@ -38,6 +43,10 @@ public:
 
 	//描画関数
 	void Draw() override;
+public:
+	//タヌキが非表示になったフラグの取得
+	bool GetHiddenFlag() { return m_HiddenFlag; }
+
 private:
 	//上下の動き
 	void UpDown();

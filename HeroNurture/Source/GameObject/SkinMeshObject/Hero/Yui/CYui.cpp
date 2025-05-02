@@ -5,6 +5,9 @@
 #include "Scene\CSceneManager.h"
 #include "SkinMeshObject\Hero\CHeroManager.h"
 
+//定数の名前空間
+using namespace Constant_Yui;
+
 CYui::CYui()
 	: m_AnimChange  ()
 	, m_MoveRotateY (0.0f)
@@ -39,7 +42,7 @@ void CYui::BattleInitialize()
 	//座標の設定
 	SetPosition(BATTLEINIT_POS);
 	//拡縮の設定
-	SetScale(BATTLE_SCALE_YUI);
+	SetScale(BATTLE_SCALE);
 	//回転の設定
 	SetRotation(BATTLE_ROTATE);
 
@@ -68,7 +71,7 @@ void CYui::BattleInitialize()
 }
 
 //敵になった際の初期化関数
-void CYui::EnemyInit()
+void CYui::EnemyInitialize()
 {
 	//アニメーション関連の初期化
 	AnimInit();
@@ -76,7 +79,7 @@ void CYui::EnemyInit()
 	//座標の設定
 	SetPosition(ENEMYINIT_POS);
 	//拡縮の設定
-	SetScale(BATTLE_SCALE_YUI);
+	SetScale(BATTLE_SCALE);
 	//回転の設定
 	SetRotation(ENEMY_ROTATE);
 	
@@ -106,35 +109,11 @@ void CYui::EnemyInit()
 	m_MoveZ = m_vPosition.z;
 }
 
-void CYui::UniqueInit()
+//バトル開始時登場シーンでの初期化
+void CYui::AppearanceInitialize()
 {
-	//アニメーション関連の初期化
-	AnimInit();
-
-	//アニメーションの軸ごとの回転値の初期化
-	m_MoveRotateY = 0.0f; //Y軸
-	m_MoveRotateZ = 0.0f; //Z軸
-
-	//回転スピードの初期化
-	m_RotateSpeedY = 1.0f;
-
-	//アニメーション終了フラグの初期化
-	m_AnimEnd = false;
-	//ダメージアニメーション終了フラグの初期化
-	m_DamageAnimEnd = false;
-	//ダメージフラグの初期化
-	m_Damage = false;
-	//アニメーションカウントの初期化
-	m_AnimCnt = 0;
-	//エフェクトカウントの初期化
-	m_EffCnt = 0;
-	//アニメーション切り替えフラグの初期化
-	m_AnimChange = false;
-
-	//アニメーションの開始地点の固定
-	m_MoveX = m_vPosition.x;
-	m_MoveY = m_vPosition.y;
-	m_MoveZ = m_vPosition.z;
+	//座標の設定
+	SetPosition(APPEALANCE_POS);
 }
 
 //メッシュデータ読み込み関数
@@ -214,6 +193,21 @@ void CYui::BattleHeroSelectAnimation()
 {
 	//アニメーションスピードの設定
 	m_AnimSpeed = 0.01f;
+}
+
+void CYui::AppearanceAnimation()
+{
+	//アニメーションスピードの設定
+	m_AnimSpeed = 0.01f;
+	
+	//アニメーション番号の設定
+	if (m_AnimNo != 2)
+	{
+		AnimChange(2);
+	}
+
+	//カメラに向けて前進
+	m_vPosition.z -= APPEALANCE_SPEED;
 }
 
 //育成シーンのアニメーション

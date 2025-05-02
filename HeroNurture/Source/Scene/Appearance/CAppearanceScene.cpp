@@ -61,6 +61,11 @@ void CAppearanceScene::Releace()
 
 void CAppearanceScene::LoadData()
 {
+	//選択されているヒーローのメッシュデータ設定
+	m_pHero->LoadMeshData();
+	//敵のヒーローのメッシュデータ設定
+	m_pEnemyHero->LoadMeshData();
+
 	//タヌキのメッシュデータ設定
 	m_pRaccoonDog->AttachMesh(CSkinMeshManager::GetMesh(CSkinMeshManager::RaccoonDog));
 	//地面のメッシュデータ設定
@@ -75,6 +80,10 @@ void CAppearanceScene::Initialize()
 
 	//タヌキの初期化
 	m_pRaccoonDog->Initialize();
+
+	//各ヒーローの初期化
+	m_pHero->AppearanceInitialize();      //自分
+	m_pEnemyHero->AppearanceInitialize(); //敵
 
 	//カメラを動かす値の初期値
 	m_MoveCam = { 0.0f, 0.0f, 0.0f };
@@ -92,7 +101,7 @@ void CAppearanceScene::Update()
 	//タヌキのユイ登場時アニメーション
 	m_pRaccoonDog->AppearanceAnim(YUI_CAMPOS.z);
 
-	//ユイの登場アニメーション
+	//ユイの登場時に行う処理
 	YuiAppearance();
 
 	//シーン遷移(仮)
@@ -125,6 +134,9 @@ void CAppearanceScene::Draw()
 	//タヌキの描画
 	m_pRaccoonDog->Draw();
 
+	//ユイの描画
+	YuiDraw();
+
 	//地面の描画
 	m_pGround->Draw();
 }
@@ -147,23 +159,58 @@ void CAppearanceScene::YuiAppearance()
 	//動かすカメラの値をセット
 	m_pCamera->SetPos(YUI_CAMPOS.x + m_MoveCam.x, YUI_CAMPOS.y + m_MoveCam.y, YUI_CAMPOS.z + m_MoveCam.z);
 
-	switch (m_Cut)
+	switch (m_Scene)
 	{
 	case 0:
+		//白フェード
+		if (m_pRaccoonDog->GetPosition().z <= FLICK_WHITEFADE)
+		{
+			PlayWhiteFade(0, 0.06f, 1.0f);
+		}
+
+		//タヌキがカメラのZ座標を超えたら
 		if (m_pRaccoonDog->GetPosition().z <= YUI_CAMPOS.z)
 		{
 			if (m_MoveCam.z >= -CAM_FLICK_DISTANCE)
 			{
 				m_MoveCam.z -= CAM_FLICK_SPEED;
 			}
+		
+		}
+		//タヌキが非表示になったら
+		if (m_pRaccoonDog->GetHiddenFlag())
+		{
+			//シーンを進める
+			m_Scene = 1;
 		}
 		break;
 	case 1:
-
+		if (m_pHero->GetHeroName() == "Yui") { m_pHero->AppearanceAnimation(); }
+		if (m_pEnemyHero->GetEnemyHeroName() == "Yui") { m_pEnemyHero->AppearanceAnimation(); }
 		break;
 	}
 }
 
 void CAppearanceScene::KaitoAppearance()
 {
+}
+
+void CAppearanceScene::YuiDraw()
+{
+	//自分がユイを使用している場合の描画
+	if (m_pHero->GetHeroName() == "Yui")
+	{
+		if (m_pRaccoonDog->GetHiddenFlag())
+		{
+			m_pHero->Draw();
+		}
+	}
+	//敵がユイの場合の描画
+	if (m_pEnemyHero->GetEnemyHeroName() == "Yui")
+	{
+		if (m_pRaccoonDog->GetHiddenFlag())
+		{
+			m_pEnemyHero->Draw();
+		}
+	}
 }
