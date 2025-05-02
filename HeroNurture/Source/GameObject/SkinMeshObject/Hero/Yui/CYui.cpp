@@ -54,7 +54,7 @@ void CYui::BattleInitialize()
 	m_RotateSpeedY = 1.0f;
 
 	//アニメーション終了フラグの初期化
-	m_AnimEnd = false;
+	m_AttackAnimEnd = false;
 	//ダメージアニメーション終了フラグの初期化
 	m_DamageAnimEnd = false;
 	//ダメージフラグの初期化
@@ -91,7 +91,7 @@ void CYui::EnemyInitialize()
 	m_RotateSpeedY = 1.0f;
 
 	//アニメーション終了フラグの初期化
-	m_AnimEnd = false;
+	m_AttackAnimEnd = false;
 	//ダメージアニメーション終了フラグの初期化
 	m_DamageAnimEnd = false;
 	//ダメージフラグの初期化
@@ -240,7 +240,7 @@ void CYui::PowerAttackAnim(float vector)
 	else { InitPos = ENEMYINIT_POS; }
 
 
-	if (!m_AnimEnd) 
+	if (!m_AttackAnimEnd) 
 	{
 		m_AnimCnt++;
 
@@ -310,11 +310,11 @@ void CYui::PowerAttackAnim(float vector)
 		{
 			m_AnimCnt = 0;
 			m_EffCnt = 0;
-			m_AnimEnd = true;
+			m_AttackAnimEnd = true;
 		}
 	}
 
-	if (!m_AnimEnd) {
+	if (!m_AttackAnimEnd) {
 		SetPosition(m_MoveX, m_MoveY, m_MoveZ);
 	}
 	else
@@ -351,7 +351,7 @@ void CYui::MagicAttackAnim(float vector)
 	else { InitPos = ENEMYINIT_POS; }
 
 	//アニメーション終了までのカウント
-	if (!m_AnimEnd)
+	if (!m_AttackAnimEnd)
 	{
 		m_AnimCnt++;
 
@@ -392,7 +392,7 @@ void CYui::MagicAttackAnim(float vector)
 			}
 		}
 
-		if (!m_AnimEnd)
+		if (!m_AttackAnimEnd)
 		{
 			SetPosition(m_MoveX, m_MoveY, m_MoveZ);
 		}
@@ -405,7 +405,7 @@ void CYui::MagicAttackAnim(float vector)
 			//変動したY座標の初期化
 			m_MoveY = InitPos.y;
 			//アニメーション終了
-			m_AnimEnd = true;
+			m_AttackAnimEnd = true;
 			AnimChange(0);
 			//アニメーションカウントの初期化
 			m_AnimCnt = 0;

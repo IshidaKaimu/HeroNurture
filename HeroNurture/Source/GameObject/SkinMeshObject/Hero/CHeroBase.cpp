@@ -5,19 +5,20 @@
 #include <codecvt>
 
 CHeroBase::CHeroBase()	
-	: m_Param          ()
-	, m_pJson          ()
-	, m_UserName       ()
-	, m_BeforeParam	   ()
-	, m_Hp             ()
-	, m_Correction	   (1.0f)
-	, m_Failure		   (false)
-	, m_MoveX		   ()
-	, m_MoveY		   ()
-	, m_MoveZ		   ()
-	, m_Damage		   ()
-	, m_AnimEnd	       ()
-	, m_DamageAnimEnd  ()
+	: m_Param            ()
+	, m_pJson            ()
+	, m_UserName         ()
+	, m_BeforeParam	     ()
+	, m_Hp               ()
+	, m_Correction	     (1.0f)
+	, m_Failure		     (false)
+	, m_MoveX		     ()
+	, m_MoveY		     ()
+	, m_MoveZ		     ()
+	, m_Damage		     ()
+	, m_AttackAnimEnd    ()
+	, m_DamageAnimEnd    ()
+	, m_AppealanceAnimEnd()
 {
 	m_pJson = std::make_unique<CJson>();
 }

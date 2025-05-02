@@ -170,8 +170,8 @@ public:
 	//ダメージフラグ
 	bool GetDamageFlag() { return m_pHero->GetDamageFlag(); }
 	//アニメーション終了フラグ
-	bool GetAnimEndFlag() { return m_pHero->GetAnimEndFlag(); }
-	void SetAnimEndFlag(bool animend) { m_pHero->SetAnimEndFlag(animend); }
+	bool GetAnimEndFlag() { return m_pHero->GetAttackAnimEndFlag(); }
+	void SetAnimEndFlag(bool animend) { m_pHero->SetAttackAnimEndFlag(animend); }
 	//ダメージアニメーション終了フラグ
 	bool GetDamageAnimEndFlag() { return m_pHero->GetDamageAnimEndFlag(); }
 	void SetDamageAnimEndFlag(bool damageanimend) { m_pHero->SetDamageAnimEndFlag(damageanimend); }
