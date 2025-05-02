@@ -158,7 +158,9 @@ public:
 
 	// =======================
 	// ゲッター・セッター関数
-	// =======================		
+	// =======================
+	// 座標の取得
+	D3DXVECTOR3 GetPosition() { return m_vPosition; }
 	//育成中のパラメータ
 	enParam GetParam()       { return  m_Param; }
 	//バトルに使用するパラメータ
@@ -188,6 +190,8 @@ public:
 	//ダメージアニメーション終了フラグ
 	bool GetDamageAnimEndFlag() { return m_DamageAnimEnd; }
 	void SetDamageAnimEndFlag(bool damageanimend) { m_DamageAnimEnd = damageanimend; }
+	//登場アニメーション終了フラグ
+	bool GetAppealanceAnimEndFlag() { return m_AppealanceAnimEnd; }
 
 	//アニメーション切り替え関数
 	virtual void AnimChange(int animno);
@@ -208,12 +212,9 @@ private:
 	void TraningResult(float stamina, float app, float& param);
 
 protected:
-	// =======================
-	// パラメータ
-	// =======================		
-	//育成中
+	//育成中のパラメータ
 	enParam m_Param;
-	//バトル
+	//バトルのパラメータ
 	enParam m_BattleParam;
 
 	//バトルするヒーローの名前
@@ -241,16 +242,14 @@ protected:
 	float m_MoveY; //Y座標
 	float m_MoveZ; //Z座標
 
-	//ダメージを受けたとき立てるフラグ
+	//----フラグ----
+	//ダメージを受けたとき立てる
 	bool m_Damage;
-
-	//攻撃アニメーションが終了したら立てるフラグ
+	//攻撃アニメーションが終了したら立てる
 	bool m_AttackAnimEnd;
-
-	//ダメージのアニメーションが終了したら立てるフラグ
+	//ダメージのアニメーションが終了したら立てる
 	bool m_DamageAnimEnd;
-
-	//登場アニメーションが終了したら立てるフラグ
+	//登場アニメーションが終了したら立てる
 	bool m_AppealanceAnimEnd;
 
 private:

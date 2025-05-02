@@ -98,7 +98,6 @@ void CHeroBase::Damage(float damage)
 void CHeroBase::AnimChange(int animno)
 {
 	m_AnimNo = animno;
-	m_AnimTime = 0;
 	m_pMesh->ChangeAnimSet(m_AnimNo, m_pAnimCtrl);
 }
 

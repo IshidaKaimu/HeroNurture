@@ -21,7 +21,7 @@ namespace Constant_RaccoonDog
 	constexpr float MOVE_SPEED = 0.2f; //移動速度
 	constexpr float MAX_UP     = 5.0f; //上下の動きの高さ上限
 	constexpr float UP_SPEED   = 0.04f;//上下の動きの速さ
-	constexpr int   HIDDEN_TIME= 140;  //非表示にするタイミング
+	constexpr int   HIDDEN_TIME= 190;  //非表示にするタイミング
 	//煙エフェクト
 	constexpr int   STEAM_TIME = 120;  //再生までの時間
 	constexpr float STEAM_DELAY= 5.0f; //タヌキからずらす値

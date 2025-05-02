@@ -86,14 +86,13 @@ void CAppearanceScene::Initialize()
 	m_pEnemyHero->AppearanceInitialize(); //敵
 
 	//カメラを動かす値の初期値
-	m_MoveCam = { 0.0f, 0.0f, 0.0f };
+	m_MoveCamPos = { 0.0f, 0.0f, 0.0f };
 }
 
 void CAppearanceScene::Update()
 {
 	CKeyManager* KeyMng = &CKeyManager::GetInstance();
 	CSceneManager* SceneMng = CSceneManager::GetInstance();
-
 
 	//フェードイン処理
 	if (!FadeIn()) { return; }
@@ -156,12 +155,12 @@ void CAppearanceScene::Debug()
 
 void CAppearanceScene::YuiAppearance()
 {
-	//動かすカメラの値をセット
-	m_pCamera->SetPos(YUI_CAMPOS.x + m_MoveCam.x, YUI_CAMPOS.y + m_MoveCam.y, YUI_CAMPOS.z + m_MoveCam.z);
-
 	switch (m_Scene)
 	{
 	case 0:
+		//動かすカメラの値をセット
+		m_pCamera->SetPos(YUI_CAMPOS.x + m_MoveCamPos.x, YUI_CAMPOS.y + m_MoveCamPos.y, YUI_CAMPOS.z + m_MoveCamPos.z);
+
 		//白フェード
 		if (m_pRaccoonDog->GetPosition().z <= FLICK_WHITEFADE)
 		{
@@ -171,9 +170,9 @@ void CAppearanceScene::YuiAppearance()
 		//タヌキがカメラのZ座標を超えたら
 		if (m_pRaccoonDog->GetPosition().z <= YUI_CAMPOS.z)
 		{
-			if (m_MoveCam.z >= -CAM_FLICK_DISTANCE)
+			if (m_MoveCamPos.z >= -CAM_FLICK_DISTANCE)
 			{
-				m_MoveCam.z -= CAM_FLICK_SPEED;
+				m_MoveCamPos.z -= CAM_FLICK_SPEED;
 			}
 		
 		}
@@ -182,11 +181,75 @@ void CAppearanceScene::YuiAppearance()
 		{
 			//シーンを進める
 			m_Scene = 1;
+			//動かすカメラのy軸
+			m_MoveCamPos.y = 1.5f;
 		}
 		break;
 	case 1:
-		if (m_pHero->GetHeroName() == "Yui") { m_pHero->AppearanceAnimation(); }
-		if (m_pEnemyHero->GetEnemyHeroName() == "Yui") { m_pEnemyHero->AppearanceAnimation(); }
+		//自分がユイを選択していた場合
+		if (m_pHero->GetHeroName() == "Yui")
+		{
+			m_pHero->AppearanceAnimation();
+			//カメラの設定
+			YuiSetCamera(D3DXVECTOR3(m_MoveCamPos.x - 2.0f, m_MoveCamPos.y, m_pHero->GetPosition().z - 2.0f),
+						 D3DXVECTOR3(m_pHero->GetPosition().x, m_MoveCamLook.y, m_pHero->GetPosition().z));
+		}
+		//敵がユイの場合
+		else if (m_pHero->GetAppealanceAnimEndFlag())
+		{
+			//カメラの設定
+			YuiSetCamera(D3DXVECTOR3(m_MoveCamPos.x - 2.0f, m_MoveCamPos.y, m_pEnemyHero->GetPosition().z - 2.0f),
+				         D3DXVECTOR3(m_pEnemyHero->GetPosition().x, m_pEnemyHero->GetPosition().y, m_pEnemyHero->GetPosition().z));
+		}
+
+		//カメラが一定の高さになるまで
+		if (!m_pHero->GetAppealanceAnimEndFlag())
+		{
+			//座標と注視点をあげる
+			m_MoveCamPos.y += CAM_MOVE_SPEED;
+			m_MoveCamLook.y += CAM_MOVE_SPEED;
+		}
+		else
+		{
+			m_AnimCnt++;
+		}
+
+		if(m_AnimCnt >= 60)
+		{
+			m_Scene = 2;
+			//動かすカメラのy軸
+			m_MoveCamPos.y  = 2.0f;  //座標
+			m_MoveCamLook.y = 2.0f; //注視点
+		}
+		break;
+	case 2:
+		//自分がユイを選択していた場合
+		if (m_pHero->GetHeroName() == "Yui")
+		{
+			m_pHero->AppearanceAnimation();
+			//カメラの設定
+			YuiSetCamera(D3DXVECTOR3(m_MoveCamPos.x, m_MoveCamPos.y, m_pHero->GetPosition().z - 4.0f),
+				         D3DXVECTOR3(m_pHero->GetPosition().x, m_MoveCamLook.y, m_pHero->GetPosition().z));
+		}
+		//敵がユイの場合
+		else if (m_pHero->GetAppealanceAnimEndFlag())
+		{
+			//カメラの設定
+			YuiSetCamera(D3DXVECTOR3(m_MoveCamPos.x, m_MoveCamPos.y, m_pEnemyHero->GetPosition().z - 4.0f),
+				         D3DXVECTOR3(m_pEnemyHero->GetPosition().x, m_pEnemyHero->GetPosition().y, m_pEnemyHero->GetPosition().z));
+		}
+
+		//カメラが一定の高さになるまで
+		if (m_MoveCamPos.y <= YUI_CAMPOS.y + 2.5f)
+		{
+			//座標と注視点をあげる
+			m_MoveCamPos.y += CAM_MOVE_SPEED;
+			m_MoveCamLook.y += CAM_MOVE_SPEED;
+		}
+		else
+		{
+			PlayWhiteFade(1, 0.01f, 1.0f);
+		}
 		break;
 	}
 }
@@ -195,10 +258,16 @@ void CAppearanceScene::KaitoAppearance()
 {
 }
 
+void CAppearanceScene::YuiSetCamera(D3DXVECTOR3 pos, D3DXVECTOR3 look)
+{
+	m_pCamera->SetPos(pos);
+	m_pCamera->SetLook(look);
+}
+
 void CAppearanceScene::YuiDraw()
 {
 	//自分がユイを使用している場合の描画
-	if (m_pHero->GetHeroName() == "Yui")
+	if (m_pHero->GetHeroName() == "Yui" && !m_YuiAnimEnd)
 	{
 		if (m_pRaccoonDog->GetHiddenFlag())
 		{
@@ -206,7 +275,7 @@ void CAppearanceScene::YuiDraw()
 		}
 	}
 	//敵がユイの場合の描画
-	if (m_pEnemyHero->GetEnemyHeroName() == "Yui")
+	if (m_YuiAnimEnd)
 	{
 		if (m_pRaccoonDog->GetHiddenFlag())
 		{

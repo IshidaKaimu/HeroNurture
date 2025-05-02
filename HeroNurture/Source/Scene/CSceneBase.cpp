@@ -6,6 +6,8 @@
 
 CSceneBase::CSceneBase()
     : m_Light     ()
+    , m_MoveCamPos     ()
+    , m_MoveCamLook    ()
     , m_DebugPos       ()
     , m_DebugUiPos     ()
     , m_DebugCamPos    ()

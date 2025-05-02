@@ -185,7 +185,7 @@ void CYui::Debug()
 void CYui::NatureHeroSelectAnimation()
 {
 	//アニメーションスピードの設定
-	m_AnimSpeed = 0.01f;
+	//m_AnimSpeed = 0.01f;
 }
 
 //バトルヒーロー選択シーンのアニメーション
@@ -195,19 +195,33 @@ void CYui::BattleHeroSelectAnimation()
 	m_AnimSpeed = 0.01f;
 }
 
+//登場シーンのアニメーション
 void CYui::AppearanceAnimation()
 {
 	//アニメーションスピードの設定
 	m_AnimSpeed = 0.01f;
 	
-	//アニメーション番号の設定
-	if (m_AnimNo != 2)
-	{
-		AnimChange(2);
-	}
+	//アニメーションの経過時間を加算		
+	m_AnimTime += m_pMesh->GetAnimSpeed();
 
-	//カメラに向けて前進
-	m_vPosition.z -= APPEALANCE_SPEED;
+	//アニメーション番号の設定	
+	if (m_vPosition.z >= -13.0f) {
+		//歩くアニメーションに
+		if (m_AnimNo != 2)
+		{
+			AnimChange(2);
+		}
+		//カメラに向けて前進
+		m_vPosition.z -= APPEALANCE_SPEED;
+	}
+	else
+	{
+		if (m_AnimNo == 2)
+		{
+			AnimChange(3);
+		}
+		m_AppealanceAnimEnd = true;
+	}
 }
 
 //育成シーンのアニメーション
@@ -234,11 +248,9 @@ void CYui::PowerAttackAnim(float vector)
 	//エフェクトハンドルの用意
 	static ::EsHandle hTornado = 2;	//竜巻エフェクト
 
-
 	//敵側か自分かで戻す初期位置を決める
 	if (vector == 1.0f) { InitPos = BATTLEINIT_POS; }
 	else { InitPos = ENEMYINIT_POS; }
-
 
 	if (!m_AttackAnimEnd) 
 	{
@@ -327,8 +339,11 @@ void CYui::PowerAttackAnim(float vector)
 		m_MoveZ = InitPos.z; //Z座標
 		//回転値を戻す
 		SetRotation(BATTLE_ROTATE.x, BATTLE_ROTATE.y, BATTLE_ROTATE.z * vector);
-
-		AnimChange(3);
+		
+		if (m_AnimNo == 4)
+		{
+			AnimChange(3);
+		}
 	}
 
 }

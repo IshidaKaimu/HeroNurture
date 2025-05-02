@@ -17,6 +17,7 @@ namespace Constant_AppearanceScene
 	//カメラ
 	constexpr float CAM_FLICK_DISTANCE  = 25.0f; //タヌキにはじかれる距離
 	constexpr float CAM_FLICK_SPEED		= 0.7f;  //タヌキにはじかれる速度
+	constexpr float CAM_MOVE_SPEED		= 0.03f;  //カメラの動く速度
 	//白フェード
 	constexpr float FLICK_WHITEFADE		= -3.0f; //カメラがタヌキにはじかれるとき
 }
@@ -86,6 +87,10 @@ private:
 	void YuiAppearance();
 	//カイト
 	void KaitoAppearance();
+	//----各ヒーローの登場シーンのカメラ設定関数----
+	void YuiSetCamera(D3DXVECTOR3 pos, D3DXVECTOR3 look);
+	void KaitoSetCamera(D3DXVECTOR3 pos, D3DXVECTOR3 look);
+
 	//----各ヒーローの条件付き描画----
 	//ユイ
 	void YuiDraw();
@@ -109,8 +114,10 @@ private:
 	//地面
 	std::unique_ptr<CGround> m_pGround;
 
-	//カメラを動かす値
-	D3DXVECTOR3 m_MoveCam;
+	//----フラグ----
+	//各ヒーローのアニメーション、カメラ処理が終了したとき
+	bool m_YuiAnimEnd;   //ユイ
+	bool m_KaitoAnimEnd; //カイト
 
 };
 
