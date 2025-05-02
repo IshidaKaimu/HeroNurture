@@ -14,21 +14,19 @@ private:
 
 public:
 	//初期化関数
-	void Initialize() override;
-	//固有攻撃アニメーション時の初期化
-	virtual void UniqueInit() override;
+	void Initialize()   { m_pEnemyHero->Initialize(); }
 
 	//データ読み込み関数
-	void LoadMeshData() override;
+	void LoadMeshData() { m_pEnemyHero->LoadMeshData(); };
 
 	//更新関数
-	void Update() override;
+	void Update()		{ m_pEnemyHero->Update(); };
 
 	//描画関数
-	void Draw() override;
+	void Draw()			{ m_pEnemyHero->Draw(); };
 
 	//デバッグ関数
-	void Debug() override;
+	void Debug()		{ m_pEnemyHero->Debug(); };
 
 	//作成するヒーロークラスの設定
 	void CreateEnemyHero(enHeroList list);
@@ -55,6 +53,9 @@ public:
 	float MagicAttack()  override {  return m_pEnemyHero->MagicAttack(); }
 	//固有攻撃(各ヒーローの一番高いステータスを反映した攻撃)
 	float UniqueAttack() override {  return m_pEnemyHero->UniqueAttack(); }
+
+	//バトル開始時登場シーンのアニメーション
+	void AppearanceAnimation() { m_pEnemyHero->AppearanceAnimation(); };
 
 	// =======================
 	// 各バトルフェーズでのアニメーション

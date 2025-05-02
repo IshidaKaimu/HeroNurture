@@ -14,9 +14,11 @@ namespace Constant_AppearanceScene
 	const D3DXVECTOR3 KAITO_CAMPOS  = { 1.0f, 4.0f, 0.0f }; //座標
 	const D3DXVECTOR3 KAITO_CAMLOOK = { 1.0f, 4.0f, 0.0f }; //注視点
 	//----イベントシーン----
-	constexpr float CAM_FLICK_DISTANCE  = 25.0f; //タヌキにカメラがはじかれた距離
-	constexpr float CAM_FLICK_SPEED		= 0.7f;  //タヌキにカメラがはじかれる速度
-
+	//カメラ
+	constexpr float CAM_FLICK_DISTANCE  = 25.0f; //タヌキにはじかれる距離
+	constexpr float CAM_FLICK_SPEED		= 0.7f;  //タヌキにはじかれる速度
+	//白フェード
+	constexpr float FLICK_WHITEFADE		= -3.0f; //カメラがタヌキにはじかれるとき
 }
 
 //=====================================
@@ -79,11 +81,17 @@ public:
 	void Debug();
 
 private:
-	//----各ヒーローの登場シーンの処理関数----
+	//----各ヒーローの登場シーンのアニメーション関数----
 	//ユイ
 	void YuiAppearance();
 	//カイト
 	void KaitoAppearance();
+	//----各ヒーローの条件付き描画----
+	//ユイ
+	void YuiDraw();
+	//カイト
+	void KaitoDraw();
+
 private:
 	//カメラマネージャー
 	CCameraManager* m_pCamera;

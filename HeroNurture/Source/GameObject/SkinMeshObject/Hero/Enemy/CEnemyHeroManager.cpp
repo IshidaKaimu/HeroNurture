@@ -11,41 +11,6 @@ CEnemyHeroManager::~CEnemyHeroManager()
 {
 }
 
-//初期化関数
-void CEnemyHeroManager::Initialize()
-{
-    m_pEnemyHero->EnemyInit();
-}
-
-//固有攻撃アニメーションシーンでの初期化
-void CEnemyHeroManager::UniqueInit()
-{
-    m_pEnemyHero->UniqueInit();
-}
-
-//メッシュデータの設定
-void CEnemyHeroManager::LoadMeshData()
-{
-    m_pEnemyHero->LoadMeshData();
-}
-
-//更新関数
-void CEnemyHeroManager::Update()
-{
-    m_pEnemyHero->Update();
-}
-
-//描画関数
-void CEnemyHeroManager::Draw()
-{
-    m_pEnemyHero->Draw();
-}
-
-//デバッグ関数
-void CEnemyHeroManager::Debug()
-{
-    m_pEnemyHero->Debug();
-}
 
 //作成するヒーローの設定
 void CEnemyHeroManager::CreateEnemyHero(enHeroList list)

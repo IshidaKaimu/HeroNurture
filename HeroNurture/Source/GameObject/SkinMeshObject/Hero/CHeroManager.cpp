@@ -18,54 +18,6 @@ CHeroManager::~CHeroManager()
 {
 }
 
-//初期化関数
-void CHeroManager::Initialize()
-{
-    m_pHero->Initialize();
-}
-
-//バトルシーンのみで使用する初期化
-void CHeroManager::BattleInitialize()
-{
-    m_pHero->BattleInitialize();
-}
-
-//固有攻撃の際の初期化
-void CHeroManager::UniqueInit()
-{
-    m_pHero->UniqueInit();
-}
-
-//データ読み込み関数
-void CHeroManager::LoadMeshData()
-{
-    m_pHero->LoadMeshData();
-}
-
-//パラメータ情報の読み込み
-void CHeroManager::LoadParamData(const json& jsondata)
-{
-    m_pHero->LoadParamData(jsondata);
-}
-
-//更新関数
-void CHeroManager::Update()
-{
-    m_pHero->Update();
-}
-
-//描画関数
-void CHeroManager::Draw()
-{
-    m_pHero->Draw();
-}
-
-//デバッグ関数
-void CHeroManager::Debug()
-{
-    m_pHero->Debug();
-}
-
 //ヒーロー構築関数
 void CHeroManager::CreateHero(enHeroList list)
 {
@@ -82,18 +34,6 @@ std::unique_ptr<CHeroBase> CHeroManager::Create(enHeroList list)
     case CHeroManager::Max:     return nullptr;
     default:                    return nullptr;
     }
-}
-
-//ヒーロー選択シーンのアニメーション
-void CHeroManager::NatureHeroSelectAnimation()
-{
-    m_pHero->NatureHeroSelectAnimation();
-}
-
-//育成シーンのアニメーション
-void CHeroManager::NatureAnimation(int no)
-{
-    m_pHero->NatureAnimation(no);
 }
 
 //スタミナの減少関数

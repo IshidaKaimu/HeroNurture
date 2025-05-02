@@ -28,7 +28,7 @@ public:
 	//バトルシーンで使用する初期化
 	void BattleInitialize() override;
 	//敵になった際の初期化関数
-	void EnemyInit() override;
+	void EnemyInitialize() override;
 
 	//データ読み込み関数
 	void LoadMeshData() override;

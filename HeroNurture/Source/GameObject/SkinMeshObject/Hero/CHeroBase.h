@@ -76,9 +76,9 @@ public:
 	//バトルシーンで使用する初期化
 	virtual void BattleInitialize() {};
 	//敵になった際の初期化関数
-	virtual void EnemyInit() {};
-	//固有攻撃アニメーション時の初期化
-	virtual void UniqueInit() {};
+	virtual void EnemyInitialize() {};
+	//バトル開始時登場シーンでの初期化
+	virtual void AppearanceInitialize() {};
 
 	//データ読み込み関数
 	virtual void LoadMeshData() {};
@@ -110,6 +110,8 @@ public:
 	virtual void NatureHeroSelectAnimation() {};
 	//バトルヒーロー選択シーン
 	virtual void BattleHeroSelectAnimation() {};
+	//バトル開始時登場シーン
+	virtual void AppearanceAnimation() {};
 	//育成シーン
 	virtual void NatureAnimation(int no) {};
 
