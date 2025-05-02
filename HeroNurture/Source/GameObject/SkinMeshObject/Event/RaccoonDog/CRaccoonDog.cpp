@@ -97,7 +97,6 @@ void CRaccoonDog::Draw()
 //ã‰º‚Ì“®‚«
 void CRaccoonDog::UpDown()
 {
-
 	//ƒJƒƒ‰‚É“ž’B‚·‚é‚Ü‚Å‚ÌŠÔ
 	if (!m_ReachCamFlag) 
 	{

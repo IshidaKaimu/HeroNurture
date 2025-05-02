@@ -183,8 +183,8 @@ public:
 	bool GetDamageFlag() { return m_Damage; }
 	void SetDamageFlag(bool damage) { m_Damage = damage; }
 	//アニメーション終了フラグ
-	bool GetAnimEndFlag() { return m_AnimEnd; }
-	void SetAnimEndFlag(bool animend) { m_AnimEnd = animend; }
+	bool GetAttackAnimEndFlag()             { return m_AttackAnimEnd; }
+	void SetAttackAnimEndFlag(bool animend) { m_AttackAnimEnd = animend; }
 	//ダメージアニメーション終了フラグ
 	bool GetDamageAnimEndFlag() { return m_DamageAnimEnd; }
 	void SetDamageAnimEndFlag(bool damageanimend) { m_DamageAnimEnd = damageanimend; }
@@ -244,11 +244,14 @@ protected:
 	//ダメージを受けたとき立てるフラグ
 	bool m_Damage;
 
-	//アニメーションが終了したら立てるフラグ
-	bool m_AnimEnd;
+	//攻撃アニメーションが終了したら立てるフラグ
+	bool m_AttackAnimEnd;
 
 	//ダメージのアニメーションが終了したら立てるフラグ
 	bool m_DamageAnimEnd;
+
+	//登場アニメーションが終了したら立てるフラグ
+	bool m_AppealanceAnimEnd;
 
 private:
 	//パラメータ更新前のパラメータ情報

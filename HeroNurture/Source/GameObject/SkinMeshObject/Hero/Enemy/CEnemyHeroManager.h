@@ -91,8 +91,8 @@ public:
 	//ダメージフラグ
 	bool GetDamageFlag() { return m_pEnemyHero->GetDamageFlag(); }
 	//アニメーション終了フラグ
-	bool GetAnimEndFlag() { return m_pEnemyHero->GetAnimEndFlag(); }
-	void SetAnimEndFlag(bool animend) { m_pEnemyHero->SetAnimEndFlag(animend); }
+	bool GetAnimEndFlag() { return m_pEnemyHero->GetAttackAnimEndFlag(); }
+	void SetAnimEndFlag(bool animend) { m_pEnemyHero->SetAttackAnimEndFlag(animend); }
 	//ダメージアニメーション終了フラグ
 	bool GetDamageAnimEndFlag() { return m_pEnemyHero->GetDamageAnimEndFlag(); }
 	void SetDamageAnimEndFlag(bool damageanimend) { m_pEnemyHero->SetDamageAnimEndFlag(damageanimend); }

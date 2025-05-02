@@ -38,7 +38,7 @@ void CKaito::BattleInitialize()
 	SetRotation(BATTLE_ROTATE);
 
 	//アニメーション終了フラグの初期化
-	m_AnimEnd = false;
+	m_AttackAnimEnd = false;
 	//ダメージアニメーション終了フラグの初期化
 	m_DamageAnimEnd = false;
 	//ダメージフラグの初期化
@@ -66,7 +66,7 @@ void CKaito::EnemyInitialize()
 	SetRotation(ENEMY_ROTATE);
 
 	//アニメーション終了フラグの初期化
-	m_AnimEnd = false;
+	m_AttackAnimEnd = false;
 	//ダメージアニメーション終了フラグの初期化
 	m_DamageAnimEnd = false;
 	//ダメージフラグの初期化
@@ -213,7 +213,7 @@ void CKaito::PowerAttackAnim(float vector)
 
 
 	//待機アニメーション時
-	if (!m_AnimEnd) 
+	if (!m_AttackAnimEnd) 
 	{
 		m_AnimCnt++;
 
@@ -237,7 +237,7 @@ void CKaito::PowerAttackAnim(float vector)
 		if (m_AnimNo == 2)
 		{
 			//アニメーション終了までのカウント
-			if (!m_AnimEnd) { m_AnimCnt++; }
+			if (!m_AttackAnimEnd) { m_AnimCnt++; }
 
 			m_EffCnt++;
 
@@ -267,7 +267,7 @@ void CKaito::PowerAttackAnim(float vector)
 			{
 				m_AnimCnt = 0;
 				m_EffCnt = 0;
-				m_AnimEnd = true;
+				m_AttackAnimEnd = true;
 			}
 		}
 	}
@@ -287,7 +287,7 @@ void CKaito::MagicAttackAnim(float vector)
 	//どのアニメーションの後でも再生速度を変えない
 	m_AnimSpeed = 0.01f;
 
-	if (!m_AnimEnd)
+	if (!m_AttackAnimEnd)
 	{
 		//待機中の斬るアニメーションだった場合
 		if (m_AnimNo == 3)
@@ -309,7 +309,7 @@ void CKaito::MagicAttackAnim(float vector)
 		if (m_AnimNo == 6)
 		{
 			//アニメーション終了までのカウント
-			if (!m_AnimEnd) { m_AnimCnt++; }
+			if (!m_AttackAnimEnd) { m_AnimCnt++; }
 
 			m_AnimTime += m_pMesh->GetAnimSpeed();
 
@@ -336,7 +336,7 @@ void CKaito::MagicAttackAnim(float vector)
 
 		if (m_EffCnt >= 120)
 		{
-			m_AnimEnd = true;
+			m_AttackAnimEnd = true;
 			m_EffCnt = 0;
 		}
 	}
