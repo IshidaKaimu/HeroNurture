@@ -34,7 +34,7 @@ void CRaccoonDog::AppearanceAnim(float camz)
 	static ::EsHandle hSteam = -1;	//煙エフェクト
 	//煙エフェクト
 	CEffect* Eff = CEffect::GetInstance();
-	Eff->Speed(hSteam, 1.0f);
+	Eff->Speed(hSteam, 0.4f);
 	Eff->Scale(hSteam, 0.1f, 0.1f, 0.1f);
 	Eff->Rotate(hSteam, 0.0f, 0.0f, 0.0f);
 

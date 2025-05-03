@@ -133,6 +133,8 @@ public:
 	// =======================
 	// ゲッター・セッター関数
 	// =======================
+	// 座標の取得
+	D3DXVECTOR3 GetPosition() { return m_pHero->GetPosition(); }	
 	//選択したヒーロー
 	void SelectHero(enHeroList list) { m_SelectHero = list; }
 	enHeroList GetSelectHero() { return m_SelectHero; }
@@ -175,6 +177,8 @@ public:
 	//ダメージアニメーション終了フラグ
 	bool GetDamageAnimEndFlag() { return m_pHero->GetDamageAnimEndFlag(); }
 	void SetDamageAnimEndFlag(bool damageanimend) { m_pHero->SetDamageAnimEndFlag(damageanimend); }
+	//登場アニメーション終了フラグ
+	bool GetAppealanceAnimEndFlag() { return m_pHero->GetAppealanceAnimEndFlag(); }
 
 private:
 	//他からアクセスすることがないように

@@ -96,6 +96,10 @@ protected:
 	//ライト情報
 	LIGHT       m_Light;
 
+	//----カメラを移動させる値----
+	D3DXVECTOR3 m_MoveCamPos; //座標
+	D3DXVECTOR3 m_MoveCamLook;//注視点
+
 	//----デバッグ用情報----
 	//オブジェクト位置
 	D3DXVECTOR3 m_DebugPos;
