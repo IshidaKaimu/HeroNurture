@@ -51,6 +51,10 @@ class CEffect;
 //----オブジェクトクラス----
 //タヌキ
 class CRaccoonDog;
+//ユイ
+class CYui;
+//カイト
+class CKaito;
 //地面
 class CGround;
 
@@ -102,7 +106,7 @@ private:
 	CCameraManager* m_pCamera;
 
 	//自分が使うヒーロー
-	CHeroManager*      m_pHero;
+	std::unique_ptr<CYui>*  m_pYui;
 	//敵のヒーロー
 	CEnemyHeroManager* m_pEnemyHero;
 
