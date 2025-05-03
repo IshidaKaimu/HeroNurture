@@ -82,12 +82,6 @@ std::string CHeroManager::GetSelectHeroName()
     return m_HeroName;
 }
 
-std::string CHeroManager::GetSelectBattleHeroName()
-{
-
-    return std::string();
-}
-
 
 
 
