@@ -115,9 +115,12 @@ private:
 	std::unique_ptr<CGround> m_pGround;
 
 	//----フラグ----
+	//各ヒーローの非表示フラグ
+	bool m_YuiHiddenFlag;	//ユイ
+	bool m_KaitoHiddenFlag; //カイト
 	//各ヒーローのアニメーション、カメラ処理が終了したとき
-	bool m_YuiAnimEnd;   //ユイ
-	bool m_KaitoAnimEnd; //カイト
+	bool m_YuiAnimEndFlag;      //ユイ
+	bool m_KaitoAnimEndFlag;    //カイト
 
 };
 

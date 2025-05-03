@@ -109,7 +109,7 @@ void CNatureResultScene::Update()
     if (m_SceneTransitionFlg && FadeOut())
     {
         CSceneManager::GetInstance()->SetIsDataLoaded(false);
-        m_pJson->SaveResult(HeroMng->GetHeroName(), m_ResultWriter);
+        m_pJson->SaveResult(HeroMng->GetSelectHeroName(), m_ResultWriter);
         CSceneManager::GetInstance()->LoadCreate(CSceneManager::ModeSelect);
     }
 }

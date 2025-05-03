@@ -537,7 +537,7 @@ void CNatureScene::SaveParam()
     //トレーニング実行時にパラメータ情報を書き込むファイルの階層
     std::string ParamFileHierarchy = "Data\\Acount\\" + UserName + "\\Parameter\\";
     //セットされたヒーローのパラメータ情報の書き込み
-    m_pJson->SaveNatureData(m_pHero->GetHeroName(), m_ParamWriter, ParamFileHierarchy);
+    m_pJson->SaveNatureData(m_pHero->GetSelectHeroName(), m_ParamWriter, ParamFileHierarchy);
 }
 
 //各種パラメータの描画

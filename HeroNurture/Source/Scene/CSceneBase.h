@@ -117,8 +117,6 @@ protected:
 	bool        m_IsScene;  
     //シーン遷移フラグ
     bool        m_SceneTransitionFlg;
-	//白フェードフラグ
-	bool        m_WhiteFlag;
 
 	//選択中番号
     int         m_SelectNo;
@@ -142,6 +140,7 @@ private:
 	bool		m_AlphaChange;					//フェード回数制御用フラグ
 	int         m_WhiteFadeCnt;					//フェード回数のカウント
 	float       m_WhiteFadeAlpha;				//フェード画像のα値
+
 	//操作方法指示バー
 	std::unique_ptr <CUIObject> m_pControlBar;  //操作方法指示バー画像
 };
