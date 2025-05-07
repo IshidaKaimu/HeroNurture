@@ -15,7 +15,7 @@ class CNatureScene;
 class CTraningScene;
 class CTraningResultScene;
 class CBattleHeroSelectScene;
-class CAppearanceScene;
+class CYuiAppearanceScene;
 class CBattleScene;
 class CBattleResultScene;
 
@@ -48,7 +48,8 @@ public:
 		Training,
 		NatureResult,
 		BattleHeroSelect,
-		Appearance,
+		YuiAppearance,
+		KaitoAppearance,
 		Battle,
 		UniqueAttack,
 		BattleResult,

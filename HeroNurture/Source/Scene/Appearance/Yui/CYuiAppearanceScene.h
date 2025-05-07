@@ -62,15 +62,15 @@ class CKaito;
 class CGround;
 
 //=====================================
-// ヒーロー登場シーンクラス
+// ユイ登場シーンクラス
 // 制作者:石田櫂夢
 //=====================================
-class CAppearanceScene
+class CYuiAppearanceScene
 	: public CSceneBase
 {
 public:
-	CAppearanceScene();
-	~CAppearanceScene();
+	CYuiAppearanceScene();
+	~CYuiAppearanceScene();
 
 	//構築関数
 	void Create()	  override;
@@ -92,16 +92,8 @@ private:
 	//----各ヒーローの登場シーンのアニメーション関数----
 	//ユイ
 	void YuiAppearance();
-	//カイト
-	void KaitoAppearance();
 	//----各ヒーローの登場シーンのカメラ設定関数----
 	void SetCamera(D3DXVECTOR3 pos, D3DXVECTOR3 look);
-
-	//----各ヒーローの条件付き描画----
-	//ユイ
-	void YuiDraw();
-	//カイト
-	void KaitoDraw();
 
 private:
 	//カメラマネージャー
@@ -120,12 +112,10 @@ private:
 	std::unique_ptr<CGround> m_pGround;
 
 	//----フラグ----
-	//各ヒーローの非表示フラグ
-	bool m_YuiHiddenFlag;	//ユイ
-	bool m_KaitoHiddenFlag; //カイト
-	//各ヒーローのアニメーション、カメラ処理が終了したとき
-	bool m_YuiAnimEndFlag;      //ユイ
-	bool m_KaitoAnimEndFlag;    //カイト
+	//非表示フラグ
+	bool m_HiddenFlag;	//ユイ
+	//アニメーション、カメラ処理が終了したとき
+	bool m_AnimEndFlag;      //ユイ
 
 };
 

@@ -9,7 +9,8 @@
 #include "Scene\NatureResult\CNatureResultScene.h"
 #include "Scene\BattleHeroSelect\CBattleHeroSelectScene.h"
 #include "Scene\Battle\CBattleScene.h"
-#include "Scene\Appearance\CAppearanceScene.h"
+#include "Scene\Appearance\Yui\CYuiAppearanceScene.h"
+#include "Scene\Appearance\Kaito\CKaitoAppearanceScene.h"
 #include "Scene\Battle\UniqueAttack\CUniqueAttack.h"
 #include "Scene\BattleResult\CBattleResultScene.h"
 #include "ImGui\ImGuiManager\ImGuiManager.h"
@@ -76,7 +77,8 @@ void CSceneManager::Update()
     if (ImGui::Button(JAPANESE("修行")))               { LoadCreate(enSceneList::Training); }
     if (ImGui::Button(JAPANESE("育成結果")))           { LoadCreate(enSceneList::NatureResult); }
     if (ImGui::Button(JAPANESE("バトルヒーロー選択"))) { LoadCreate(enSceneList::BattleHeroSelect); }
-    if (ImGui::Button(JAPANESE("登場シーン")))         { LoadCreate(enSceneList::Appearance); }
+    if (ImGui::Button(JAPANESE("ユイの登場シーン")))   { LoadCreate(enSceneList::YuiAppearance); }
+    if (ImGui::Button(JAPANESE("カイトの登場シーン"))) { LoadCreate(enSceneList::KaitoAppearance); }
     if (ImGui::Button(JAPANESE("バトル")))             { LoadCreate(enSceneList::Battle); }
     if (ImGui::Button(JAPANESE("バトル結果")))         { LoadCreate(enSceneList::BattleResult); }
     ImGui::End();
@@ -124,7 +126,8 @@ std::unique_ptr<CSceneBase> CSceneManager::Create(enSceneList List)
     case CSceneManager::Training:         return std::make_unique<CTraningScene>();
     case CSceneManager::NatureResult:     return std::make_unique<CNatureResultScene>();
     case CSceneManager::BattleHeroSelect: return std::make_unique<CBattleHeroSelectScene>();
-    case CSceneManager::Appearance      : return std::make_unique<CAppearanceScene>();
+    case CSceneManager::YuiAppearance:    return std::make_unique<CYuiAppearanceScene>();
+    case CSceneManager::KaitoAppearance:  return std::make_unique<CKaitoAppearanceScene>();
     case CSceneManager::Battle:           return std::make_unique<CBattleScene>();
     case CSceneManager::BattleResult:     return std::make_unique<CBattleResultScene>();
     case CSceneManager::UniqueAttack:     return std::make_unique<CUniqueAttack>();
