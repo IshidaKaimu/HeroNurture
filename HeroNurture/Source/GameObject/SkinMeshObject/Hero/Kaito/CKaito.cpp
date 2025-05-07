@@ -90,6 +90,9 @@ void CKaito::AppearanceInitialize()
 {
 	//座標の設定
 	SetPosition(APPEALANCE_POS);
+
+	//アニメーション関連の初期化
+	AnimInit();
 }
 
 //メッシュデータ読み込み関数
@@ -173,6 +176,16 @@ void CKaito::BattleHeroSelectAnimation()
 //バトル開始時登場シーンのアニメーション
 void CKaito::AppearanceAnimation()
 {
+	//アニメーション番号が0以外だった場合0に
+	if (m_AnimNo != 0)
+	{
+		AnimChange(0);
+	}
+
+	if (m_vPosition.y <= AFTER_POS_Y)
+	{
+		m_vPosition.y += APPEALANCE_SPEED;
+	}
 
 }
 

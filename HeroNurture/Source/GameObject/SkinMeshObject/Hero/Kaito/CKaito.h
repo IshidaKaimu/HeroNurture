@@ -9,7 +9,8 @@
 namespace Constant_Kaito
 {
 	//バトル開始時登場シーン
-	const D3DXVECTOR3 APPEALANCE_POS = { 0.0f, 1.0f, -5.0f }; //初期座標
+	const D3DXVECTOR3 APPEALANCE_POS = { 0.0f, 2.0f, -5.0f }; //初期座標
+	constexpr float AFTER_POS_Y = 2.0f;                       //移動後座標
 	const float APPEALANCE_SPEED = 0.05f;				      //移動速度
 	//バトルシーン
 	const D3DXVECTOR3 BATTLE_SCALE = { 0.3f,0.3f,0.3f };//拡縮
