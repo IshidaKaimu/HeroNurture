@@ -5,6 +5,9 @@
 #include "Scene\CSceneManager.h"
 #include "ImGui\ImGuiManager\ImGuiManager.h"
 
+//定数の名前空間
+using namespace Constant_Kaito;
+
 CKaito::CKaito()
 	: m_BonePos		()
 	, m_Run			()
@@ -34,7 +37,7 @@ void CKaito::BattleInitialize()
 	AnimInit();
 
 	SetPosition(BATTLEINIT_POS);
-	SetScale(BATTLE_SCALE_KAITO);
+	SetScale(BATTLE_SCALE);
 	SetRotation(BATTLE_ROTATE);
 
 	//アニメーション終了フラグの初期化
@@ -62,7 +65,7 @@ void CKaito::EnemyInitialize()
 	AnimInit();
 
 	SetPosition(ENEMYINIT_POS);
-	SetScale(BATTLE_SCALE_KAITO);
+	SetScale(BATTLE_SCALE);
 	SetRotation(ENEMY_ROTATE);
 
 	//アニメーション終了フラグの初期化
@@ -81,6 +84,12 @@ void CKaito::EnemyInitialize()
 	m_MoveY = m_vPosition.y;
 	m_MoveZ = m_vPosition.z;
 
+}
+
+void CKaito::AppearanceInitialize()
+{
+	//座標の設定
+	SetPosition(APPEALANCE_POS);
 }
 
 //メッシュデータ読み込み関数
@@ -161,6 +170,12 @@ void CKaito::BattleHeroSelectAnimation()
 {
 }
 
+//バトル開始時登場シーンのアニメーション
+void CKaito::AppearanceAnimation()
+{
+
+}
+
 //育成シーンのアニメーション
 void CKaito::NatureAnimation(int no)
 {
@@ -171,6 +186,7 @@ void CKaito::NatureAnimation(int no)
 //行動選択中のアニメーション
 void CKaito::MoveSelectAnim()
 {
+
 	if (m_AnimNo == 0) {
 		//アニメーションの経過時間を加算
 		m_AnimTime += m_pMesh->GetAnimSpeed();
@@ -341,12 +357,6 @@ void CKaito::MagicAttackAnim(float vector)
 		}
 	}
 }
-
-//固有攻撃アニメーション
-void CKaito::UniqueAttackAnim()
-{
-}
-
 
 //ダメージ中アニメーション
 void CKaito::DamageAnim(float vector)

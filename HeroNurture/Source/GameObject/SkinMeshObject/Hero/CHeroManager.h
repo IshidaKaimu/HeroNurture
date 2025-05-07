@@ -128,7 +128,9 @@ public:
 	void BattleInitPos() { m_pHero->SetPosition(BATTLEINIT_POS); }
 
 	//選択しているヒーローを文字列で返す関数
-	std::string GetHeroName();
+	std::string GetSelectHeroName();
+	//選択されているバトルに使用されるヒーローを文字列で返す
+	std::string GetSelectBattleHeroName();
 
 	// =======================
 	// ゲッター・セッター関数
@@ -190,6 +192,8 @@ protected:
 
 	//選択されているヒーロー
 	enHeroList m_SelectHero;
+	//選択されているバトルに使用するヒーロー
+	enHeroList m_SelectBattleHero;
 
 	//トレーニングリスト
 	enTraningList m_Traning;

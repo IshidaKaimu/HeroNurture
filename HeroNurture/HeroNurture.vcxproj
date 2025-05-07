@@ -258,7 +258,6 @@
     <ClCompile Include="Source\GameObject\SkinMeshObject\CSkinMeshObject.cpp" />
     <ClCompile Include="Source\GameObject\SkinMeshObject\Hero\Kaito\CKaito.cpp" />
     <ClCompile Include="Source\GameObject\SkinMeshObject\Hero\CHeroBase.cpp" />
-    <ClCompile Include="Source\GameObject\SkinMeshObject\Hero\Zako\CZako.cpp" />
     <ClCompile Include="Source\GameObject\SpriteObject\CSpriteObject.cpp" />
     <ClCompile Include="Source\GameObject\SpriteObject\Explosion\CExplosion.cpp" />
     <ClCompile Include="Source\GameObject\StaticMeshObject\Character\CCharacter.cpp" />
@@ -330,7 +329,6 @@
     <ClInclude Include="Source\GameObject\SkinMeshObject\CSkinMeshObject.h" />
     <ClInclude Include="Source\GameObject\SkinMeshObject\Hero\Kaito\CKaito.h" />
     <ClInclude Include="Source\GameObject\SkinMeshObject\Hero\CHeroBase.h" />
-    <ClInclude Include="Source\GameObject\SkinMeshObject\Hero\Zako\CZako.h" />
     <ClInclude Include="Source\GameObject\SpriteObject\CSpriteObject.h" />
     <ClInclude Include="Source\GameObject\SpriteObject\Explosion\CExplosion.h" />
     <ClInclude Include="Source\GameObject\StaticMeshObject\Character\CCharacter.h" />

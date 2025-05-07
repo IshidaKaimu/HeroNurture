@@ -3,13 +3,13 @@
 #include "SkinMeshObject\Hero\Kaito\CKaito.h"
 
 CHeroManager::CHeroManager()
-    : m_pHero         ()
-    , m_SelectHero     ()
-    , m_Traning      ()
-    , m_HeroName     ()
-    , m_Stamina      ()
-    , m_BeforeStamina()
-    , m_AfterStamina ()
+    : m_pHero           ()
+    , m_SelectHero      ()
+    , m_Traning         ()
+    , m_HeroName        ()
+    , m_Stamina         ()
+    , m_BeforeStamina   ()
+    , m_AfterStamina    ()
 {
     m_pHero = std::make_unique<CYui>();
 }
@@ -66,7 +66,7 @@ void CHeroManager::StaminaRecovery()
 }
 
 //ƒq[ƒ[–¼‚ğ•¶š—ñ‚Å•Ô‚·ŠÖ”
-std::string CHeroManager::GetHeroName()
+std::string CHeroManager::GetSelectHeroName()
 {
     switch (m_SelectHero)
     {

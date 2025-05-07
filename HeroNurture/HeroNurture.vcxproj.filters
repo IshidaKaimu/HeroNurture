@@ -185,9 +185,6 @@
     <ClInclude Include="Source\GameObject\SkinMeshObject\Hero\Kaito\CKaito.h">
       <Filter>Source\GameObject\SkinMeshObject\Kaito</Filter>
     </ClInclude>
-    <ClInclude Include="Source\GameObject\SkinMeshObject\Hero\Zako\CZako.h">
-      <Filter>Source\GameObject\SkinMeshObject\Zako</Filter>
-    </ClInclude>
     <ClInclude Include="Source\GameObject\SkinMeshObject\Hero\CHeroBase.h">
       <Filter>Source\GameObject\SkinMeshObject\Player</Filter>
     </ClInclude>
@@ -358,9 +355,6 @@
     </ClCompile>
     <ClCompile Include="Source\GameObject\SkinMeshObject\Hero\Kaito\CKaito.cpp">
       <Filter>Source\GameObject\SkinMeshObject\Kaito</Filter>
-    </ClCompile>
-    <ClCompile Include="Source\GameObject\SkinMeshObject\Hero\Zako\CZako.cpp">
-      <Filter>Source\GameObject\SkinMeshObject\Zako</Filter>
     </ClCompile>
     <ClCompile Include="Source\GameObject\SkinMeshObject\Hero\CHeroBase.cpp">
       <Filter>Source\GameObject\SkinMeshObject\Player</Filter>

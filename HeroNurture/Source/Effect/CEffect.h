@@ -47,6 +47,7 @@ public:
 		Kaito_Power,
 		Kaito_Magic,
 		Steam,
+		MagicSircle,
 		Max,
 	};
 

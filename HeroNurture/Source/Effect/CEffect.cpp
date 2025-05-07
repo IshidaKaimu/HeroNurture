@@ -93,6 +93,7 @@ HRESULT CEffect::LoadData()
 		{enList::Kaito_Power,u"Data\\Effekseer\\Sword.efk"},
 		{enList::Kaito_Magic,u"Data\\Effekseer\\MagicKaito.efk"},
 		{enList::Steam,u"Data\\Effekseer\\Steam.efk"},
+		{enList::MagicSircle,u"Data\\Effekseer\\MagicSircle.efk"},
 	};
 	//配列の最大要素数を算出(配列全体のサイズ/配列一つ分のサイズ)
 	int list_max = sizeof( EList ) / sizeof( EList[0] );
