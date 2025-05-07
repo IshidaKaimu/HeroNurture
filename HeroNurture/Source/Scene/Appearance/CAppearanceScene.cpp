@@ -242,7 +242,6 @@ void CAppearanceScene::YuiAppearance()
 		//動かすカメラの値をセット
 		m_pCamera->SetPos(YUI_CAMPOS.x + m_MoveCamPos.x, YUI_CAMPOS.y + m_MoveCamPos.y, YUI_CAMPOS.z + m_MoveCamPos.z);
 
-
 		//白フェード
 		if (m_pRaccoonDog->GetPosition().z <= FLICK_WHITEFADE)
 		{
