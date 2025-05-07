@@ -188,7 +188,7 @@ void CKaitoAppearanceScene::KaitoAppearance()
 
 		if (m_MoveCamLook.y <= 4.0f)
 		{
-			m_MoveCamLook.y += 
+			m_MoveCamLook.y += CAM_MOVE_SPEED;
 		}
 		break;
 	default:
