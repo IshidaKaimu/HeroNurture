@@ -11,6 +11,8 @@
 #include "KeyManager\CKeyManager.h"
 #include "Effect\CEffect.h"
 #include "SkinMeshObject\Event\RaccoonDog\CRaccoonDog.h"
+#include "SkinMeshObject\Hero\Yui\CYui.h"
+#include "SkinMeshObject\Hero\Kaito\CKaito.h"
 #include "StaticMeshObject\Ground\CGround.h"
 
 //定数の名前空間
@@ -18,8 +20,8 @@ using namespace Constant_AppearanceScene;
 
 CAppearanceScene::CAppearanceScene()
 	:m_pCamera         (&CCameraManager::GetInstance())
-	,m_pHero	       (&CHeroManager::GetInstance())
-	,m_pEnemyHero      (&CEnemyHeroManager::GetInstance())
+	,m_pYui	           ()
+	,m_pKaito          ()
 	,m_pRaccoonDog     ()
 	,m_pGround	       ()
 	,m_YuiHiddenFlag   ()
@@ -35,19 +37,12 @@ CAppearanceScene::~CAppearanceScene()
 
 void CAppearanceScene::Create()
 {
-	//選択されたヒーローのインスタンス生成
-	if (m_pHero->GetSelectHeroName() == "Yui")
-	{
-		m_pHero->CreateHero(CHeroManager::Yui);
-		//選択されなかったヒーローを敵として生成
-		m_pEnemyHero->CreateEnemyHero(CHeroManager::Kaito);
-	}
-	else if (m_pHero->GetSelectHeroName() == "Kaito")
-	{
-		m_pHero->CreateHero(CHeroManager::Kaito);
-		//選択されなかったヒーローを敵として生成
-		m_pEnemyHero->CreateEnemyHero(CHeroManager::Yui);
-	}
+	CHeroManager* HeroMng = &CHeroManager::GetInstance();
+
+	//ユイ
+	m_pYui = make_unique<CYui>();
+	//カイト
+	m_pKaito = make_unique<CKaito>();
 
 	//タヌキ
 	m_pRaccoonDog = make_unique<CRaccoonDog>();
@@ -59,16 +54,13 @@ void CAppearanceScene::Create()
 void CAppearanceScene::Releace()
 {
     m_pCamera    = nullptr;
-    m_pHero      = nullptr;
-	m_pEnemyHero = nullptr;
 }
 
 void CAppearanceScene::LoadData()
 {
-	//選択されているヒーローのメッシュデータ設定
-	m_pHero->LoadMeshData();
-	//敵のヒーローのメッシュデータ設定
-	m_pEnemyHero->LoadMeshData();
+	//ヒーローのメッシュデータ設定
+	m_pYui->LoadMeshData();
+	m_pKaito->LoadMeshData();
 
 	//タヌキのメッシュデータ設定
 	m_pRaccoonDog->AttachMesh(CSkinMeshManager::GetMesh(CSkinMeshManager::RaccoonDog));
@@ -78,13 +70,15 @@ void CAppearanceScene::LoadData()
 
 void CAppearanceScene::Initialize()
 {
+	CHeroManager* HeroMng = &CHeroManager::GetInstance();
+
 	//カメラ初期設定
-	if (m_pHero->GetSelectHeroName() == "Yui")
+	if (HeroMng->GetBattleHeroName() == "Yui")
 	{
 		m_pCamera->SetPos(YUI_CAMPOS);	 //初期座標
 		m_pCamera->SetLook(YUI_CAMLOOK); //初期注視点
 	}
-	else
+	else if(HeroMng->GetBattleHeroName() == "Kaito")
 	{
 		m_pCamera->SetPos(KAITO_CAMPOS);	 //初期座標
 		m_pCamera->SetLook(KAITO_CAMLOOK); //初期注視点
@@ -94,8 +88,8 @@ void CAppearanceScene::Initialize()
 	m_pRaccoonDog->Initialize();
 
 	//各ヒーローの初期化
-	m_pHero->AppearanceInitialize();      //自分
-	m_pEnemyHero->AppearanceInitialize(); //敵
+	m_pYui->AppearanceInitialize();   //自分
+	m_pKaito->AppearanceInitialize(); //敵
 
 	//カメラを動かす値の初期値
 	m_MoveCamPos = { 0.0f, 0.0f, 0.0f };
@@ -103,6 +97,8 @@ void CAppearanceScene::Initialize()
 
 void CAppearanceScene::Update()
 {
+	CHeroManager* HeroMng = &CHeroManager::GetInstance();
+
 	CKeyManager* KeyMng = &CKeyManager::GetInstance();
 	CSceneManager* SceneMng = CSceneManager::GetInstance();
 
@@ -111,28 +107,40 @@ void CAppearanceScene::Update()
 
 	
 	//自分がユイを選択していた場合
-	if (m_pHero->GetSelectHeroName() == "Yui")
+  if (HeroMng->GetBattleHeroName() == "Yui")
 	{
-		//タヌキのユイ登場時アニメーション
-		m_pRaccoonDog->AppearanceAnim(YUI_CAMPOS.z);
-		//ユイのアニメーション
-		YuiAppearance();
-		//ユイのアニメーションが終了したら
-		if (m_YuiAnimEndFlag)
-		{
-			//カイトのアニメーションへ
-			KaitoAppearance();
-		}
+	  if (!m_YuiAnimEndFlag)
+	  {
+		  //タヌキのユイ登場時アニメーション
+		  if (!m_pRaccoonDog->GetHiddenFlag()) 
+		  {
+			  m_pRaccoonDog->AppearanceAnim(YUI_CAMPOS.z);
+		  }
+		  //ユイのアニメーション
+		  YuiAppearance();
+	  }
+	  //ユイのアニメーションが終了したら
+	  else 
+	  {
+		  //シーン段階のリセット
+		  m_Scene = 0;
+		  //カイトのアニメーションへ
+		  KaitoAppearance();
+	  }
 	}
 
 	//自分がカイトを選択していた場合
-	if (m_pHero->GetSelectHeroName() == "Kaito")
+	if (HeroMng->GetBattleHeroName() == "Kaito")
 	{
-		//カイトのアニメーション
-		KaitoAppearance();
+		if (!m_KaitoAnimEndFlag) {
+			//カイトのアニメーション
+			KaitoAppearance();
+		}
 		//カイトのアニメーションが終了したら
-		if (m_KaitoAnimEndFlag)
+		else
 		{
+			//シーン段階のリセット
+			m_Scene = 0;
 			//タヌキのユイ登場時アニメーション
 			m_pRaccoonDog->AppearanceAnim(YUI_CAMPOS.z);
 			//ユイのアニメーション
@@ -164,15 +172,47 @@ void CAppearanceScene::Update()
 
 void CAppearanceScene::Draw()
 {
+	CHeroManager* HeroMng = &CHeroManager::GetInstance();
+
 	//カメラの動作
 	m_pCamera->CameraUpdate();
 
-	if (!m_YuiAnimEndFlag) 
+	
+	if (HeroMng->GetBattleHeroName() == "Yui")
 	{
-		//タヌキの描画
-		m_pRaccoonDog->Draw();
-		//ユイの描画
-		YuiDraw();
+		//ユイのアニメーション中
+		if (!m_YuiAnimEndFlag)
+		{
+			//タヌキの描画
+			m_pRaccoonDog->Draw();
+			//ユイの描画
+			YuiDraw();
+		}
+		else
+		{
+			if (!GetWhiteFadeNow()) 
+			{
+				//カイトの描画
+				KaitoDraw();
+			}
+		}
+	}
+	//カイトのアニメーション中の描画
+	else if(HeroMng->GetBattleHeroName() == "Kaito")
+	{
+		//	カイトのアニメーション中
+		if (!m_KaitoAnimEndFlag)
+		{
+			KaitoDraw();
+		}
+		else
+		{
+			//タヌキの描画
+			m_pRaccoonDog->Draw();
+			//ユイの描画
+			YuiDraw();
+		}
+
 	}
 
 	//地面の描画
@@ -194,6 +234,8 @@ void CAppearanceScene::Debug()
 
 void CAppearanceScene::YuiAppearance()
 {
+	CHeroManager* HeroMng = &CHeroManager::GetInstance();
+
 	switch (m_Scene)
 	{
 	case 0:
@@ -226,23 +268,23 @@ void CAppearanceScene::YuiAppearance()
 		break;
 	case 1:
 		//自分がユイを選択していた場合
-		if (m_pHero->GetSelectHeroName() == "Yui")
+		if (HeroMng->GetSelectHeroName() == "Yui")
 		{
-			m_pHero->AppearanceAnimation();
+			m_pYui->AppearanceAnimation();
 			//カメラの設定
-			YuiSetCamera(D3DXVECTOR3(m_MoveCamPos.x - 2.0f, m_MoveCamPos.y, m_pHero->GetPosition().z - 2.0f),
-						 D3DXVECTOR3(m_pHero->GetPosition().x, m_MoveCamLook.y, m_pHero->GetPosition().z));
+			SetCamera(D3DXVECTOR3(m_MoveCamPos.x - 2.0f, m_MoveCamPos.y, m_pYui->GetPosition().z - 2.0f),
+						 D3DXVECTOR3(m_pYui->GetPosition().x, m_MoveCamLook.y, m_pYui->GetPosition().z));
 		}
 		//敵がユイの場合
-		else if (m_pHero->GetAppealanceAnimEndFlag())
+		else if (m_pYui->GetAppealanceAnimEndFlag())
 		{
 			//カメラの設定
-			YuiSetCamera(D3DXVECTOR3(m_MoveCamPos.x - 2.0f, m_MoveCamPos.y, m_pEnemyHero->GetPosition().z - 2.0f),
-				         D3DXVECTOR3(m_pEnemyHero->GetPosition().x, m_pEnemyHero->GetPosition().y, m_pEnemyHero->GetPosition().z));
+			SetCamera(D3DXVECTOR3(m_MoveCamPos.x - 2.0f, m_MoveCamPos.y, m_pYui->GetPosition().z - 2.0f),
+				         D3DXVECTOR3(m_pYui->GetPosition().x, m_pYui->GetPosition().y, m_pYui->GetPosition().z));
 		}
 
 		//カメラが一定の高さになるまで
-		if (!m_pHero->GetAppealanceAnimEndFlag())
+		if (!m_pYui->GetAppealanceAnimEndFlag())
 		{
 			//座標と注視点をあげる
 			m_MoveCamPos.y += CAM_MOVE_SPEED;
@@ -265,19 +307,19 @@ void CAppearanceScene::YuiAppearance()
 		break;
 	case 2:
 		//自分がユイを選択していた場合
-		if (m_pHero->GetSelectHeroName() == "Yui")
+		if (HeroMng->GetSelectHeroName() == "Yui")
 		{
-			m_pHero->AppearanceAnimation();
+			m_pYui->AppearanceAnimation();
 			//カメラの設定
-			YuiSetCamera(D3DXVECTOR3(m_MoveCamPos.x, m_MoveCamPos.y, m_pHero->GetPosition().z - 4.0f),
-				         D3DXVECTOR3(m_pHero->GetPosition().x, m_MoveCamLook.y, m_pHero->GetPosition().z));
+			SetCamera(D3DXVECTOR3(m_MoveCamPos.x, m_MoveCamPos.y, m_pYui->GetPosition().z - 4.0f),
+				         D3DXVECTOR3(m_pYui->GetPosition().x, m_MoveCamLook.y, m_pYui->GetPosition().z));
 		}
 		//敵がユイの場合
-		else if (m_pHero->GetAppealanceAnimEndFlag())
+		else if (m_pYui->GetAppealanceAnimEndFlag())
 		{
 			//カメラの設定
-			YuiSetCamera(D3DXVECTOR3(m_MoveCamPos.x, m_MoveCamPos.y, m_pEnemyHero->GetPosition().z - 4.0f),
-				         D3DXVECTOR3(m_pEnemyHero->GetPosition().x, m_pEnemyHero->GetPosition().y, m_pEnemyHero->GetPosition().z));
+			SetCamera(D3DXVECTOR3(m_MoveCamPos.x, m_MoveCamPos.y, m_pYui->GetPosition().z - 4.0f),
+				         D3DXVECTOR3(m_pYui->GetPosition().x, m_pYui->GetPosition().y, m_pYui->GetPosition().z));
 		}
 
 		//カメラが一定の高さになるまで
@@ -289,31 +331,59 @@ void CAppearanceScene::YuiAppearance()
 		}
 		else
 		{
-			PlayWhiteFade(1, 0.02f, 1.0f);
 			m_AnimCnt++;
-			if (m_AnimCnt >= 50)
+			if (m_AnimCnt >= 120)
 			{
-				//ユイの非表示
-				m_YuiHiddenFlag= true;
-			}
-
-			if (m_AnimCnt >= 60)
-			{
+				m_AnimCnt = 0;
 				//ユイのアニメーションの終了
 				m_YuiAnimEndFlag = true;
+				//カイトのアニメーション後でなければ
+				if (!m_KaitoAnimEndFlag)
+				{
+					m_MoveCamPos.y = 1.0f;
+				}
 			}
 		}
-		break;
-	case 3:
 		break;
 	}
 }
 
 void CAppearanceScene::KaitoAppearance()
 {
+	CEffect* Eff = CEffect::GetInstance();
+	//エフェクトハンドルの用意
+	static ::EsHandle hMagicSircle = -1;	//魔法陣エフェクト
+	Eff->Speed(hMagicSircle, 1.0f);
+	Eff->Scale(hMagicSircle, 4.0f,4.0f,4.0f);
+	Eff->Rotate(hMagicSircle, D3DXToRadian(90.0f), 1.0f,1.0f);
+
+	CHeroManager* HeroMng = &CHeroManager::GetInstance();
+
+	switch (m_Scene)
+	{
+	case 0:
+		SetCamera(D3DXVECTOR3(MAGICSIRCLE_CAMPOS.x, MAGICSIRCLE_CAMPOS.y + m_MoveCamPos.y, MAGICSIRCLE_CAMPOS.z),
+			D3DXVECTOR3(MAGICSIRCLE_POS));
+		
+		m_AnimCnt++;
+		if (m_AnimCnt == 1)
+		{
+			hMagicSircle = Eff->Play(CEffect::enList::MagicSircle, MAGICSIRCLE_POS);
+		}
+
+		if (m_MoveCamPos.y <= 20.0f)
+		{
+			m_MoveCamPos.y += CAM_MOVE_SPEED;
+		}
+		break;
+	case 1:
+		break;
+	default:
+		break;
+	}
 }
 
-void CAppearanceScene::YuiSetCamera(D3DXVECTOR3 pos, D3DXVECTOR3 look)
+void CAppearanceScene::SetCamera(D3DXVECTOR3 pos, D3DXVECTOR3 look)
 {
 	m_pCamera->SetPos(pos);
 	m_pCamera->SetLook(look);
@@ -321,12 +391,14 @@ void CAppearanceScene::YuiSetCamera(D3DXVECTOR3 pos, D3DXVECTOR3 look)
 
 void CAppearanceScene::YuiDraw()
 {
+	CHeroManager* HeroMng = &CHeroManager::GetInstance();
+
 	//自分がユイを使用している場合の描画
-	if (m_pHero->GetSelectHeroName() == "Yui" && !m_YuiHiddenFlag)
+	if (HeroMng->GetSelectHeroName() == "Yui" && !m_YuiHiddenFlag)
 	{
 		if (m_pRaccoonDog->GetHiddenFlag())
 		{
-			m_pHero->Draw();
+			m_pYui->Draw();
 		}
 	}
 	//敵がユイの場合の描画
@@ -334,7 +406,23 @@ void CAppearanceScene::YuiDraw()
 	{
 		if (m_pRaccoonDog->GetHiddenFlag())
 		{
-			m_pEnemyHero->Draw();
+			m_pYui->Draw();
 		}
+	}
+}
+
+void CAppearanceScene::KaitoDraw()
+{
+	CHeroManager* HeroMng = &CHeroManager::GetInstance();
+
+	//自分がカイトを使用している場合の描画
+	if (HeroMng->GetSelectHeroName() == "Kaito" && !m_KaitoHiddenFlag)
+	{
+		m_pKaito->Draw();
+	}
+	//敵がカイトの場合の描画
+	else if (m_YuiAnimEndFlag)
+	{
+	    m_pKaito->Draw();
 	}
 }

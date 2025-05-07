@@ -168,6 +168,16 @@ void CSceneBase::PlayWhiteFade(int max, float speed, float alpha)
         }
     }
 
+    //フェード中かどうかの取得
+    if (m_WhiteFadeAlpha != 0.0f)
+    {
+        m_WhiteFadeNow = true;
+    }
+    else
+    {
+        m_WhiteFadeNow = false;
+    }
+
     //α値の設定
     m_pWhiteFade->SetAlpha(m_WhiteFadeAlpha);
 }

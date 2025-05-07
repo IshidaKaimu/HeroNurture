@@ -90,7 +90,8 @@ public:
 	void InitWhiteFade();
 	//白フェード
 	void PlayWhiteFade(int max, float speed, float alpha);
-
+	//白フェード中かの取得
+	bool GetWhiteFadeNow() { return m_WhiteFadeNow; }
 
 protected:
 	//ライト情報
@@ -140,6 +141,7 @@ private:
 	bool		m_AlphaChange;					//フェード回数制御用フラグ
 	int         m_WhiteFadeCnt;					//フェード回数のカウント
 	float       m_WhiteFadeAlpha;				//フェード画像のα値
+	bool        m_WhiteFadeNow;				    //白フェード中であるか
 
 	//操作方法指示バー
 	std::unique_ptr <CUIObject> m_pControlBar;  //操作方法指示バー画像

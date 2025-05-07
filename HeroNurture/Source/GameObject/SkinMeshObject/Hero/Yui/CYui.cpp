@@ -184,15 +184,11 @@ void CYui::Debug()
 //育成ヒーロー選択シーンのアニメーション
 void CYui::NatureHeroSelectAnimation()
 {
-	//アニメーションスピードの設定
-	//m_AnimSpeed = 0.01f;
 }
 
 //バトルヒーロー選択シーンのアニメーション
 void CYui::BattleHeroSelectAnimation()
 {
-	//アニメーションスピードの設定
-	m_AnimSpeed = 0.01f;
 }
 
 //登場シーンのアニメーション
