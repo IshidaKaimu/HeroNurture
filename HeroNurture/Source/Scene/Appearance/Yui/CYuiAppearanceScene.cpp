@@ -1,4 +1,4 @@
-#include "Scene\Appearance\CAppearanceScene.h"
+#include "Scene\Appearance\Yui\CYuiAppearanceScene.h"
 #include "Scene\CSceneManager.h"
 #include "StaticMesh\MeshManager\CMeshManager.h"
 #include "Sprite2D\UIManager\CUIManager.h"
@@ -18,7 +18,7 @@
 //定数の名前空間
 using namespace Constant_AppearanceScene;
 
-CAppearanceScene::CAppearanceScene()
+CYuiAppearanceScene::CYuiAppearanceScene()
 	:m_pCamera         (&CCameraManager::GetInstance())
 	,m_pYui	           ()
 	,m_pKaito          ()
@@ -31,11 +31,11 @@ CAppearanceScene::CAppearanceScene()
 {
 }
 
-CAppearanceScene::~CAppearanceScene()
+CYuiAppearanceScene::~CYuiAppearanceScene()
 {
 }
 
-void CAppearanceScene::Create()
+void CYuiAppearanceScene::Create()
 {
 	CHeroManager* HeroMng = &CHeroManager::GetInstance();
 
@@ -51,12 +51,12 @@ void CAppearanceScene::Create()
 	m_pGround = make_unique<CGround>();
 }
 
-void CAppearanceScene::Releace()
+void CYuiAppearanceScene::Releace()
 {
     m_pCamera    = nullptr;
 }
 
-void CAppearanceScene::LoadData()
+void CYuiAppearanceScene::LoadData()
 {
 	//ヒーローのメッシュデータ設定
 	m_pYui->LoadMeshData();
@@ -68,7 +68,7 @@ void CAppearanceScene::LoadData()
 	m_pGround->AttachMesh(CMeshManager::GetMesh(CMeshManager::Ground));
 }
 
-void CAppearanceScene::Initialize()
+void CYuiAppearanceScene::Initialize()
 {
 	CHeroManager* HeroMng = &CHeroManager::GetInstance();
 
@@ -95,7 +95,7 @@ void CAppearanceScene::Initialize()
 	m_MoveCamPos = { 0.0f, 0.0f, 0.0f };
 }
 
-void CAppearanceScene::Update()
+void CYuiAppearanceScene::Update()
 {
 	CHeroManager* HeroMng = &CHeroManager::GetInstance();
 
@@ -170,7 +170,7 @@ void CAppearanceScene::Update()
 #endif
 }
 
-void CAppearanceScene::Draw()
+void CYuiAppearanceScene::Draw()
 {
 	CHeroManager* HeroMng = &CHeroManager::GetInstance();
 
@@ -219,7 +219,7 @@ void CAppearanceScene::Draw()
 	m_pGround->Draw();
 }
 
-void CAppearanceScene::Debug()
+void CYuiAppearanceScene::Debug()
 {
 	ImGui::Begin(JAPANESE("デバッグ"));
 	//ImGui::InputFloat3(JAPANESE("カメラ位置:%f"), m_DebugCamPos);
@@ -232,7 +232,7 @@ void CAppearanceScene::Debug()
 	m_pRaccoonDog->SetRotation(D3DXVECTOR3(D3DXToRadian(m_DebugRotate.x), D3DXToRadian(m_DebugRotate.y), D3DXToRadian(m_DebugRotate.z)));
 }
 
-void CAppearanceScene::YuiAppearance()
+void CYuiAppearanceScene::YuiAppearance()
 {
 	CHeroManager* HeroMng = &CHeroManager::GetInstance();
 
@@ -348,7 +348,7 @@ void CAppearanceScene::YuiAppearance()
 	}
 }
 
-void CAppearanceScene::KaitoAppearance()
+void CYuiAppearanceScene::KaitoAppearance()
 {
 	CEffect* Eff = CEffect::GetInstance();
 	//エフェクトハンドルの用意
@@ -383,13 +383,13 @@ void CAppearanceScene::KaitoAppearance()
 	}
 }
 
-void CAppearanceScene::SetCamera(D3DXVECTOR3 pos, D3DXVECTOR3 look)
+void CYuiAppearanceScene::SetCamera(D3DXVECTOR3 pos, D3DXVECTOR3 look)
 {
 	m_pCamera->SetPos(pos);
 	m_pCamera->SetLook(look);
 }
 
-void CAppearanceScene::YuiDraw()
+void CYuiAppearanceScene::YuiDraw()
 {
 	CHeroManager* HeroMng = &CHeroManager::GetInstance();
 
@@ -411,7 +411,7 @@ void CAppearanceScene::YuiDraw()
 	}
 }
 
-void CAppearanceScene::KaitoDraw()
+void CYuiAppearanceScene::KaitoDraw()
 {
 	CHeroManager* HeroMng = &CHeroManager::GetInstance();
 

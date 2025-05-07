@@ -4,24 +4,17 @@
 //=====================================
 // 定数宣言
 //=====================================
-namespace Constant_AppearanceScene
+namespace Constant_KaitoAppearanceScene
 {
 	//----カメラ情報----
-	//ユイ
-	const D3DXVECTOR3 YUI_CAMPOS  = { 0.0f, 4.0f, -5.0f }; //座標
-	const D3DXVECTOR3 YUI_CAMLOOK = { 0.0f, 4.0f, 0.0f };  //注視点
 	//カイト
-	const D3DXVECTOR3 KAITO_CAMPOS  = { 1.0f, 0.0f, -5.0f };  //座標
+	const D3DXVECTOR3 KAITO_CAMPOS = { 1.0f, 0.0f, -5.0f };  //座標
 	const D3DXVECTOR3 KAITO_CAMLOOK = { 0.0f, 0.0f,  -5.0f }; //注視点
 	//----イベント演出----
 	//カメラ
-	constexpr float CAM_FLICK_DISTANCE  = 25.0f; //タヌキにはじかれる距離
-	constexpr float CAM_FLICK_SPEED		= 0.7f;  //タヌキにはじかれる速度
-	constexpr float CAM_MOVE_SPEED		= 0.03f; //カメラの動く速度
-	//白フェード
-	constexpr float FLICK_WHITEFADE		= -3.0f; //カメラがタヌキにはじかれるとき
+	constexpr float CAM_MOVE_SPEED = 0.03f; //カメラの動く速度
 	//魔法陣エフェクト
-	const D3DXVECTOR3 MAGICSIRCLE_POS    = { 0.0f, 0.5f,  -5.0f }; //座標
+	const D3DXVECTOR3 MAGICSIRCLE_POS = { 0.0f, 0.5f,  -5.0f }; //座標
 	const D3DXVECTOR3 MAGICSIRCLE_CAMPOS = { 1.0f, 1.5f,  -5.0f }; //魔法陣を映すカメラ初期座標
 }
 
@@ -62,15 +55,15 @@ class CKaito;
 class CGround;
 
 //=====================================
-// ヒーロー登場シーンクラス
+// カイト登場シーンクラス
 // 制作者:石田櫂夢
 //=====================================
-class CAppearanceScene
+class CKaitoAppearanceScene
 	: public CSceneBase
 {
 public:
-	CAppearanceScene();
-	~CAppearanceScene();
+	CKaitoAppearanceScene();
+	~CKaitoAppearanceScene();
 
 	//構築関数
 	void Create()	  override;
@@ -89,17 +82,13 @@ public:
 	void Debug();
 
 private:
-	//----各ヒーローの登場シーンのアニメーション関数----
-	//ユイ
-	void YuiAppearance();
+	//登場シーンのアニメーション関数
 	//カイト
 	void KaitoAppearance();
 	//----各ヒーローの登場シーンのカメラ設定関数----
 	void SetCamera(D3DXVECTOR3 pos, D3DXVECTOR3 look);
 
-	//----各ヒーローの条件付き描画----
-	//ユイ
-	void YuiDraw();
+	//各ヒーローの条件付き描画
 	//カイト
 	void KaitoDraw();
 
@@ -111,21 +100,15 @@ private:
 	std::unique_ptr<CYui>   m_pYui;  //ユイ
 	std::unique_ptr<CKaito> m_pKaito;//カイト
 
-	//----登場に使用するヒーロー以外のスキンメッシュ----
-	//タヌキ
-	std::unique_ptr<CRaccoonDog> m_pRaccoonDog;
-
 	//----スタティックメッシュ----
 	//地面
 	std::unique_ptr<CGround> m_pGround;
 
 	//----フラグ----
-	//各ヒーローの非表示フラグ
-	bool m_YuiHiddenFlag;	//ユイ
-	bool m_KaitoHiddenFlag; //カイト
-	//各ヒーローのアニメーション、カメラ処理が終了したとき
-	bool m_YuiAnimEndFlag;      //ユイ
-	bool m_KaitoAnimEndFlag;    //カイト
+	//非表示フラグ
+	bool m_HiddenFlag;
+	//アニメーション、カメラ処理が終了したとき
+	bool m_AnimEndFlag;
 
 };
 
