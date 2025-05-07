@@ -8,8 +8,8 @@ namespace Constant_KaitoAppearanceScene
 {
 	//----カメラ情報----
 	//カイト
-	const D3DXVECTOR3 KAITO_CAMPOS = { 1.0f, 0.0f, -5.0f };  //座標
-	const D3DXVECTOR3 KAITO_CAMLOOK = { 0.0f, 0.0f,  -5.0f }; //注視点
+	const D3DXVECTOR3 CAMPOS  = { 1.0f, 0.0f, -5.0f };  //座標
+	const D3DXVECTOR3 CAMLOOK = { 0.0f, 0.0f,  -5.0f }; //注視点
 	//----イベント演出----
 	//カメラ
 	constexpr float CAM_MOVE_SPEED = 0.03f; //カメラの動く速度

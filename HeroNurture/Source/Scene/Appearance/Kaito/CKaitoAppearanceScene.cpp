@@ -24,6 +24,7 @@ CKaitoAppearanceScene::CKaitoAppearanceScene()
 	, m_pKaito()
 	, m_pGround()
 	, m_HiddenFlag()
+	, m_AnimEndFlag()
 {
 }
 
@@ -39,7 +40,6 @@ void CKaitoAppearanceScene::Create()
 	m_pYui = make_unique<CYui>();
 	//カイト
 	m_pKaito = make_unique<CKaito>();
-
 	//地面
 	m_pGround = make_unique<CGround>();
 }
@@ -63,8 +63,8 @@ void CKaitoAppearanceScene::Initialize()
 	CHeroManager* HeroMng = &CHeroManager::GetInstance();
 
 	//カメラ初期設定
-	m_pCamera->SetPos(KAITO_CAMPOS);	 //初期座標
-	m_pCamera->SetLook(KAITO_CAMLOOK); //初期注視点
+	m_pCamera->SetPos(CAMPOS);	 //初期座標
+	m_pCamera->SetLook(CAMLOOK); //初期注視点
 
 	//各ヒーローの初期化
 	m_pYui->AppearanceInitialize();   //自分
@@ -85,14 +85,11 @@ void CKaitoAppearanceScene::Update()
 	if (!FadeIn()) { return; }
 
 	//自分がカイトを選択していた場合
-	if (HeroMng->GetBattleHeroName() == "Kaito")
-	{
-		//カイトのアニメーション
-		KaitoAppearance();
-	}
+	//カイトのアニメーション
+	KaitoAppearance();
 
 	//シーン遷移(仮)
-	if (KeyMng->IsDown(VK_RETURN))
+	if (m_AnimEndFlag)
 	{
 		//決定SEの再生
 		CSoundManager::GetInstance()->PlaySE(CSoundManager::SE_Enter);
@@ -121,10 +118,7 @@ void CKaitoAppearanceScene::Draw()
 	m_pCamera->CameraUpdate();
 
 	//カイトのアニメーション中の描画
-	if (HeroMng->GetBattleHeroName() == "Kaito")
-	{
-	  KaitoDraw();
-	}
+	KaitoDraw();
 
 	//地面の描画
 	m_pGround->Draw();
@@ -164,12 +158,38 @@ void CKaitoAppearanceScene::KaitoAppearance()
 			hMagicSircle = Eff->Play(CEffect::enList::MagicSircle, MAGICSIRCLE_POS);
 		}
 
-		if (m_MoveCamPos.y <= 20.0f)
+		if (m_MoveCamPos.y <= 10.0f)
 		{
 			m_MoveCamPos.y += CAM_MOVE_SPEED;
 		}
+		else
+		{
+			m_Scene = 1;
+		}
 		break;
 	case 1:
+		SetCamera(D3DXVECTOR3(MAGICSIRCLE_CAMPOS.x - m_MoveCamPos.x, MAGICSIRCLE_CAMPOS.y + m_MoveCamPos.y, MAGICSIRCLE_CAMPOS.z - m_MoveCamPos.z),
+			      D3DXVECTOR3(MAGICSIRCLE_POS.x, MAGICSIRCLE_POS.y + m_MoveCamLook.y, MAGICSIRCLE_POS.z));
+		//カメラをz軸方向に移動
+		if (m_MoveCamPos.z <= 10.0f)
+		{
+			m_MoveCamPos.z += CAM_MOVE_SPEED;
+		}
+
+		if (m_MoveCamPos.x <= 1.0f)
+		{
+			m_MoveCamPos.x += CAM_MOVE_SPEED;
+		}
+
+		if (m_MoveCamPos.y >= 8.0f)
+		{
+			m_MoveCamPos.y -= CAM_MOVE_SPEED;
+		}
+
+		if (m_MoveCamLook.y <= 4.0f)
+		{
+			m_MoveCamLook.y += 
+		}
 		break;
 	default:
 		break;
@@ -187,8 +207,5 @@ void CKaitoAppearanceScene::KaitoDraw()
 	CHeroManager* HeroMng = &CHeroManager::GetInstance();
 
 	//自分がカイトを使用している場合の描画
-	if (HeroMng->GetSelectHeroName() == "Kaito" && !m_HiddenFlag)
-	{
-		m_pKaito->Draw();
-	}
+    m_pKaito->Draw();
 }
