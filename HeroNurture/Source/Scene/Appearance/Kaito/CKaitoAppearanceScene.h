@@ -88,10 +88,6 @@ private:
 	//----各ヒーローの登場シーンのカメラ設定関数----
 	void SetCamera(D3DXVECTOR3 pos, D3DXVECTOR3 look);
 
-	//各ヒーローの条件付き描画
-	//カイト
-	void KaitoDraw();
-
 private:
 	//カメラマネージャー
 	CCameraManager* m_pCamera;
