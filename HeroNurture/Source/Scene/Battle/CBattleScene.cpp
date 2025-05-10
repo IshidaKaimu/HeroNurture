@@ -171,6 +171,8 @@ void CBattleScene::Update()
 	case CBattleScene::AttackPhase:
 		Attack();		//‚¨ŒÝ‚¢‚ÌUŒ‚
 		break;
+	case CBattleScene::Max:
+		break;
 	}
 
 	//Ž€–SŽžˆ—
@@ -471,6 +473,8 @@ void CBattleScene::Attack()
 				case CBattleScene::MagicAttack:
 					m_pEnemyHero->Damage(m_pHero->MagicAttack());
 					break;
+				case CBattleScene::Max:
+					break;
 				}
 			}
 		}
@@ -486,6 +490,8 @@ void CBattleScene::Attack()
 					break;
 				case CBattleScene::MagicAttack:
 					m_pHero->Damage(m_pEnemyHero->MagicAttack());
+					break;
+				case CBattleScene::Max:
 					break;
 				}
 			}
