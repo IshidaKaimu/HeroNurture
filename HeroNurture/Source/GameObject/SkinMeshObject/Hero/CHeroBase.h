@@ -184,7 +184,7 @@ public:
 	//ダメージフラグ
 	bool GetDamageFlag() { return m_Damage; }
 	void SetDamageFlag(bool damage) { m_Damage = damage; }
-	//アニメーション終了フラグ
+	//攻撃アニメーション終了フラグ
 	bool GetAttackAnimEndFlag()             { return m_AttackAnimEnd; }
 	void SetAttackAnimEndFlag(bool animend) { m_AttackAnimEnd = animend; }
 	//ダメージアニメーション終了フラグ
