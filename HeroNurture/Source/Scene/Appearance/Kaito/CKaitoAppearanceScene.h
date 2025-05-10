@@ -8,14 +8,38 @@ namespace Constant_KaitoAppearanceScene
 {
 	//----カメラ情報----
 	//カイト
-	const D3DXVECTOR3 CAMPOS  = { 1.0f, 0.0f, -5.0f };  //座標
-	const D3DXVECTOR3 CAMLOOK = { 0.0f, 0.0f,  -5.0f }; //注視点
+	const D3DXVECTOR3 INIT_CAMPOS  = { 1.0f, 0.5f, -5.0f };  //初期座標
+	const D3DXVECTOR3 INIT_CAMLOOK = { 0.0f, 0.0f,  -5.0f }; //初期注視点
 	//----イベント演出----
 	//カメラ
 	constexpr float CAM_MOVE_SPEED = 0.03f; //カメラの動く速度
 	//魔法陣エフェクト
-	const D3DXVECTOR3 MAGICSIRCLE_POS = { 0.0f, 0.5f,  -5.0f }; //座標
+	const D3DXVECTOR3 MAGICSIRCLE_POS    = { 0.0f, 0.5f,  -5.0f }; //座標
 	const D3DXVECTOR3 MAGICSIRCLE_CAMPOS = { 1.0f, 1.5f,  -5.0f }; //魔法陣を映すカメラ初期座標
+	const D3DXVECTOR3 MAGICSIRCLE_SCALE  = { 4.0f, 4.0f, 4.0f };   //魔法陣の拡縮
+	const D3DXVECTOR3 MAGICSIRCLE_ROTATE = { D3DXToRadian(90.0f), 1.0f, 1.0f };  //魔法陣の回転
+	//光エフェクト
+	const D3DXVECTOR3 LASER_POS = { 0.0f, 0.5f, -5.0f }; //座標
+	//イベント演出遷移用数値
+	//----シーン0----
+	//移動させるカメラのy軸の値
+	constexpr float ANIMCHANGE_CAMPOS_Y = 10.0f;
+	//シーンを0から1に遷移させるためのカウント
+	constexpr int   ANIMCHANGE_CNT      = 60;  
+	//----シーン1----
+	//カメラを移動させる値の最大値
+	const D3DXVECTOR3 MOVE_CAMPOS_MAX         = { 1.0f, 6.0f, 12.0f }; //座標
+	constexpr float   MOVE_CAMLOOK_MAX_Y      = 4.0f;				   //注視点y軸
+	//次のシーンでの初期座標
+	const D3DXVECTOR3 MOVE_CAMPOS_INIT	  = {  0.0f, 1.0f, 5.0f }; //座標
+	//シーン1から2へ遷移するために用いるカウント
+	constexpr int     SCENECHANGE_CNT_FAST	= 240;
+	//----シーン2----
+	//カメラを移動させる値の最大値
+	constexpr float   MOVE_CAMPOS_MAX_Y         = 6.5f; //座標y軸
+	//シーン2から終了するために用いるカウント
+	constexpr int     SCENECHANGE_CNT_SECOND = 120;
+
 }
 
 //=====================================

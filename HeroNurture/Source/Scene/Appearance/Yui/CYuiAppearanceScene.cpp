@@ -71,16 +71,8 @@ void CYuiAppearanceScene::Initialize()
 	CHeroManager* HeroMng = &CHeroManager::GetInstance();
 
 	//カメラ初期設定
-	if (HeroMng->GetBattleHeroName() == "Yui")
-	{
-		m_pCamera->SetPos(YUI_CAMPOS);	 //初期座標
-		m_pCamera->SetLook(YUI_CAMLOOK); //初期注視点
-	}
-	else if(HeroMng->GetBattleHeroName() == "Kaito")
-	{
-		m_pCamera->SetPos(KAITO_CAMPOS);	 //初期座標
-		m_pCamera->SetLook(KAITO_CAMLOOK); //初期注視点
-	}
+	m_pCamera->SetPos(INIT_CAMPOS);	 //初期座標
+	m_pCamera->SetLook(INIT_CAMLOOK); //初期注視点
 
 	//タヌキの初期化
 	m_pRaccoonDog->Initialize();
@@ -110,7 +102,7 @@ void CYuiAppearanceScene::Update()
 	     //タヌキのユイ登場時アニメーション
 	     if (!m_pRaccoonDog->GetHiddenFlag()) 
 	     {
-	       m_pRaccoonDog->AppearanceAnim(YUI_CAMPOS.z);
+	       m_pRaccoonDog->AppearanceAnim(INIT_CAMPOS.z);
 	     }
 		 //ユイのアニメーション
 		 YuiAppearance();
@@ -139,7 +131,6 @@ void CYuiAppearanceScene::Update()
 		{
 			SceneMng->LoadCreate(CSceneManager::Battle);
 		}
-
 	}
 
 #if DEBUG
@@ -157,18 +148,15 @@ void CYuiAppearanceScene::Draw()
 
 	
 	//ユイのアニメーション中
-	if (!m_AnimEndFlag)
+	//タヌキの描画
+	if (!m_pRaccoonDog->GetHiddenFlag())
 	{
-		//タヌキの描画
-		if (!m_pRaccoonDog->GetHiddenFlag())
-		{
-			m_pRaccoonDog->Draw();
-		}
-		else 
-		{
-			//ユイの描画
-			m_pYui->Draw();
-		}
+		m_pRaccoonDog->Draw();
+	}
+	else 
+	{
+		//ユイの描画
+		m_pYui->Draw();
 	}
 
 	//地面の描画
@@ -196,7 +184,7 @@ void CYuiAppearanceScene::YuiAppearance()
 	{
 	case 0:
 		//動かすカメラの値をセット
-		m_pCamera->SetPos(YUI_CAMPOS.x + m_MoveCamPos.x, YUI_CAMPOS.y + m_MoveCamPos.y, YUI_CAMPOS.z + m_MoveCamPos.z);
+		m_pCamera->SetPos(INIT_CAMPOS.x + m_MoveCamPos.x, INIT_CAMPOS.y + m_MoveCamPos.y, INIT_CAMPOS.z + m_MoveCamPos.z);
 
 		//白フェード
 		if (m_pRaccoonDog->GetPosition().z <= FLICK_WHITEFADE)
@@ -205,7 +193,7 @@ void CYuiAppearanceScene::YuiAppearance()
 		}
 
 		//タヌキがカメラのZ座標を超えたら
-		if (m_pRaccoonDog->GetPosition().z <= YUI_CAMPOS.z)
+		if (m_pRaccoonDog->GetPosition().z <= INIT_CAMPOS.z)
 		{
 			if (m_MoveCamPos.z >= -CAM_FLICK_DISTANCE)
 			{
@@ -279,7 +267,7 @@ void CYuiAppearanceScene::YuiAppearance()
 		}
 
 		//カメラが一定の高さになるまで
-		if (m_MoveCamPos.y <= YUI_CAMPOS.y + 2.5f)
+		if (m_MoveCamPos.y <= INIT_CAMPOS.y + 2.5f)
 		{
 			//座標と注視点をあげる
 			m_MoveCamPos.y += CAM_MOVE_SPEED;
