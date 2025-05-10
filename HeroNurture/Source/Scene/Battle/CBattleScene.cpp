@@ -409,7 +409,6 @@ void CBattleScene::MoveSelect()
 	//速度による行動順の判断
 	SetUpToNextTurn();
 
-
 	//カーソルの移動
 	if (KeyMng->IsDown(VK_RIGHT))
 		{
