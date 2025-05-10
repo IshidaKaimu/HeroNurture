@@ -200,7 +200,7 @@ void CKaito::NatureAnimation(int no)
 void CKaito::MoveSelectAnim()
 {
 
-	if (m_AnimNo != 3) {
+	if (m_AnimNo == 3) {
 		//アニメーションの経過時間を加算
 		m_AnimTime += m_pMesh->GetAnimSpeed();
 		m_AnimCnt++;
