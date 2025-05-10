@@ -91,8 +91,8 @@ void CKaito::AppearanceInitialize()
 	//座標の設定
 	SetPosition(APPEALANCE_POS);
 
-	//アニメーション関連の初期化
-	AnimInit();
+	////アニメーション関連の初期化
+	//AnimInit();
 }
 
 //メッシュデータ読み込み関数
