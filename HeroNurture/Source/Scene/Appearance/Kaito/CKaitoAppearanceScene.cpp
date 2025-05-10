@@ -63,8 +63,8 @@ void CKaitoAppearanceScene::Initialize()
 	CHeroManager* HeroMng = &CHeroManager::GetInstance();
 
 	//カメラ初期設定
-	m_pCamera->SetPos(CAMPOS);	 //初期座標
-	m_pCamera->SetLook(CAMLOOK); //初期注視点
+	m_pCamera->SetPos(INIT_CAMPOS);	  //初期座標
+	m_pCamera->SetLook(INIT_CAMLOOK); //初期注視点
 
 	//カイト初期化
 	m_pKaito->AppearanceInitialize(); 
@@ -103,7 +103,14 @@ void CKaitoAppearanceScene::Update()
 	//フェードアウト処理
 	if (m_SceneTransitionFlg && FadeOut())
 	{
-		SceneMng->LoadCreate(CSceneManager::Battle);
+		if (HeroMng->GetBattleHeroName() == "Kaito")
+		{
+		   SceneMng->LoadCreate(CSceneManager::YuiAppearance);
+		}
+		else 
+		{
+			SceneMng->LoadCreate(CSceneManager::Battle);
+		}
 	}
 
 #if DEBUG
@@ -149,8 +156,8 @@ void CKaitoAppearanceScene::KaitoAppearance()
 	static ::EsHandle hLaser       = 3;	    //光エフェクト
 	//----魔法陣エフェクトの設定----
 	Eff->Speed(hMagicSircle, 1.0f);
-	Eff->Scale(hMagicSircle, 4.0f, 4.0f, 4.0f);
-	Eff->Rotate(hMagicSircle, D3DXToRadian(90.0f), 1.0f, 1.0f);
+	Eff->Scale(hMagicSircle, MAGICSIRCLE_SCALE.x, MAGICSIRCLE_SCALE.y, MAGICSIRCLE_SCALE.z);
+	Eff->Rotate(hMagicSircle, MAGICSIRCLE_ROTATE.x, MAGICSIRCLE_ROTATE.y, MAGICSIRCLE_ROTATE.z);
 	//----光エフェクトの設定----
 	Eff->Speed(hLaser, 1.0f);
 	Eff->Scale(hLaser, 5.0f, 5.0f, 5.0f);
@@ -166,22 +173,26 @@ void CKaitoAppearanceScene::KaitoAppearance()
 		SetCamera(D3DXVECTOR3(MAGICSIRCLE_CAMPOS.x, MAGICSIRCLE_CAMPOS.y + m_MoveCamPos.y, MAGICSIRCLE_CAMPOS.z),
 			D3DXVECTOR3(MAGICSIRCLE_POS));
 
-		m_AnimCnt++;
-		if (m_AnimCnt == 1)
-		{
-			hMagicSircle = Eff->Play(CEffect::enList::MagicSircle, MAGICSIRCLE_POS);
-		}
-
 		//カメラのy軸の座標を一定の値まで上げる
-		if (m_MoveCamPos.y <= 10.0f)
+		if (m_MoveCamPos.y <= ANIMCHANGE_CAMPOS_Y)
 		{
 			m_MoveCamPos.y += CAM_MOVE_SPEED;
 		}
 		else
 		{
-			//シーンを進める
-			m_Scene = 1;
-			m_AnimCnt = 0;
+			//アニメーションカウント増加
+			m_AnimCnt++;
+			//魔法陣エフェクトの再生
+			if (m_AnimCnt == 1)
+			{
+				hMagicSircle = Eff->Play(CEffect::enList::MagicSircle, MAGICSIRCLE_POS);
+			}
+			//カウントが一定値を超えたら魔法陣エフェクトの再生
+			if (m_AnimCnt >= ANIMCHANGE_CNT) 
+			{
+				m_Scene = 1;
+				m_AnimCnt = 0;
+			}
 		}
 		break;
 	case 1:
@@ -189,7 +200,7 @@ void CKaitoAppearanceScene::KaitoAppearance()
 		SetCamera(D3DXVECTOR3(MAGICSIRCLE_CAMPOS.x - m_MoveCamPos.x, MAGICSIRCLE_CAMPOS.y + m_MoveCamPos.y, MAGICSIRCLE_CAMPOS.z - m_MoveCamPos.z),
 			      D3DXVECTOR3(MAGICSIRCLE_POS.x, MAGICSIRCLE_POS.y + m_MoveCamLook.y, MAGICSIRCLE_POS.z));
 		//カメラをz軸方向に移動
-		if (m_MoveCamPos.z <= 12.0f)
+		if (m_MoveCamPos.z <= MOVE_CAMPOS_MAX.z)
 		{
 			m_MoveCamPos.z += CAM_MOVE_SPEED;
 		}
@@ -198,18 +209,20 @@ void CKaitoAppearanceScene::KaitoAppearance()
 			m_AnimCnt++;
 		}
 
-
-		if (m_MoveCamPos.x <= 1.0f)
+		//カメラをx軸方向に移動
+		if (m_MoveCamPos.x <= MOVE_CAMPOS_MAX.x)
 		{
 			m_MoveCamPos.x += CAM_MOVE_SPEED;
 		}
 
-		if (m_MoveCamPos.y >= 6.0f)
+		//カメラをy軸方向に移動
+		if (m_MoveCamPos.y >= MOVE_CAMPOS_MAX.y)
 		{
 			m_MoveCamPos.y -= CAM_MOVE_SPEED;
 		}
 
-		if (m_MoveCamLook.y <= 4.0f)
+		//注視点のy軸方向の移動
+		if (m_MoveCamLook.y <= MOVE_CAMLOOK_MAX_Y)
 		{
 			m_MoveCamLook.y += CAM_MOVE_SPEED;
 		}
@@ -221,12 +234,14 @@ void CKaitoAppearanceScene::KaitoAppearance()
 		}
 
 		//シーンを進める
-		if (m_AnimCnt >= 240)
+		if (m_AnimCnt >= SCENECHANGE_CNT_FAST)
 		{
 			m_Scene = 2;
 
+			//アニメーションカウントの初期化
+			m_AnimCnt = 0;
 			//次のシーンでの動かすカメラの値の初期値
-			m_MoveCamPos = { 0.0f, 1.0f, 5.0f };
+			m_MoveCamPos = MOVE_CAMPOS_INIT;
 			m_MoveCamLook.y = 1.0f;
 		}
 
@@ -242,14 +257,23 @@ void CKaitoAppearanceScene::KaitoAppearance()
 		//非表示フラグをおろす
 		m_HiddenFlag = false;
 
-		if (m_MoveCamPos.y <= 6.5f)
+		if (m_MoveCamPos.y <= MOVE_CAMPOS_MAX_Y)
 		{
 			m_MoveCamPos.y  += CAM_MOVE_SPEED;
 			m_MoveCamLook.y += CAM_MOVE_SPEED;
 		}
 		else
 		{
-			m_AnimEndFlag = true;
+			//アニメーションカウントの加算
+			m_AnimCnt++;
+			
+			//カメラが止まってからしばらく経ってから
+			if (m_AnimCnt >= SCENECHANGE_CNT_SECOND)
+			{
+				m_AnimEndFlag = true;
+				//魔法陣エフェクトの停止
+				Eff->Stop(hMagicSircle);
+			}
 		}
 
 		break;

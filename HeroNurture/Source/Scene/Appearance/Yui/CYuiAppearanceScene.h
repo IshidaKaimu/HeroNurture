@@ -7,12 +7,8 @@
 namespace Constant_AppearanceScene
 {
 	//----カメラ情報----
-	//ユイ
-	const D3DXVECTOR3 YUI_CAMPOS  = { 0.0f, 4.0f, -5.0f }; //座標
-	const D3DXVECTOR3 YUI_CAMLOOK = { 0.0f, 4.0f, 0.0f };  //注視点
-	//カイト
-	const D3DXVECTOR3 KAITO_CAMPOS  = { 1.0f, 0.0f, -5.0f };  //座標
-	const D3DXVECTOR3 KAITO_CAMLOOK = { 0.0f, 0.0f,  -5.0f }; //注視点
+	const D3DXVECTOR3 INIT_CAMPOS  = { 0.0f, 4.0f, -5.0f }; //初期座標
+	const D3DXVECTOR3 INIT_CAMLOOK = { 0.0f, 4.0f, 0.0f };  //初期注視点
 	//----イベント演出----
 	//カメラ
 	constexpr float CAM_FLICK_DISTANCE  = 25.0f; //タヌキにはじかれる距離
