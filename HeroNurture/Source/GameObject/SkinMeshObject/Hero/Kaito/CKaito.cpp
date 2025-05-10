@@ -200,7 +200,7 @@ void CKaito::NatureAnimation(int no)
 void CKaito::MoveSelectAnim()
 {
 
-	if (m_AnimNo == 0) {
+	if (m_AnimNo != 3) {
 		//アニメーションの経過時間を加算
 		m_AnimTime += m_pMesh->GetAnimSpeed();
 		m_AnimCnt++;
@@ -210,7 +210,6 @@ void CKaito::MoveSelectAnim()
 			m_AnimCnt = 0;
 		}
 	}
-
 	if (m_AnimNo == 3)
 	{
 		m_AnimTime += m_pMesh->GetAnimSpeed();
@@ -218,6 +217,7 @@ void CKaito::MoveSelectAnim()
 		if (m_pMesh->GetAnimPeriod(m_AnimNo) < m_AnimTime)
 		{
 			AnimChange(0);
+			m_AnimCnt = 0;
 		}
 	}
 }
@@ -332,6 +332,7 @@ void CKaito::MagicAttackAnim(float vector)
 			{
 				AnimChange(6);
 				m_AnimCnt = 0;
+				m_AnimTime = 0;
 			}
 		}
 
@@ -459,6 +460,8 @@ void CKaito::AnimInit()
 	m_AnimSpeed = 0.01f;
 	//待機アニメーション
 	m_AnimNo = 0;
+	//アニメーション時間の初期化
+	m_AnimTime = 0;
 	//アニメーションを設定
 	m_pMesh->ChangeAnimSet(m_AnimNo, m_pAnimCtrl);
 }
