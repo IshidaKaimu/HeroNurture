@@ -14,7 +14,7 @@ private:
 
 public:
 	//‰Šú‰»ŠÖ”
-	void Initialize()   { m_pEnemyHero->Initialize(); }
+	void Initialize()   { m_pEnemyHero->EnemyInitialize(); }
 
 	//ƒf[ƒ^“Ç‚Ýž‚ÝŠÖ”
 	void LoadMeshData() { m_pEnemyHero->LoadMeshData(); };
