@@ -207,7 +207,6 @@ void CKaito::MoveSelectAnim()
 		if (m_AnimCnt >= 180)
 		{
 			AnimChange(3);
-			m_AnimCnt = 0;
 		}
 	}
 	if (m_AnimNo == 3)
