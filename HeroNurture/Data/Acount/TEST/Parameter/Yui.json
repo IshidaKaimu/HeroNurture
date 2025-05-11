@@ -1,15 +1,15 @@
 {
  "Appropriate": {
   "Hp": 0.0,
-  "Magic": 0.0,
+  "Magic": 10.0,
   "Power": 0.0,
-  "Speed": 0.0
+  "Speed": 20.0
  },
  "Name": "Yui",
  "Parameter": {
-  "Hp": 0.0,
-  "Magic": 0.0,
-  "Power": 20.0,
-  "Speed": 0.0
+  "Hp": 150.0,
+  "Magic": 82.0,
+  "Power": 30.0,
+  "Speed": 90.0
  }
 }

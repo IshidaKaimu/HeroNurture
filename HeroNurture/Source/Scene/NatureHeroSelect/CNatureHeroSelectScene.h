@@ -31,6 +31,11 @@ namespace Constant_NatureHeroSelectScene
 	const D3DXVECTOR2 SCENENAME_POS_NS = { 350.0f, -10.0f };
 	//ÉqÅ[ÉçÅ[ñºï\é¶à íu
 	const D3DXVECTOR2 HERONAME_POS_NS = { 350.0f,450.0f };
+	//îwåi
+	static D3DXVECTOR3 BACK_POS = { 0.0f,0.0f,0.0f };    //ç¿ïW
+	static D3DXVECTOR3 BACK_SCALE = { 1.0f, 1.0f, 1.0f };//ägèk
+	static D3DXVECTOR2 BACK_DISP = { 1.0f,1.0f };		 //ïù
+
 }
 
 class CNatureHeroSelectScene

@@ -84,7 +84,7 @@ protected:
     //フェードイン
     bool FadeIn();
 	//操作方法指示バーテンプレートの描画
-	void DrawControlBar();
+	void DrawControlBar( bool basictext);
 public:
 	//白フェード関連の初期化
 	void InitWhiteFade();

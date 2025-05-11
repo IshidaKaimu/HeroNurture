@@ -51,8 +51,12 @@ bool CSoundManager::Load( HWND hWnd )
 		{ enList::SE_FireBall,			_T( "Data\\Sound\\SE\\FireBall.mp3" ),			    _T( "SE_FireBall" )		},
 		{ enList::SE_Thunder,			_T( "Data\\Sound\\SE\\Thunder.mp3" ),			    _T( "SE_Thunder" )		},
 		{ enList::SE_TPose,			    _T( "Data\\Sound\\SE\\TPose.mp3" ),			        _T( "SE_TPose" )		},
-		{ enList::SE_Up,			    _T( "Data\\Sound\\SE\\Up.mp3" ),			        _T( "SE_Up" )		},
-		{ enList::SE_Miss,			    _T( "Data\\Sound\\SE\\Miss.mp3" ),			        _T( "SE_Miss" )		},
+		{ enList::SE_Up,			    _T( "Data\\Sound\\SE\\Up.mp3" ),			        _T( "SE_Up" )			},
+		{ enList::SE_Miss,			    _T( "Data\\Sound\\SE\\Miss.mp3" ),			        _T( "SE_Miss" )			},
+		{ enList::SE_RaccoonChange,	    _T( "Data\\Sound\\SE\\RaccoonChange.mp3" ),	        _T( "SE_RaccoonChange " )	},
+		{ enList::SE_RaccoonCollision,	_T( "Data\\Sound\\SE\\RaccoonCollision.mp3" ),		_T( "SE_RaccoonCollision" )	},
+		{ enList::SE_MagicSircle,	    _T( "Data\\Sound\\SE\\MagicSircle.mp3" ),			_T( "SE_MagicSircle" )		},
+		{ enList::SE_Laser,			    _T( "Data\\Sound\\SE\\Laser.mp3" ),			        _T( "SE_Laser" )			},
 	};
 	//配列の最大要素数を算出 (配列全体のサイズ/配列1つ分のサイズ).
 	int list_max = sizeof( SList ) / sizeof( SList[0] );

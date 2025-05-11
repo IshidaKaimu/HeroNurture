@@ -118,7 +118,7 @@ bool CSceneBase::FadeIn()
 }
 
 //操作方法指示バーテンプレートの描画
-void CSceneBase::DrawControlBar()
+void CSceneBase::DrawControlBar(bool basictext)
 {
     WriteText* Text = WriteText::GetInstance();
 
@@ -130,10 +130,13 @@ void CSceneBase::DrawControlBar()
     //操作方法指示バー描画
     m_pControlBar->Draw();
 
-    //操作方法指示「Enter 決定」テキストの描画
-    Text->Draw_Text(L"Enter 決定", WriteText::Control, ENTERTEXT_POS);
-    //操作方法指示「Esc 戻る」テキストの描画
-    Text->Draw_Text(L"Esc 戻る", WriteText::Control, ESCAPETEXT_POS);
+    if (basictext) 
+    {
+        //操作方法指示「Enter 決定」テキストの描画
+        Text->Draw_Text(L"Enter 決定", WriteText::Control, ENTERTEXT_POS);
+        //操作方法指示「Esc 戻る」テキストの描画
+        Text->Draw_Text(L"Esc 戻る", WriteText::Control, ESCAPETEXT_POS);
+    }
 }
 
 //白フェード関連の初期化

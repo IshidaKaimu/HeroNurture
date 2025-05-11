@@ -1,6 +1,6 @@
 #include "CRaccoonDog.h"
 #include "Effect\CEffect.h"
-
+#include "Sound\CSoundManager.h"
 using namespace Constant_RaccoonDog;
 
 CRaccoonDog::CRaccoonDog()
@@ -67,6 +67,9 @@ void CRaccoonDog::AppearanceAnim(float camz)
 		{
 			//煙エフェクトの再生
 			hSteam = Eff->Play(CEffect::enList::Steam, D3DXVECTOR3(m_vPosition.x,m_vPosition.y,m_vPosition.z - STEAM_DELAY));
+			//タヌキ変身SEの再生
+			CSoundManager::GetInstance()->PlaySE(CSoundManager::SE_RaccoonChange);
+			CSoundManager::GetInstance()->Volume(CSoundManager::SE_RaccoonChange, 40);
 		}
 	}
 

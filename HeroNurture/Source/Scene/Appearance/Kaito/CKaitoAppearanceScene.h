@@ -20,7 +20,7 @@ namespace Constant_KaitoAppearanceScene
 	const D3DXVECTOR3 MAGICSIRCLE_ROTATE = { D3DXToRadian(90.0f), 1.0f, 1.0f };  //魔法陣の回転
 	//光エフェクト
 	const D3DXVECTOR3 LASER_POS = { 0.0f, 0.5f, -5.0f }; //座標
-	//イベント演出遷移用数値
+	//イベント演出用数値
 	//----シーン0----
 	//移動させるカメラのy軸の値
 	constexpr float ANIMCHANGE_CAMPOS_Y = 10.0f;
@@ -38,8 +38,7 @@ namespace Constant_KaitoAppearanceScene
 	//カメラを移動させる値の最大値
 	constexpr float   MOVE_CAMPOS_MAX_Y         = 6.5f; //座標y軸
 	//シーン2から終了するために用いるカウント
-	constexpr int     SCENECHANGE_CNT_SECOND = 120;
-
+	constexpr int     SCENECEND_CNT_SECOND = 120;
 }
 
 //=====================================
@@ -68,11 +67,9 @@ class CEnemyHeroManager;
 class CKeyManager;
 //エフェクト
 class CEffect;
+//テキスト
+class WriteText;
 //----オブジェクトクラス----
-//タヌキ
-class CRaccoonDog;
-//ユイ
-class CYui;
 //カイト
 class CKaito;
 //地面
@@ -116,8 +113,7 @@ private:
 	//カメラマネージャー
 	CCameraManager* m_pCamera;
 
-	//----ヒーローのスキンメッシュ----
-	std::unique_ptr<CYui>   m_pYui;  //ユイ
+	//スキンメッシュ
 	std::unique_ptr<CKaito> m_pKaito;//カイト
 
 	//----スタティックメッシュ----
@@ -129,6 +125,8 @@ private:
 	bool m_HiddenFlag;
 	//アニメーション、カメラ処理が終了したとき
 	bool m_AnimEndFlag;
+	//演出スキップフラグ
+	bool m_SkipFlag;
 
 };
 

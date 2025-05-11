@@ -33,7 +33,10 @@ public:
 		SE_TPose,             //T字ポーズ
 		SE_Up,                //ステータス(上昇)
 		SE_Miss,              //ステータス(失敗)
-		//音が増えたら「ここ」に追加してください.
+		SE_RaccoonChange,     //タヌキの変身
+		SE_RaccoonCollision,  //タヌキの衝突
+		SE_MagicSircle,       //魔法陣出現
+		SE_Laser,			  //光エフェクト
 		max,		//最大数.
 	};
 

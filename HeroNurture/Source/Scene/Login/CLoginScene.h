@@ -19,12 +19,15 @@ class CUtility;
 // =======================
 namespace Constant_LoginScene
 {
-	//名前入力スペースの位置
-	static D3DXVECTOR3 NAMESPACE_POS   = { 300.0f,300.0f,0.0f };
-	//名前入力スペースのスケール
-	static D3DXVECTOR3 NAMESPACE_SCALE = { 0.5f, 0.5f, 1.0f };
-	//名前入力スペースの幅
-	static D3DXVECTOR2 NAMESPACE_DISP  = { 1.0f,1.0f };
+	//----UI----
+	//名前入力スペース
+	static D3DXVECTOR3 NAMESPACE_POS   = { 300.0f,300.0f,0.0f }; //座標
+	static D3DXVECTOR3 NAMESPACE_SCALE = { 0.5f, 0.5f, 1.0f };   //拡縮
+	static D3DXVECTOR2 NAMESPACE_DISP  = { 1.0f,1.0f };		     //幅
+	//背景
+	static D3DXVECTOR3 BACK_POS   = { 0.0f,0.0f,0.0f };  //座標
+	static D3DXVECTOR3 BACK_SCALE = { 1.0f, 1.0f, 1.0f };//拡縮
+	static D3DXVECTOR2 BACK_DISP  = { 1.0f,1.0f };		 //幅
 	//名前入力開始位置
 	static D3DXVECTOR3 NAME_STARTPOS   = { 320.0f, 320.0f, 0.0f };
 	//名前最大文字数
@@ -57,10 +60,6 @@ public:
 	void Draw()		  override;
 
 private:
-	//wstringからstringへの変換
-	std::string WstringToString(std::wstring owstring);
-
-private:
 	//存在の有無を確認したいフォルダのパス
 	std::filesystem::path m_TargetPath;
 
@@ -72,8 +71,12 @@ private:
 	std::wstring m_UserName;
 	//ユーザー名入力スペース
 	std::unique_ptr<CUIObject> m_pNameSpace;
+	//背景
+	std::unique_ptr<CUIObject> m_pBack;
 
 	//Jsonクラス
 	std::unique_ptr<CJson> m_pJson;
-
+	
+	//一致する名前が存在しないことを表示するフラグ
+	bool m_NonExistent;
 };

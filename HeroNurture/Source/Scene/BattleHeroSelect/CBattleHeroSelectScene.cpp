@@ -24,6 +24,7 @@ CBattleHeroSelectScene::CBattleHeroSelectScene()
 	, m_pRightArrow		()
 	, m_pYui			()
 	, m_pKaito			()
+	, m_BackSceneFlag   ()
 {
 }
 
@@ -46,7 +47,7 @@ void CBattleHeroSelectScene::Create()
 	m_pYui = std::make_unique<CYui>();
 
 	//----UI----
-	m_pLeftArrow = make_unique<CUIObject>();
+	m_pLeftArrow  = make_unique<CUIObject>();
 	m_pRightArrow = make_unique<CUIObject>();
 }
 
@@ -73,9 +74,13 @@ void CBattleHeroSelectScene::LoadData()
 	m_pKaito->AttachMesh(CSkinMeshManager::GetMesh(CSkinMeshManager::Kaito));
 
 	//----UI----
-	m_pLeftArrow->AttachSprite(CUIManager::GetSprite(CUIManager::Arrow));           //矢印左
-	m_pRightArrow->AttachSprite(CUIManager::GetSprite(CUIManager::Arrow));          //矢印右
-	m_pParamBack->AttachSprite(CUIManager::GetSprite(CUIManager::ResultParamList));	//パラメータ背景
+	//矢印左
+	m_pLeftArrow->AttachSprite(CUIManager::GetSprite(CUIManager::Arrow));          
+	//矢印右
+	m_pRightArrow->AttachSprite(CUIManager::GetSprite(CUIManager::Arrow));         
+	//パラメータ背景
+	m_pParamBack->AttachSprite(CUIManager::GetSprite(CUIManager::ResultParamList));
+
 }
 
 void CBattleHeroSelectScene::Initialize()
@@ -92,7 +97,6 @@ void CBattleHeroSelectScene::Initialize()
 	//カメラ情報の設定
 	m_pCamera->SetPos(CAMPOS);
 	m_pCamera->SetLook(CAMLOOK);
-
 }
 
 void CBattleHeroSelectScene::Update()
@@ -134,13 +138,25 @@ void CBattleHeroSelectScene::Update()
 		else { m_SelectNo = m_ResultData.size(); }
 	}
 
-	//フェード開始
+	//バトルに使用するヒーローを決めたら
 	if (KeyMng->IsDown(VK_RETURN))
 	{
 		//決定SEの再生
 		CSoundManager::GetInstance()->PlaySE(CSoundManager::SE_Enter);
 		CSoundManager::GetInstance()->Volume(CSoundManager::SE_Enter, 40);
+		//フェード開始
+		m_SceneTransitionFlg = true;
+	}
 
+	//Escapeキーが押されたら
+	if (KeyMng->IsDown(VK_ESCAPE))
+	{
+		//決定SEの再生
+		CSoundManager::GetInstance()->PlaySE(CSoundManager::SE_Enter);
+		CSoundManager::GetInstance()->Volume(CSoundManager::SE_Enter, 40);	
+		//前のシーンに戻すフラグを立てる
+		m_BackSceneFlag = true;
+		//フェード開始
 		m_SceneTransitionFlg = true;
 	}
 
@@ -149,13 +165,20 @@ void CBattleHeroSelectScene::Update()
 		//選択した育成データをバトルに使用するデータとして書き込み
 		m_pJson->SaveBattleData(m_ResultData,m_BattleDataWriter,m_SelectNo);
 		//自分が選択したヒーロー登場シーンへ
-		if (HeroMng->GetBattleHeroName() == "Yui")
+		if (!m_BackSceneFlag)
 		{
-			SceneMng->LoadCreate(CSceneManager::YuiAppearance);
+			if (HeroMng->GetBattleHeroName() == "Yui")
+			{
+				SceneMng->LoadCreate(CSceneManager::YuiAppearance);
+			}
+			else if (HeroMng->GetBattleHeroName() == "Kaito")
+			{
+				SceneMng->LoadCreate(CSceneManager::KaitoAppearance);
+			}
 		}
-		else if(HeroMng->GetBattleHeroName() == "Kaito")
+		else
 		{
-			SceneMng->LoadCreate(CSceneManager::KaitoAppearance);
+			SceneMng->LoadCreate(CSceneManager::ModeSelect);
 		}
 	}
 }
@@ -174,10 +197,9 @@ void CBattleHeroSelectScene::Draw()
 	DrawArrow();
 
 	//操作方法指示バーの描画
-	DrawControlBar();
+	DrawControlBar(true);
 	//操作方法指示「←→ 選択」テキストの描画
 	Text->Draw_Text(L"←→ 選択", WriteText::Control, SELECTTEXT_POS);
-
 }
 
 //デバッグ処理
