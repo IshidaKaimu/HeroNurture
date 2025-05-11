@@ -13,6 +13,7 @@
 #include "SkinMeshObject\Event\RaccoonDog\CRaccoonDog.h"
 #include "SkinMeshObject\Hero\Yui\CYui.h"
 #include "StaticMeshObject\Ground\CGround.h"
+#include "WriteText\WriteText.h"
 
 //定数の名前空間
 using namespace Constant_AppearanceScene;
@@ -20,11 +21,11 @@ using namespace Constant_AppearanceScene;
 CYuiAppearanceScene::CYuiAppearanceScene()
 	:m_pCamera         (&CCameraManager::GetInstance())
 	,m_pYui	           ()
-	,m_pKaito          ()
 	,m_pRaccoonDog     ()
 	,m_pGround	       ()
 	,m_HiddenFlag      ()
 	,m_AnimEndFlag     ()
+	,m_SkipFlag		   ()
 {
 }
 
@@ -56,6 +57,7 @@ void CYuiAppearanceScene::LoadData()
 	//ヒーローのメッシュデータ設定
 	m_pYui->LoadMeshData();
 
+	//----スタティックメッシュ----
 	//タヌキのメッシュデータ設定
 	m_pRaccoonDog->AttachMesh(CSkinMeshManager::GetMesh(CSkinMeshManager::RaccoonDog));
 	//地面のメッシュデータ設定
@@ -83,14 +85,41 @@ void CYuiAppearanceScene::Initialize()
 void CYuiAppearanceScene::Update()
 {
 	CHeroManager* HeroMng = &CHeroManager::GetInstance();
-
 	CKeyManager* KeyMng = &CKeyManager::GetInstance();
 	CSceneManager* SceneMng = CSceneManager::GetInstance();
+	CEffect* Eff = CEffect::GetInstance();
+
+
+	//バトルヒーロー選択BGMを停止
+	CSoundManager::GetInstance()->Stop(CSoundManager::BGM_BattleHeroSelect);
+
+	//バトルBGMの再生
+	CSoundManager::GetInstance()->PlayLoop(CSoundManager::BGM_Battle);
+	CSoundManager::GetInstance()->Volume(CSoundManager::BGM_Battle, 40);
+
+	//キーマネージャの動作
+	KeyMng->Update();
+
 
 	//フェードイン処理
 	if (!FadeIn()) { return; }
 
 	
+	//スキップ
+	if (CKeyManager::GetInstance().IsDown(VK_RETURN))
+	{
+		//演出スキップフラグを立てる
+		m_SkipFlag = true;
+
+		//全てのエフェクトを止める
+		Eff->StopAll();
+
+		//バトルシーンへ
+		m_SceneTransitionFlg = true;
+	}
+
+
+
 	//自分がユイを選択していた場合
 	if (!m_AnimEndFlag)
 	 {
@@ -126,6 +155,13 @@ void CYuiAppearanceScene::Update()
 		{
 			SceneMng->LoadCreate(CSceneManager::Battle);
 		}
+
+		//演出スキップフラグが立っていればバトルシーンへ
+		if (m_SkipFlag)
+		{
+			SceneMng->LoadCreate(CSceneManager::Battle);
+		}
+
 	}
 
 #if DEBUG
@@ -136,12 +172,16 @@ void CYuiAppearanceScene::Update()
 
 void CYuiAppearanceScene::Draw()
 {
-	CHeroManager* HeroMng = &CHeroManager::GetInstance();
+	CHeroManager*  HeroMng  = &CHeroManager::GetInstance();
+	CSceneManager* SceneMng = CSceneManager::GetInstance();
+	WriteText*     Text     = WriteText::GetInstance();
 
 	//カメラの動作
 	m_pCamera->CameraUpdate();
 
-	
+	//地面の描画
+	m_pGround->Draw();
+
 	//ユイのアニメーション中
 	//タヌキの描画
 	if (!m_pRaccoonDog->GetHiddenFlag())
@@ -154,8 +194,12 @@ void CYuiAppearanceScene::Draw()
 		m_pYui->Draw();
 	}
 
-	//地面の描画
-	m_pGround->Draw();
+	//操作方法指示バーの描画
+	DrawControlBar(false);
+
+	//演出スキップ指示の描画
+	Text->Draw_Text(L"Enter 演出スキップ", WriteText::Control, ENTERTEXT_POS);
+
 }
 
 void CYuiAppearanceScene::Debug()
@@ -185,6 +229,13 @@ void CYuiAppearanceScene::YuiAppearance()
 		if (m_pRaccoonDog->GetPosition().z <= FLICK_WHITEFADE)
 		{
 			PlayWhiteFade(0, 0.06f, 1.0f);
+			m_AnimCnt++;
+			if (m_AnimCnt == 1)
+			{
+				//衝突SEの再生
+				CSoundManager::GetInstance()->PlaySE(CSoundManager::SE_RaccoonCollision);
+				CSoundManager::GetInstance()->Volume(CSoundManager::SE_RaccoonCollision, 60);
+			}
 		}
 
 		//タヌキがカメラのZ座標を超えたら
@@ -193,8 +244,7 @@ void CYuiAppearanceScene::YuiAppearance()
 			if (m_MoveCamPos.z >= -CAM_FLICK_DISTANCE)
 			{
 				m_MoveCamPos.z -= CAM_FLICK_SPEED;
-			}
-		
+			}		
 		}
 		//タヌキが非表示になったら
 		if (m_pRaccoonDog->GetHiddenFlag())
@@ -203,24 +253,16 @@ void CYuiAppearanceScene::YuiAppearance()
 			m_Scene = 1;
 			//動かすカメラのy軸
 			m_MoveCamPos.y = 1.5f;
+			//アニメーションカウントの初期化
+			m_AnimCnt = 0;
 		}
 		break;
 	case 1:
 		//自分がユイを選択していた場合
-		if (HeroMng->GetSelectHeroName() == "Yui")
-		{
-			m_pYui->AppearanceAnimation();
-			//カメラの設定
-			SetCamera(D3DXVECTOR3(m_MoveCamPos.x - 2.0f, m_MoveCamPos.y, m_pYui->GetPosition().z - 2.0f),
+		m_pYui->AppearanceAnimation();
+		//カメラの設定
+		SetCamera(D3DXVECTOR3(m_MoveCamPos.x - SHIFT_CAMPOS, m_MoveCamPos.y, m_pYui->GetPosition().z - SHIFT_CAMPOS),
 						 D3DXVECTOR3(m_pYui->GetPosition().x, m_MoveCamLook.y, m_pYui->GetPosition().z));
-		}
-		//敵がユイの場合
-		else if (m_pYui->GetAppealanceAnimEndFlag())
-		{
-			//カメラの設定
-			SetCamera(D3DXVECTOR3(m_MoveCamPos.x - 2.0f, m_MoveCamPos.y, m_pYui->GetPosition().z - 2.0f),
-				         D3DXVECTOR3(m_pYui->GetPosition().x, m_pYui->GetPosition().y, m_pYui->GetPosition().z));
-		}
 
 		//カメラが一定の高さになるまで
 		if (!m_pYui->GetAppealanceAnimEndFlag())
@@ -234,35 +276,25 @@ void CYuiAppearanceScene::YuiAppearance()
 			m_AnimCnt++;
 		}
 
-		if(m_AnimCnt >= 60)
+		if(m_AnimCnt >= ANIMCHANGE_CNT)
 		{
 			m_Scene = 2;
 			//動かすカメラのy軸
-			m_MoveCamPos.y  = 2.0f;  //座標
-			m_MoveCamLook.y = 2.0f; //注視点
+			m_MoveCamPos.y  = MOVE_INIT_CAMPOS_Y;  //座標
+			m_MoveCamLook.y = MOVE_INIT_CAMLOOK_Y; //注視点
 			//アニメーションカウントのリセット
 			m_AnimCnt = 0;
 		}
 		break;
 	case 2:
 		//自分がユイを選択していた場合
-		if (HeroMng->GetSelectHeroName() == "Yui")
-		{
-			m_pYui->AppearanceAnimation();
-			//カメラの設定
-			SetCamera(D3DXVECTOR3(m_MoveCamPos.x, m_MoveCamPos.y, m_pYui->GetPosition().z - 4.0f),
+		m_pYui->AppearanceAnimation();
+		//カメラの設定
+		SetCamera(D3DXVECTOR3(m_MoveCamPos.x, m_MoveCamPos.y, m_pYui->GetPosition().z - 4.0f),
 				         D3DXVECTOR3(m_pYui->GetPosition().x, m_MoveCamLook.y, m_pYui->GetPosition().z));
-		}
-		//敵がユイの場合
-		else if (m_pYui->GetAppealanceAnimEndFlag())
-		{
-			//カメラの設定
-			SetCamera(D3DXVECTOR3(m_MoveCamPos.x, m_MoveCamPos.y, m_pYui->GetPosition().z - 4.0f),
-				         D3DXVECTOR3(m_pYui->GetPosition().x, m_pYui->GetPosition().y, m_pYui->GetPosition().z));
-		}
 
 		//カメラが一定の高さになるまで
-		if (m_MoveCamPos.y <= INIT_CAMPOS.y + 2.5f)
+		if (m_MoveCamPos.y <= MOVEMENT_RANGE_MAX_Y)
 		{
 			//座標と注視点をあげる
 			m_MoveCamPos.y += CAM_MOVE_SPEED;
@@ -271,7 +303,7 @@ void CYuiAppearanceScene::YuiAppearance()
 		else
 		{
 			m_AnimCnt++;
-			if (m_AnimCnt >= 120)
+			if (m_AnimCnt >= SCENECEND_CNT_SECOND)
 			{
 				m_AnimCnt = 0;
 				//ユイのアニメーションの終了

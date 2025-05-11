@@ -14,17 +14,18 @@
 #include "SkinMeshObject\Hero\Yui\CYui.h"
 #include "SkinMeshObject\Hero\Kaito\CKaito.h"
 #include "StaticMeshObject\Ground\CGround.h"
+#include "WriteText\WriteText.h"
 
 //定数の名前空間
 using namespace Constant_KaitoAppearanceScene;
 
 CKaitoAppearanceScene::CKaitoAppearanceScene()
-	:m_pCamera(&CCameraManager::GetInstance())
-	, m_pYui()
-	, m_pKaito()
-	, m_pGround()
-	, m_HiddenFlag()
+	:m_pCamera     (&CCameraManager::GetInstance())
+	, m_pKaito     ()
+	, m_pGround	   ()
+	, m_HiddenFlag ()
 	, m_AnimEndFlag()
+	, m_SkipFlag   ()
 {
 }
 
@@ -36,8 +37,6 @@ void CKaitoAppearanceScene::Create()
 {
 	CHeroManager* HeroMng = &CHeroManager::GetInstance();
 
-	//ユイ
-	m_pYui = make_unique<CYui>();
 	//カイト
 	m_pKaito = make_unique<CKaito>();
 	//地面
@@ -79,9 +78,19 @@ void CKaitoAppearanceScene::Initialize()
 void CKaitoAppearanceScene::Update()
 {
 	CHeroManager* HeroMng = &CHeroManager::GetInstance();
-
 	CKeyManager* KeyMng = &CKeyManager::GetInstance();
 	CSceneManager* SceneMng = CSceneManager::GetInstance();
+	CEffect* Eff = CEffect::GetInstance();
+
+	//バトルヒーロー選択BGMを停止
+	CSoundManager::GetInstance()->Stop(CSoundManager::BGM_BattleHeroSelect);
+
+	//バトルBGMの再生
+	CSoundManager::GetInstance()->PlayLoop(CSoundManager::BGM_Battle);
+	CSoundManager::GetInstance()->Volume(CSoundManager::BGM_Battle, 40);
+
+	//キーマネージャの動作
+	KeyMng->Update();
 
 	//フェードイン処理
 	if (!FadeIn()) { return; }
@@ -90,13 +99,23 @@ void CKaitoAppearanceScene::Update()
 	//カイトのアニメーション
 	KaitoAppearance();
 
+	//スキップ
+	if (KeyMng->IsDown(VK_RETURN))
+	{
+		//演出スキップフラグを立てる
+		m_SkipFlag = true;
+
+		//全てのエフェクトを止める
+		Eff->StopAll();
+
+		//バトルシーンへ
+		m_SceneTransitionFlg = true;
+	}
+
+
 	//シーン遷移(仮)
 	if (m_AnimEndFlag)
 	{
-		//決定SEの再生
-		CSoundManager::GetInstance()->PlaySE(CSoundManager::SE_Enter);
-		CSoundManager::GetInstance()->Volume(CSoundManager::SE_Enter, 40);
-
 		//オープニングシーンへ
 		m_SceneTransitionFlg = true;
 	}
@@ -111,6 +130,12 @@ void CKaitoAppearanceScene::Update()
 		{
 			SceneMng->LoadCreate(CSceneManager::Battle);
 		}
+
+		//演出スキップフラグが立っていればバトルシーンへ
+		if (m_SkipFlag)
+		{
+			SceneMng->LoadCreate(CSceneManager::Battle);
+		}
 	}
 
 #if DEBUG
@@ -121,7 +146,9 @@ void CKaitoAppearanceScene::Update()
 
 void CKaitoAppearanceScene::Draw()
 {
-	CHeroManager* HeroMng = &CHeroManager::GetInstance();
+	CHeroManager* HeroMng   = &CHeroManager::GetInstance();
+	WriteText* Text	        = WriteText::GetInstance();
+	CSceneManager* SceneMng = CSceneManager::GetInstance();
 
 	//カメラの動作
 	m_pCamera->CameraUpdate();
@@ -134,6 +161,13 @@ void CKaitoAppearanceScene::Draw()
 
 	//地面の描画
 	m_pGround->Draw();
+
+	//操作方法指示バーの描画
+	DrawControlBar(false);
+
+	//演出スキップ指示の描画
+	Text->Draw_Text(L"Enter 演出スキップ", WriteText::Control, ENTERTEXT_POS);
+
 }
 
 void CKaitoAppearanceScene::Debug()
@@ -186,6 +220,9 @@ void CKaitoAppearanceScene::KaitoAppearance()
 			if (m_AnimCnt == 1)
 			{
 				hMagicSircle = Eff->Play(CEffect::enList::MagicSircle, MAGICSIRCLE_POS);
+				//魔法陣SEの再生
+				CSoundManager::GetInstance()->PlaySE(CSoundManager::SE_MagicSircle);
+				CSoundManager::GetInstance()->Volume(CSoundManager::SE_MagicSircle, 40);
 			}
 			//カウントが一定値を超えたら魔法陣エフェクトの再生
 			if (m_AnimCnt >= ANIMCHANGE_CNT) 
@@ -194,6 +231,7 @@ void CKaitoAppearanceScene::KaitoAppearance()
 				m_AnimCnt = 0;
 			}
 		}
+
 		break;
 	case 1:
 		//カメラの設定
@@ -233,6 +271,13 @@ void CKaitoAppearanceScene::KaitoAppearance()
 			hLaser = Eff->Play(CEffect::Laser, MAGICSIRCLE_POS);
 		}
 
+		if (m_AnimCnt == 120)
+		{
+			//光SEの再生
+			CSoundManager::GetInstance()->PlaySE(CSoundManager::SE_Laser);
+			CSoundManager::GetInstance()->Volume(CSoundManager::SE_Laser, 40);
+		}
+
 		//シーンを進める
 		if (m_AnimCnt >= SCENECHANGE_CNT_FAST)
 		{
@@ -268,7 +313,7 @@ void CKaitoAppearanceScene::KaitoAppearance()
 			m_AnimCnt++;
 			
 			//カメラが止まってからしばらく経ってから
-			if (m_AnimCnt >= SCENECHANGE_CNT_SECOND)
+			if (m_AnimCnt >= SCENECEND_CNT_SECOND)
 			{
 				m_AnimEndFlag = true;
 				//魔法陣エフェクトの停止

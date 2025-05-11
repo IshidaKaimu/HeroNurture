@@ -18,10 +18,12 @@
 using namespace Constant_NatureHeroSelectScene;
 
 CNatureHeroSelectScene::CNatureHeroSelectScene()
-    : m_pCamera (  &CCameraManager::GetInstance() )
-    , m_pYui    ()
-    , m_pKaito  ()
-    , m_UserName()
+    : m_pCamera    (&CCameraManager::GetInstance())
+    , m_pYui       ()
+    , m_pKaito     ()
+    , m_UserName   ()
+    , m_pLeftArrow ()
+    , m_pRightArrow()
 {
 }
 
@@ -37,8 +39,8 @@ void CNatureHeroSelectScene::Create()
    m_pKaito   = make_unique<CKaito>();//カイト
 
    //----UI----
-   m_pLeftArrow = make_unique<CUIObject>();
-   m_pRightArrow = make_unique<CUIObject>();
+   m_pLeftArrow  = make_unique<CUIObject>(); //左矢印
+   m_pRightArrow = make_unique<CUIObject>(); //右矢印
 }
 
 //データ設定関数
@@ -83,6 +85,7 @@ void CNatureHeroSelectScene::Initialize()
     m_pYui->Initialize();
     //カイト
     m_pKaito->Initialize();
+
 }
 
 //更新関数
@@ -140,7 +143,7 @@ void CNatureHeroSelectScene::Update()
     ImGui::End();
 #endif
 
-    //シーン遷移(仮)
+    //シーン遷移
     if (CKeyManager::GetInstance().IsDown(VK_RETURN))
     {
         //決定SEの再生
@@ -148,6 +151,20 @@ void CNatureHeroSelectScene::Update()
         CSoundManager::GetInstance()->Volume(CSoundManager::SE_Enter, 40);
 
         //オープニングシーンへ
+        m_SceneTransitionFlg = true;
+    }
+
+    //前のシーンに戻す
+    if (CKeyManager::GetInstance().IsDown(VK_ESCAPE))
+    {
+        //決定SEの再生
+        CSoundManager::GetInstance()->PlaySE(CSoundManager::SE_Enter);
+        CSoundManager::GetInstance()->Volume(CSoundManager::SE_Enter, 40);
+
+        //選択番号を2にする
+        m_SelectNo = 2;
+
+        //モード選択シーンへ
         m_SceneTransitionFlg = true;
     }
 
@@ -165,7 +182,16 @@ void CNatureHeroSelectScene::Update()
         default:
             break;
         }
-       CSceneManager::GetInstance()->LoadCreate(CSceneManager::Nature);
+        //選択番号が2以外なら
+        if (m_SelectNo != 2) 
+        {
+            CSceneManager::GetInstance()->LoadCreate(CSceneManager::Nature);
+        }
+        else
+        {
+            //前のシーンへ
+            CSceneManager::GetInstance()->LoadCreate(CSceneManager::ModeSelect);
+        }
     }
 }
 
@@ -201,7 +227,7 @@ void CNatureHeroSelectScene::Draw()
     Text->Draw_Text(L"Nature Hero Select", WriteText::Normal, SCENENAME_POS_NS);    
 
     //操作方法指示バーの描画
-    DrawControlBar();
+    DrawControlBar(true);
 
     //矢印の描画
     DrawArrow();

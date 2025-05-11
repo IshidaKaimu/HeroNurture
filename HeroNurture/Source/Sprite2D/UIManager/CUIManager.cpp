@@ -33,6 +33,7 @@ HRESULT CUIManager::Load(CDirectX11* Dx11)
 		{UIList::WhiteFade,	     _T("Data\\Texture\\WhiteFade.png")		   ,{ 1280.0f,720.0f,1280.0f,720.0f, 0.0f, 0.0f,}},
 		{UIList::TitleBack,      _T("Data\\Texture\\TitleBack.png")	       ,{ 534.0f, 200.0f, 534.0f, 200.0f, 534.0f, 200.0f,}},
 		{UIList::TitleInfoBack,  _T("Data\\Texture\\TitleInfoBack.png")	   ,{ 465.0f, 136.0f, 465.0f, 136.0f, 465.0f, 136.0f,}},
+		{UIList::BasicBack,      _T("Data\\Texture\\BasicBack.png")	       ,{ 1280.0f,720.0f,1280.0f,720.0f, 0.0f, 0.0f,}},
 		{UIList::ModeSelectLeft, _T("Data\\Texture\\ModeSelectLeft.png")   ,{ 640.0f, 720.0f, 640.0f, 720.0f, 640.0f, 720.0f,}},
 		{UIList::ModeSelectRight,_T("Data\\Texture\\ModeSelectRight.png")  ,{ 640.0f, 720.0f, 640.0f, 720.0f, 640.0f, 720.0f,}},
 		{UIList::ModeSelectCover,_T("Data\\Texture\\ModeSelectCover.png")  ,{ 640.0f, 720.0f, 640.0f, 720.0f, 640.0f, 720.0f,}},
@@ -67,6 +68,10 @@ HRESULT CUIManager::Load(CDirectX11* Dx11)
 		{UIList::Safe,			 _T("Data\\Texture\\Safe.png")             ,{ 314.0f, 299.0f, 314.0f, 299.0f, 314.0f, 299.0f}},
 		{UIList::Anxiety,	     _T("Data\\Texture\\Anxiety.png")          ,{ 314.0f, 299.0f, 314.0f, 299.0f, 314.0f, 299.0f}},
 		{UIList::Danger,	     _T("Data\\Texture\\Danger.png")           ,{ 316.0f, 301.0f, 316.0f, 301.0f, 316.0f, 301.0f}},
+		{UIList::Yui_Name,	     _T("Data\\Texture\\YuiName.png")          ,{ 134.0f, 78.0f, 134.0f, 78.0f, 134.0f, 78.0f}},
+		{UIList::Kaito_Name,	 _T("Data\\Texture\\KaitoName.png")        ,{ 227.0f, 72.0f, 227.0f, 72.0f, 227.0f, 72.0f}},
+		{UIList::HeroText,	     _T("Data\\Texture\\HeroText.png")         ,{ 227.0f, 72.0f, 227.0f, 72.0f, 227.0f, 72.0f}},
+		{UIList::EnemyHeroText,	 _T("Data\\Texture\\EnemyText.png")        ,{ 412.0f, 51.0f, 412.0f, 51.0f, 412.0f, 51.0f}},
 	};
 
 	int list_max = sizeof(SList) / sizeof(SList[0]);

@@ -112,10 +112,10 @@ void CModeSelectScene::Update()
     //前のシーンへ戻る
     if (KeyMng->IsDown(VK_ESCAPE))
     {
-        //ログイン画面へ
+        //選択番号を設定
         m_SelectNo = 2;
 
-        //オープニングシーンへ
+        //ログイン画面へ
         m_SceneTransitionFlg = true;
     }
 
@@ -193,7 +193,7 @@ void CModeSelectScene::DrawUI()
     //選択されていない方に被せる画像
     m_pCover->Draw();
     //操作方法指示バーテンプレートの描画
-    DrawControlBar();
+    DrawControlBar(true);
     //操作方法指示「←→ 選択」テキストの描画
     Text->Draw_Text(L"←→ 選択", WriteText::Control, SELECTTEXT_POS);
     //シーン名の描画

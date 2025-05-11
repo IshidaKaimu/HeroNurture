@@ -67,7 +67,10 @@ namespace Constant_BattleHeroSelectScene
 	const D3DXVECTOR2 NATUREDATA_MAX_POS = { 1200.0f, 0.0f };
 	//「←→ 選択」テキスト
 	const D3DXVECTOR2 SELECTTEXT_POS = { 800.0f, 675.0f }; //座標
-
+	//背景
+	static D3DXVECTOR3 BACK_POS = { 0.0f,0.0f,0.0f };    //座標
+	static D3DXVECTOR3 BACK_SCALE = { 1.0f, 1.0f, 1.0f };//拡縮
+	static D3DXVECTOR2 BACK_DISP = { 1.0f,1.0f };		 //幅
 }
 //==============================
 // バトルヒーロー選択クラス
@@ -136,6 +139,12 @@ private:
 	// =======================
 	// オブジェクトクラス
 	// =======================	
+	//----スキンメッシュ----
+	//ユイ
+	std::unique_ptr<CYui>	m_pYui;
+	//カイト
+	std::unique_ptr<CKaito> m_pKaito;
+
 	//----UI----
 	//パラメータ背景
 	std::unique_ptr<CUIObject> m_pParamBack;
@@ -144,12 +153,8 @@ private:
 	//矢印右
 	std::unique_ptr<CUIObject> m_pRightArrow;
 
-	//----スキンメッシュ----
-	//ユイ
-	std::unique_ptr<CYui>	m_pYui;
-	//カイト
-	std::unique_ptr<CKaito> m_pKaito;
 
-
+	//前のシーンに戻す場合のフラグ
+	bool m_BackSceneFlag;
 
 };

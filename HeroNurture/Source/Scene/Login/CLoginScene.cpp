@@ -13,7 +13,9 @@ CLoginScene::CLoginScene()
     : m_TargetPath ()
     , m_UserName   ()
     , m_pNameSpace ()
+    , m_pBack      ()
     , m_pJson      ()
+    , m_NonExistent()
 {
 }
 
@@ -24,7 +26,11 @@ CLoginScene::~CLoginScene()
 void CLoginScene::Create()
 {
     //----UI----
-    m_pNameSpace = std::make_unique<CUIObject>();
+    //名前入力空間
+    m_pNameSpace = std::make_unique<CUIObject>(); 
+    //背景
+    m_pBack = std::make_unique<CUIObject>();
+
 }
 
 void CLoginScene::Releace()
@@ -33,21 +39,35 @@ void CLoginScene::Releace()
 
 void CLoginScene::LoadData()
 {
+    //----UI----
+    //名前入力スペース
     m_pNameSpace->AttachSprite(CUIManager::GetSprite(CUIManager::NameSpace));
+    //背景
+    m_pBack->AttachSprite(CUIManager::GetSprite(CUIManager::BasicBack));
 }
 
 void CLoginScene::Initialize()
 {
-    //名前入力スペースの位置初期化
-    m_pNameSpace->SetPosition(NAMESPACE_POS.x, NAMESPACE_POS.y, NAMESPACE_POS.z);
-    //名前入力スペースのスケール初期化
-    m_pNameSpace->SetScale(NAMESPACE_SCALE.x, NAMESPACE_SCALE.y, NAMESPACE_SCALE.z);
-    //名前入力スペースの幅初期化
-    m_pNameSpace->SetDisplay(NAMESPACE_DISP.x, NAMESPACE_DISP.y);
+    //名前入力スペース
+    m_pNameSpace->SetPosition(NAMESPACE_POS);                    //座標
+    m_pNameSpace->SetScale(NAMESPACE_SCALE);                     //拡縮
+    m_pNameSpace->SetDisplay(NAMESPACE_DISP.x, NAMESPACE_DISP.y);//幅
+    //背景
+    m_pBack->SetPosition(BACK_POS);                         //座標
+    m_pBack->SetScale(BACK_SCALE);                          //拡縮
+    m_pBack->SetDisplay(BACK_DISP.x, BACK_DISP.y);          //幅
 }
 
 void CLoginScene::Update()
 {
+    //モード選択BGMを停止
+    CSoundManager::GetInstance()->Stop(CSoundManager::BGM_ModeSelect);
+
+    //タイトルBGMの再生
+    CSoundManager::GetInstance()->PlayLoop(CSoundManager::BGM_Title);
+    CSoundManager::GetInstance()->Volume(CSoundManager::BGM_Title, 40);
+
+
     //フェードイン処理
     if (!FadeIn()) { return; }
 
@@ -78,6 +98,11 @@ void CLoginScene::Update()
             //フェード開始
             m_SceneTransitionFlg = true;
         }
+        else
+        {
+            //一致する名前が存在しないことを表示する
+            m_NonExistent = true;
+        }
     }
 
     //前の画面に戻る
@@ -107,12 +132,19 @@ void CLoginScene::Update()
 void CLoginScene::Draw()
 {
     WriteText* Text = WriteText::GetInstance();
+    CSceneManager* SceneMng = CSceneManager::GetInstance();
+
+    //操作方法指示バーの描画
+    DrawControlBar(true);
 
     //名前入力スペースの描画
     m_pNameSpace->Draw();
 
+    //背景の描画
+    m_pBack->Draw();
+
     //シーン名の描画
-    Text->Draw_Text(L"ログイン", WriteText::D_Big, D3DXVECTOR2(0.0f, -20.0f));
+    Text->Draw_Text(L"ログイン", WriteText::Select, SCENENAME_POS);
 
     if (m_UserName.empty())
     {
@@ -120,11 +152,15 @@ void CLoginScene::Draw()
         Text->Draw_Text(L"ここに名前を入力...", WriteText::NameInfo, D3DXVECTOR2(NAME_STARTPOS.x, NAME_STARTPOS.y));
     }
 
+    if (m_NonExistent)
+    {
+        //一致する名前がない場合の文を表示
+        Text->Draw_Text(L"※一致するアカウント名が存在しません", WriteText::Error, D3DXVECTOR2(300.0f, 450.0f));
+    }
+
     //入力された文字の描画
     Text->Draw_Text(m_UserName, WriteText::InputName, D3DXVECTOR2(NAME_STARTPOS.x, NAME_STARTPOS.y));
 
-    //操作方法指示バーの描画
-    DrawControlBar();
 }
 
 

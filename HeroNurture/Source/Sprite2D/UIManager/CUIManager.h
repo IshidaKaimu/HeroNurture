@@ -17,6 +17,7 @@ public:
 		WhiteFade,	        //白フェード用画像
 		TitleBack,          //タイトル背景
 		TitleInfoBack,      //タイトル指示テキスト背景
+		BasicBack,			//基本背景
 		ModeSelectLeft,     //モード選択シーン背景左
 		ModeSelectRight,	//モード選択シーン背景右
 		ModeSelectCover,    //モード選択シーン背景かぶせる画像
@@ -51,6 +52,10 @@ public:
 		Safe,				//失敗率アイコン(30%以下)
 		Anxiety,			//失敗率アイコン(30%以上70%以下)
 		Danger,				//失敗率アイコン(70%以上)
+		Yui_Name,           //ユイの名前
+		Kaito_Name,         //カイトの名前
+		HeroText,			//"HERO"テキスト
+		EnemyHeroText,		//"ENEMYHERO"テキスト
 		Max,
 	};
 

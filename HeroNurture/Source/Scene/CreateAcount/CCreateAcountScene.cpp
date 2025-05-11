@@ -26,7 +26,10 @@ CCreateAcountScene::~CCreateAcountScene()
 void CCreateAcountScene::Create()
 {
     //----UI----
+    //名前入力空間
     m_pNameSpace = std::make_unique<CUIObject>();
+    //背景
+    m_pBack = std::make_unique<CUIObject>();
 }
 
 void CCreateAcountScene::Releace()
@@ -35,21 +38,32 @@ void CCreateAcountScene::Releace()
 
 void CCreateAcountScene::LoadData()
 {
+    //----UI----
+    //名前入力空間
     m_pNameSpace->AttachSprite(CUIManager::GetSprite(CUIManager::NameSpace));
+    //背景
+    m_pBack->AttachSprite(CUIManager::GetSprite(CUIManager::BasicBack));
 }
 
 void CCreateAcountScene::Initialize()
 {
-    //名前入力スペースの位置初期化
-    m_pNameSpace->SetPosition(NAMESPACE_POS.x, NAMESPACE_POS.y, NAMESPACE_POS.z);
-    //名前入力スペースのスケール初期化
-    m_pNameSpace->SetScale(NAMESPACE_SCALE.x, NAMESPACE_SCALE.y, NAMESPACE_SCALE.z);
-    //名前入力スペースの幅初期化
-    m_pNameSpace->SetDisplay(NAMESPACE_DISP.x, NAMESPACE_DISP.y);
+    //名前入力スペース
+    m_pNameSpace->SetPosition(NAMESPACE_POS);                    //座標
+    m_pNameSpace->SetScale(NAMESPACE_SCALE);                     //拡縮
+    m_pNameSpace->SetDisplay(NAMESPACE_DISP.x, NAMESPACE_DISP.y);//幅
+    //背景
+    m_pBack->SetPosition(BACK_POS);                         //座標
+    m_pBack->SetScale(BACK_SCALE);                          //拡縮
+    m_pBack->SetDisplay(BACK_DISP.x, BACK_DISP.y);          //幅
 }
 
 void CCreateAcountScene::Update()
 {
+    //タイトルBGMの再生
+    CSoundManager::GetInstance()->PlayLoop(CSoundManager::BGM_Title);
+    CSoundManager::GetInstance()->Volume(CSoundManager::BGM_Title, 40);
+
+
     //フェードイン処理
     if (!FadeIn()) { return; }
 
@@ -115,11 +129,17 @@ void CCreateAcountScene::Draw()
 {
     WriteText* Text = WriteText::GetInstance();
 
+    //操作方法指示バーの描画
+    DrawControlBar(true);
+
     //名前入力スペースの描画
     m_pNameSpace->Draw();
 
+    //背景の描画
+    m_pBack->Draw();
+
     //シーン名の描画
-    Text->Draw_Text(L"アカウント作成", WriteText::D_Big, D3DXVECTOR2(0.0f, -20.0f));
+    Text->Draw_Text(L"アカウントを作成", WriteText::Select, SCENENAME_POS);
 
     //何も入力されていなければ
     if (m_UserName.empty())
@@ -135,8 +155,5 @@ void CCreateAcountScene::Draw()
     {
         Text->Draw_Text(L"※このアカウント名は既に使用されています", WriteText::Error, D3DXVECTOR2(300.0f, 450.0f));
     }
-
-    //操作方法指示バーの描画
-    DrawControlBar();
 }
 

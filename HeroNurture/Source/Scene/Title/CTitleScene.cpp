@@ -109,6 +109,9 @@ void CTitleScene::Update()
 
     KeyMng->Update();
 
+    //モード選択BGMを停止
+    CSoundManager::GetInstance()->Stop(CSoundManager::BGM_ModeSelect);
+
     //タイトルBGMの再生
     CSoundManager::GetInstance()->PlayLoop(CSoundManager::BGM_Title);
     CSoundManager::GetInstance()->Volume(CSoundManager::BGM_Title, 40);
@@ -226,8 +229,13 @@ void CTitleScene::MoveArrow()
     //選択肢移動
     if (KeyMng->IsDown(VK_DOWN))
     {
+
         if (m_SelectNo < 2)
         {
+            //選択SEの再生
+            CSoundManager::GetInstance()->PlaySE(CSoundManager::SE_Select);
+            CSoundManager::GetInstance()->Volume(CSoundManager::SE_Select, 40);
+
             m_SelectNo++;
         }
         else
@@ -238,8 +246,13 @@ void CTitleScene::MoveArrow()
 
     if (KeyMng->IsDown(VK_UP))
     {
+
         if (m_SelectNo > 0)
         {
+            //選択SEの再生
+            CSoundManager::GetInstance()->PlaySE(CSoundManager::SE_Select);
+            CSoundManager::GetInstance()->Volume(CSoundManager::SE_Select, 40);
+
             m_SelectNo--;
         }
         else
