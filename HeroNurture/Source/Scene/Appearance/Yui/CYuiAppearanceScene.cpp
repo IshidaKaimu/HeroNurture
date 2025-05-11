@@ -12,7 +12,6 @@
 #include "Effect\CEffect.h"
 #include "SkinMeshObject\Event\RaccoonDog\CRaccoonDog.h"
 #include "SkinMeshObject\Hero\Yui\CYui.h"
-#include "SkinMeshObject\Hero\Kaito\CKaito.h"
 #include "StaticMeshObject\Ground\CGround.h"
 
 //定数の名前空間
@@ -39,8 +38,6 @@ void CYuiAppearanceScene::Create()
 
 	//ユイ
 	m_pYui = make_unique<CYui>();
-	//カイト
-	m_pKaito = make_unique<CKaito>();
 
 	//タヌキ
 	m_pRaccoonDog = make_unique<CRaccoonDog>();
@@ -58,7 +55,6 @@ void CYuiAppearanceScene::LoadData()
 {
 	//ヒーローのメッシュデータ設定
 	m_pYui->LoadMeshData();
-	m_pKaito->LoadMeshData();
 
 	//タヌキのメッシュデータ設定
 	m_pRaccoonDog->AttachMesh(CSkinMeshManager::GetMesh(CSkinMeshManager::RaccoonDog));
@@ -77,9 +73,8 @@ void CYuiAppearanceScene::Initialize()
 	//タヌキの初期化
 	m_pRaccoonDog->Initialize();
 
-	//各ヒーローの初期化
-	m_pYui->AppearanceInitialize();   //自分
-	m_pKaito->AppearanceInitialize(); //敵
+	//初期化
+	m_pYui->AppearanceInitialize(); 
 
 	//カメラを動かす値の初期値
 	m_MoveCamPos = { 0.0f, 0.0f, 0.0f };
