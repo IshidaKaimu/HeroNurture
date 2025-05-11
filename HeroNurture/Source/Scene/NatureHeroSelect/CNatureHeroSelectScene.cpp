@@ -136,7 +136,7 @@ void CNatureHeroSelectScene::Update()
     CCameraManager::GetInstance().SetLook(CamLook);
 #endif
 
-#ifdef _DEBUG
+#ifdef DEBUG
     ImGui::Begin(JAPANESE("選択状況"));
     if (m_SelectNo == 0) { ImGui::Text(JAPANESE("ユイ")); }
     if (m_SelectNo == 1) { ImGui::Text(JAPANESE("カイト")); }

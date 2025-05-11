@@ -138,7 +138,7 @@ void CTraningScene::Update()
    //上昇したパラメータのテキストを追加
    AddText();
 
-#if _DEBUG
+#if DEBUG
    ImGui::Begin(JAPANESE("テキストの番号"));
    ImGui::Text(JAPANESE("m_TextNo:%d"), m_TextNo);
    ImGui::Text(JAPANESE("m_TextNo:%d"), m_ParamInc.size());

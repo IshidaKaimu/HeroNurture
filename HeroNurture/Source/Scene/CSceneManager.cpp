@@ -66,7 +66,7 @@ void CSceneManager::Initialize()
 //更新関数
 void CSceneManager::Update()
 {        
-#if _DEBUG
+#if DEBUG
     ImGui::Begin(JAPANESE("シーン"));
     if (ImGui::Button(JAPANESE("タイトル")))           { LoadCreate(enSceneList::Title); }
     if (ImGui::Button(JAPANESE("アカウント作成")))     { LoadCreate(enSceneList::CreateAcount); }

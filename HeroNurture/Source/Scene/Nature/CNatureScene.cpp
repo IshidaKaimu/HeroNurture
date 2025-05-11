@@ -1,7 +1,5 @@
 #include "CNatureScene.h"
-#if _DEBUG
 #include "ImGui\ImGuiManager\ImGuiManager.h"
-#endif
 #include "SkinMesh\SkinMeshManager\CSkinMeshManager.h"
 #include "Camera\CameraManager\CCameraManager.h"
 #include "Light\LightManager\CLightManager.h"
@@ -320,7 +318,7 @@ void CNatureScene::Debug()
     ImGui::End();
 #endif
 
-#ifdef _DEBUG 
+#ifdef DEBUG 
     ImGui::Begin(JAPANESE("ƒpƒ‰ƒ[ƒ^"));
     ImGui::Text(JAPANESE("‹Ø—Í:%f"), m_pHero->GetParam().Power);
     ImGui::Text(JAPANESE("–‚—Í:%f"), m_pHero->GetParam().Magic);

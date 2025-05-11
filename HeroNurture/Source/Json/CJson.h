@@ -9,6 +9,8 @@
 //=====================================
 //ヒーローマネージャー
 class CHeroManager;
+//シーンマネージャー
+class CSceneManager;
 
 //Json使用に必要な名前空間の格納
 using json = nlohmann::json;

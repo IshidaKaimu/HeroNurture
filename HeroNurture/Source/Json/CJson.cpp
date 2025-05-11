@@ -1,6 +1,7 @@
 #include "CJson.h"
 #include <iostream> 
 #include "SkinMeshObject\Hero\CHeroManager.h"
+#include "Scene\CSceneManager.h"
 
 CJson::CJson()
 {
@@ -131,9 +132,13 @@ void CJson::SaveNatureData(const std::string& heroname, json& jsondata, std::str
 void CJson::SaveResult(const std::string& heroname, json& jsondata)
 {
     CHeroManager* HeroMng = &CHeroManager::GetInstance();
+    CSceneManager* SceneMng = CSceneManager::GetInstance();
+
+    //設定されているユーザー名の取得
+    std::string UserName = SceneMng->GetStringName();
 
     //育成結果を保存するファイルの階層
-    std::string SaveHierarchy = "Data\\Acount\\Hero\\Result\\";
+    std::string SaveHierarchy = "Data\\Acount\\" + UserName + "\\Result\\";
 
     //書き込む情報の格納
     //----パラメータ----
@@ -158,9 +163,13 @@ void CJson::SaveResult(const std::string& heroname, json& jsondata)
 void CJson::SaveBattleData(json& data, json& writer, int selectno)
 {
     CHeroManager* HeroMng = &CHeroManager::GetInstance();
+    CSceneManager* SceneMng = CSceneManager::GetInstance();
+
+    //設定されているユーザー名の取得
+    std::string UserName = SceneMng->GetStringName();
 
     //バトルに使用するデータを保存するファイルの階層
-    std::string SaveHierarchy = "Data\\Acount\\Hero\\BattleData\\";
+    std::string SaveHierarchy = "Data\\Acount\\" + UserName + "\\BattleData\\";
 
     //書き込む情報
     for (const auto& battledata : data)

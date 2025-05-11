@@ -7,7 +7,7 @@
 #include "Sprite2D\UIManager\CUIManager.h"
 #include "SkinMesh\SkinMeshManager\CSkinMeshManager.h"
 #include "Effect\CEffect.h"	
-#ifdef _DEBUG
+#ifdef DEBUG
 #include "ImGui/ImGuiManager/ImGuiManager.h"
 #endif // DEBUG
 
@@ -59,7 +59,7 @@ void CMain::Init()
 //更新処理.
 void CMain::Update()
 {
-#ifdef _DEBUG
+#ifdef DEBUG
 	//ImGuiの更新
 	CImGuiManager::ImGui_NewFrame();
 #endif // DEBUG
@@ -78,13 +78,7 @@ void CMain::Update()
 	//エフェクトの描画
 	CEffect::GetInstance()->Draw();
 
-
-	////一番上に表示
-	//m_pDx11->SetDepth(false);
-	//CFadeManager::GetInstance()->Draw();
-	//m_pDx11->SetDepth(true);
-
-#ifdef _DEBUG
+#ifdef DEBUG
 	//ImGuiの描画
 	CImGuiManager::Render();
 #endif // DEBUG
@@ -111,7 +105,7 @@ HRESULT CMain::Create()
 		return E_FAIL;
 	}
 
-#ifdef _DEBUG
+#ifdef DEBUG
 	//ImGuiの初期化
 	CImGuiManager::Init(m_hWnd, *m_pDx11);
 #endif // DEBUG
@@ -310,7 +304,7 @@ HRESULT CMain::InitWindow(
 	return S_OK;
 }
 
-#ifdef _DEBUG
+#ifdef DEBUG
 extern IMGUI_IMPL_API LRESULT ImGui_ImplWin32_WndProcHandler(HWND hWnd, UINT msg, WPARAM wParam, LPARAM lParam);
 #endif // DEBUG
 
@@ -321,7 +315,7 @@ LRESULT CALLBACK CMain::MsgProc(
 	WPARAM wParam, LPARAM lParam )
 {
 
-#ifdef _DEBUG
+#ifdef DEBUG
 	// ImGuiウィンドウの処理をする(ドラッグやスクロールなど).
 	ImGui_ImplWin32_WndProcHandler(hWnd, uMsg, wParam, lParam);
 #endif // DEBUG

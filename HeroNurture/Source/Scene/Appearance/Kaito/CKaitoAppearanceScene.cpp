@@ -172,6 +172,7 @@ void CKaitoAppearanceScene::Draw()
 
 void CKaitoAppearanceScene::Debug()
 {
+#if DEBUG
 	ImGui::Begin(JAPANESE("デバッグ"));
 	//ImGui::InputFloat3(JAPANESE("カメラ位置:%f"), m_DebugCamPos);
 	//ImGui::InputFloat3(JAPANESE("カメラ注視点:%f"), m_DebugCamLook);
@@ -179,6 +180,7 @@ void CKaitoAppearanceScene::Debug()
 
 	//m_pCamera->SetPos(m_DebugCamPos);
 	//m_pCamera->SetLook(m_DebugCamLook);
+#endif
 }
 
 void CKaitoAppearanceScene::KaitoAppearance()

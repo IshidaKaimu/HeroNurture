@@ -204,6 +204,7 @@ void CYuiAppearanceScene::Draw()
 
 void CYuiAppearanceScene::Debug()
 {
+#if DEBUG
 	ImGui::Begin(JAPANESE("デバッグ"));
 	//ImGui::InputFloat3(JAPANESE("カメラ位置:%f"), m_DebugCamPos);
 	//ImGui::InputFloat3(JAPANESE("カメラ注視点:%f"), m_DebugCamLook);
@@ -213,6 +214,7 @@ void CYuiAppearanceScene::Debug()
 	//m_pCamera->SetPos(m_DebugCamPos);
 	//m_pCamera->SetLook(m_DebugCamLook);
 	m_pRaccoonDog->SetRotation(D3DXVECTOR3(D3DXToRadian(m_DebugRotate.x), D3DXToRadian(m_DebugRotate.y), D3DXToRadian(m_DebugRotate.z)));
+#endif
 }
 
 void CYuiAppearanceScene::YuiAppearance()

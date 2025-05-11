@@ -285,7 +285,7 @@ void CBattleScene::Debug()
 	CCameraManager::GetInstance().SetLook(ATTACK_CAMLOOK);
 	ImGui::End();
 #endif
-#if _DEBUG
+#if DEBUG
 	m_pHero->Debug();
 	m_pEnemyHero->Debug();
 #endif

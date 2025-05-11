@@ -171,7 +171,7 @@ void CYui::Debug()
 	SetScale(DebugScale);
 #endif
 
-#if _DEBUG
+#if DEBUG
 	ImGui::Begin(JAPANESE("Yui"));
 	ImGui::Text(JAPANESE("ˆÊ’ux:%f"), m_vPosition.x);
 	ImGui::Text(JAPANESE("ˆÊ’uy:%f"), m_vPosition.y);
