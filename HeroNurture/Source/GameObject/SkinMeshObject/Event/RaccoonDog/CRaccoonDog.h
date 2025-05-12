@@ -25,6 +25,9 @@ namespace Constant_RaccoonDog
 	constexpr float UP_SPEED   = 0.04f;//上下の動きの速さ
 	constexpr int   HIDDEN_TIME= 190;  //非表示にするタイミング
 	//煙エフェクト
+	constexpr float STEAM_SPEED       = 0.4f;
+	const D3DXVECTOR3 STEAM_SCALE     = { 0.1f, 0.1f, 0.1f };
+	const D3DXVECTOR3 STEAM_ROTATE     = { 0.1f, 0.1f, 0.1f };
 	constexpr int   STEAM_TIME = 120;  //再生までの時間
 	constexpr float STEAM_DELAY= 5.0f; //タヌキからずらす値
 }
