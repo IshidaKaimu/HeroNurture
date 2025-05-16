@@ -5,16 +5,20 @@
 #include "WriteText\WriteText.h"
 #include "StaticMeshObject\Ground\CGround.h"
 #include "SkinMeshObject\Hero\CHeroBase.h"
-#include "Scene\Nature\CNatureScene.h"
+#include "Scene\Nurture\CNurtureScene.h"
 #include "json.hpp"
 
 //========================
 // 前方宣言
 //=======================
 //----マネージャークラス----
-//ヒーローマネージャー
+// シーン
+class CSceneManager;
+//育成モード
+class CNurtureManager;
+//ヒーロー
 class CHeroManager;
-//UIマネージャー
+//UI
 class CUIManager;
 
 //========================
@@ -48,7 +52,7 @@ struct IncParam
 //トレーニングシーンクラス
 //=====================================
 class CTraningScene
-	:public CNatureScene
+	:public CNurtureScene
 {
 public:
 	CTraningScene();

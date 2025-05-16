@@ -11,6 +11,10 @@
 // 前方宣言
 //=====================================
 //----マネージャークラス----
+//シーン
+class CSceneManager;
+//育成モード
+class CNurtureManager;
 //UI
 class CUIManager;
 //スキンメッシュ
@@ -30,7 +34,7 @@ using json = nlohmann::json;
 //=====================================
 // 定数宣言
 //=====================================
-namespace Constant_NatureResultScene 
+namespace Constant_NurtureResultScene 
 {
 	//-----カメラ情報----
 	//カメラ位置
@@ -58,12 +62,12 @@ namespace Constant_NatureResultScene
 //=====================================
 // 育成結果シーンクラス
 //=====================================
-class CNatureResultScene
+class CNurtureResultScene
 	:public CSceneBase
 {
 public:
-	CNatureResultScene();
-	~CNatureResultScene();
+	CNurtureResultScene();
+	~CNurtureResultScene();
 
 	//構築関数
 	void Create()	  override;

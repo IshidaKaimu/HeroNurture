@@ -2,10 +2,12 @@
 #include "ImGui\ImGuiManager\ImGuiManager.h"
 #include "KeyManager\CKeyManager.h"
 #include "Scene\CSceneManager.h"
+#include "ModeManager\Nurture\CNurtureManager.h"
 #include "WriteText\WriteText.h"
 #include "SkinMeshObject\Hero\CHeroManager.h"
 #include "Sprite2D\UIManager\CUIManager.h"
 #include "Sound\CSoundManager.h"
+
 //定数の名前空間
 using namespace Constant_TraningScene;
 
@@ -41,7 +43,7 @@ void CTraningScene::Create()
     m_pTextBox = make_unique<CUIObject>();
 
     //育成関連のシーンで共通するUIのインスタンス生成
-    CNatureScene::CreateNatureUI(m_pStaminaGage,m_pStaminaBack,m_pStaminaFrame, m_pTurnBack);
+    CNurtureScene::CreateNurtureUI(m_pStaminaGage,m_pStaminaBack,m_pStaminaFrame, m_pTurnBack);
 }
 //破棄関数
 void CTraningScene::Releace()
@@ -50,14 +52,15 @@ void CTraningScene::Releace()
 //データ読み込み関数
 void CTraningScene::LoadData()
 {
-    WriteText* Text = WriteText::GetInstance();
-    CHeroManager* HeroMng = &CHeroManager::GetInstance();
+    WriteText* Text             = WriteText::GetInstance();
+    CHeroManager* HeroMng       = &CHeroManager::GetInstance();
+    CNurtureManager* NurtureMng = &CNurtureManager::GetInstance();
 
     //地面のメッシュデータ設定
     m_pGround->LoadData();
 
     //育成関連のシーンで共通するUIのスプライトデータ設定
-    CNatureScene::LoadNatureUI(m_pStaminaGage,m_pStaminaBack,m_pStaminaFrame, m_pTurnBack);
+    CNurtureScene::LoadNurtureUI(m_pStaminaGage,m_pStaminaBack,m_pStaminaFrame, m_pTurnBack);
 
     //トレーニングごとの背景UIのスプライトデータ設定
     switch (HeroMng->GetTraining())
@@ -77,10 +80,10 @@ void CTraningScene::LoadData()
 //初期化関数
 void CTraningScene::Initialize()
 {
-    CSceneManager::GetInstance()->InitWhiteFade();
+    CSceneManager::GetInstance().InitWhiteFade();
 
     //育成関連のシーンで共通するUI
-    CNatureScene::InitNatureUI(m_pStaminaGage,m_pStaminaBack,m_pStaminaFrame, m_pTurnBack);
+    CNurtureScene::InitNurtureUI(m_pStaminaGage,m_pStaminaBack,m_pStaminaFrame, m_pTurnBack);
 
     //背景画像の設定
     m_pBack->SetPosition(0.0f, 0.0f, 0.0f);
@@ -96,6 +99,8 @@ void CTraningScene::Initialize()
 //更新関数
 void CTraningScene::Update()
 {
+    CNurtureManager* NurtureMng = &CNurtureManager::GetInstance();
+
     //フェードイン処理
     if (!FadeIn()) { return; }
 
@@ -103,7 +108,7 @@ void CTraningScene::Update()
    CKeyManager::GetInstance().Update();
 
    //シーンマネージャークラス
-   CSceneManager* SceneMng = CSceneManager::GetInstance();
+   CSceneManager* SceneMng = &CSceneManager::GetInstance();
 
    //ステータス変化SEの再生
    if (CHeroManager::GetInstance().GetFailure()) {
@@ -169,17 +174,17 @@ void CTraningScene::Update()
    if (m_SceneTransitionFlg && FadeOut())
    {
        //休息フラグが立っていたら降ろす
-       if (SceneMng->GetRestFlag()) { SceneMng->SetRestFlag(false); }
+       if (NurtureMng->GetRestFlag()) { NurtureMng->SetRestFlag(false); }
        //ターン経過処理
-       SceneMng->TurnProgress();
-       CSceneManager::GetInstance()->LoadCreate(CSceneManager::Nature);
+       NurtureMng->TurnProgress();
+       SceneMng->LoadCreate(CSceneManager::Nurture);
        m_SECnt = 0;
    }
 }
 //描画関数
 void CTraningScene::Draw()
 {
-    CSceneManager* SceneMng = CSceneManager::GetInstance();
+    CSceneManager* SceneMng = &CSceneManager::GetInstance();
 
     m_pGround->Draw();
 
@@ -193,7 +198,7 @@ void CTraningScene::Draw()
     DrawTraningText();
 
     //育成関連のシーンで共通して表示するUI
-    CNatureScene::DrawNatureUI(m_pStaminaGage,m_pStaminaBack,m_pStaminaFrame,m_pTurnBack);
+    CNurtureScene::DrawNurtureUI(m_pStaminaGage,m_pStaminaBack,m_pStaminaFrame,m_pTurnBack);
 
     //深度を戻す
     SceneMng->GetDx11()->SetDepth(true);
@@ -253,9 +258,11 @@ bool CTraningScene::AlreadyAddCheck(std::wstring paramname)
 //トレーニング結果テキストの描画
 void CTraningScene::DrawTraningText()
 {
-    WriteText* Text = WriteText::GetInstance();
-    CHeroManager* HeroMng = &CHeroManager::GetInstance();
-    CSceneManager* SceneMng = CSceneManager::GetInstance();
+    WriteText*       Text          = WriteText::GetInstance();
+    CHeroManager*    HeroMng       = &CHeroManager::GetInstance();
+    CSceneManager*   SceneMng      = &CSceneManager::GetInstance();
+    CNurtureManager* NurtureMng    = &CNurtureManager::GetInstance();
+
 
     //----テキストを変数に代入----
     //失敗したか同課によって返すテキストを変える
@@ -264,7 +271,7 @@ void CTraningScene::DrawTraningText()
     //トレーニングが失敗したかの条件文
     bool Failure = HeroMng->GetFailure();
     //休息が選択されていたかの条件文
-    bool Rest = SceneMng->GetRestFlag();
+    bool Rest = NurtureMng->GetRestFlag();
 
     //テキストボックスの描画
     m_pTextBox->Draw();

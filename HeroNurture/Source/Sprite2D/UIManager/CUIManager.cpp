@@ -50,7 +50,7 @@ HRESULT CUIManager::Load(CDirectX11* dx11)
 		{UIList::HpBack,	     _T("Data\\Texture\\HpTraningBack.png")	   ,{ 1280.0f,720.0f,1280.0f,720.0f,1280.0f,720.0f}},
 		{UIList::RestBack,	     _T("Data\\Texture\\RestBack.png")		   ,{ 1280.0f,720.0f,1280.0f,720.0f,1280.0f,720.0f}},
 		{UIList::TextBox,	     _T("Data\\Texture\\TextBox.png")		   ,{ 1180.0f,190.0f,1180.0f,190.0f,1180.0f,190.0f}},
-		{UIList::ParamList,	     _T("Data\\Texture\\NatureParamList.png")  ,{ 787.0f, 161.0f, 787.0f, 161.0f, 787.0f, 161.0f,}},
+		{UIList::ParamList,	     _T("Data\\Texture\\NurtureParamList.png") ,{ 787.0f, 161.0f, 787.0f, 161.0f, 787.0f, 161.0f,}},
 		{UIList::ResultParamList,_T("Data\\Texture\\ResultParamList.png")  ,{ 178.0f, 472.0f, 178.0f, 472.0f, 178.0f, 472.0f,}},
 		{UIList::StaminaGage,	 _T("Data\\Texture\\Stamina.png")		   ,{ 602.0f, 54.0f,  602.0f, 54.0f,  602.0f, 54.0f,}},
 		{UIList::StaminaBack,	 _T("Data\\Texture\\StaminaBack.png")      ,{ 602.0f, 54.0f,  602.0f, 54.0f,  602.0f, 54.0f}},

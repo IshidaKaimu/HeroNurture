@@ -1,4 +1,4 @@
-#include "CNatureHeroSelectScene.h"
+#include "CNurtureHeroSelectScene.h"
 #include "Scene\CSceneManager.h"
 #include "KeyManager\CKeyManager.h"
 #include "StaticMesh\MeshManager\CMeshManager.h"
@@ -15,9 +15,9 @@
 #include <sstream>
 
 //定数の名前空間
-using namespace Constant_NatureHeroSelectScene;
+using namespace Constant_NurtureHeroSelectScene;
 
-CNatureHeroSelectScene::CNatureHeroSelectScene()
+CNurtureHeroSelectScene::CNurtureHeroSelectScene()
     : m_pCamera    (&CCameraManager::GetInstance())
     , m_pYui       ()
     , m_pKaito     ()
@@ -27,12 +27,12 @@ CNatureHeroSelectScene::CNatureHeroSelectScene()
 {
 }
 
-CNatureHeroSelectScene::~CNatureHeroSelectScene()
+CNurtureHeroSelectScene::~CNurtureHeroSelectScene()
 {
 }
 
 //構築関数
-void CNatureHeroSelectScene::Create()
+void CNurtureHeroSelectScene::Create()
 {
    //----スキンメッシュ----
     m_pYui    = make_unique<CYui>();  //ユイ
@@ -44,7 +44,7 @@ void CNatureHeroSelectScene::Create()
 }
 
 //データ設定関数
-void CNatureHeroSelectScene::LoadData()
+void CNurtureHeroSelectScene::LoadData()
 {
     //----各ヒーロークラスのメッシュデータ設定----
     m_pYui->AttachMesh(CSkinMeshManager::GetMesh(CSkinMeshManager::Yui));    //ユイ
@@ -56,12 +56,12 @@ void CNatureHeroSelectScene::LoadData()
 }
 
 //破棄関数
-void CNatureHeroSelectScene::Releace()
+void CNurtureHeroSelectScene::Releace()
 {
 }
 
 //初期化関数
-void CNatureHeroSelectScene::Initialize()
+void CNurtureHeroSelectScene::Initialize()
 {
 
 #ifdef DEBUG
@@ -89,8 +89,10 @@ void CNatureHeroSelectScene::Initialize()
 }
 
 //更新関数
-void CNatureHeroSelectScene::Update()
+void CNurtureHeroSelectScene::Update()
 {
+    CSceneManager* SceneMng = &CSceneManager::GetInstance();
+
     //フェードイン処理
     if (!FadeIn()) { return; }
 
@@ -98,8 +100,8 @@ void CNatureHeroSelectScene::Update()
     CSoundManager::GetInstance()->Stop(CSoundManager::BGM_ModeSelect);
 
     //育成ヒーローBGMの再生
-    CSoundManager::GetInstance()->PlayLoop(CSoundManager::BGM_NatureHeroSelect);
-    CSoundManager::GetInstance()->Volume(CSoundManager::BGM_NatureHeroSelect, 40);
+    CSoundManager::GetInstance()->PlayLoop(CSoundManager::BGM_NurtureHeroSelect);
+    CSoundManager::GetInstance()->Volume(CSoundManager::BGM_NurtureHeroSelect, 40);
 
     CKeyManager* KeyMng = &CKeyManager::GetInstance();
     CHeroManager* HeroMng = &CHeroManager::GetInstance();
@@ -185,21 +187,21 @@ void CNatureHeroSelectScene::Update()
         //選択番号が2以外なら
         if (m_SelectNo != 2) 
         {
-            CSceneManager::GetInstance()->LoadCreate(CSceneManager::Nature);
+            SceneMng->LoadCreate(CSceneManager::Nurture);
         }
         else
         {
             //前のシーンへ
-            CSceneManager::GetInstance()->LoadCreate(CSceneManager::ModeSelect);
+            SceneMng->LoadCreate(CSceneManager::ModeSelect);
         }
     }
 }
 
 //描画関数
-void CNatureHeroSelectScene::Draw()
+void CNurtureHeroSelectScene::Draw()
 {  
     CHeroManager* Hero = &CHeroManager::GetInstance();
-    CSceneManager* SceneMng = CSceneManager::GetInstance();
+    CSceneManager* SceneMng = &CSceneManager::GetInstance();
     WriteText* Text = WriteText::GetInstance();
 
     //カメラの動作
@@ -214,13 +216,13 @@ void CNatureHeroSelectScene::Draw()
     {
     case 0:
         //ユイ
-        m_pYui->NatureHeroSelectAnimation();
+        m_pYui->NurtureHeroSelectAnimation();
         m_pYui->Draw();
         Text->Draw_Text(L"YUI", WriteText::B_Big, HERONAME_POS_NS);
         break;
     case 1:
         //カイト
-        m_pKaito->NatureHeroSelectAnimation();
+        m_pKaito->NurtureHeroSelectAnimation();
         m_pKaito->Draw();
         Text->Draw_Text(L"KAITO", WriteText::D_Big, HERONAME_POS_NS);
         break;
@@ -229,7 +231,7 @@ void CNatureHeroSelectScene::Draw()
     }
 
     //シーン名,指示の描画
-    Text->Draw_Text(L"Nature Hero Select", WriteText::Normal, SCENENAME_POS_NS);    
+    Text->Draw_Text(L"Nurture Hero Select", WriteText::Normal, SCENENAME_POS_NS);    
 
     //操作方法指示バーの描画
     DrawControlBar(true);
@@ -239,7 +241,7 @@ void CNatureHeroSelectScene::Draw()
 }
 
 //矢印の描画
-void CNatureHeroSelectScene::DrawArrow()
+void CNurtureHeroSelectScene::DrawArrow()
 {
     //設定
     //左

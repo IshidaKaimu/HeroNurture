@@ -108,7 +108,7 @@ bool CJson::Load( json& jsondata, const std::string& filename )
 }
 
 //育成情報の書き込み
-void CJson::SaveNatureData(const std::string& heroname, json& jsondata, std::string& hierarchy)
+void CJson::SaveNurtureData(const std::string& heroname, json& jsondata, std::string& hierarchy)
 {
     CHeroManager* HeroMng = &CHeroManager::GetInstance();
 
@@ -131,8 +131,8 @@ void CJson::SaveNatureData(const std::string& heroname, json& jsondata, std::str
 
 void CJson::SaveResult(const std::string& heroname, json& jsondata)
 {
-    CHeroManager* HeroMng = &CHeroManager::GetInstance();
-    CSceneManager* SceneMng = CSceneManager::GetInstance();
+    CHeroManager* HeroMng   = &CHeroManager::GetInstance();
+    CSceneManager* SceneMng = &CSceneManager::GetInstance();
 
     //設定されているユーザー名の取得
     std::string UserName = SceneMng->GetStringName();
@@ -162,8 +162,8 @@ void CJson::SaveResult(const std::string& heroname, json& jsondata)
 //バトルに使用するデータの保存
 void CJson::SaveBattleData(json& data, json& writer, int selectno)
 {
-    CHeroManager* HeroMng = &CHeroManager::GetInstance();
-    CSceneManager* SceneMng = CSceneManager::GetInstance();
+    CHeroManager* HeroMng   = &CHeroManager::GetInstance();
+    CSceneManager* SceneMng = &CSceneManager::GetInstance();
 
     //設定されているユーザー名の取得
     std::string UserName = SceneMng->GetStringName();

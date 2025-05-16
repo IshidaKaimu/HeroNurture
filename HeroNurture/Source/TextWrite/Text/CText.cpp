@@ -9,7 +9,7 @@ CText::CText()
     , m_y( 0 )
 {
 
-   m_pDevice = CSceneManager::GetInstance()->GetDx9()->GetDevice();
+   m_pDevice = CSceneManager::GetInstance().GetDx9()->GetDevice();
 
    // デバイスの有効性を確認
    if (!m_pDevice) {

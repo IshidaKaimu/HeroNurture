@@ -15,6 +15,10 @@ using json = nlohmann::json;
 // 前方宣言
 //=====================================
 //----マネージャークラス----
+//シーン
+class CSceneManager;
+//バトルモード
+class CBattleManager;
 //UI
 class CUIManager;
 //スキンメッシュ

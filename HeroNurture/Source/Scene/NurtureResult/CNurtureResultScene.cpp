@@ -1,5 +1,6 @@
-#include "Scene\NatureResult\CNatureResultScene.h"
+#include "Scene\NurtureResult\CNurtureResultScene.h"
 #include "Scene\CSceneManager.h"
+#include "ModeManager\Nurture\CNurtureManager.h"
 #include "KeyManager\CKeyManager.h"
 #include "Sprite2D\UIManager\CUIManager.h"
 #include "SkinMesh\SkinMeshManager\CSkinMeshManager.h"
@@ -15,9 +16,9 @@
 #include <sstream>
 
 //定数の名前空間
-using namespace Constant_NatureResultScene;
+using namespace Constant_NurtureResultScene;
 
-CNatureResultScene::CNatureResultScene()
+CNurtureResultScene::CNurtureResultScene()
     : m_pCamera(&CCameraManager::GetInstance())
     , m_pParamList  ()
     , m_pJson       ()
@@ -25,19 +26,19 @@ CNatureResultScene::CNatureResultScene()
 {
 }
 
-CNatureResultScene::~CNatureResultScene()
+CNurtureResultScene::~CNurtureResultScene()
 {
 }
 
 //構築関数
-void CNatureResultScene::Create()
+void CNurtureResultScene::Create()
 {
     //パラメータ背景UIのインスタンス生成
     m_pParamList = std::make_unique<CUIObject>();
 }
 
 //データ設定関数
-void CNatureResultScene::LoadData()
+void CNurtureResultScene::LoadData()
 {
     CHeroManager* HeroMng = &CHeroManager::GetInstance();
 
@@ -49,12 +50,12 @@ void CNatureResultScene::LoadData()
 }
 
 //破棄関数
-void CNatureResultScene::Releace()
+void CNurtureResultScene::Releace()
 {
 }
 
 //初期化関数
-void CNatureResultScene::Initialize()
+void CNurtureResultScene::Initialize()
 {
     CHeroManager* Hero = &CHeroManager::GetInstance();
 
@@ -74,21 +75,23 @@ void CNatureResultScene::Initialize()
 }
 
 //更新関数
-void CNatureResultScene::Update()
+void CNurtureResultScene::Update()
 {
+    CKeyManager*     KeyMng     = &CKeyManager::GetInstance();
+    CHeroManager*    HeroMng    = &CHeroManager::GetInstance();
+    CSceneManager*   SceneMng   = &CSceneManager::GetInstance();
+    CNurtureManager* NurtureMng = &CNurtureManager::GetInstance();
+
+
     //フェードイン処理
     if (!FadeIn()) { return; }
 
-    CKeyManager* KeyMng = &CKeyManager::GetInstance();
-    CHeroManager* HeroMng = &CHeroManager::GetInstance();
-
     //モード選択画面のBGM停止
-    CSoundManager::GetInstance()->Stop(CSoundManager::BGM_Nature);
-
+    CSoundManager::GetInstance()->Stop(CSoundManager::BGM_Nurture);
 
     //育成結果BGMの再生
-    CSoundManager::GetInstance()->PlayLoop(CSoundManager::BGM_NatureResult);
-    CSoundManager::GetInstance()->Volume(CSoundManager::BGM_NatureResult, 40);
+    CSoundManager::GetInstance()->PlayLoop(CSoundManager::BGM_NurtureResult);
+    CSoundManager::GetInstance()->Volume(CSoundManager::BGM_NurtureResult, 40);
 
 
     //キーマネージャの動作処理
@@ -108,14 +111,14 @@ void CNatureResultScene::Update()
     //フェードアウト処理
     if (m_SceneTransitionFlg && FadeOut())
     {
-        CSceneManager::GetInstance()->SetIsDataLoaded(false);
+        NurtureMng->SetIsDataLoaded(false);
         m_pJson->SaveResult(HeroMng->GetSelectHeroName(), m_ResultWriter);
-        CSceneManager::GetInstance()->LoadCreate(CSceneManager::ModeSelect);
+        SceneMng->LoadCreate(CSceneManager::ModeSelect);
     }
 }
 
 //描画関数
-void CNatureResultScene::Draw()
+void CNurtureResultScene::Draw()
 {
     CHeroManager* Hero = &CHeroManager::GetInstance();
 
@@ -133,7 +136,7 @@ void CNatureResultScene::Draw()
 }
 
 //デバッグ処理
-void CNatureResultScene::Debug()
+void CNurtureResultScene::Debug()
 {
 #ifdef DEBUG 
     ImGui::Begin(JAPANESE("カメラ"));
@@ -146,7 +149,7 @@ void CNatureResultScene::Debug()
 }
 
 //育成結果の描画
-void CNatureResultScene::DrawResult()
+void CNurtureResultScene::DrawResult()
 {
     WriteText* Text = WriteText::GetInstance();
     CHeroManager* HeroMng = &CHeroManager::GetInstance();
@@ -169,7 +172,7 @@ void CNatureResultScene::DrawResult()
 }
 
 //パラメータの合計値
-float CNatureResultScene::ParamTotal()
+float CNurtureResultScene::ParamTotal()
 {
     //セット中のヒーローのステータスを変数に代入
     CHeroManager::enParam HeroParam = CHeroManager::GetInstance().GetParam();
@@ -181,7 +184,7 @@ float CNatureResultScene::ParamTotal()
 }
 
 //パラメータUIの描画
-void CNatureResultScene::DrawParamUI(float paramvalue, int no)
+void CNurtureResultScene::DrawParamUI(float paramvalue, int no)
 {
     WriteText* Text = WriteText::GetInstance();
     CRank* Rank = &CRank::GetInstance();

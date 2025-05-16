@@ -4,6 +4,7 @@
 #include "SkinMesh\SkinMeshManager\CSkinMeshManager.h"
 #include "Scene\CSceneManager.h"
 #include "SkinMeshObject\Hero\CHeroManager.h"
+#include "ModeManager\Nurture\CNurtureManager.h"
 
 //定数の名前空間
 using namespace Constant_Yui;
@@ -24,7 +25,7 @@ CYui::~CYui()
 //初期化関数
 void CYui::Initialize()
 {
-	CSceneManager* SceneMng = CSceneManager::GetInstance();
+	CSceneManager* SceneMng = &CSceneManager::GetInstance();
 
 	//アニメーションの初期化
 	AnimInit();
@@ -126,7 +127,7 @@ void CYui::LoadMeshData()
 //パラメータ情報の読み込み
 void CYui::LoadParamData(const json& jsondata)
 {
-	if (!CSceneManager::GetInstance()->GetIsDataLoaded()) 
+	if (!CNurtureManager::GetInstance().GetIsDataLoaded()) 
 	{
 		//パラメータの読み込み
 		LoadParam(jsondata, "Yui");
@@ -182,7 +183,7 @@ void CYui::Debug()
 }
 
 //育成ヒーロー選択シーンのアニメーション
-void CYui::NatureHeroSelectAnimation()
+void CYui::NurtureHeroSelectAnimation()
 {
 }
 
@@ -221,7 +222,7 @@ void CYui::AppearanceAnimation()
 }
 
 //育成シーンのアニメーション
-void CYui::NatureAnimation(int no)
+void CYui::NurtureAnimation(int no)
 {
 	//アニメーションの経過時間を加算		
 	m_AnimTime += m_pMesh->GetAnimSpeed();

@@ -2,11 +2,11 @@
 #include "Scene\Title\CTitleScene.h"
 #include "CreateAcount\CCreateAcountScene.h"
 #include "Scene\Login\CLoginScene.h"
-#include "Scene\Nature\CNatureScene.h"
+#include "Scene\Nurture\CNurtureScene.h"
 #include "Scene\ModeSelect\CModeSelectScene.h"
-#include "Scene\NatureHeroSelect\CNatureHeroSelectScene.h"
+#include "Scene\NurtureHeroSelect\CNurtureHeroSelectScene.h"
 #include "Scene\Traning\CTraningScene.h"
-#include "Scene\NatureResult\CNatureResultScene.h"
+#include "Scene\NurtureResult\CNurtureResultScene.h"
 #include "Scene\BattleHeroSelect\CBattleHeroSelectScene.h"
 #include "Scene\Battle\CBattleScene.h"
 #include "Scene\Appearance\Yui\CYuiAppearanceScene.h"
@@ -19,13 +19,7 @@ CSceneManager::CSceneManager()
     , m_hWnd        ()
     , m_pDx9        ( nullptr )
     , m_pDx11       ( nullptr )
-    , m_Turn        ()
     , m_UserName    ()
-    , m_GageWidth   (1.0f)
-    , m_RoleList    ()
-    , m_BattleResult()
-    , m_Rest        ()
-    , m_IsDataLoaded()
 {
     m_Scene = std::make_unique<CTitleScene>();   //make_unique:インスタンスを生成して、使わなくなったら勝手に破棄してくれる
 }
@@ -71,10 +65,10 @@ void CSceneManager::Update()
     if (ImGui::Button(JAPANESE("アカウント作成")))     { LoadCreate(enSceneList::CreateAcount); }
     if (ImGui::Button(JAPANESE("ログイン")))           { LoadCreate(enSceneList::Login); }
     if (ImGui::Button(JAPANESE("モード選択")))         { LoadCreate(enSceneList::ModeSelect); }
-    if (ImGui::Button(JAPANESE("ヒーロー選択")))       { LoadCreate(enSceneList::NatureHeroSelect); }
-    if (ImGui::Button(JAPANESE("育成")))               { LoadCreate(enSceneList::Nature); }
+    if (ImGui::Button(JAPANESE("ヒーロー選択")))       { LoadCreate(enSceneList::NurtureHeroSelect); }
+    if (ImGui::Button(JAPANESE("育成")))               { LoadCreate(enSceneList::Nurture); }
     if (ImGui::Button(JAPANESE("修行")))               { LoadCreate(enSceneList::Training); }
-    if (ImGui::Button(JAPANESE("育成結果")))           { LoadCreate(enSceneList::NatureResult); }
+    if (ImGui::Button(JAPANESE("育成結果")))           { LoadCreate(enSceneList::NurtureResult); }
     if (ImGui::Button(JAPANESE("バトルヒーロー選択"))) { LoadCreate(enSceneList::BattleHeroSelect); }
     if (ImGui::Button(JAPANESE("ユイの登場シーン")))   { LoadCreate(enSceneList::YuiAppearance); }
     if (ImGui::Button(JAPANESE("カイトの登場シーン"))) { LoadCreate(enSceneList::KaitoAppearance); }
@@ -120,10 +114,10 @@ std::unique_ptr<CSceneBase> CSceneManager::Create(enSceneList List)
     case CSceneManager::CreateAcount:     return std::make_unique<CCreateAcountScene>();
     case CSceneManager::Login:            return std::make_unique<CLoginScene>();
     case CSceneManager::ModeSelect:       return std::make_unique<CModeSelectScene>();
-    case CSceneManager::NatureHeroSelect: return std::make_unique<CNatureHeroSelectScene>();
-    case CSceneManager::Nature:           return std::make_unique<CNatureScene>();
+    case CSceneManager::NurtureHeroSelect: return std::make_unique<CNurtureHeroSelectScene>();
+    case CSceneManager::Nurture:           return std::make_unique<CNurtureScene>();
     case CSceneManager::Training:         return std::make_unique<CTraningScene>();
-    case CSceneManager::NatureResult:     return std::make_unique<CNatureResultScene>();
+    case CSceneManager::NurtureResult:     return std::make_unique<CNurtureResultScene>();
     case CSceneManager::BattleHeroSelect: return std::make_unique<CBattleHeroSelectScene>();
     case CSceneManager::YuiAppearance:    return std::make_unique<CYuiAppearanceScene>();
     case CSceneManager::KaitoAppearance:  return std::make_unique<CKaitoAppearanceScene>();

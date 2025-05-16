@@ -104,8 +104,8 @@ void CTitleScene::Initialize()
 //更新関数
 void CTitleScene::Update()
 {   
-    CSceneManager* SceneMng = CSceneManager::GetInstance();
-    CKeyManager* KeyMng = &CKeyManager::GetInstance();
+    CSceneManager* SceneMng = &CSceneManager::GetInstance();
+    CKeyManager* KeyMng     = &CKeyManager::GetInstance();
 
     KeyMng->Update();
 
@@ -213,7 +213,7 @@ void CTitleScene::DrawUI()
     m_pSelectArrow->Draw();
 
     //タイトル
-    Text->Draw_Text(L"HeroNature", WriteText::B_Big, D3DXVECTOR2(TITLE_POS)); 
+    Text->Draw_Text(L"HeroNurture", WriteText::B_Big, D3DXVECTOR2(TITLE_POS)); 
     //「アカウント作成」テキスト
     Text->Draw_Text(L"アカウント作成", WriteText::Select, D3DXVECTOR2(SELECT_POS));
     //「ログイン」テキスト

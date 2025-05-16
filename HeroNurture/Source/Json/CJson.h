@@ -34,7 +34,7 @@ public:
 	bool Load( json& jsondata,const std::string& filename );
 
 	//ˆç¬î•ñ‚Ì‘‚«‚İ
-	void SaveNatureData(const std::string& heroname, json& json, std::string& hierarchy);
+	void SaveNurtureData(const std::string& heroname, json& json, std::string& hierarchy);
 
 	//ˆç¬Œ‹‰Ê‚Ì•Û‘¶
 	void SaveResult(const std::string& heroname, json& json);
