@@ -118,6 +118,9 @@ private:
 	//保存されているヒーローのパラメータを表示する
 	void DrawSaveParameter(const json& jsondata, int number);
 
+	//保存されている名前ごとのヒーローの描画
+	void DrawHero();
+
 	//矢印の描画
 	void DrawArrow();
 

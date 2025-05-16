@@ -1,4 +1,5 @@
 #include "CUIManager.h"
+#include "Windows.h"
 CUIManager::CUIManager()
 	: m_pSprite2D()
 {
@@ -14,7 +15,7 @@ CUIManager::~CUIManager()
 	m_pDx11 = nullptr;
 }
 
-HRESULT CUIManager::Load(CDirectX11* Dx11)
+HRESULT CUIManager::Load(CDirectX11* dx11)
 {
 	for (int i = 0; i < UIList::Max; i++) {
 		m_pSprite2D[i] = new CSprite2D();
@@ -33,11 +34,11 @@ HRESULT CUIManager::Load(CDirectX11* Dx11)
 		{UIList::WhiteFade,	     _T("Data\\Texture\\WhiteFade.png")		   ,{ 1280.0f,720.0f,1280.0f,720.0f, 0.0f, 0.0f,}},
 		{UIList::TitleBack,      _T("Data\\Texture\\TitleBack.png")	       ,{ 534.0f, 200.0f, 534.0f, 200.0f, 534.0f, 200.0f,}},
 		{UIList::TitleInfoBack,  _T("Data\\Texture\\TitleInfoBack.png")	   ,{ 465.0f, 136.0f, 465.0f, 136.0f, 465.0f, 136.0f,}},
-		{UIList::BasicBack,      _T("Data\\Texture\\BasicBack.png")	       ,{ 1280.0f,720.0f,1280.0f,720.0f, 0.0f, 0.0f,}},
+		{UIList::BasicBack,      _T("Data\\Texture\\BasicBack.png")	       ,{ 1280.0f,720.0f,1280.0f,720.0f, 1280.0f, 720.0f,}},
 		{UIList::ModeSelectLeft, _T("Data\\Texture\\ModeSelectLeft.png")   ,{ 640.0f, 720.0f, 640.0f, 720.0f, 640.0f, 720.0f,}},
 		{UIList::ModeSelectRight,_T("Data\\Texture\\ModeSelectRight.png")  ,{ 640.0f, 720.0f, 640.0f, 720.0f, 640.0f, 720.0f,}},
 		{UIList::ModeSelectCover,_T("Data\\Texture\\ModeSelectCover.png")  ,{ 640.0f, 720.0f, 640.0f, 720.0f, 640.0f, 720.0f,}},
-		{UIList::ControlBar,	 _T("Data\\Texture\\ControlBar.png")       ,{ 1280.0f,60.0f, 1280.0f,60.0f, 1280.0f,60.0f,}},
+		{UIList::ControlBar,	 _T("Data\\Texture\\ControlBar.png")       ,{ 1280.0f,60.0f, 1280.0f,60.0f, 0.0f,0.0f,}},
 		{UIList::PowerTraning,   _T("Data\\Texture\\PowerTraning.png")	   ,{ 290.0, 260.0, 290.0, 260.0, 290.0, 260.0,}},
 		{UIList::MagicTraning,   _T("Data\\Texture\\MagicTraning.png")	   ,{ 290.0, 260.0, 290.0, 260.0, 290.0, 260.0,}},
 		{UIList::SpeedTraning,   _T("Data\\Texture\\SpeedTraning.png")	   ,{ 290.0, 260.0, 290.0, 260.0, 290.0, 260.0,}},
@@ -78,7 +79,7 @@ HRESULT CUIManager::Load(CDirectX11* Dx11)
 	for (int i = 0; i < list_max; i++)
 	{
 		if (m_pSprite2D[SList[i].listNo]->Init(
-			*Dx11, SList[i].path, SList[i].Ss) == E_FAIL)
+			*dx11, SList[i].path, SList[i].Ss) == E_FAIL)
 		{
 			return E_FAIL;
 		}

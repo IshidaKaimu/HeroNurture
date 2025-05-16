@@ -199,10 +199,15 @@ void CNatureHeroSelectScene::Update()
 void CNatureHeroSelectScene::Draw()
 {  
     CHeroManager* Hero = &CHeroManager::GetInstance();
+    CSceneManager* SceneMng = CSceneManager::GetInstance();
     WriteText* Text = WriteText::GetInstance();
 
     //カメラの動作
     m_pCamera->CameraUpdate();
+
+    SceneMng->GetDx11()->SetDepth(false);
+    DrawBasicBackGround();
+    SceneMng->GetDx11()->SetDepth(true);
 
     //選択中ヒーローの描画・アニメーション・カメラ配置
     switch (m_SelectNo)

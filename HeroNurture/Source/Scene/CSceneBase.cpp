@@ -1,6 +1,5 @@
 #include "CSceneBase.h"
-#include "Sprite3D\CSprite3D.h"
-#include "Sprite2D\CSprite2D.h"
+#include "Sprite3D\Sprite3DManager\CSprite3DManager.h"
 #include "Sprite2D\UIManager\CUIManager.h"
 #include "WriteText\WriteText.h"
 
@@ -27,6 +26,9 @@ CSceneBase::CSceneBase()
     m_pWhiteFade = std::make_unique<CUIObject>();
     m_pWhiteFade->AttachSprite(CUIManager::GetSprite(CUIManager::WhiteFade));
     m_pWhiteFade->SetAlpha(m_WhiteFadeAlpha);
+    //汎用背景
+    m_pBasicBackGround = std::make_unique<CUIObject>();
+    m_pBasicBackGround->AttachSprite(CUIManager::GetSprite(CUIManager::BasicBack));
     //操作方法指示バー
     m_pControlBar = std::make_unique<CUIObject>();
     m_pControlBar->AttachSprite(CUIManager::GetSprite(CUIManager::ControlBar));
@@ -115,6 +117,15 @@ bool CSceneBase::FadeIn()
     m_pFade->SetAlpha(m_FadeAlpha);
 
     return false;
+}
+
+//汎用背景の描画
+void CSceneBase::DrawBasicBackGround()
+{
+    m_pBasicBackGround->SetScale(1.0f,1.0f,1.0f);
+    m_pBasicBackGround->SetDisplay(1.0f, 1.0f);
+
+    m_pBasicBackGround->Draw();
 }
 
 //操作方法指示バーテンプレートの描画

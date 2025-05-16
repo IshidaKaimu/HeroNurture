@@ -1,6 +1,7 @@
 #pragma once
 #include <Windows.h>
 #include "UIObject\CUIObject.h"
+#include "SpriteObject\CSpriteObject.h"
 #include "Effect\CEffect.h"
 #include <memory>
 
@@ -8,9 +9,8 @@
 // 前方宣言
 //=====================================
 //----マネージャークラス----
+class CSprite3DManager;
 class CUIManager;
-class CSprite3D;
-class CSprite2D;
 class CEffect;
 class WriteText;
 
@@ -83,6 +83,8 @@ protected:
     bool FadeOut();
     //フェードイン
     bool FadeIn();
+	//汎用背景の描画
+	void DrawBasicBackGround();
 	//操作方法指示バーテンプレートの描画
 	void DrawControlBar( bool basictext);
 public:
@@ -142,6 +144,9 @@ private:
 	int         m_WhiteFadeCnt;					//フェード回数のカウント
 	float       m_WhiteFadeAlpha;				//フェード画像のα値
 	bool        m_WhiteFadeNow;				    //白フェード中であるか
+
+	//汎用背景
+	std::unique_ptr<CUIObject> m_pBasicBackGround;
 
 	//操作方法指示バー
 	std::unique_ptr <CUIObject> m_pControlBar;  //操作方法指示バー画像

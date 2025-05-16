@@ -172,5 +172,5 @@ float4 PS_Main( PSSkinIn input ) : SV_Target
 	// テクスチャのα値をそのまま使用.
 	Color.a = texColor.a;
 	
-	return Color;
+	return texColor;
 }
