@@ -11,6 +11,10 @@
 // 前方宣言
 //=====================================
 //----マネージャークラス----
+//シーン
+class CSceneManager;
+//育成モード
+class CNurtureManager;
 //UI
 class CUIManager;
 //スキンメッシュ

@@ -3,6 +3,13 @@
 #include "SkinMeshObject\CSkinMeshObject.h"
 #include "SkinMeshObject\Hero\CHeroBase.h"
 
+
+// =======================
+// ‘O•ûéŒ¾
+// =======================
+//ˆç¬ƒ‚[ƒh
+class CNurtureManager;
+
 // =======================
 // ’è”éŒ¾
 // =======================

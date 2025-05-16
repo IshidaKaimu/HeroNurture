@@ -1,17 +1,19 @@
 #include "CNurtureScene.h"
 #include "ImGui\ImGuiManager\ImGuiManager.h"
+#include "Scene\CSceneManager.h"
+#include "ModeManager\Nurture\CNurtureManager.h"
 #include "SkinMesh\SkinMeshManager\CSkinMeshManager.h"
 #include "Camera\CameraManager\CCameraManager.h"
 #include "Light\LightManager\CLightManager.h"
 #include "SkinMeshObject\Hero\CHeroManager.h"
 #include "StaticMesh\MeshManager\CMeshManager.h"
 #include "Sprite2D\UIManager\CUIManager.h"
-#include "Scene\CSceneManager.h"
 #include "KeyManager\CKeyManager.h"
 #include "WriteText\WriteText.h"
 #include "Utility\CUtility.h"
 #include "Rank\CRank.h"
 #include "Sound\CSoundManager.h"
+
 //定数の名前空間
 using namespace Constant_NurtureScene;
 
@@ -35,7 +37,7 @@ CNurtureScene::CNurtureScene()
     , m_pSafeBack    ()
     , m_pAnxietyBack ()
     , m_pDangerBack  ()
-    , m_GageWidth    ( CSceneManager::GetInstance().GetStaminaWidth() )
+    , m_GageWidth    ( CNurtureManager::GetInstance().GetStaminaWidth() )
     , m_pJson        ()
     , m_ParamWriter  ()
     , m_ParamData    ()
@@ -176,9 +178,10 @@ void CNurtureScene::Initialize()
 
 void CNurtureScene::Update()
 {
-    CKeyManager* KeyMng = &CKeyManager::GetInstance();
-    CHeroManager* HeroMng = &CHeroManager::GetInstance();
-    CSceneManager* SceneMng = &CSceneManager::GetInstance();
+    CKeyManager*     KeyMng     = &CKeyManager::GetInstance();
+    CHeroManager*    HeroMng    = &CHeroManager::GetInstance();
+    CSceneManager*   SceneMng   = &CSceneManager::GetInstance();
+    CNurtureManager* NurtureMng = &CNurtureManager::GetInstance();
 
     //フェードイン処理
     if (!FadeIn()) { return; }
@@ -242,7 +245,7 @@ void CNurtureScene::Update()
 
     }
 
-    if (SceneMng->GetRemainingTurn() <= 0) 
+    if (NurtureMng->GetRemainingTurn() <= 0) 
     {
         m_SceneTransitionFlg = true;
     }
@@ -250,7 +253,7 @@ void CNurtureScene::Update()
     //フェードが終わったら
     if (m_SceneTransitionFlg && FadeOut())
     {
-        if (SceneMng->GetRemainingTurn() > 0)
+        if (NurtureMng->GetRemainingTurn() > 0)
         {
             //パラメータ処理
             SelectTraning();
@@ -382,14 +385,15 @@ void CNurtureScene::InitNurtureUI(
     std::unique_ptr<CUIObject>& frame,
     std::unique_ptr<CUIObject>& turnback)
 {
-    CSceneManager* SceneMng = &CSceneManager::GetInstance();
+    CSceneManager*   SceneMng   = &CSceneManager::GetInstance();
+    CNurtureManager* NurtureMng = &CNurtureManager::GetInstance();
 
     //読み込みが初回であるなら
-    if (!SceneMng->GetIsDataLoaded())
+    if (!NurtureMng->GetIsDataLoaded())
     {
         //ターン数・HPの値の初期化
         //ターン数
-        SceneMng->InitTurn();
+        NurtureMng->InitTurn();
         gage->SetWidth(1.0f);
         //スタミナの初期化
         m_pHero->InitStamina();
@@ -399,7 +403,7 @@ void CNurtureScene::InitNurtureUI(
         //スタミナに減少後の値をセット
         m_pHero->SetStamina(m_pHero->GetAfterStamina());
         //現在のスタミナ幅を取得し、設定する
-        gage->SetWidth(SceneMng->GetStaminaWidth());
+        gage->SetWidth(NurtureMng->GetStaminaWidth());
     }
 
     //スタミナゲージ
@@ -445,7 +449,8 @@ void CNurtureScene::DrawNurtureUI(
 //各ヒーローのデータ読み込み
 void CNurtureScene::LoadHeroData( const std::string& heroname )
 {
-    CSceneManager* SceneMng = &CSceneManager::GetInstance();
+    CSceneManager*   SceneMng   = &CSceneManager::GetInstance();
+    CNurtureManager* NurtureMng = &CNurtureManager::GetInstance();
 
     //設定されているユーザー名の取得
     std::string UserName = SceneMng->GetStringName();
@@ -458,7 +463,7 @@ void CNurtureScene::LoadHeroData( const std::string& heroname )
 
     //jsonに保存されたデータの読み込み
     //読み込み回数に応じて読み込むファイルを変える
-    if (!SceneMng->GetIsDataLoaded()) 
+    if (!NurtureMng->GetIsDataLoaded())
     {
         //初回の読み込み時
         if (!m_pJson->Load(m_ParamData, InitFilePath)) { return; }
@@ -473,7 +478,9 @@ void CNurtureScene::LoadHeroData( const std::string& heroname )
 //トレーニング選択処理
 void CNurtureScene::SelectTraning()
 {
-    CSceneManager* SceneMng = &CSceneManager::GetInstance();
+    CSceneManager*   SceneMng   = &CSceneManager::GetInstance();
+    CNurtureManager* NurtureMng = &CNurtureManager::GetInstance();
+
 
     //更新前のパラメータを保存
      m_pHero->SetBeforeParam(m_pHero->GetParam());
@@ -487,19 +494,19 @@ void CNurtureScene::SelectTraning()
     case::CHeroManager::MagicTraining: m_pHero->MagicUp(m_pHero->GetStamina()); break; //魔力
     case::CHeroManager::SpeedTraining: m_pHero->SpeedUp(m_pHero->GetStamina()); break; //素早さ
     case::CHeroManager::HpTraining: m_pHero->HpUp(m_pHero->GetStamina()); break;       //体力
-    case::CHeroManager::Rest: SceneMng->SetRestFlag(true); break;                      //休息
+    case::CHeroManager::Rest: NurtureMng->SetRestFlag(true); break;                      //休息
     }
 
     //スタミナの減少または回復
     //休息フラグが立っていなければ減少
-    if (!SceneMng->GetRestFlag()) { m_pHero->ReduceStamina(); }
+    if (!NurtureMng->GetRestFlag()) { m_pHero->ReduceStamina(); }
     else { m_pHero->StaminaRecovery(); }
 
     //更新後パラメータの保存
     SaveParam();
 
     //初回のみ読み込むものを読み込まなくする
-    SceneMng->SetIsDataLoaded(true);
+    NurtureMng->SetIsDataLoaded(true);
 
 }
 
@@ -595,16 +602,17 @@ void CNurtureScene::DrawTraning()
 //残りターン数の描画
 void CNurtureScene::DrawRemainingTurn()
 {
-    WriteText* Text = WriteText::GetInstance();
-    CUtility* Utility = &CUtility::GetInstance();
-    CSceneManager* SceneMng = &CSceneManager::GetInstance();
+    WriteText*       Text       = WriteText::GetInstance();
+    CUtility*        Utility    = &CUtility::GetInstance();
+    CSceneManager*   SceneMng   = &CSceneManager::GetInstance();
+    CNurtureManager* NurtureMng = &CNurtureManager::GetInstance();
 
     //整数をwstring型に変換
-    std::wstring Turn = std::to_wstring(SceneMng->GetRemainingTurn());
+    std::wstring Turn = std::to_wstring(NurtureMng->GetRemainingTurn());
 
     //残りターン数の描画
     Text->Draw_Text(L"残り", WriteText::TurnText, REMAININGTEXT_POS);
-    Text->Draw_Text(Turn, WriteText::Turn, Utility->PosCorrection(SceneMng->GetRemainingTurn(),2,TURN_POS));
+    Text->Draw_Text(Turn, WriteText::Turn, Utility->PosCorrection(NurtureMng->GetRemainingTurn(),2,TURN_POS));
     Text->Draw_Text(L"ターン", WriteText::TurnText, TURNTEXT_POS);
 }
 
@@ -612,7 +620,9 @@ void CNurtureScene::DrawRemainingTurn()
 //スタミナゲージのアニメーション
 void CNurtureScene::StaminaGageAnim()
 {
-    CSceneManager* SceneMng = &CSceneManager::GetInstance();
+    CSceneManager*   SceneMng   = &CSceneManager::GetInstance();
+    CNurtureManager* NurtureMng = &CNurtureManager::GetInstance();
+
 
     //ゲージ幅の確認
     float GageScale = 1.0f * m_pHero->GetStamina() / STAMINA_MAX;
@@ -623,10 +633,10 @@ void CNurtureScene::StaminaGageAnim()
     if (GageScale > m_GageWidth){ m_GageWidth += 0.01f; }
 
     //現在のゲージ幅をシーンマネージャの変数に代入
-    SceneMng->SetStaminaWidth(m_GageWidth);
+    NurtureMng->SetStaminaWidth(m_GageWidth);
 
     //スタミナゲージの幅高さを設定
-    if (SceneMng->GetIsDataLoaded()) {
+    if (NurtureMng->GetIsDataLoaded()) {
         m_pStaminaGage->SetDisplay(m_GageWidth, 1.0f);
     }
     else

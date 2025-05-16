@@ -35,11 +35,11 @@ bool CSoundManager::Load( HWND hWnd )
 	{
 		{ enList::BGM_Title,		    _T( "Data\\Sound\\BGM\\Title.mp3" ),				_T( "BGM_Title" )		},
 		{ enList::BGM_ModeSelect,		_T( "Data\\Sound\\BGM\\ModeSelect.mp3" ),			_T( "BGM_ModeSelect" )	},
-		{ enList::BGM_NurtureHeroSelect, _T( "Data\\Sound\\BGM\\NurtureHeroSelect.mp3" ),		_T( "BGM_NurtureHeroSelect" )},
+		{ enList::BGM_NurtureHeroSelect,_T( "Data\\Sound\\BGM\\NurtureHeroSelect.mp3" ),	_T( "BGM_NurtureHeroSelect" )},
 		{ enList::BGM_Nurture,		    _T( "Data\\Sound\\BGM\\Nurture.mp3" ),				_T( "BGM_Nurture" )		},
 		{ enList::BGM_BattleHeroSelect,	_T( "Data\\Sound\\BGM\\BattleHeroSelect.mp3" ),	    _T( "BGM_BattleHeroSelect" )},
 		{ enList::BGM_Battle,		    _T( "Data\\Sound\\BGM\\Battle.mp3" ),				_T( "BGM_Battle" )		},
-		{ enList::BGM_NurtureResult,		_T( "Data\\Sound\\BGM\\NurtureResult.mp3" ),			_T( "BGM_NurtureResult" )},
+		{ enList::BGM_NurtureResult,    _T( "Data\\Sound\\BGM\\NurtureResult.mp3" ),		_T( "BGM_NurtureResult" )},
 		{ enList::BGM_Win,		        _T( "Data\\Sound\\BGM\\Win.mp3" ),				    _T( "BGM_Win" )		    },
 		{ enList::BGM_Lose,		        _T( "Data\\Sound\\BGM\\Lose.mp3" ),				    _T( "BGM_Lose" )		},
 		{ enList::SE_Slash,				_T( "Data\\Sound\\SE\\Slash.mp3" ),				    _T( "SE_Slash" )		},

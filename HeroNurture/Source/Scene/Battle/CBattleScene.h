@@ -17,7 +17,7 @@ using json = nlohmann::json;
 //----マネージャークラス----
 //シーン
 class CSceneManager;
-//バトル
+//バトルモード
 class CBattleManager;
 //UI
 class CUIManager;

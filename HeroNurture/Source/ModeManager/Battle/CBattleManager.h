@@ -1,12 +1,8 @@
 #pragma once
-#include "CDirectX11.h"
-#include "CDirectX9.h"
 #include "Singleton\CSingleton.h"
-#include "Utility\CUtility.h"
-#include <memory>
 
 //=====================================
-//バトルマネージャークラス
+//バトルモードマネージャークラス
 //制作者：石田櫂夢
 //=====================================
 class CBattleManager

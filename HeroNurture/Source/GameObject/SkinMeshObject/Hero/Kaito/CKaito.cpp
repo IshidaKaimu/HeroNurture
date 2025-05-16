@@ -4,6 +4,7 @@
 #include "SkinMesh\SkinMeshManager\CSkinMeshManager.h"
 #include "Scene\CSceneManager.h"
 #include "ImGui\ImGuiManager\ImGuiManager.h"
+#include "ModeManager\Nurture\CNurtureManager.h"
 
 //定数の名前空間
 using namespace Constant_Kaito;
@@ -105,7 +106,7 @@ void CKaito::LoadMeshData()
 //パラメータ情報の読み込み
 void CKaito::LoadParamData(const json& jsondata)
 {
-	if (!CSceneManager::GetInstance().GetIsDataLoaded())
+	if (!CNurtureManager::GetInstance().GetIsDataLoaded())
 	{
 		//パラメータの読み込み
 		LoadParam(jsondata, "Kaito");

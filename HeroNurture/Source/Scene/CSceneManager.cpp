@@ -19,11 +19,7 @@ CSceneManager::CSceneManager()
     , m_hWnd        ()
     , m_pDx9        ( nullptr )
     , m_pDx11       ( nullptr )
-    , m_Turn        ()
     , m_UserName    ()
-    , m_GageWidth   (1.0f)
-    , m_Rest        ()
-    , m_IsDataLoaded()
 {
     m_Scene = std::make_unique<CTitleScene>();   //make_unique:インスタンスを生成して、使わなくなったら勝手に破棄してくれる
 }

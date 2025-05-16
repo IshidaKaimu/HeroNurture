@@ -241,6 +241,7 @@
     <ClCompile Include="Source\GameObject\SkinMeshObject\Hero\CHeroManager.cpp" />
     <ClCompile Include="Source\GameObject\SkinMeshObject\Hero\Yui\CYui.cpp" />
     <ClCompile Include="Source\Light\LightManager\CLightManager.cpp" />
+    <ClCompile Include="Source\ModeManager\Nurture\CNurtureManager.cpp" />
     <ClCompile Include="Source\Rank\CRank.cpp" />
     <ClCompile Include="Source\Scene\Appearance\Kaito\CKaitoAppearanceScene.cpp" />
     <ClCompile Include="Source\Scene\Appearance\Yui\CYuiAppearanceScene.cpp" />
@@ -313,6 +314,7 @@
     <ClInclude Include="Source\GameObject\SkinMeshObject\Hero\Yui\CYui.h" />
     <ClInclude Include="Source\GameObject\SkinMeshObject\Event\RaccoonDog\CRaccoonDog.h" />
     <ClInclude Include="Source\Light\LightManager\CLightManager.h" />
+    <ClInclude Include="Source\ModeManager\Nurture\CNurtureManager.h" />
     <ClInclude Include="Source\Rank\CRank.h" />
     <ClInclude Include="Source\Scene\Appearance\Kaito\CKaitoAppearanceScene.h" />
     <ClInclude Include="Source\Scene\Appearance\Yui\CYuiAppearanceScene.h" />

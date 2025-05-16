@@ -1,5 +1,6 @@
 #include "Scene\NurtureResult\CNurtureResultScene.h"
 #include "Scene\CSceneManager.h"
+#include "ModeManager\Nurture\CNurtureManager.h"
 #include "KeyManager\CKeyManager.h"
 #include "Sprite2D\UIManager\CUIManager.h"
 #include "SkinMesh\SkinMeshManager\CSkinMeshManager.h"
@@ -76,9 +77,11 @@ void CNurtureResultScene::Initialize()
 //更新関数
 void CNurtureResultScene::Update()
 {
-    CKeyManager*  KeyMng    = &CKeyManager::GetInstance();
-    CHeroManager* HeroMng   = &CHeroManager::GetInstance();
-    CSceneManager* SceneMng = &CSceneManager::GetInstance();
+    CKeyManager*     KeyMng     = &CKeyManager::GetInstance();
+    CHeroManager*    HeroMng    = &CHeroManager::GetInstance();
+    CSceneManager*   SceneMng   = &CSceneManager::GetInstance();
+    CNurtureManager* NurtureMng = &CNurtureManager::GetInstance();
+
 
     //フェードイン処理
     if (!FadeIn()) { return; }
@@ -108,7 +111,7 @@ void CNurtureResultScene::Update()
     //フェードアウト処理
     if (m_SceneTransitionFlg && FadeOut())
     {
-        SceneMng->SetIsDataLoaded(false);
+        NurtureMng->SetIsDataLoaded(false);
         m_pJson->SaveResult(HeroMng->GetSelectHeroName(), m_ResultWriter);
         SceneMng->LoadCreate(CSceneManager::ModeSelect);
     }

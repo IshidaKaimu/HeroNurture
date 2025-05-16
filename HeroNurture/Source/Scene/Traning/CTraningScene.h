@@ -12,9 +12,13 @@
 // 前方宣言
 //=======================
 //----マネージャークラス----
-//ヒーローマネージャー
+// シーン
+class CSceneManager;
+//育成モード
+class CNurtureManager;
+//ヒーロー
 class CHeroManager;
-//UIマネージャー
+//UI
 class CUIManager;
 
 //========================

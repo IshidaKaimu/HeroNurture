@@ -9,7 +9,9 @@
 // =======================
 //----マネージャークラス----
 //シーン
-class CSceneManager;              
+class CSceneManager; 
+//育成モード
+class CNurtureManager;
 //サウンド
 class CSoundManager;
 //エフェクト

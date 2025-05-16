@@ -11,8 +11,12 @@
 // 前方宣言
 // =======================		
 //----マネージャークラス----
+//ImGui
+class ImGuiManager;
 //シーン
 class CSceneManager;
+//育成モード
+class CNurtureManager;
 //ライト
 class CLightManager;
 //サウンド
@@ -21,6 +25,7 @@ class CSoundManager;
 class WriteText;
 //汎用クラス
 class CUtility;
+
 
 //Json使用に必要な名前空間の格納
 using json = nlohmann::json;
