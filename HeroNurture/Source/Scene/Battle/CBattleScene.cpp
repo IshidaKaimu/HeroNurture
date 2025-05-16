@@ -1,12 +1,13 @@
 #pragma once
 #include "CBattleScene.h"
+#include "Scene\CSceneManager.h"
+#include "ModeManager\Battle\CBattleManager.h"
 #include "SkinMeshObject\Hero\CHeroManager.h"
 #include "SkinMeshObject\Hero\Enemy\CEnemyHeroManager.h"
 #include "ImGui\ImGuiManager\ImGuiManager.h"
 #include "Camera\CameraManager\CCameraManager.h"
 #include "Sprite2D\UIManager\CUIManager.h"
 #include "KeyManager\CKeyManager.h"
-#include "Scene\CSceneManager.h"
 #include "Effect\CEffect.h"
 #include "Sound\CSoundManager.h"
 
@@ -151,7 +152,8 @@ void CBattleScene::Initialize()
 
 void CBattleScene::Update()
 {
-	CSceneManager* SceneMng = CSceneManager::GetInstance();
+	CSceneManager* SceneMng   = &CSceneManager::GetInstance();
+	CBattleManager* BattleMng = &CBattleManager::GetInstance();
 
 	//バトルヒーロー選択BGMを停止
 	CSoundManager::GetInstance()->Stop(CSoundManager::BGM_BattleHeroSelect);
@@ -180,7 +182,7 @@ void CBattleScene::Update()
 	if (m_pHero->Death())
 	{
 		//勝敗の設定
-		SceneMng->SetBattleResult(CSceneManager::Lose);
+		BattleMng->SetBattleResult(BattleMng->Lose);
 
 		m_SceneTransitionFlg = true;
 	}
@@ -188,7 +190,7 @@ void CBattleScene::Update()
 	if (m_pEnemyHero->Death())
 	{
 		//勝敗の設定
-		SceneMng->SetBattleResult(CSceneManager::Win);
+		BattleMng->SetBattleResult(BattleMng->Win);
 
 		m_SceneTransitionFlg = true;
 	}
@@ -207,7 +209,7 @@ void CBattleScene::Update()
 void CBattleScene::Draw()
 {
 	WriteText* Text = WriteText::GetInstance();
-	CSceneManager* SceneMng = CSceneManager::GetInstance();
+	CSceneManager* SceneMng = &CSceneManager::GetInstance();
 
 	//カメラの動作
 	CCameraManager::GetInstance().CameraUpdate();
@@ -223,7 +225,7 @@ void CBattleScene::Draw()
 	//空
 	m_pSky->Draw();
 
-	CSceneManager::GetInstance()->GetDx11()->SetDepth(false);
+	SceneMng->GetDx11()->SetDepth(false);
 	
 	//各Hpゲージの描画
 	DrawHpGage();
@@ -244,7 +246,7 @@ void CBattleScene::Draw()
 	else{ CoverPos = POWER_ATTACK_POS; }
 	DrawAttack(m_pAttackCover, CoverPos, ATTACK_COVER_ALPHA);   //アイコンにかぶせる画像
 
-	CSceneManager::GetInstance()->GetDx11()->SetDepth(true);
+	SceneMng->GetDx11()->SetDepth(true);
 }
 
 void CBattleScene::Debug()
@@ -296,14 +298,13 @@ void CBattleScene::Debug()
 //バトルに使用するデータの読み込み
 void CBattleScene::LoadBattleData()
 {
-	CSceneManager* SceneMng = CSceneManager::GetInstance();
+	CSceneManager* SceneMng = &CSceneManager::GetInstance();
 
 	//設定されているユーザー名の取得
 	std::string UserName = SceneMng->GetStringName();
 
-
 	//読み込むファイルのパス
-	std::string BattleParamFilePath = "Data\\Acount\\"+ UserName +"\\BattleData\\BattleParam";//バトルに使用するパラメータ
+	std::string BattleParamFilePath = "Data\\Acount\\"+ UserName +"\\BattleData\\BattleParam";  //バトルに使用するパラメータ
 	std::string EnemyParamFilePath = "Data\\Acount\\" + UserName + "\\BattleData\\EnemyParam";  //敵のパラメータ
 
 	//バトルに使用するデータのファイルを読み込み

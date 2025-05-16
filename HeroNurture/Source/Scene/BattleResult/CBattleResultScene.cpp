@@ -1,6 +1,9 @@
 #include "CBattleResultScene.h"
 #include "Scene\CSceneManager.h"
+#include "ModeManager\Battle\CBattleManager.h"
+#include "SkinMeshObject\Hero\CHeroManager.h"	
 #include "KeyManager\CKeyManager.h"
+#include "Camera\CameraManager\CCameraManager.h"
 #include "StaticMesh\MeshManager\CMeshManager.h"
 #include "SkinMeshObject\Hero\CHeroManager.h"
 #include "SkinMeshObject\Hero\Enemy\CEnemyHeroManager.h"
@@ -10,6 +13,7 @@
 #include "Json\CJson.h"
 #include "Utility\CUtility.h"
 #include "Sprite2D\UIManager\CUIManager.h" 
+
 //定数の名前空間
 using namespace Constant_BattleResultScene;
 
@@ -43,17 +47,17 @@ void CBattleResultScene::Releace()
 
 void CBattleResultScene::LoadData()
 {
-    CSceneManager* SceneMng = CSceneManager::GetInstance();
-    CHeroManager* HeroMng = &CHeroManager::GetInstance();
+    CSceneManager*     SceneMng     = &CSceneManager::GetInstance();
+    CHeroManager*      HeroMng      = &CHeroManager::GetInstance();
     CEnemyHeroManager* EnemyHeroMng = &CEnemyHeroManager::GetInstance();
-
+    CBattleManager*    BattleMng    = &CBattleManager::GetInstance();
 
     //----スタティックメッシュ----
     m_pSky->AttachMesh(CMeshManager::GetMesh(CMeshManager::Sky));      //空
     m_pGround->AttachMesh(CMeshManager::GetMesh(CMeshManager::Ground));//地面
 
     //----スキンメッシュ----
-    switch (SceneMng->GetBattleResult())
+    switch (BattleMng->GetBattleResult())
     {
     case CSceneManager::Win:    
         HeroMng->LoadMeshData();
@@ -68,12 +72,14 @@ void CBattleResultScene::LoadData()
 
 void CBattleResultScene::Initialize()
 {
-    CSceneManager* SceneMng = CSceneManager::GetInstance();
-    CHeroManager* HeroMng = &CHeroManager::GetInstance();
+    CSceneManager* SceneMng         = &CSceneManager::GetInstance();
+    CHeroManager* HeroMng           = &CHeroManager::GetInstance();
     CEnemyHeroManager* EnemyHeroMng = &CEnemyHeroManager::GetInstance();
+    CBattleManager* BattleMng       = &CBattleManager::GetInstance();
+
 
     //カメラの初期位置
-    switch (SceneMng->GetBattleResult())
+    switch (BattleMng->GetBattleResult())
     {
     case CSceneManager::Win:
         m_pCamera->SetPos(WIN_CAM_POS);
@@ -93,8 +99,10 @@ void CBattleResultScene::Initialize()
 //更新関数
 void CBattleResultScene::Update()
 {
-    CSceneManager* SceneMng = CSceneManager::GetInstance();
-    CKeyManager* KeyMng = &CKeyManager::GetInstance();
+    CSceneManager* SceneMng   = &CSceneManager::GetInstance();
+    CKeyManager* KeyMng       = &CKeyManager::GetInstance();
+    CBattleManager* BattleMng = &CBattleManager::GetInstance();
+
 
     KeyMng->Update();
 
@@ -104,7 +112,7 @@ void CBattleResultScene::Update()
     //モード選択画面のBGM停止
     CSoundManager::GetInstance()->Stop(CSoundManager::BGM_Battle);
 
-    switch (SceneMng->GetBattleResult())
+    switch (BattleMng->GetBattleResult())
     {
     case CSceneManager::Win:
         //勝利時BGMの再生
@@ -139,9 +147,10 @@ void CBattleResultScene::Update()
 
 void CBattleResultScene::Draw()
 {
-    CSceneManager* SceneMng = CSceneManager::GetInstance();
-    CHeroManager* HeroMng   = &CHeroManager::GetInstance();
+    CSceneManager* SceneMng         = &CSceneManager::GetInstance();
+    CHeroManager* HeroMng           = &CHeroManager::GetInstance();
     CEnemyHeroManager* EnemyHeroMng = &CEnemyHeroManager::GetInstance();
+    CBattleManager* BattleMng       = &CBattleManager::GetInstance();
 
     //カメラの動作
     m_pCamera->CameraUpdate();
@@ -152,7 +161,7 @@ void CBattleResultScene::Draw()
     //地面の描画
     m_pGround->Draw();
 
-    switch (SceneMng->GetBattleResult())
+    switch (BattleMng->GetBattleResult())
     {
     case CSceneManager::Win:
         HeroMng->MoveSelectAnim();
@@ -188,10 +197,11 @@ void CBattleResultScene::Debug()
 //タイトル画面の描画
 void CBattleResultScene::DrawUI()
 {
-    WriteText* Text = WriteText::GetInstance();
-    CSceneManager* SceneMng = CSceneManager::GetInstance();
+    WriteText* Text           = WriteText::GetInstance();
+    CSceneManager* SceneMng   = &CSceneManager::GetInstance();
+    CBattleManager* BattleMng = &CBattleManager::GetInstance();
 
-    switch (SceneMng->GetBattleResult())
+    switch (BattleMng->GetBattleResult())
     {
     case CSceneManager::Win:
         Text->Draw_Text(L"WIN", WriteText::Win, RESULTTEXT_POS);

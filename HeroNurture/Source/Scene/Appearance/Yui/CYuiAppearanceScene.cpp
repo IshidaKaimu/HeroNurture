@@ -84,9 +84,9 @@ void CYuiAppearanceScene::Initialize()
 
 void CYuiAppearanceScene::Update()
 {
-	CHeroManager* HeroMng = &CHeroManager::GetInstance();
-	CKeyManager* KeyMng = &CKeyManager::GetInstance();
-	CSceneManager* SceneMng = CSceneManager::GetInstance();
+	CHeroManager* HeroMng   = &CHeroManager::GetInstance();
+	CKeyManager* KeyMng     = &CKeyManager::GetInstance();
+	CSceneManager* SceneMng = &CSceneManager::GetInstance();
 	CEffect* Eff = CEffect::GetInstance();
 
 
@@ -173,7 +173,7 @@ void CYuiAppearanceScene::Update()
 void CYuiAppearanceScene::Draw()
 {
 	CHeroManager*  HeroMng  = &CHeroManager::GetInstance();
-	CSceneManager* SceneMng = CSceneManager::GetInstance();
+	CSceneManager* SceneMng = &CSceneManager::GetInstance();
 	WriteText*     Text     = WriteText::GetInstance();
 
 	//ƒJƒƒ‰‚Ì“®ì

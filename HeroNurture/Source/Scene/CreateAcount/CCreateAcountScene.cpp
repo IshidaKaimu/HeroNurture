@@ -63,13 +63,12 @@ void CCreateAcountScene::Update()
     CSoundManager::GetInstance()->PlayLoop(CSoundManager::BGM_Title);
     CSoundManager::GetInstance()->Volume(CSoundManager::BGM_Title, 40);
 
+    CKeyManager* KeyMng = &CKeyManager::GetInstance();
+    CSceneManager* SceneMng = &CSceneManager::GetInstance();
+    WriteText* Text = WriteText::GetInstance();
 
     //フェードイン処理
     if (!FadeIn()) { return; }
-
-    CKeyManager* KeyMng = &CKeyManager::GetInstance();
-    CSceneManager* SceneMng = CSceneManager::GetInstance();
-    WriteText* Text = WriteText::GetInstance();
 
     //リアルタイム入力処理
     CUtility::GetInstance().InputText(m_UserName,NAME_MAXLENGTH);
@@ -128,7 +127,7 @@ void CCreateAcountScene::Update()
 void CCreateAcountScene::Draw()
 {
     WriteText* Text = WriteText::GetInstance();
-    CSceneManager* SceneMng = CSceneManager::GetInstance();
+    CSceneManager* SceneMng = &CSceneManager::GetInstance();
 
 
     //深度を無効にする

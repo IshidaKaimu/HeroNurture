@@ -27,7 +27,7 @@ namespace Constant_ModeSelectScene
 {
 	//----各UIの設定----
 	//育成モード		
-	const D3DXVECTOR3 NATUREMODE_POS = { 0.0f,0.0f,-1.0f };  //座標
+	const D3DXVECTOR3 NurtureMODE_POS = { 0.0f,0.0f,-1.0f };  //座標
 	//バトルモード
 	const D3DXVECTOR3 BATTLEMODE_POS = { 640.0f,0.0f,-1.0f };//座標
 	//被せる画像
@@ -54,7 +54,7 @@ private:
 	//モードリスト
 	enum enModeList :char
 	{
-		NatureMode,
+		NurtureMode,
 		BattleMode,
 		Max
 	};
@@ -83,7 +83,7 @@ private:
 	// オブジェクトクラス
 	// =======================		
 	//----UI----
-	std::unique_ptr<CUIObject> m_pNatureMode; //育成モード
+	std::unique_ptr<CUIObject> m_pNurtureMode; //育成モード
 	std::unique_ptr<CUIObject> m_pBattleMode; //対戦モード
 	std::unique_ptr<CUIObject> m_pCover;      //選択されていないほうにかぶせる画像
 	std::unique_ptr<CUIObject> m_pControlBar;  //操作方法指示バー

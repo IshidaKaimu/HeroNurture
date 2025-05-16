@@ -5,7 +5,7 @@
 #include "WriteText\WriteText.h"
 #include "StaticMeshObject\Ground\CGround.h"
 #include "SkinMeshObject\Hero\CHeroBase.h"
-#include "Scene\Nature\CNatureScene.h"
+#include "Scene\Nurture\CNurtureScene.h"
 #include "json.hpp"
 
 //========================
@@ -48,7 +48,7 @@ struct IncParam
 //トレーニングシーンクラス
 //=====================================
 class CTraningScene
-	:public CNatureScene
+	:public CNurtureScene
 {
 public:
 	CTraningScene();

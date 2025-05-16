@@ -28,7 +28,7 @@ using json = nlohmann::json;
 // =======================
 // 定数宣言
 // =======================	
-namespace Constant_NatureScene
+namespace Constant_NurtureScene
 {
 	//----各ヒーローごとのカメラ位置/注視点---
 	//ユイ
@@ -100,12 +100,12 @@ struct HeroName
 //育成シーンクラス
 //制作者：石田櫂夢
 //=====================================
-class CNatureScene
+class CNurtureScene
 	:public CSceneBase
 {
 public:
-	CNatureScene();
-	~CNatureScene();
+	CNurtureScene();
+	~CNurtureScene();
 
 	//構築関数
 	void Create()	  override;
@@ -127,25 +127,25 @@ protected:
     // 育成関連のシーンで固定するUI関連の関数
     // =======================		
     //インスタンス生成
-	void CreateNatureUI(
+	void CreateNurtureUI(
 		std::unique_ptr<CUIObject>& gage, 
 		std::unique_ptr<CUIObject>& back,
 		std::unique_ptr<CUIObject>& frame,
 		std::unique_ptr<CUIObject>& turnback);
 	//データのロード
-	void LoadNatureUI(
+	void LoadNurtureUI(
 		std::unique_ptr<CUIObject>& gage,
 		std::unique_ptr<CUIObject>& back,
 		std::unique_ptr<CUIObject>& frame,
 		std::unique_ptr<CUIObject>& turnback);
 	//初期化
-	void InitNatureUI(
+	void InitNurtureUI(
 		std::unique_ptr<CUIObject>& gage, 
 		std::unique_ptr<CUIObject>& back, 
 		std::unique_ptr<CUIObject>& frame,
 		std::unique_ptr<CUIObject>& turnback);
 	//描画
-	void DrawNatureUI(
+	void DrawNurtureUI(
 		std::unique_ptr<CUIObject>& gage, 
 		std::unique_ptr<CUIObject>& back, 
 		std::unique_ptr<CUIObject>& frame,

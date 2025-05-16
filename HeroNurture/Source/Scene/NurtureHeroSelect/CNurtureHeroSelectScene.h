@@ -21,7 +21,7 @@ class CSoundManager;
 // =======================
 // 定数宣言
 // =======================	
-namespace Constant_NatureHeroSelectScene 
+namespace Constant_NurtureHeroSelectScene 
 {
 	//----各ヒーローのカメラ配置・注視点----
 	static const D3DXVECTOR3 CAMPOS_NS = { 0.0f, 5.2f, -2.8f };
@@ -38,12 +38,12 @@ namespace Constant_NatureHeroSelectScene
 
 }
 
-class CNatureHeroSelectScene
+class CNurtureHeroSelectScene
 	:public CSceneBase
 {
 public:
-	CNatureHeroSelectScene();
-	~CNatureHeroSelectScene();
+	CNurtureHeroSelectScene();
+	~CNurtureHeroSelectScene();
 
 	//構築関数
 	void Create()	  override;

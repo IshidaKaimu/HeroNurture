@@ -14,11 +14,11 @@ public:
 	{
 		BGM_Title,	          //タイトル
 		BGM_ModeSelect,       //モード選択
-		BGM_NatureHeroSelect, //育成ヒーロー選択
-		BGM_Nature,			  //育成
+		BGM_NurtureHeroSelect, //育成ヒーロー選択
+		BGM_Nurture,			  //育成
 		BGM_BattleHeroSelect, //戦闘ヒーロー選択
 		BGM_Battle,			  //戦闘
-		BGM_NatureResult,     //育成結果
+		BGM_NurtureResult,     //育成結果
 		BGM_Win,	          //戦闘結果(勝利)
 		BGM_Lose,			  //戦闘結果(敗北)
 		

@@ -53,7 +53,7 @@ CMain::~CMain()
 
 void CMain::Init()
 {
-	CSceneManager::GetInstance()->Initialize();
+	CSceneManager::GetInstance().Initialize();
 }
 
 //更新処理.
@@ -66,14 +66,14 @@ void CMain::Update()
 
 
 	//更新処理.
-	CSceneManager::GetInstance()->Update();
+	CSceneManager::GetInstance().Update();
 
 
 	//バックバッファをクリアにする.
 	m_pDx11->ClearBackBuffer();
 
 	//描画処理.
-	CSceneManager::GetInstance()->Draw();
+	CSceneManager::GetInstance().Draw();
 
 	//エフェクトの描画
 	CEffect::GetInstance()->Draw();
@@ -125,10 +125,10 @@ HRESULT CMain::Create()
 	Effect->LoadData();
 
 	//シーンの構築（Loadも含める）.
-	CSceneManager::GetInstance()->Create(*m_pDx9, *m_pDx11, m_hWnd);
+	CSceneManager::GetInstance().Create(*m_pDx9, *m_pDx11, m_hWnd);
 
 	//シーンの初期化
-	CSceneManager::GetInstance()->Initialize();
+	CSceneManager::GetInstance().Initialize();
 
 	return S_OK;
 }
@@ -148,7 +148,7 @@ HRESULT CMain::LoadData()
 //解放処理.
 void CMain::Release()
 {
-	CSceneManager::GetInstance()->Release();
+	CSceneManager::GetInstance().Release();
 	
 	if( m_pDx11 != nullptr ){
 		m_pDx11->Release();

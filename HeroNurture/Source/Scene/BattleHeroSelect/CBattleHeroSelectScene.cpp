@@ -57,7 +57,7 @@ void CBattleHeroSelectScene::Releace()
 
 void CBattleHeroSelectScene::LoadData()
 {
-	CSceneManager* SceneMng = CSceneManager::GetInstance();
+	CSceneManager* SceneMng = &CSceneManager::GetInstance();
 	
 	//設定されているユーザー名の取得
 	std::string UserName = SceneMng->GetStringName();
@@ -101,6 +101,10 @@ void CBattleHeroSelectScene::Initialize()
 
 void CBattleHeroSelectScene::Update()
 {
+	CKeyManager* KeyMng     = &CKeyManager::GetInstance();
+	CHeroManager* HeroMng   = &CHeroManager::GetInstance();
+	CSceneManager* SceneMng = &CSceneManager::GetInstance();
+
 	//フェードイン処理
 	if (!FadeIn()) { return; }
 
@@ -111,9 +115,6 @@ void CBattleHeroSelectScene::Update()
 	CSoundManager::GetInstance()->PlayLoop(CSoundManager::BGM_BattleHeroSelect);
 	CSoundManager::GetInstance()->Volume(CSoundManager::BGM_BattleHeroSelect, 40);
 
-	CKeyManager* KeyMng = &CKeyManager::GetInstance();
-	CHeroManager* HeroMng = &CHeroManager::GetInstance();
-	CSceneManager* SceneMng = CSceneManager::GetInstance();
 
 	KeyMng->Update();
 
@@ -186,7 +187,7 @@ void CBattleHeroSelectScene::Update()
 void CBattleHeroSelectScene::Draw()
 {
 	WriteText* Text = WriteText::GetInstance();
-	CSceneManager* SceneMng = CSceneManager::GetInstance();
+	CSceneManager* SceneMng = &CSceneManager::GetInstance();
 
 	//カメラの動作
 	m_pCamera->CameraUpdate();
@@ -226,7 +227,7 @@ void CBattleHeroSelectScene::DrawResultData()
 
 	//保存されている育成データの数と現在の選択番号を描画
 	Text->Draw_Text(std::to_wstring(m_SelectNo) + L"/", WriteText::Normal, Utility->PosCorrection(m_SelectNo,2,SELECTNO_POS));
-	Text->Draw_Text(std::to_wstring(m_ResultData.size()), WriteText::Normal, NATUREDATA_MAX_POS);
+	Text->Draw_Text(std::to_wstring(m_ResultData.size()), WriteText::Normal, NurtureDATA_MAX_POS);
 
 	//パラメータ背景の描画
 	m_pParamBack->SetPosition(PARAMBACK_POS);

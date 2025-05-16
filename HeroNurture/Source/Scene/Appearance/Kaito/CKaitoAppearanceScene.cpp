@@ -79,7 +79,7 @@ void CKaitoAppearanceScene::Update()
 {
 	CHeroManager* HeroMng = &CHeroManager::GetInstance();
 	CKeyManager* KeyMng = &CKeyManager::GetInstance();
-	CSceneManager* SceneMng = CSceneManager::GetInstance();
+	CSceneManager* SceneMng = &CSceneManager::GetInstance();
 	CEffect* Eff = CEffect::GetInstance();
 
 	//バトルヒーロー選択BGMを停止
@@ -148,7 +148,7 @@ void CKaitoAppearanceScene::Draw()
 {
 	CHeroManager* HeroMng   = &CHeroManager::GetInstance();
 	WriteText* Text	        = WriteText::GetInstance();
-	CSceneManager* SceneMng = CSceneManager::GetInstance();
+	CSceneManager* SceneMng = &CSceneManager::GetInstance();
 
 	//カメラの動作
 	m_pCamera->CameraUpdate();
@@ -185,7 +185,8 @@ void CKaitoAppearanceScene::Debug()
 
 void CKaitoAppearanceScene::KaitoAppearance()
 {
-	CSceneManager* SceneMng = CSceneManager::GetInstance();
+	CSceneManager* SceneMng = &CSceneManager::GetInstance();
+	CHeroManager* HeroMng = &CHeroManager::GetInstance();
 	CEffect* Eff = CEffect::GetInstance();
 	//エフェクトハンドルの用意
 	static ::EsHandle hMagicSircle = -1;	//魔法陣エフェクト
@@ -198,9 +199,6 @@ void CKaitoAppearanceScene::KaitoAppearance()
 	Eff->Speed(hLaser, 1.0f);
 	Eff->Scale(hLaser, 5.0f, 5.0f, 5.0f);
 	Eff->Rotate(hLaser, D3DXToRadian(270.0f), 1.0f, 1.0f);
-
-
-	CHeroManager* HeroMng = &CHeroManager::GetInstance();
 
 	switch (m_Scene)
 	{

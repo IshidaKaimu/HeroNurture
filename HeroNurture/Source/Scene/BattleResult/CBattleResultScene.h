@@ -1,22 +1,23 @@
 #pragma once
 #include "Scene\CSceneBase.h"					//シーンベースクラス
-#include "Camera\CameraManager\CCameraManager.h"//カメラマネージャクラス
 #include "StaticMeshObject\Sky\CSky.h"			//スカイボックスクラス
 #include "WriteText\WriteText.h"				//テキスト描画クラス
 #include "StaticMeshObject\Ground\CGround.h"	//地面クラス
-#include "SkinMeshObject\Hero\CHeroManager.h"	//プレイヤークラス
 #include <Windows.h>
 
 //=====================================
 // 前方宣言 
 //=====================================
 //----マネージャークラス----
+//バトルモード
+class CBattleManager;
 //ヒーロー
 class CHeroManager;
 //敵のヒーロー
 class CEnemyHeroManager;
 //カメラ
 class CCameraManager;
+
 
 //=====================================
 // 定数宣言 

@@ -41,7 +41,7 @@ void CTraningScene::Create()
     m_pTextBox = make_unique<CUIObject>();
 
     //育成関連のシーンで共通するUIのインスタンス生成
-    CNatureScene::CreateNatureUI(m_pStaminaGage,m_pStaminaBack,m_pStaminaFrame, m_pTurnBack);
+    CNurtureScene::CreateNurtureUI(m_pStaminaGage,m_pStaminaBack,m_pStaminaFrame, m_pTurnBack);
 }
 //破棄関数
 void CTraningScene::Releace()
@@ -57,7 +57,7 @@ void CTraningScene::LoadData()
     m_pGround->LoadData();
 
     //育成関連のシーンで共通するUIのスプライトデータ設定
-    CNatureScene::LoadNatureUI(m_pStaminaGage,m_pStaminaBack,m_pStaminaFrame, m_pTurnBack);
+    CNurtureScene::LoadNurtureUI(m_pStaminaGage,m_pStaminaBack,m_pStaminaFrame, m_pTurnBack);
 
     //トレーニングごとの背景UIのスプライトデータ設定
     switch (HeroMng->GetTraining())
@@ -77,10 +77,10 @@ void CTraningScene::LoadData()
 //初期化関数
 void CTraningScene::Initialize()
 {
-    CSceneManager::GetInstance()->InitWhiteFade();
+    CSceneManager::GetInstance().InitWhiteFade();
 
     //育成関連のシーンで共通するUI
-    CNatureScene::InitNatureUI(m_pStaminaGage,m_pStaminaBack,m_pStaminaFrame, m_pTurnBack);
+    CNurtureScene::InitNurtureUI(m_pStaminaGage,m_pStaminaBack,m_pStaminaFrame, m_pTurnBack);
 
     //背景画像の設定
     m_pBack->SetPosition(0.0f, 0.0f, 0.0f);
@@ -103,7 +103,7 @@ void CTraningScene::Update()
    CKeyManager::GetInstance().Update();
 
    //シーンマネージャークラス
-   CSceneManager* SceneMng = CSceneManager::GetInstance();
+   CSceneManager* SceneMng = &CSceneManager::GetInstance();
 
    //ステータス変化SEの再生
    if (CHeroManager::GetInstance().GetFailure()) {
@@ -172,14 +172,14 @@ void CTraningScene::Update()
        if (SceneMng->GetRestFlag()) { SceneMng->SetRestFlag(false); }
        //ターン経過処理
        SceneMng->TurnProgress();
-       CSceneManager::GetInstance()->LoadCreate(CSceneManager::Nature);
+       SceneMng->LoadCreate(CSceneManager::Nurture);
        m_SECnt = 0;
    }
 }
 //描画関数
 void CTraningScene::Draw()
 {
-    CSceneManager* SceneMng = CSceneManager::GetInstance();
+    CSceneManager* SceneMng = &CSceneManager::GetInstance();
 
     m_pGround->Draw();
 
@@ -193,7 +193,7 @@ void CTraningScene::Draw()
     DrawTraningText();
 
     //育成関連のシーンで共通して表示するUI
-    CNatureScene::DrawNatureUI(m_pStaminaGage,m_pStaminaBack,m_pStaminaFrame,m_pTurnBack);
+    CNurtureScene::DrawNurtureUI(m_pStaminaGage,m_pStaminaBack,m_pStaminaFrame,m_pTurnBack);
 
     //深度を戻す
     SceneMng->GetDx11()->SetDepth(true);
@@ -253,9 +253,9 @@ bool CTraningScene::AlreadyAddCheck(std::wstring paramname)
 //トレーニング結果テキストの描画
 void CTraningScene::DrawTraningText()
 {
-    WriteText* Text = WriteText::GetInstance();
-    CHeroManager* HeroMng = &CHeroManager::GetInstance();
-    CSceneManager* SceneMng = CSceneManager::GetInstance();
+    WriteText* Text         = WriteText::GetInstance();
+    CHeroManager* HeroMng   = &CHeroManager::GetInstance();
+    CSceneManager* SceneMng = &CSceneManager::GetInstance();
 
     //----テキストを変数に代入----
     //失敗したか同課によって返すテキストを変える

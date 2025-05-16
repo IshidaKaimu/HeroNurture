@@ -107,13 +107,13 @@ public:
 	// シーンごとのアニメーション関数
 	// =======================		
 	//育成ヒーロー選択シーン
-	virtual void NatureHeroSelectAnimation() {};
+	virtual void NurtureHeroSelectAnimation() {};
 	//バトルヒーロー選択シーン
 	virtual void BattleHeroSelectAnimation() {};
 	//バトル開始時登場シーン
 	virtual void AppearanceAnimation() {};
 	//育成シーン
-	virtual void NatureAnimation(int no) {};
+	virtual void NurtureAnimation(int no) {};
 
     // =======================
 	// 攻撃関数

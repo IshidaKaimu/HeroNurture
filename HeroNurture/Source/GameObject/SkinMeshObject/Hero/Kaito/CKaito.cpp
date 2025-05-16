@@ -105,7 +105,7 @@ void CKaito::LoadMeshData()
 //パラメータ情報の読み込み
 void CKaito::LoadParamData(const json& jsondata)
 {
-	if (!CSceneManager::GetInstance()->GetIsDataLoaded())
+	if (!CSceneManager::GetInstance().GetIsDataLoaded())
 	{
 		//パラメータの読み込み
 		LoadParam(jsondata, "Kaito");
@@ -164,7 +164,7 @@ void CKaito::Debug()
 }
 
 //育成ヒーロー選択シーンのアニメーション
-void CKaito::NatureHeroSelectAnimation()
+void CKaito::NurtureHeroSelectAnimation()
 {
 }
 
@@ -190,7 +190,7 @@ void CKaito::AppearanceAnimation()
 }
 
 //育成シーンのアニメーション
-void CKaito::NatureAnimation(int no)
+void CKaito::NurtureAnimation(int no)
 {
 	//アニメーションの経過時間を加算
 	m_AnimTime += m_pMesh->GetAnimSpeed();

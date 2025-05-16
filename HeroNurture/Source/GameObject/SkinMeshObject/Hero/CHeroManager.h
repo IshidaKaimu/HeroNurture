@@ -65,9 +65,9 @@ public:
 	// 各シーンごとのアニメーション
 	// =======================
     //ヒーロー選択シーン 
-	void NatureHeroSelectAnimation() { m_pHero->NatureHeroSelectAnimation(); } 
+	void NurtureHeroSelectAnimation() { m_pHero->NurtureHeroSelectAnimation(); } 
 	//育成シーン
-	void NatureAnimation(int no)	 { m_pHero->NatureAnimation(no); }
+	void NurtureAnimation(int no)	 { m_pHero->NurtureAnimation(no); }
 	//バトル開始時登場シーン
 	void AppearanceAnimation()		 { m_pHero->AppearanceAnimation(); };
 

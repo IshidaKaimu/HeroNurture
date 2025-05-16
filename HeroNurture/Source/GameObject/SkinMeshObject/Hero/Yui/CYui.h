@@ -73,13 +73,13 @@ public:
 	// 各シーンごとのアニメーション
 	// =======================
 	//育成ヒーロー選択シーン 
-	void NatureHeroSelectAnimation() override;
+	void NurtureHeroSelectAnimation() override;
 	//バトルヒーロー選択シーン
 	void BattleHeroSelectAnimation() override;
 	//バトル開始時登場シーン
 	void AppearanceAnimation() override;
 	//育成シーン		
-	void NatureAnimation(int no) override;
+	void NurtureAnimation(int no) override;
 
 
 	// =======================

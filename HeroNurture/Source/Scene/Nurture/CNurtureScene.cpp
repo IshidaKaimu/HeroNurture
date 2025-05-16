@@ -1,4 +1,4 @@
-#include "CNatureScene.h"
+#include "CNurtureScene.h"
 #include "ImGui\ImGuiManager\ImGuiManager.h"
 #include "SkinMesh\SkinMeshManager\CSkinMeshManager.h"
 #include "Camera\CameraManager\CCameraManager.h"
@@ -13,10 +13,10 @@
 #include "Rank\CRank.h"
 #include "Sound\CSoundManager.h"
 //定数の名前空間
-using namespace Constant_NatureScene;
+using namespace Constant_NurtureScene;
 
 
-CNatureScene::CNatureScene()
+CNurtureScene::CNurtureScene()
     : m_pCamera      ( &CCameraManager::GetInstance() )
     , m_pHero        ( &CHeroManager::GetInstance() )
     , m_Name         ()
@@ -35,18 +35,18 @@ CNatureScene::CNatureScene()
     , m_pSafeBack    ()
     , m_pAnxietyBack ()
     , m_pDangerBack  ()
-    , m_GageWidth    ( CSceneManager::GetInstance()->GetStaminaWidth() )
+    , m_GageWidth    ( CSceneManager::GetInstance().GetStaminaWidth() )
     , m_pJson        ()
     , m_ParamWriter  ()
     , m_ParamData    ()
 {
 }
 
-CNatureScene::~CNatureScene()
+CNurtureScene::~CNurtureScene()
 {
 }
 
-void CNatureScene::Create()
+void CNurtureScene::Create()
 {
     //セットされたヒーローのクラスのインスタンス生成
     switch (m_pHero->GetSelectHero())
@@ -88,10 +88,10 @@ void CNatureScene::Create()
     m_pDangerBack   = std::make_unique<CUIObject>();
 
     //育成関連のシーンで共通して表示するUIのインスタンス生成
-    CreateNatureUI(m_pStaminaGage,m_pStaminaBack,m_pStaminaFrame,m_pTurnBack);
+    CreateNurtureUI(m_pStaminaGage,m_pStaminaBack,m_pStaminaFrame,m_pTurnBack);
 }
 
-void CNatureScene::Releace()
+void CNurtureScene::Releace()
 {
     //----破棄----
     //カメラ
@@ -100,7 +100,7 @@ void CNatureScene::Releace()
     m_pHero   = nullptr;
 }
 
-void CNatureScene::LoadData()
+void CNurtureScene::LoadData()
 {   
     //セットされたヒーローのクラスのメッシュデータの読み込み
     CHeroManager::GetInstance().LoadMeshData();
@@ -124,10 +124,10 @@ void CNatureScene::LoadData()
     m_pDangerBack->AttachSprite(CUIManager::GetSprite(CUIManager::Danger));
 
     //スタミナゲージのUIのスプライト設定
-    LoadNatureUI(m_pStaminaGage, m_pStaminaBack,m_pStaminaFrame, m_pTurnBack);
+    LoadNurtureUI(m_pStaminaGage, m_pStaminaBack,m_pStaminaFrame, m_pTurnBack);
 }
 
-void CNatureScene::Initialize()
+void CNurtureScene::Initialize()
 {
     //セットされたヒーローのクラスの初期化
     m_pHero->Initialize();
@@ -171,24 +171,24 @@ void CNatureScene::Initialize()
 
 
     //育成関連のシーンで共通のUIの初期化
-    InitNatureUI(m_pStaminaGage,m_pStaminaBack,m_pStaminaFrame, m_pTurnBack);
+    InitNurtureUI(m_pStaminaGage,m_pStaminaBack,m_pStaminaFrame, m_pTurnBack);
 }
 
-void CNatureScene::Update()
+void CNurtureScene::Update()
 {
     CKeyManager* KeyMng = &CKeyManager::GetInstance();
     CHeroManager* HeroMng = &CHeroManager::GetInstance();
-    CSceneManager* SceneMng = CSceneManager::GetInstance();
+    CSceneManager* SceneMng = &CSceneManager::GetInstance();
 
     //フェードイン処理
     if (!FadeIn()) { return; }
 
     //モード選択画面のBGM停止
-    CSoundManager::GetInstance()->Stop(CSoundManager::BGM_NatureHeroSelect);
+    CSoundManager::GetInstance()->Stop(CSoundManager::BGM_NurtureHeroSelect);
 
     //育成BGMの再生
-    CSoundManager::GetInstance()->PlayLoop(CSoundManager::BGM_Nature);
-    CSoundManager::GetInstance()->Volume(CSoundManager::BGM_Nature, 40);
+    CSoundManager::GetInstance()->PlayLoop(CSoundManager::BGM_Nurture);
+    CSoundManager::GetInstance()->Volume(CSoundManager::BGM_Nurture, 40);
 
     //セットされたヒーローのクラスの更新
     m_pHero->Update();
@@ -218,7 +218,7 @@ void CNatureScene::Update()
     }
 
     //セットされたヒーローのクラスのアニメーション
-    m_pHero->NatureAnimation(m_SelectNo);
+    m_pHero->NurtureAnimation(m_SelectNo);
 
 
     //トレーニングの決定
@@ -258,7 +258,7 @@ void CNatureScene::Update()
         }
         else
         {
-            SceneMng->LoadCreate(CSceneManager::NatureResult);
+            SceneMng->LoadCreate(CSceneManager::NurtureResult);
         }
     }
 
@@ -266,9 +266,9 @@ void CNatureScene::Update()
     Debug();
 }
 
-void CNatureScene::Draw()
+void CNurtureScene::Draw()
 {
-    CSceneManager* SceneMng = CSceneManager::GetInstance();
+    CSceneManager* SceneMng = &CSceneManager::GetInstance();
     WriteText* Text = WriteText::GetInstance();
 
     //カメラの更新処理
@@ -284,7 +284,7 @@ void CNatureScene::Draw()
     SceneMng->GetDx11()->SetDepth(false);
 
     //育成関連シーンで共通のUIの描画
-    DrawNatureUI(m_pStaminaGage, m_pStaminaBack, m_pStaminaFrame,m_pTurnBack);
+    DrawNurtureUI(m_pStaminaGage, m_pStaminaBack, m_pStaminaFrame,m_pTurnBack);
 
     //各トレーニングの描画
     DrawTraning();
@@ -307,7 +307,7 @@ void CNatureScene::Draw()
     SceneMng->GetDx11()->SetDepth(true);
 }
 
-void CNatureScene::Debug()
+void CNurtureScene::Debug()
 {
 #ifdef DEBUG 
     ImGui::Begin(JAPANESE("カメラ"));
@@ -344,7 +344,7 @@ void CNatureScene::Debug()
 }
 
 //育成関連UIのインスタンス生成
-void CNatureScene::CreateNatureUI(
+void CNurtureScene::CreateNurtureUI(
     std::unique_ptr<CUIObject>& gage, 
     std::unique_ptr<CUIObject>& back, 
     std::unique_ptr<CUIObject>& frame,
@@ -360,7 +360,7 @@ void CNatureScene::CreateNatureUI(
     turnback = std::make_unique<CUIObject>();
 }
 //育成関連UIのスプライトデータの読み込み
-void CNatureScene::LoadNatureUI(
+void CNurtureScene::LoadNurtureUI(
     std::unique_ptr<CUIObject>& gage, 
     std::unique_ptr<CUIObject>& back, 
     std::unique_ptr<CUIObject>& frame,
@@ -376,18 +376,20 @@ void CNatureScene::LoadNatureUI(
     turnback->AttachSprite(CUIManager::GetSprite(CUIManager::TurnBack));
 }
 //育成関連UIの初期化
-void CNatureScene::InitNatureUI(
+void CNurtureScene::InitNurtureUI(
     std::unique_ptr<CUIObject>& gage,
     std::unique_ptr<CUIObject>& back,
     std::unique_ptr<CUIObject>& frame,
     std::unique_ptr<CUIObject>& turnback)
 {
+    CSceneManager* SceneMng = &CSceneManager::GetInstance();
+
     //読み込みが初回であるなら
-    if (!CSceneManager::GetInstance()->GetIsDataLoaded())
+    if (!SceneMng->GetIsDataLoaded())
     {
         //ターン数・HPの値の初期化
         //ターン数
-        CSceneManager::GetInstance()->InitTurn();
+        SceneMng->InitTurn();
         gage->SetWidth(1.0f);
         //スタミナの初期化
         m_pHero->InitStamina();
@@ -397,7 +399,7 @@ void CNatureScene::InitNatureUI(
         //スタミナに減少後の値をセット
         m_pHero->SetStamina(m_pHero->GetAfterStamina());
         //現在のスタミナ幅を取得し、設定する
-        gage->SetWidth(CSceneManager::GetInstance()->GetStaminaWidth());
+        gage->SetWidth(SceneMng->GetStaminaWidth());
     }
 
     //スタミナゲージ
@@ -420,7 +422,7 @@ void CNatureScene::InitNatureUI(
     turnback->SetDisplay(BASIC_DISPLAY.x, BASIC_DISPLAY.y);
 }
 //描画
-void CNatureScene::DrawNatureUI(
+void CNurtureScene::DrawNurtureUI(
     std::unique_ptr<CUIObject>& gage,
     std::unique_ptr<CUIObject>& back,
     std::unique_ptr<CUIObject>& frame,
@@ -441,9 +443,9 @@ void CNatureScene::DrawNatureUI(
 }
 
 //各ヒーローのデータ読み込み
-void CNatureScene::LoadHeroData( const std::string& heroname )
+void CNurtureScene::LoadHeroData( const std::string& heroname )
 {
-    CSceneManager* SceneMng = CSceneManager::GetInstance();
+    CSceneManager* SceneMng = &CSceneManager::GetInstance();
 
     //設定されているユーザー名の取得
     std::string UserName = SceneMng->GetStringName();
@@ -456,7 +458,7 @@ void CNatureScene::LoadHeroData( const std::string& heroname )
 
     //jsonに保存されたデータの読み込み
     //読み込み回数に応じて読み込むファイルを変える
-    if (!CSceneManager::GetInstance()->GetIsDataLoaded()) 
+    if (!SceneMng->GetIsDataLoaded()) 
     {
         //初回の読み込み時
         if (!m_pJson->Load(m_ParamData, InitFilePath)) { return; }
@@ -469,9 +471,9 @@ void CNatureScene::LoadHeroData( const std::string& heroname )
 }
 
 //トレーニング選択処理
-void CNatureScene::SelectTraning()
+void CNurtureScene::SelectTraning()
 {
-    CSceneManager* SceneMng = CSceneManager::GetInstance();
+    CSceneManager* SceneMng = &CSceneManager::GetInstance();
 
     //更新前のパラメータを保存
      m_pHero->SetBeforeParam(m_pHero->GetParam());
@@ -497,12 +499,12 @@ void CNatureScene::SelectTraning()
     SaveParam();
 
     //初回のみ読み込むものを読み込まなくする
-    CSceneManager::GetInstance()->SetIsDataLoaded(true);
+    SceneMng->SetIsDataLoaded(true);
 
 }
 
 //各種トレーニングUI初期設定
-void CNatureScene::UIInit(std::unique_ptr<CUIObject>& ui, D3DXVECTOR3 pos, float interval, D3DXVECTOR3 scale, int no)
+void CNurtureScene::UIInit(std::unique_ptr<CUIObject>& ui, D3DXVECTOR3 pos, float interval, D3DXVECTOR3 scale, int no)
 {
     //位置
     ui->SetPosition(pos.x + (interval * no), pos.y, 0.0f);
@@ -515,7 +517,7 @@ void CNatureScene::UIInit(std::unique_ptr<CUIObject>& ui, D3DXVECTOR3 pos, float
 }
 
 //失敗率背景の初期設定
-void CNatureScene::FailureRateBackInit(std::unique_ptr<CUIObject>& back, D3DXVECTOR3 pos)
+void CNurtureScene::FailureRateBackInit(std::unique_ptr<CUIObject>& back, D3DXVECTOR3 pos)
 {
     back->SetPosition(FAILUREBACK_POS);
     back->SetScale(FAILUREBACK_SCALE);
@@ -525,9 +527,9 @@ void CNatureScene::FailureRateBackInit(std::unique_ptr<CUIObject>& back, D3DXVEC
 
 
 //ヒーローごとのパラメータ書き込み
-void CNatureScene::SaveParam()
+void CNurtureScene::SaveParam()
 {
-    CSceneManager* SceneMng = CSceneManager::GetInstance();
+    CSceneManager* SceneMng = &CSceneManager::GetInstance();
 
     //設定されているユーザー名の取得
     std::string UserName = SceneMng->GetStringName();
@@ -535,11 +537,11 @@ void CNatureScene::SaveParam()
     //トレーニング実行時にパラメータ情報を書き込むファイルの階層
     std::string ParamFileHierarchy = "Data\\Acount\\" + UserName + "\\Parameter\\";
     //セットされたヒーローのパラメータ情報の書き込み
-    m_pJson->SaveNatureData(m_pHero->GetSelectHeroName(), m_ParamWriter, ParamFileHierarchy);
+    m_pJson->SaveNurtureData(m_pHero->GetSelectHeroName(), m_ParamWriter, ParamFileHierarchy);
 }
 
 //各種パラメータの描画
-void CNatureScene::DrawParam()
+void CNurtureScene::DrawParam()
 {
     WriteText* Text = WriteText::GetInstance();
     CUtility* Utility = &CUtility::GetInstance();
@@ -562,7 +564,7 @@ void CNatureScene::DrawParam()
 }
 
 //各種トレーニングの描画
-void CNatureScene::DrawTraning()
+void CNurtureScene::DrawTraning()
 {
     //選択されたときそれぞれの位置を上げる変数
     float PosUp = 20.0f;
@@ -591,14 +593,14 @@ void CNatureScene::DrawTraning()
 }
 
 //残りターン数の描画
-void CNatureScene::DrawRemainingTurn()
+void CNurtureScene::DrawRemainingTurn()
 {
     WriteText* Text = WriteText::GetInstance();
     CUtility* Utility = &CUtility::GetInstance();
-    CSceneManager* SceneMng = CSceneManager::GetInstance();
+    CSceneManager* SceneMng = &CSceneManager::GetInstance();
 
     //整数をwstring型に変換
-    std::wstring Turn = std::to_wstring(CSceneManager::GetInstance()->GetRemainingTurn());
+    std::wstring Turn = std::to_wstring(SceneMng->GetRemainingTurn());
 
     //残りターン数の描画
     Text->Draw_Text(L"残り", WriteText::TurnText, REMAININGTEXT_POS);
@@ -608,9 +610,9 @@ void CNatureScene::DrawRemainingTurn()
 
 
 //スタミナゲージのアニメーション
-void CNatureScene::StaminaGageAnim()
+void CNurtureScene::StaminaGageAnim()
 {
-    CSceneManager* SceneMng = CSceneManager::GetInstance();
+    CSceneManager* SceneMng = &CSceneManager::GetInstance();
 
     //ゲージ幅の確認
     float GageScale = 1.0f * m_pHero->GetStamina() / STAMINA_MAX;
@@ -621,7 +623,7 @@ void CNatureScene::StaminaGageAnim()
     if (GageScale > m_GageWidth){ m_GageWidth += 0.01f; }
 
     //現在のゲージ幅をシーンマネージャの変数に代入
-    CSceneManager::GetInstance()->SetStaminaWidth(m_GageWidth);
+    SceneMng->SetStaminaWidth(m_GageWidth);
 
     //スタミナゲージの幅高さを設定
     if (SceneMng->GetIsDataLoaded()) {

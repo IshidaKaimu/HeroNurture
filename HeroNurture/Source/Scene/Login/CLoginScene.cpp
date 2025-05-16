@@ -72,7 +72,7 @@ void CLoginScene::Update()
     if (!FadeIn()) { return; }
 
     CKeyManager* KeyMng = &CKeyManager::GetInstance();
-    CSceneManager* SceneMng = CSceneManager::GetInstance();
+    CSceneManager* SceneMng = &CSceneManager::GetInstance();
     CUtility* Utility = &CUtility::GetInstance();
 
     //リアルタイム入力処理
@@ -132,7 +132,7 @@ void CLoginScene::Update()
 void CLoginScene::Draw()
 {
     WriteText* Text = WriteText::GetInstance();
-    CSceneManager* SceneMng = CSceneManager::GetInstance();
+    CSceneManager* SceneMng = &CSceneManager::GetInstance();
 
     //深度を無効にする
     SceneMng->GetDx11()->SetDepth(false);

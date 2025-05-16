@@ -64,7 +64,7 @@ namespace Constant_BattleHeroSelectScene
 	//現在の選択番号
 	const D3DXVECTOR2 SELECTNO_POS = { 1140.0f, 0.0f };
 	//育成データの最大数
-	const D3DXVECTOR2 NATUREDATA_MAX_POS = { 1200.0f, 0.0f };
+	const D3DXVECTOR2 NurtureDATA_MAX_POS = { 1200.0f, 0.0f };
 	//「←→ 選択」テキスト
 	const D3DXVECTOR2 SELECTTEXT_POS = { 800.0f, 675.0f }; //座標
 	//背景

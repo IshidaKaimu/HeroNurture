@@ -10,8 +10,8 @@
 //----前方宣言---
 class CTitleScene;
 class CModeSelect;
-class CNatureHeroSelectScene;
-class CNatureScene;
+class CNurtureHeroSelectScene;
+class CNurtureScene;
 class CTraningScene;
 class CTraningResultScene;
 class CBattleHeroSelectScene;
@@ -43,10 +43,10 @@ public:
 		CreateAcount,
 		Login,
 		ModeSelect,
-		NatureHeroSelect,
-		Nature,
+		NurtureHeroSelect,
+		Nurture,
 		Training,
-		NatureResult,
+		NurtureResult,
 		BattleHeroSelect,
 		YuiAppearance,
 		KaitoAppearance,
@@ -57,13 +57,6 @@ public:
 		none,
 	};
 
-	//役割リスト
-	enum enRoleList :char
-	{
-		Hero,
-		EnemyHero,
-	};
-
 	//勝敗リスト
 	enum enBattleResultList
 	{
@@ -72,11 +65,6 @@ public:
 	};
 
 public:
-	static CSceneManager* GetInstance() {
-		static CSceneManager s_Instance;
-		return &s_Instance;
-	}
-
 	//構築関数
     void Create(CDirectX9& pDx9, CDirectX11& pDx11, HWND hwnd);
 
@@ -97,6 +85,9 @@ public:
 
 	//シーン構築関数
 	static std::unique_ptr<CSceneBase> Create(enSceneList List);
+private:
+	//他からアクセスされることがないように
+	CSceneManager();
 
 public:
 	//読み込み回数制限フラグの操作
@@ -141,17 +132,7 @@ public:
 	//休息フラグ
 	bool GetRestFlag()			{ return m_Rest; }
 	void SetRestFlag(bool rest) { m_Rest = rest; }
-	//役割
-	enRoleList GetRole()		  { return m_RoleList; }
-	void SetRole(enRoleList role) { m_RoleList = role; }
-	//勝敗
-	enBattleResultList GetBattleResult()			  { return m_BattleResult; }
-	void SetBattleResult( enBattleResultList result ) { m_BattleResult = result; }
 
-private:
-	CSceneManager();
-	CSceneManager(const CSceneManager& rhs) = delete;
-	CSceneManager& operator = (const CSceneManager& rhs) = delete;
 private:
 	//ユニークポインタ
 	std::unique_ptr<CSceneBase> m_Scene;
@@ -167,12 +148,6 @@ private:
 	std::wstring m_UserName;
 	//スタミナゲージの幅
 	float m_GageWidth;
-
-	//----列挙型----
-	//役割リスト
-	enRoleList  m_RoleList;
-	//勝敗リスト
-	enBattleResultList m_BattleResult;
 
 	//----列挙型----
 	//休息を選択したかのフラグ
