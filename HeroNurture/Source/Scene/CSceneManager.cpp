@@ -11,7 +11,6 @@
 #include "Scene\Battle\CBattleScene.h"
 #include "Scene\Appearance\Yui\CYuiAppearanceScene.h"
 #include "Scene\Appearance\Kaito\CKaitoAppearanceScene.h"
-#include "Scene\Battle\UniqueAttack\CUniqueAttack.h"
 #include "Scene\BattleResult\CBattleResultScene.h"
 #include "ImGui\ImGuiManager\ImGuiManager.h"
 
@@ -130,7 +129,6 @@ std::unique_ptr<CSceneBase> CSceneManager::Create(enSceneList List)
     case CSceneManager::KaitoAppearance:  return std::make_unique<CKaitoAppearanceScene>();
     case CSceneManager::Battle:           return std::make_unique<CBattleScene>();
     case CSceneManager::BattleResult:     return std::make_unique<CBattleResultScene>();
-    case CSceneManager::UniqueAttack:     return std::make_unique<CUniqueAttack>();
     case CSceneManager::Max_S:            return nullptr;
     case CSceneManager::none:             return nullptr;
     default:                              return nullptr;

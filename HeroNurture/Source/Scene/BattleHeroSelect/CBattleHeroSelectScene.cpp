@@ -186,15 +186,27 @@ void CBattleHeroSelectScene::Update()
 void CBattleHeroSelectScene::Draw()
 {
 	WriteText* Text = WriteText::GetInstance();
+	CSceneManager* SceneMng = CSceneManager::GetInstance();
 
 	//ƒJƒƒ‰‚Ì“®ì
 	m_pCamera->CameraUpdate();
+
+
+	SceneMng->GetDx11()->SetDepth(false);
+	
+	//”Ä—p”wŒi‚Ì•`‰æ
+	DrawBasicBackGround();
 
 	//•Û‘¶‚³‚ê‚Ä‚¢‚éˆç¬•]‰¿‚Ì•\Ž¦
 	DrawResultData();
 
 	//–îˆó‚Ì•`‰æ
 	DrawArrow();
+
+	SceneMng->GetDx11()->SetDepth(true);
+
+	//ƒq[ƒ[‚Ì•`‰æ
+	DrawHero();
 
 	//‘€ì•û–@ŽwŽ¦ƒo[‚Ì•`‰æ
 	DrawControlBar(true);
@@ -216,23 +228,6 @@ void CBattleHeroSelectScene::DrawResultData()
 	Text->Draw_Text(std::to_wstring(m_SelectNo) + L"/", WriteText::Normal, Utility->PosCorrection(m_SelectNo,2,SELECTNO_POS));
 	Text->Draw_Text(std::to_wstring(m_ResultData.size()), WriteText::Normal, NATUREDATA_MAX_POS);
 
-	for (const auto& data : m_ResultData)
-	{
-		if (data["Number"] == m_SelectNo)
-		{
-			//‘I‘ð‚³‚ê‚Ä‚¢‚éƒf[ƒ^‚Ìƒq[ƒ[‚Ì•`‰æ
-			if (data["HeroName"] == "Yui")
-			{
-				m_pYui->BattleHeroSelectAnimation();
-				m_pYui->Draw();
-			}
-			else if (data["HeroName"] == "Kaito")
-			{
-				m_pKaito->BattleHeroSelectAnimation();
-				m_pKaito->Draw();
-			}
-		}
-	}
 	//ƒpƒ‰ƒ[ƒ^”wŒi‚Ì•`‰æ
 	m_pParamBack->SetPosition(PARAMBACK_POS);
 	m_pParamBack->SetScale(PARAMBACK_SCALE);
@@ -279,6 +274,29 @@ void CBattleHeroSelectScene::DrawSaveParameter(const json& jsondata, int number)
 			
 			//ˆç¬ƒ‰ƒ“ƒN‚Ì•`‰æ
 			Rank->DrawRank(ParamTotal, 1, RANK_POS);
+		}
+	}
+
+}
+
+//–¼‘O‚²‚Æ‚Ìƒq[ƒ[‚Ì•`‰æ
+void CBattleHeroSelectScene::DrawHero()
+{
+	for (const auto& data : m_ResultData)
+	{
+		if (data["Number"] == m_SelectNo)
+		{
+			//‘I‘ð‚³‚ê‚Ä‚¢‚éƒf[ƒ^‚Ìƒq[ƒ[‚Ì•`‰æ
+			if (data["HeroName"] == "Yui")
+			{
+				m_pYui->BattleHeroSelectAnimation();
+				m_pYui->Draw();
+			}
+			else if (data["HeroName"] == "Kaito")
+			{
+				m_pKaito->BattleHeroSelectAnimation();
+				m_pKaito->Draw();
+			}
 		}
 	}
 

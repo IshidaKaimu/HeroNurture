@@ -64,9 +64,9 @@ private:
 	CUIManager();
 
 public:
-	HRESULT Load(CDirectX11* Dx11);
+	HRESULT Load(CDirectX11* dx11);
 
-	void SetDx11(CDirectX11& Dx11) { m_pDx11 = &Dx11; }
+	void SetDx11(CDirectX11& dx11) { m_pDx11 = &dx11; }
 
 	static CSprite2D& GetSprite(UIList list) { return *GetInstance().m_pSprite2D[list]; }
 private:

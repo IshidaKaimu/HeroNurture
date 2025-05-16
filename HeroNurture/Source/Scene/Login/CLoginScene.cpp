@@ -134,14 +134,20 @@ void CLoginScene::Draw()
     WriteText* Text = WriteText::GetInstance();
     CSceneManager* SceneMng = CSceneManager::GetInstance();
 
+    //深度を無効にする
+    SceneMng->GetDx11()->SetDepth(false);
+
+    //汎用背景の描画
+    DrawBasicBackGround();
+    
     //操作方法指示バーの描画
     DrawControlBar(true);
 
     //名前入力スペースの描画
     m_pNameSpace->Draw();
 
-    //背景の描画
-    m_pBack->Draw();
+    //深度を有効にする
+    SceneMng->GetDx11()->SetDepth(true);
 
     //シーン名の描画
     Text->Draw_Text(L"ログイン", WriteText::Select, SCENENAME_POS);

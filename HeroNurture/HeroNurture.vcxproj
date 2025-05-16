@@ -246,7 +246,6 @@
     <ClCompile Include="Source\Scene\Appearance\Yui\CYuiAppearanceScene.cpp" />
     <ClCompile Include="Source\Scene\BattleHeroSelect\CBattleHeroSelectScene.cpp" />
     <ClCompile Include="Source\Scene\Battle\CBattleScene.cpp" />
-    <ClCompile Include="Source\Scene\Battle\UniqueAttack\CUniqueAttack.cpp" />
     <ClCompile Include="Source\Scene\CreateAcount\CCreateAcountScene.cpp" />
     <ClCompile Include="Source\Scene\Login\CLoginScene.cpp" />
     <ClCompile Include="Source\Scene\ModeSelect\CModeSelectScene.cpp" />
@@ -260,7 +259,6 @@
     <ClCompile Include="Source\GameObject\SkinMeshObject\Hero\Kaito\CKaito.cpp" />
     <ClCompile Include="Source\GameObject\SkinMeshObject\Hero\CHeroBase.cpp" />
     <ClCompile Include="Source\GameObject\SpriteObject\CSpriteObject.cpp" />
-    <ClCompile Include="Source\GameObject\SpriteObject\Explosion\CExplosion.cpp" />
     <ClCompile Include="Source\GameObject\StaticMeshObject\Character\CCharacter.cpp" />
     <ClCompile Include="Source\GameObject\StaticMeshObject\CStaticMeshObject.cpp" />
     <ClCompile Include="Source\GameObject\StaticMeshObject\Ground\CGround.cpp" />
@@ -292,6 +290,7 @@
     <ClCompile Include="Source\Sprite2D\CSprite2D.cpp" />
     <ClCompile Include="Source\Sprite2D\UIManager\CUIManager.cpp" />
     <ClCompile Include="Source\Sprite3D\CSprite3D.cpp" />
+    <ClCompile Include="Source\Sprite3D\Sprite3DManager\CSprite3DManager.cpp" />
     <ClCompile Include="Source\StaticMesh\CStaticMesh.cpp" />
     <ClCompile Include="Source\StaticMesh\MeshManager\CMeshManager.cpp" />
     <ClCompile Include="Source\stdafx\stdafx.cpp">
@@ -318,7 +317,6 @@
     <ClInclude Include="Source\Scene\Appearance\Yui\CYuiAppearanceScene.h" />
     <ClInclude Include="Source\Scene\BattleHeroSelect\CBattleHeroSelectScene.h" />
     <ClInclude Include="Source\Scene\Battle\CBattleScene.h" />
-    <ClInclude Include="Source\Scene\Battle\UniqueAttack\CUniqueAttack.h" />
     <ClInclude Include="Source\Scene\CreateAcount\CCreateAcountScene.h" />
     <ClInclude Include="Source\Scene\Login\CLoginScene.h" />
     <ClInclude Include="Source\Scene\ModeSelect\CModeSelectScene.h" />
@@ -332,7 +330,6 @@
     <ClInclude Include="Source\GameObject\SkinMeshObject\Hero\Kaito\CKaito.h" />
     <ClInclude Include="Source\GameObject\SkinMeshObject\Hero\CHeroBase.h" />
     <ClInclude Include="Source\GameObject\SpriteObject\CSpriteObject.h" />
-    <ClInclude Include="Source\GameObject\SpriteObject\Explosion\CExplosion.h" />
     <ClInclude Include="Source\GameObject\StaticMeshObject\Character\CCharacter.h" />
     <ClInclude Include="Source\GameObject\StaticMeshObject\CStaticMeshObject.h" />
     <ClInclude Include="Source\GameObject\StaticMeshObject\Ground\CGround.h" />
@@ -367,6 +364,7 @@
     <ClInclude Include="Source\Sprite2D\CSprite2D.h" />
     <ClInclude Include="Source\Sprite2D\UIManager\CUIManager.h" />
     <ClInclude Include="Source\Sprite3D\CSprite3D.h" />
+    <ClInclude Include="Source\Sprite3D\Sprite3DManager\CSprite3DManager.h" />
     <ClInclude Include="Source\StaticMesh\CStaticMesh.h" />
     <ClInclude Include="Source\StaticMesh\MeshManager\CMeshManager.h" />
     <ClInclude Include="Source\stdafx\stdafx.h" />
