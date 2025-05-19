@@ -54,13 +54,6 @@ public:
 		none,
 	};
 
-	//Ÿ”sƒŠƒXƒg
-	enum enBattleResultList
-	{
-		Win,
-		Lose,
-	};
-
 public:
 	//\’zŠÖ”
     void Create(CDirectX9& pDx9, CDirectX11& pDx11, HWND hwnd);

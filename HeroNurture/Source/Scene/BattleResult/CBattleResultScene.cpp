@@ -59,10 +59,10 @@ void CBattleResultScene::LoadData()
     //----スキンメッシュ----
     switch (BattleMng->GetBattleResult())
     {
-    case CSceneManager::Win:    
+    case BattleMng->Win:    
         HeroMng->LoadMeshData();
         break;
-    case CSceneManager::Lose:
+    case BattleMng->Lose:
         EnemyHeroMng->LoadMeshData();
         break;
     default:
@@ -81,12 +81,12 @@ void CBattleResultScene::Initialize()
     //カメラの初期位置
     switch (BattleMng->GetBattleResult())
     {
-    case CSceneManager::Win:
+    case BattleMng->Win:
         m_pCamera->SetPos(WIN_CAM_POS);
         m_pCamera->SetLook(WIN_CAM_LOOK);
         HeroMng->Initialize();
         break;
-    case CSceneManager::Lose:
+    case BattleMng->Lose:
         m_pCamera->SetPos(LOSE_CAM_POS);
         m_pCamera->SetLook(LOSE_CAM_LOOK);
         EnemyHeroMng->Initialize();
@@ -103,7 +103,6 @@ void CBattleResultScene::Update()
     CKeyManager* KeyMng       = &CKeyManager::GetInstance();
     CBattleManager* BattleMng = &CBattleManager::GetInstance();
 
-
     KeyMng->Update();
 
     //フェードイン処理
@@ -114,12 +113,12 @@ void CBattleResultScene::Update()
 
     switch (BattleMng->GetBattleResult())
     {
-    case CSceneManager::Win:
+    case BattleMng->Win:
         //勝利時BGMの再生
         CSoundManager::GetInstance()->PlayLoop(CSoundManager::BGM_Win);
         CSoundManager::GetInstance()->Volume(CSoundManager::BGM_Win, 40);
         break;
-    case CSceneManager::Lose:
+    case BattleMng->Lose:
         //敗北時BGMの再生
         CSoundManager::GetInstance()->PlayLoop(CSoundManager::BGM_Lose);
         CSoundManager::GetInstance()->Volume(CSoundManager::BGM_Lose, 40);
@@ -163,11 +162,11 @@ void CBattleResultScene::Draw()
 
     switch (BattleMng->GetBattleResult())
     {
-    case CSceneManager::Win:
+    case BattleMng->Win:
         HeroMng->MoveSelectAnim();
         HeroMng->Draw();
         break;
-    case CSceneManager::Lose:
+    case BattleMng->Lose:
         EnemyHeroMng->MoveSelectAnim();
         EnemyHeroMng->Draw();
         break;
@@ -203,10 +202,10 @@ void CBattleResultScene::DrawUI()
 
     switch (BattleMng->GetBattleResult())
     {
-    case CSceneManager::Win:
+    case BattleMng->Win:
         Text->Draw_Text(L"WIN", WriteText::Win, RESULTTEXT_POS);
         break;
-    case CSceneManager::Lose:
+    case BattleMng->Lose:
         Text->Draw_Text(L"LOSE", WriteText::Lose, RESULTTEXT_POS);
         break;
     default:

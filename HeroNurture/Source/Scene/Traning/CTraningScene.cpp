@@ -19,6 +19,7 @@ CTraningScene::CTraningScene()
     , m_pBack   ()
     , m_TextNo  ()
     , m_pTextBox()
+    , m_TextEnd ()
 {
 }
 
@@ -94,26 +95,29 @@ void CTraningScene::Initialize()
     m_pTextBox->SetPosition(30.0f, 580.0f, 0.0f);
     m_pTextBox->SetScale(1.0f, 0.7f, 1.0f);
     m_pTextBox->SetDisplay(1.0f, 1.0f);
+
+    //テキスト終了フラグの初期化
+    m_TextEnd = false;
 }
 
 //更新関数
 void CTraningScene::Update()
 {
     CNurtureManager* NurtureMng = &CNurtureManager::GetInstance();
+    CSceneManager*   SceneMng   = &CSceneManager::GetInstance();
+    CKeyManager*     KeyMng     = &CKeyManager::GetInstance();
 
     //フェードイン処理
     if (!FadeIn()) { return; }
 
    //キーマネージャーの更新処理
-   CKeyManager::GetInstance().Update();
+   KeyMng->Update();
 
-   //シーンマネージャークラス
-   CSceneManager* SceneMng = &CSceneManager::GetInstance();
 
    //ステータス変化SEの再生
    if (CHeroManager::GetInstance().GetFailure()) {
        m_SECnt++;
-       if (m_SECnt == 1)
+       if (m_SECnt == PLAY_SE_CNT)
        {
            CSoundManager::GetInstance()->PlaySE(CSoundManager::SE_Miss);
            CSoundManager::GetInstance()->Volume(CSoundManager::SE_Miss, 80);
@@ -122,7 +126,7 @@ void CTraningScene::Update()
    else
    {
        m_SECnt++;
-       if (m_SECnt == 1)
+       if (m_SECnt == PLAY_SE_CNT)
        {
            CSoundManager::GetInstance()->PlaySE(CSoundManager::SE_Up);
            CSoundManager::GetInstance()->Volume(CSoundManager::SE_Up, 80);
@@ -131,13 +135,21 @@ void CTraningScene::Update()
 
 
    //テキストの描画を進める
-   if (CKeyManager::GetInstance().IsDown(VK_RETURN) && m_ParamInc.size())
+   if (KeyMng->IsDown(VK_RETURN))
    {
        //決定SEの再生
        CSoundManager::GetInstance()->PlaySE(CSoundManager::SE_Enter);
        CSoundManager::GetInstance()->Volume(CSoundManager::SE_Enter, 80);
 
-       m_TextNo++;
+       if (m_TextNo < m_ParamInc.size() - 1)
+       {
+           m_TextNo++;
+       }
+       else
+       {
+           //必要なテキストの描画が終了すればシーンを戻す
+           m_TextEnd = true;
+       }
    }
 
    //上昇したパラメータのテキストを追加
@@ -153,22 +165,10 @@ void CTraningScene::Update()
 #endif
 
    //テキストの描画が全て終わり次第シーン遷移
-   //トレーニングが成功していれば
-   if (!CHeroManager::GetInstance().GetFailure())
-   {
-       if (m_TextNo >= m_ParamInc.size() && !m_SceneTransitionFlg)
-       {
-           m_SceneTransitionFlg = true;
-       }
-   }
-   else
-   {
-       //失敗した場合エンターキーで遷移
-       if (CKeyManager::GetInstance().IsDown(VK_RETURN))
-       {
-           m_SceneTransitionFlg = true;
-       }
-   }
+    if (m_TextEnd)
+    {
+        m_SceneTransitionFlg = true;
+    }
 
    //フェードが終わり次第シーン遷移
    if (m_SceneTransitionFlg && FadeOut())
@@ -229,9 +229,9 @@ void CTraningScene::AddText()
     bool IsHpDown = Hero->GetBeforeParam().Hp > Hero->GetParam().Hp;           //減少
     float HpInc = std::abs(Hero->GetParam().Hp - Hero->GetBeforeParam().Hp);   //上昇量
     //スタミナ
-    bool IsRecoveryStamina = Hero->GetBeforeStamina() <= Hero->GetStamina();
-    bool IsReduceStamina = Hero->GetBeforeStamina() >= Hero->GetStamina();
-    float StaminaInc = std::abs(Hero->GetStamina() - Hero->GetBeforeStamina());
+    bool IsRecoveryStamina = Hero->GetBeforeStamina() <= Hero->GetStamina();   //上昇
+    bool IsReduceStamina = Hero->GetBeforeStamina() >= Hero->GetStamina();     //減少
+    float StaminaInc = std::abs(Hero->GetStamina() - Hero->GetBeforeStamina());//上昇量
 
     //条件を満たしていれば構造体配列に格納                                   　　　　　　　　　　　パラメータ名,上昇量
     if ((IsPowerUp || IsPowerDown) && !AlreadyAddCheck(L"筋力が")) { m_ParamInc.push_back({ L"筋力が",static_cast<int>(PowerInc), IsPowerUp ? L"上昇した" : L"減少した"}); }
@@ -313,8 +313,14 @@ void CTraningScene::DrawParamChange(const IncParam& param)
     D3DXVECTOR2 ValueOffset = VALUETEXT_OFFSET;
 
     //素早さ、スタミナの場合の調整
-    if (param.ParamName == L"素早さが") { ValueOffset.x += 30.0f; }
-    else if (param.ParamName == L"スタミナが") { ValueOffset.x += 40.0f; }
+    if (param.ParamName == L"素早さが")       
+    {
+        ValueOffset.x += 30.0f; 
+    }
+    else if (param.ParamName == L"スタミナが")
+    {
+        ValueOffset.x += 40.0f; 
+    }
 
 
     //上昇したか減少したかによって文字の色を変更する

@@ -33,6 +33,23 @@ class CKaito
 public:
 	CKaito();
 	virtual ~CKaito() override;
+private:
+
+	//アニメーション番号
+	enum Anim_No
+	{
+		Wait,		//待機
+		Run,		//走る
+		SlashRight, //斬る(右上から左下)
+		SlashLeft,  //斬る(左下から右上)
+		SwingDown,  //剣を振り下ろす
+		Avoidance,  //回避
+		HandForward,//手を突き出す
+		Damage,		//ダメージ
+		Die			//死亡
+	};
+
+public:
 
 	// =======================
 	// 各シーンごとの初期化
@@ -68,10 +85,6 @@ public:
 	// =======================
 	// 各シーンごとのアニメーション
 	// =======================
-	//育成ヒーロー選択シーン
-	void NurtureHeroSelectAnimation() override;
-	//バトルヒーロー選択シーン
-	void BattleHeroSelectAnimation() override;
 	//バトル開始時登場シーン
 	void AppearanceAnimation() override;
 	// 育成シーン		

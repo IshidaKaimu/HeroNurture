@@ -138,7 +138,7 @@ void CKaito::Update()
 	//1:走り
 	//2:斬る(右上から右下)
 	//3:斬る(左下から右上に)
-	//4:斬り下ろす
+	//4:振り下ろす
 	//5:回避
 	//6:手つき出す
 	//7:ダメージ
@@ -162,16 +162,6 @@ void CKaito::Debug()
 	ImGui::Text(JAPANESE("位置z:%f"), m_vPosition.z);
 	ImGui::End();
 #endif
-}
-
-//育成ヒーロー選択シーンのアニメーション
-void CKaito::NurtureHeroSelectAnimation()
-{
-}
-
-//バトルヒーロー選択シーンのアニメーション
-void CKaito::BattleHeroSelectAnimation()
-{
 }
 
 //バトル開始時登場シーンのアニメーション
@@ -207,16 +197,16 @@ void CKaito::MoveSelectAnim()
 		m_AnimCnt++;
 		if (m_AnimCnt >= 180)
 		{
-			AnimChange(3);
+			AnimChange(SlashLeft);
 		}
 	}
-	if (m_AnimNo == 3)
+	if (m_AnimNo == SlashLeft)
 	{
 		m_AnimTime += m_pMesh->GetAnimSpeed();
 
 		if (m_pMesh->GetAnimPeriod(m_AnimNo) < m_AnimTime)
 		{
-			AnimChange(0);
+			AnimChange(Wait);
 			m_AnimCnt = 0;
 		}
 	}
@@ -247,7 +237,7 @@ void CKaito::PowerAttackAnim(float vector)
 		m_AnimCnt++;
 
 		//待機中の斬るアニメーションだった場合
-		if (m_AnimNo == 3)
+		if (m_AnimNo == SlashLeft)
 		{
 			AnimChange(0);
 		}
@@ -258,12 +248,12 @@ void CKaito::PowerAttackAnim(float vector)
 
 			if (m_pMesh->GetAnimPeriod(m_AnimNo) < m_AnimTime)
 			{
-				AnimChange(2);
+				AnimChange(SlashRight);
 				m_AnimCnt = 0;
 			}
 		}
 
-		if (m_AnimNo == 2)
+		if (m_AnimNo == SlashRight)
 		{
 			//アニメーション終了までのカウント
 			if (!m_AttackAnimEnd) { m_AnimCnt++; }
@@ -319,24 +309,24 @@ void CKaito::MagicAttackAnim(float vector)
 	if (!m_AttackAnimEnd)
 	{
 		//待機中の斬るアニメーションだった場合
-		if (m_AnimNo == 3)
+		if (m_AnimNo == SlashLeft)
 		{
 			AnimChange(0);
 		}
 
-		if (m_AnimNo == 0)
+		if (m_AnimNo == Wait)
 		{
 			m_AnimTime += m_pMesh->GetAnimSpeed();
 
 			if (m_pMesh->GetAnimPeriod(m_AnimNo) < m_AnimTime)
 			{
-				AnimChange(6);
+				AnimChange(HandForward);
 				m_AnimCnt = 0;
 				m_AnimTime = 0;
 			}
 		}
 
-		if (m_AnimNo == 6)
+		if (m_AnimNo == HandForward)
 		{
 			//アニメーション終了までのカウント
 			if (!m_AttackAnimEnd) { m_AnimCnt++; }
@@ -383,7 +373,7 @@ void CKaito::DamageAnim(float vector)
 
 	//待機アニメーション時
 	if (NotUseAnim && !m_AnimChange) {
-		AnimChange(0);
+		AnimChange(Wait);
 	}
 
 	if (m_AnimNo == 0 && !m_AnimChange)
@@ -392,10 +382,10 @@ void CKaito::DamageAnim(float vector)
 		CSoundManager::GetInstance()->PlaySE(CSoundManager::SE_Damage);
 		CSoundManager::GetInstance()->Volume(CSoundManager::SE_Damage, 80);
 
-		AnimChange(7);
+		AnimChange(Damage);
 	}
 
-	if (m_AnimNo == 7)
+	if (m_AnimNo == Damage)
 	{
 
 		//アニメーションの経過時間を加算
@@ -407,11 +397,11 @@ void CKaito::DamageAnim(float vector)
 
 		if (m_pMesh->GetAnimPeriod(m_AnimNo)- 0.2 < m_AnimTime)
 		{
-			AnimChange(1);
+			AnimChange(Run);
 		}
 	}
 
-	if (m_AnimNo == 1)
+	if (m_AnimNo == Run)
 	{
 		//アニメーションの経過時間を加算
 		m_AnimTime += m_pMesh->GetAnimSpeed();
@@ -428,11 +418,11 @@ void CKaito::DamageAnim(float vector)
 		{
 			//同じアニメーション番号でも別の処理ができるように
 			m_AnimChange = true;
-			AnimChange(0);
+			AnimChange(Wait);
 		}
 	}
 
-	if (m_AnimNo == 0 && m_AnimChange)
+	if (m_AnimNo == Wait && m_AnimChange)
 	{
 		//戻ってからアニメーション終了までに間を置く
 		if (!m_DamageAnimEnd) 

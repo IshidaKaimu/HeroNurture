@@ -39,6 +39,19 @@ class CYui
 public:
 	CYui();
     ~CYui();
+private:
+
+	//アニメーション番号
+	enum Anim_No 
+	{
+		Jump,	//ジャンプ
+		Run,	//走る
+		Walk,	//歩く
+		Wait,	//待機
+		TSharp  //T字
+	};
+
+public:
 
 	// =======================
 	// 各シーンごとの初期化
@@ -74,10 +87,6 @@ public:
 	// =======================
 	// 各シーンごとのアニメーション
 	// =======================
-	//育成ヒーロー選択シーン 
-	void NurtureHeroSelectAnimation() override;
-	//バトルヒーロー選択シーン
-	void BattleHeroSelectAnimation() override;
 	//バトル開始時登場シーン
 	void AppearanceAnimation() override;
 	//育成シーン		

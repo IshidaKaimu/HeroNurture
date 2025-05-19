@@ -34,7 +34,7 @@ namespace Constant_TraningScene
 	//トレーニング結果
 	const D3DXVECTOR2 RESULTTEXT_OFFSET = { 500.0f,100.0f };
 	//SEの再生タイミング
-	const int PLAY_SE = 1;
+	const int PLAY_SE_CNT = 1;
 }
 
 //========================
@@ -110,5 +110,9 @@ private:
 
 	//SE再生用カウント
 	int m_SECnt;
+
+	//----フラグ----
+	//必要なテキストをすべて表示し終えた
+	bool m_TextEnd;
 
 };
