@@ -24,19 +24,25 @@ CBattleScene::CBattleScene()
 	, m_pHpGageBack       ()
 	, m_pHpGageFrame      ()
 	, m_pEnemyHpGage      ()
+	, m_pEnemyHpGageBack  ()
 	, m_pEnemyHpGageFrame ()
+	, m_pPowerAttack	  ()
+	, m_pMagicAttack	  ()
+	, m_pAttackCover	  ()
 	, m_pJson			  ()
 	, m_BattleData		  ()
 	, m_EnemyHeroData     ()
 	, m_HpWidth			  (1.0f)
 	, m_EnemyHpWidth      (1.0f)
 	, m_BattleTurn        ()
+	, m_MoveSelectCut	  ()
 	, m_IsHeroTurn        ()
 	, m_CurrentTurn		  ()
 	, m_SelectAttack      ()
 	, m_Attack            ()
+	, m_EnemyAttack		  ()
 	, m_EnemyAttackNo     ()
-	, m_EnemyAttack       ()
+	, m_BattlePhase		  ()
 {
 }
 
@@ -148,6 +154,11 @@ void CBattleScene::Initialize()
 
 	//Hpゲージの表示幅以外の設定
 	InitHpGage();
+
+	//行動選択時カメラを移動させる値の初期化
+	m_MoveCamPos  = { -8.0f, 0.0f, 0.0f };
+	m_MoveCamLook = { 0.0f, 0.0f, 0.0f };
+
 }
 
 void CBattleScene::Update()
@@ -406,8 +417,10 @@ void CBattleScene::MoveSelect()
 	m_pEnemyHero->MoveSelectAnim();
 
 	//カメラ情報の初期化
-	m_pCamera->SetPos(INIT_CAMPOS);
-	m_pCamera->SetLook(INIT_CAMLOOK);
+	//m_pCamera->SetPos(INIT_CAMPOS);
+	//m_pCamera->SetLook(INIT_CAMLOOK);
+
+	MoveSelectCamera();
 
 	//速度による行動順の判断
 	SetUpToNextTurn();
@@ -567,6 +580,25 @@ void CBattleScene::SetUpToNextTurn()
 	{
 		//低ければ敵のターン
 		m_IsHeroTurn = false;
+	}
+}
+
+//行動選択中のカメラワーク
+void CBattleScene::MoveSelectCamera()
+{
+	switch (m_MoveSelectCut)
+	{
+	case 0:
+		m_pCamera->SetPos(m_MoveCamPos.x, 4.0f, -3.0f);
+		m_pCamera->SetLook(0.0f, 2.0f, 0.0f);
+
+		if (m_MoveCamPos.x <= 10.0f) 
+		{
+			m_MoveCamPos.x  += CAM_MOVESPEED;
+		}
+	    break;
+	default:
+		break;
 	}
 }
 

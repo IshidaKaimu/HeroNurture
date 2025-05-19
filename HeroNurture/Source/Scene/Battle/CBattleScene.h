@@ -44,12 +44,13 @@ class CEffect;
 namespace Constant_BattleScene 
 {
 	//----カメラ情報----
-	const D3DXVECTOR3 INIT_CAMPOS	= { -1.0f,2.0f,-7.0f };		//初期座標
-	const D3DXVECTOR3 INIT_CAMLOOK  = { -1.0f,2.0f,0.0f };		//初期注視点
-	const D3DXVECTOR3 ATTACK_CAMPOS = { -1.0f,2.0f,0.0f };		//攻撃時座標(自分)
+	const D3DXVECTOR3 INIT_CAMPOS	= { -1.0f,2.0f,-7.0f };		  //初期座標
+	const D3DXVECTOR3 INIT_CAMLOOK  = { -1.0f,2.0f,0.0f };		  //初期注視点
+	const D3DXVECTOR3 ATTACK_CAMPOS = { -1.0f,2.0f,0.0f };		  //攻撃時座標(自分)
 	const D3DXVECTOR3 ATTACK_CAMLOOK	   = { -2.0f,2.0f,0.0f }; //攻撃時注視点(自分)
 	const D3DXVECTOR3 ENEMY_ATTACK_CAMPOS  = { -1.0f,2.0f,0.0f }; //攻撃時座標(敵)
 	const D3DXVECTOR3 ENEMY_ATTACK_CAMLOOK = { 2.0f,2.0f,0.0f };  //攻撃時注視点(敵)
+	constexpr float   CAM_MOVESPEED = 0.03f;				      //カメラの移動速度
 	//----ゲージ情報----
 	//HP
 	const D3DXVECTOR3 HPGAGE_POS = { 0.0f, 16.0f, 0.0f }; //座標
@@ -136,12 +137,16 @@ private:
 	//体力ゲージのアニメーション
 	void HpGageAnim(std::unique_ptr<CUIObject>& gage, float hp, float maxhp, float& width);
 
+	//----各フェーズで行う処理----
 	//行動選択フェーズ中の処理
 	void MoveSelect();
 	//攻撃フェーズ中の処理
 	void Attack();
 	//次のターン準備中の処理
 	void SetUpToNextTurn();
+
+	//行動選択フェーズ中のカメラの動き
+	void MoveSelectCamera();
 
 	//----それぞれのターンに行う処理----
 	//自分
@@ -150,7 +155,6 @@ private:
 	//敵
 	void EnemyHeroTurn();     //行動処理
 	void DrawEnemyHeroTurn(); //UI等描画処理
-
 	//ターンごとの攻撃の設定
 	void SettingAttack(int no , enAttackList& attacklist);
 
@@ -202,25 +206,27 @@ private:
 	//経過ターン数
 	int m_BattleTurn;
 
+	//行動選択中のカメラに用いるカット番号
+	int m_MoveSelectCut;
+
+	//----フラグ----
 	//ターンの順を決めるフラグ
 	bool m_IsHeroTurn;
-
 	//現在どちらのターンかを判断するフラグ
 	bool m_CurrentTurn;
-
 	//行動を選択済みであるかの判断
 	bool m_SelectAttack;
 
+	//----列挙型----
 	//自分が選択する攻撃のリスト
 	enAttackList m_Attack;
-
-	//敵の行動を決める番号
-	int m_EnemyAttackNo;
-
 	//敵の選択する攻撃のリスト
 	enAttackList m_EnemyAttack;
-
+	//敵の攻撃を決める番号
+	int m_EnemyAttackNo;
 	//バトルのフェーズ
 	enBattlePhase m_BattlePhase;
+
+
 
 };

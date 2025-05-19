@@ -25,12 +25,12 @@ class CCameraManager;
 namespace Constant_BattleResultScene
 {
 	//カメラ
-	const D3DXVECTOR3 WIN_CAM_POS = { -2.4f, 2.0f, 1.1f };  //勝利時座標
-	const D3DXVECTOR3 WIN_CAM_LOOK = { -5.0f, 2.0f, -1.0f }; //勝利時注視点
-	const D3DXVECTOR3 LOSE_CAM_POS = { -0.3f, 1.8f, 1.8f };  //敗北時座標
-	const D3DXVECTOR3 LOSE_CAM_LOOK = { 2.0f, 2.0f, 1.0f };   //敗北時注視点
+	const D3DXVECTOR3 WIN_CAM_POS    = { -2.4f, 2.0f, 1.1f };  //勝利時座標
+	const D3DXVECTOR3 WIN_CAM_LOOK   = { -5.0f, 2.0f, -1.0f }; //勝利時注視点
+	const D3DXVECTOR3 LOSE_CAM_POS   = { -0.3f, 1.8f, 1.8f };  //敗北時座標
+	const D3DXVECTOR3 LOSE_CAM_LOOK  = { 2.0f, 2.0f, 1.0f };   //敗北時注視点
 	//----勝敗テキストUI----
-	const D3DXVECTOR2 RESULTTEXT_POS = { 150.0f,220.0f };   //座標
+	const D3DXVECTOR2 RESULTTEXT_POS = { 150.0f,220.0f };      //座標
 }
 
 //=====================================

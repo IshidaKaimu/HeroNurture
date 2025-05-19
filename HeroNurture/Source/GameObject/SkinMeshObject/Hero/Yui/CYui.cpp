@@ -182,16 +182,6 @@ void CYui::Debug()
 
 }
 
-//育成ヒーロー選択シーンのアニメーション
-void CYui::NurtureHeroSelectAnimation()
-{
-}
-
-//バトルヒーロー選択シーンのアニメーション
-void CYui::BattleHeroSelectAnimation()
-{
-}
-
 //登場シーンのアニメーション
 void CYui::AppearanceAnimation()
 {
@@ -204,18 +194,18 @@ void CYui::AppearanceAnimation()
 	//アニメーション番号の設定	
 	if (m_vPosition.z >= -13.0f) {
 		//歩くアニメーションに
-		if (m_AnimNo != 2)
+		if (m_AnimNo != Walk)
 		{
-			AnimChange(2);
+			AnimChange(Walk);
 		}
 		//カメラに向けて前進
 		m_vPosition.z -= APPEALANCE_SPEED;
 	}
 	else
 	{
-		if (m_AnimNo == 2)
+		if (m_AnimNo == Walk)
 		{
-			AnimChange(3);
+			AnimChange(Wait);
 		}
 		m_AppealanceAnimEnd = true;
 	}
@@ -230,7 +220,7 @@ void CYui::NurtureAnimation(int no)
 
 void CYui::MoveSelectAnim()
 {
-	if (m_AnimNo == 3)
+	if (m_AnimNo == Wait)
 	{
 		m_AnimTime += m_pMesh->GetAnimSpeed();
 	}
@@ -260,10 +250,10 @@ void CYui::PowerAttackAnim(float vector)
 		Eff->Rotate(hTornado,0.0f, 0.0f, 0.0f);
 
 		if (m_AnimCnt >= 60) {
-			AnimChange(4);
+			AnimChange(TSharp);
 		}
 
-		if (m_AnimNo == 4)
+		if (m_AnimNo == TSharp)
 		{
 			m_EffCnt++;
 
@@ -367,13 +357,13 @@ void CYui::MagicAttackAnim(float vector)
 	{
 		m_AnimCnt++;
 
-
-		if (m_AnimNo == 3)
+		//ジャンプ以外のアニメーション番号が設定されている場合ジャンプへ
+		if (m_AnimNo == Wait)
 		{
-			AnimChange(0);
+			AnimChange(Jump);
 		}
 
-		if (m_AnimNo == 0)
+		if (m_AnimNo == Jump)
 		{
 			//アニメーションの経過時間を加算		
 			m_AnimTime += m_pMesh->GetAnimSpeed();
@@ -455,10 +445,10 @@ void CYui::DamageAnim(float vector)
 	//待機アニメーション時
 	if (NotUseAnim && !m_AnimChange) {
 
-		AnimChange(0);
+		AnimChange(Jump);
 	}
 
-	if (m_AnimNo == 0 && !m_AnimChange)
+	if (m_AnimNo == Jump && !m_AnimChange)
 	{
 		//アニメーションの経過時間を加算
 		m_AnimTime += m_pMesh->GetAnimSpeed();
@@ -468,7 +458,7 @@ void CYui::DamageAnim(float vector)
 
 		if (m_pMesh->GetAnimPeriod(m_AnimNo) - 0.4 < m_AnimTime)
 		{
-			AnimChange(1);
+			AnimChange(Run);
 		}
 		else
 		{
@@ -494,11 +484,11 @@ void CYui::DamageAnim(float vector)
 		{
 			//同じアニメーション番号でも別の処理ができるように
 			m_AnimChange = true;
-			AnimChange(3);
+			AnimChange(Wait);
 		}
 	}
 
-	if (m_AnimNo == 3 && m_AnimChange)
+	if (m_AnimNo == Wait && m_AnimChange)
 	{
 		//戻ってきてからアニメーション終了まで少し開ける
 		m_AnimCnt++;
@@ -535,7 +525,7 @@ void CYui::AnimInit()
 	//アニメーションスピードの設定
 	m_AnimSpeed = 0.01f;
 	//初めのアニメーションの設定
-	m_AnimNo = 3;
+	m_AnimNo = Wait;
 	//登場アニメーション
 	m_pMesh->ChangeAnimSet(m_AnimNo, m_pAnimCtrl);
 }
