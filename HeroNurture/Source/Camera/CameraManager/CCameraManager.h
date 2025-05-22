@@ -2,6 +2,7 @@
 #include "Singleton\CSingleton.h"
 #include "Camera\CCamera.h"
 #include <memory>
+#include <vector>
 
 //=====================================
 // カメラマネージャークラス
@@ -14,16 +15,18 @@ class CCameraManager
 public:
 	//フレンド宣言
 	friend class CSingleton<CCameraManager>;
+	~CCameraManager();
 
 public:
 
-	~CCameraManager();
 
 	//カメラの更新
 	void CameraUpdate();
 
 	//カメラ情報の取得
 	CAMERA GetCamera() { return GetInstance().m_pCamera.get()->GetCamera(); }
+
+
 
 	// =======================
 	// ゲッター・セッター関数
@@ -50,5 +53,8 @@ private:
 private:
 	//カメラクラス
 	std::unique_ptr<CCamera> m_pCamera;
+
+	//複数のカメラ
+	std::vector<std::shared_ptr<CCamera>> m_pCameras;
 
 };

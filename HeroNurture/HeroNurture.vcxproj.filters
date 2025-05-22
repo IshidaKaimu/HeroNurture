@@ -257,9 +257,6 @@
     <ClInclude Include="Source\Scene\Title\CTitleScene.h">
       <Filter>Source\Scene\Title</Filter>
     </ClInclude>
-    <ClInclude Include="Source\Scene\NatureHeroSelect\CNatureHeroSelectScene.h">
-      <Filter>Source\Scene\GameMain</Filter>
-    </ClInclude>
     <ClInclude Include="Source\SkinMesh\CSkinMesh.h">
       <Filter>Source\SkinMesh</Filter>
     </ClInclude>
@@ -277,9 +274,6 @@
     </ClInclude>
     <ClInclude Include="Source\GameObject\SpriteObject\CSpriteObject.h">
       <Filter>Source\GameObject\SpriteObject</Filter>
-    </ClInclude>
-    <ClInclude Include="Source\GameObject\SpriteObject\Explosion\CExplosion.h">
-      <Filter>Source\GameObject\SpriteObject\Explosion</Filter>
     </ClInclude>
     <ClInclude Include="Source\Sound\CSound.h">
       <Filter>Source\Sound</Filter>
@@ -317,9 +311,6 @@
     <ClInclude Include="Source\Json\CJson.h">
       <Filter>Source</Filter>
     </ClInclude>
-    <ClInclude Include="Source\Scene\Nature\CNatureScene.h">
-      <Filter>Source\Scene\Nature</Filter>
-    </ClInclude>
     <ClInclude Include="Source\Singleton\CSingleton.h" />
     <ClInclude Include="Source\Camera\CameraManager\CCameraManager.h" />
     <ClInclude Include="Source\GameObject\SkinMeshObject\Hero\CHeroManager.h" />
@@ -327,11 +318,9 @@
     <ClInclude Include="Source\Light\LightManager\CLightManager.h" />
     <ClInclude Include="Source\Scene\Traning\CTraningScene.h" />
     <ClInclude Include="Source\Utility\CUtility.h" />
-    <ClInclude Include="Source\Scene\NatureResult\CNatureResultScene.h" />
     <ClInclude Include="Source\Scene\Battle\CBattleScene.h" />
     <ClInclude Include="Source\Scene\BattleHeroSelect\CBattleHeroSelectScene.h" />
     <ClInclude Include="Source\GameObject\SkinMeshObject\Hero\Enemy\CEnemyHeroManager.h" />
-    <ClInclude Include="Source\Scene\Battle\UniqueAttack\CUniqueAttack.h" />
     <ClInclude Include="Source\Scene\ModeSelect\CModeSelectScene.h" />
     <ClInclude Include="Source\Scene\BattleResult\CBattleResultScene.h" />
     <ClInclude Include="Source\Rank\CRank.h" />
@@ -340,6 +329,12 @@
     <ClInclude Include="Source\Scene\Appearance\Yui\CYuiAppearanceScene.h" />
     <ClInclude Include="Source\GameObject\SkinMeshObject\Event\RaccoonDog\CRaccoonDog.h" />
     <ClInclude Include="Source\Scene\Appearance\Kaito\CKaitoAppearanceScene.h" />
+    <ClInclude Include="Source\ModeManager\Nurture\CNurtureManager.h" />
+    <ClInclude Include="Source\ModeManager\Battle\CBattleManager.h" />
+    <ClInclude Include="Source\Scene\Nurture\CNurtureScene.h" />
+    <ClInclude Include="Source\Scene\NurtureHeroSelect\CNurtureHeroSelectScene.h" />
+    <ClInclude Include="Source\Scene\NurtureResult\CNurtureResultScene.h" />
+    <ClInclude Include="Source\Sprite3D\Sprite3DManager\CSprite3DManager.h" />
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="Source\BoundingSphere\CBoundingSphere.cpp">
@@ -423,9 +418,6 @@
     <ClCompile Include="Source\Scene\Title\CTitleScene.cpp">
       <Filter>Source\Scene\Title</Filter>
     </ClCompile>
-    <ClCompile Include="Source\Scene\NatureHeroSelect\CNatureHeroSelectScene.cpp">
-      <Filter>Source\Scene\GameMain</Filter>
-    </ClCompile>
     <ClCompile Include="Source\SkinMesh\CSkinMesh.cpp">
       <Filter>Source\SkinMesh</Filter>
     </ClCompile>
@@ -443,9 +435,6 @@
     </ClCompile>
     <ClCompile Include="Source\GameObject\SpriteObject\CSpriteObject.cpp">
       <Filter>Source\GameObject\SpriteObject</Filter>
-    </ClCompile>
-    <ClCompile Include="Source\GameObject\SpriteObject\Explosion\CExplosion.cpp">
-      <Filter>Source\GameObject\SpriteObject\Explosion</Filter>
     </ClCompile>
     <ClCompile Include="Source\Sound\CSound.cpp">
       <Filter>Source\Sound</Filter>
@@ -486,20 +475,15 @@
     <ClCompile Include="Source\Json\CJson.cpp">
       <Filter>Source</Filter>
     </ClCompile>
-    <ClCompile Include="Source\Scene\Nature\CNatureScene.cpp">
-      <Filter>Source\Scene\Nature</Filter>
-    </ClCompile>
     <ClCompile Include="Source\Camera\CameraManager\CCameraManager.cpp" />
     <ClCompile Include="Source\GameObject\SkinMeshObject\Hero\CHeroManager.cpp" />
     <ClCompile Include="Source\GameObject\SkinMeshObject\Hero\Yui\CYui.cpp" />
     <ClCompile Include="Source\Light\LightManager\CLightManager.cpp" />
     <ClCompile Include="Source\Scene\Traning\CTraningScene.cpp" />
     <ClCompile Include="Source\Utility\CUtility.cpp" />
-    <ClCompile Include="Source\Scene\NatureResult\CNatureResultScene.cpp" />
     <ClCompile Include="Source\Scene\Battle\CBattleScene.cpp" />
     <ClCompile Include="Source\Scene\BattleHeroSelect\CBattleHeroSelectScene.cpp" />
     <ClCompile Include="Source\GameObject\SkinMeshObject\Hero\Enemy\CEnemyHeroManager.cpp" />
-    <ClCompile Include="Source\Scene\Battle\UniqueAttack\CUniqueAttack.cpp" />
     <ClCompile Include="Source\Scene\ModeSelect\CModeSelectScene.cpp" />
     <ClCompile Include="Source\Scene\BattleResult\CBattleResultScene.cpp" />
     <ClCompile Include="Source\Rank\CRank.cpp" />
@@ -508,6 +492,12 @@
     <ClCompile Include="Source\Scene\Appearance\Yui\CYuiAppearanceScene.cpp" />
     <ClCompile Include="Source\GameObject\SkinMeshObject\Event\RaccoonDog\CRaccoonDog.cpp" />
     <ClCompile Include="Source\Scene\Appearance\Kaito\CKaitoAppearanceScene.cpp" />
+    <ClCompile Include="Source\ModeManager\Nurture\CNurtureManager.cpp" />
+    <ClCompile Include="Source\ModeManager\Battle\CBattleManager.cpp" />
+    <ClCompile Include="Source\Scene\Nurture\CNurtureScene.cpp" />
+    <ClCompile Include="Source\Scene\NurtureHeroSelect\CNurtureHeroSelectScene.cpp" />
+    <ClCompile Include="Source\Scene\NurtureResult\CNurtureResultScene.cpp" />
+    <ClCompile Include="Source\Sprite3D\Sprite3DManager\CSprite3DManager.cpp" />
   </ItemGroup>
   <ItemGroup>
     <None Include="Source\ImGui\.editorconfig">
