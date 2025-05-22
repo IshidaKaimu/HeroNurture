@@ -157,7 +157,7 @@ void CBattleScene::Initialize()
 
 	//行動選択時カメラを移動させる値の初期化
 	m_MoveCamPos  = { -8.0f, 0.0f, 0.0f };
-	m_MoveCamLook = { 0.0f, 0.0f, 0.0f };
+	m_MoveCamLook = { 0.0f, 0.0f, 0.0f  };
 
 }
 
