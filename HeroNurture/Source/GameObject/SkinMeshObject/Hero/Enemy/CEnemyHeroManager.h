@@ -78,6 +78,8 @@ public:
 	// =======================
 	// ゲッター・セッター関数
 	// =======================	
+	// 座標の取得
+	D3DXVECTOR3 GetPosition() { return m_pEnemyHero->GetPosition(); }
 	//バトルに使用するパラメータ情報
 	void SetBattleParamData(const json& jsondata) { m_pEnemyHero->SetBattleParamData(jsondata); };
 	enParam GetBattleParamData() { return m_pEnemyHero->GetBattleParamData(); };

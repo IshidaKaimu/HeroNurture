@@ -350,6 +350,7 @@ void CKaito::MagicAttackAnim(float vector)
 					hMagicLight = CEffect::Play(CEffect::Kaito_Magic, D3DXVECTOR3(m_vPosition.x - (-2.0f * vector), m_vPosition.y + 1.8f, m_vPosition.z + (0.2f * vector)));
 				}
 
+				m_AnimSpeed = 0.0f;
 			}
 		}
 
