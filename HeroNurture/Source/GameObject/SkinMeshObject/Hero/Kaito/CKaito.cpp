@@ -339,7 +339,7 @@ void CKaito::MagicAttackAnim(float vector)
 
 				CEffect* Eff = CEffect::GetInstance();
 				Eff->Speed(hMagicLight, 1.0f);
-				Eff->Scale(hMagicLight,  SLASH_SCALE);
+				Eff->Scale(hMagicLight,  LIGHTMAGIC_SCALE);
 				Eff->Rotate(hMagicLight, D3DXVECTOR3(0.0f, D3DXToRadian(EffRoteY), 0.0f));
 
 				if (m_EffCnt == 1) {

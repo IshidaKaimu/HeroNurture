@@ -23,9 +23,10 @@ namespace Constant_Kaito
 	const D3DXVECTOR3 BATTLE_SCALE = { 0.3f,0.3f,0.3f }; //ägèk
 	//----ÉGÉtÉFÉNÉg----
 	//éaåÇ
-	const D3DXVECTOR3 SLASH_SCALE  = { 0.6f, 0.6f, 0.6f };//ägèk 
+	const D3DXVECTOR3 SLASH_SCALE  = { 0.6f, 0.6f, 0.6f };				   //ägèk 
 	const D3DXVECTOR3 SLASH_ROTATE = { D3DXToRadian(-80.0f), 0.0f, 90.0f };//âÒì] 
 	//åıÉGÉtÉFÉNÉg
+	const D3DXVECTOR3 LIGHTMAGIC_SCALE  = { 0.2f, 0.2f, 0.2f };//ägèk 
 	//ñäÑÇ≤Ç∆ÇÃYé≤ÇÃâÒì]
 	constexpr float HERO_LIGHTMAGIC_ROTATE_Y      = 0.0f;	 //é©ï™
 	constexpr float ENEMYHERO_LIGHTMAGIC_ROTATE_Y = -180.0f; //ìG
