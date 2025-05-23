@@ -105,15 +105,15 @@ public:
 	}
 
 	//‰ñ“]
-	void Rotate(::EsHandle handle, float x, float y, float z)
+	void Rotate(::EsHandle handle, const D3DXVECTOR3& rotate)
 	{
-		CEffect::GetInstance()->m_pManager->SetRotation(handle, x, y, z);
+		CEffect::GetInstance()->m_pManager->SetRotation(handle, rotate.x, rotate.y, rotate.z);
 	};
 
 	//Šgk
-	void Scale(::EsHandle handle, float x, float y, float z)
+	void Scale(::EsHandle handle,  const D3DXVECTOR3& scale)
 	{
-		CEffect::GetInstance()->m_pManager->SetScale(handle, x, y, z);
+		CEffect::GetInstance()->m_pManager->SetScale(handle, scale.x, scale.y, scale.z);
 	}
 
 	//‘¬“x

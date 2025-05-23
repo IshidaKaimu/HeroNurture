@@ -192,7 +192,7 @@ void CYui::AppearanceAnimation()
 	m_AnimTime += m_pMesh->GetAnimSpeed();
 
 	//アニメーション番号の設定	
-	if (m_vPosition.z >= -13.0f) {
+	if (m_vPosition.z >= APPEALANCE_GOAL_Z) {
 		//歩くアニメーションに
 		if (m_AnimNo != Walk)
 		{
@@ -246,10 +246,9 @@ void CYui::PowerAttackAnim(float vector)
 		//竜巻エフェクト
 		CEffect* Eff = CEffect::GetInstance();
 		Eff->Speed(hTornado, 1.0f);
-		Eff->Scale(hTornado, 0.3f, 0.3f, 0.3f);
-		Eff->Rotate(hTornado,0.0f, 0.0f, 0.0f);
+		Eff->Scale(hTornado, TORNADE_SCALE);
 
-		if (m_AnimCnt >= 60) {
+		if (m_AnimCnt >= CHANGE_TSHARP) {
 			AnimChange(TSharp);
 		}
 
@@ -273,7 +272,7 @@ void CYui::PowerAttackAnim(float vector)
 				hTornado = CEffect::Play(CEffect::Yui_Power, D3DXVECTOR3(m_vPosition.x, m_vPosition.y, m_vPosition.z));
 			}
 
-			if (m_AnimCnt >= 80)
+			if (m_AnimCnt >= ROTATE_ADDSPEED_FAST)
 			{
 				if (m_AnimCnt % 30 == 0)
 				{
@@ -283,20 +282,20 @@ void CYui::PowerAttackAnim(float vector)
 				}
 				m_MoveRotateY += m_RotateSpeedY;
 
-				if (m_AnimCnt <= 120) {
+				if (m_AnimCnt <= ROTATE_ADDSPEED_SECOND) {
 					m_MoveX -= 0.1f * vector;
 					if (m_MoveRotateZ <= 0.5f) {
 						m_MoveRotateZ += 0.005f;
 					}
 				}
-				if (m_AnimCnt >= 150)
+				if (m_AnimCnt >= ROTATE_ADDSPEED_THIRD)
 				{
 					if (m_MoveRotateZ >= -0.35f)
 					{
 						m_MoveRotateZ -= 0.01f;
 					}
 				}
-				if (m_AnimCnt >= 240)
+				if (m_AnimCnt >= ROTATE_ADDSPEED_FOURTH)
 				{
 					m_MoveX += (0.2f * vector);
 				}
@@ -305,7 +304,7 @@ void CYui::PowerAttackAnim(float vector)
 			}
 		}
 
-		if (m_AnimCnt >= 300)
+		if (m_AnimCnt >= FASTATTACK_ANIM_END)
 		{
 			m_AnimCnt = 0;
 			m_EffCnt = 0;
@@ -327,9 +326,9 @@ void CYui::PowerAttackAnim(float vector)
 		//回転値を戻す
 		SetRotation(BATTLE_ROTATE.x, BATTLE_ROTATE.y, BATTLE_ROTATE.z * vector);
 		
-		if (m_AnimNo == 4)
+		if (m_AnimNo == TSharp)
 		{
-			AnimChange(3);
+			AnimChange(Wait);
 		}
 	}
 
@@ -342,8 +341,8 @@ void CYui::MagicAttackAnim(float vector)
 	static ::EsHandle hFireBall = -1;	//火球エフェクト
 	//エフェクトの軸回転
 	float EffRoteZ;
-	if (vector == 1) { EffRoteZ = -90.0f; }
-	else { EffRoteZ = 90.0f; }
+	if (vector == 1) { EffRoteZ = -FIREBALL_ROTATE_Y; }
+	else { EffRoteZ = FIREBALL_ROTATE_Y; }
 
 	//アニメーション終了後に戻す初期位置
 	D3DXVECTOR3 InitPos;
@@ -380,8 +379,8 @@ void CYui::MagicAttackAnim(float vector)
 
 				CEffect* Eff = CEffect::GetInstance();
 				Eff->Speed(hFireBall, 2.0f);
-				Eff->Scale(hFireBall, 0.3f, 0.3f, 0.3f);
-				Eff->Rotate(hFireBall, 0.0f, 0.0f, D3DXToRadian(EffRoteZ));
+				Eff->Scale(hFireBall, FIREBALL_SCALE);
+				Eff->Rotate(hFireBall, D3DXVECTOR3(0.0f, 0.0f, D3DXToRadian(EffRoteZ)));
 
 				if (m_EffCnt == 1)
 				{
@@ -400,7 +399,7 @@ void CYui::MagicAttackAnim(float vector)
 		}
 
 		//カウントが一定を超えたら
-		if (m_AnimCnt >= 200)
+		if (m_AnimCnt >= SECONDATTACK_ANIM_END)
 		{
 			//位置の修正
 			SetPositionY(InitPos.y);
@@ -408,7 +407,6 @@ void CYui::MagicAttackAnim(float vector)
 			m_MoveY = InitPos.y;
 			//アニメーション終了
 			m_AttackAnimEnd = true;
-			AnimChange(0);
 			//アニメーションカウントの初期化
 			m_AnimCnt = 0;
 			//エフェクトカウントの初期化
