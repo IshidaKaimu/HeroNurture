@@ -67,9 +67,9 @@ public:
     //ヒーロー選択シーン 
 	void NurtureHeroSelectAnimation() { m_pHero->NurtureHeroSelectAnimation(); } 
 	//育成シーン
-	void NurtureAnimation(int no)	 { m_pHero->NurtureAnimation(no); }
+	void NurtureAnimation(int no)	  { m_pHero->NurtureAnimation(no); }
 	//バトル開始時登場シーン
-	void AppearanceAnimation()		 { m_pHero->AppearanceAnimation(); };
+	void AppearanceAnimation()		  { m_pHero->AppearanceAnimation(); };
 
 	// =======================
 	// 各パラメータ上昇関数

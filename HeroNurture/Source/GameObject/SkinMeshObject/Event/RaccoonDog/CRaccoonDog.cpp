@@ -35,8 +35,8 @@ void CRaccoonDog::AppearanceAnim(float camz)
 	//煙エフェクト
 	CEffect* Eff = CEffect::GetInstance();
 	Eff->Speed(hSteam, STEAM_SPEED);
-	Eff->Scale(hSteam, STEAM_SCALE.x, STEAM_SCALE.y, STEAM_SCALE.z);
-	Eff->Rotate(hSteam, STEAM_ROTATE.x, STEAM_ROTATE.y,STEAM_ROTATE.z );
+	Eff->Scale(hSteam, STEAM_SCALE);
+	Eff->Rotate(hSteam,STEAM_ROTATE);
 
 	//アニメーションの経過時間を加算		
 	m_AnimTime += m_pMesh->GetAnimSpeed();

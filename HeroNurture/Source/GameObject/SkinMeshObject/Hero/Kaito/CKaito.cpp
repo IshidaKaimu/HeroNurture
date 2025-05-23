@@ -262,8 +262,8 @@ void CKaito::PowerAttackAnim(float vector)
 
 			CEffect* Eff = CEffect::GetInstance();
 			Eff->Speed(hSlash, 1.0f);
-			Eff->Scale(hSlash, 0.6f, 0.6f, 0.6f);
-			Eff->Rotate(hSlash, D3DXToRadian(-80.0f), 0.0f, 90.0f);
+			Eff->Scale(hSlash, SLASH_SCALE);
+			Eff->Rotate(hSlash,SLASH_ROTATE);
 
 			if (m_EffCnt == 1) {
 				//斬撃SEの再生
@@ -300,8 +300,8 @@ void CKaito::MagicAttackAnim(float vector)
 
 	//エフェクトの軸回転
 	float EffRoteY;
-	if (vector == 1.0f) { EffRoteY = 0.0f; }
-	else { EffRoteY = -180.0f; }
+	if (vector == 1.0f) { EffRoteY = HERO_LIGHTMAGIC_ROTATE_Y; }
+	else { EffRoteY = ENEMYHERO_LIGHTMAGIC_ROTATE_Y; }
 
 	//どのアニメーションの後でも再生速度を変えない
 	m_AnimSpeed = 0.01f;
@@ -311,7 +311,7 @@ void CKaito::MagicAttackAnim(float vector)
 		//待機中の斬るアニメーションだった場合
 		if (m_AnimNo == SlashLeft)
 		{
-			AnimChange(0);
+			AnimChange(Wait);
 		}
 
 		if (m_AnimNo == Wait)
@@ -339,8 +339,8 @@ void CKaito::MagicAttackAnim(float vector)
 
 				CEffect* Eff = CEffect::GetInstance();
 				Eff->Speed(hMagicLight, 1.0f);
-				Eff->Scale(hMagicLight, 0.2f, 0.2f, 0.2f);
-				Eff->Rotate(hMagicLight, 0.0f, D3DXToRadian(EffRoteY), 0.0f);
+				Eff->Scale(hMagicLight,  LIGHTMAGIC_SCALE);
+				Eff->Rotate(hMagicLight, D3DXVECTOR3(0.0f, D3DXToRadian(EffRoteY), 0.0f));
 
 				if (m_EffCnt == 1) {
 					//ダメージSEの再生

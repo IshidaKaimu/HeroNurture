@@ -22,11 +22,41 @@ class CEffect;
 // =======================
 namespace Constant_Yui 
 {
-	//バトル開始時登場シーン
-	const D3DXVECTOR3 APPEALANCE_POS = { 0.0f, 1.0f, -5.0f }; //初期座標
-	const float APPEALANCE_SPEED	 =  0.05f;				  //移動速度
-	//バトルシーン
+	//----バトル開始時登場シーン----
+	const D3DXVECTOR3 APPEALANCE_POS     = { 0.0f, 1.0f, -5.0f }; //初期座標
+	const float       APPEALANCE_SPEED   =  0.05f;				  //移動速度
+	const float       APPEALANCE_GOAL_Z  =  -13.0f;				  //最後に停止する座標のZ値
+	//------------------------------
+	
+	//----バトルシーン----
 	const D3DXVECTOR3 BATTLE_SCALE   = { 0.04f,0.04f,0.04f }; //拡縮
+	//--------------------
+
+	//----攻撃1-----
+	//T字に変更するタイミング
+	constexpr int CHANGE_TSHARP = 60;
+	//回転速度の加速タイミング
+	constexpr int ROTATE_ADDSPEED_FAST    = 80;	 //1段階目
+	constexpr int ROTATE_ADDSPEED_SECOND  = 120; //2段階目
+	constexpr int ROTATE_ADDSPEED_THIRD   = 150; //3段階目
+	constexpr int ROTATE_ADDSPEED_FOURTH  = 240; //4段階目
+	//アニメーション終了タイミング
+	constexpr int FASTATTACK_ANIM_END     = 300;
+	//--------------
+    
+	//----攻撃2----
+	//アニメーション終了タイミング
+	constexpr int SECONDATTACK_ANIM_END = 300;
+	//-------------
+	
+	//----エフェクト----
+	//竜巻エフェクト
+	const D3DXVECTOR3 TORNADE_POS      = { 0.3f, 0.3f, 0.3f };  //座標
+	const D3DXVECTOR3 TORNADE_SCALE    = { 0.3f, 0.3f, 0.3f };  //拡縮
+	//火の玉エフェクト
+	const D3DXVECTOR3 FIREBALL_SCALE    = { 0.3f, 0.3f, 0.3f }; //拡縮
+	constexpr float   FIREBALL_ROTATE_Y = 90.0f;				//役割によって変わるY軸の回転値
+	//------------------
 }
 
 //=====================================

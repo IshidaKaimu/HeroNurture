@@ -156,8 +156,8 @@ void CBattleScene::Initialize()
 	InitHpGage();
 
 	//行動選択時カメラを移動させる値の初期化
-	m_MoveCamPos  = { -8.0f, 0.0f, 0.0f };
-	m_MoveCamLook = { 0.0f, 0.0f, 0.0f  };
+	m_MoveCamPos  = INIT_MOVE_CAMPOS;
+	m_MoveCamLook = INIT_MOVE_CAMLOOK;
 
 }
 
@@ -589,14 +589,104 @@ void CBattleScene::MoveSelectCamera()
 	switch (m_MoveSelectCut)
 	{
 	case 0:
-		m_pCamera->SetPos(m_MoveCamPos.x, 4.0f, -3.0f);
-		m_pCamera->SetLook(0.0f, 2.0f, 0.0f);
+		m_AnimCnt++;
 
-		if (m_MoveCamPos.x <= 10.0f) 
+		if (m_AnimCnt >= CHANGE_CUT * 3)
+		{
+			m_MoveSelectCut = 1;
+			m_AnimCnt = 0;
+		}
+		break;
+	case 1:
+		m_pCamera->SetPos(m_MoveCamPos.x, START_CAMPOS_FAST_Y, START_CAMPOS_FAST_Z);
+		m_pCamera->SetLook(START_CAMLOOK_FAST);
+
+		if (m_MoveCamPos.x <= MAX_MOVE_CAMPOS_FAST_X)
 		{
 			m_MoveCamPos.x  += CAM_MOVESPEED;
 		}
+		else
+		{
+			m_AnimCnt++;
+
+			if (m_AnimCnt >= CHANGE_CUT)
+			{
+				//カメラを動かす値の初期化
+				m_MoveCamPos.x = INIT_MOVE_CAMPOS.x;
+				//カウントの初期化
+				m_AnimCnt = 0;
+				//次のカットへ
+				m_MoveSelectCut = 2;
+			}
+		}
 	    break;
+	case 2:
+		m_pCamera->SetPos(m_pHero->GetPosition().x + SHIFT_CAMPOS_SECOND_Y, m_MoveCamPos.y, m_pHero->GetPosition().z - SHIFT_CAMPOS_SECOND_Z);
+		m_pCamera->SetLook(m_pHero->GetPosition().x, m_MoveCamLook.y, m_pHero->GetPosition().z);
+
+		if (m_MoveCamPos.y <= MAX_MOVE_CAMPOS_SECOND_Y)
+		{
+			m_MoveCamPos.y  += CAM_MOVESPEED/2;
+			m_MoveCamLook.y += CAM_MOVESPEED/2;
+		}
+		else
+		{
+			//次のカットの前に少し止める
+			m_AnimCnt++;
+			if (m_AnimCnt >= CHANGE_CUT)
+			{
+				//カウントの初期化
+				m_AnimCnt = 0;
+				//カメラを動かす値の初期化
+				m_MoveCamPos.y  = 0.0f;
+				m_MoveCamLook.y = 0.0f;
+				//次のカットへ
+				m_MoveSelectCut = 3;
+			}
+		}
+		break;
+	case 3:
+		m_pCamera->SetPos(m_pHero->GetPosition().x + SHIFT_CAMPOS_THIRD_Y, m_MoveCamPos.y, m_pHero->GetPosition().z + SHIFT_CAMPOS_THIRD_Z);
+		m_pCamera->SetLook(m_pEnemyHero->GetPosition().x, m_MoveCamLook.y, m_pEnemyHero->GetPosition().z);
+
+		if (m_MoveCamPos.y <= MAX_MOVE_CAMPOS_THIRD_Y)
+		{
+			m_MoveCamPos.y  += CAM_MOVESPEED/2;
+			m_MoveCamLook.y += CAM_MOVESPEED/2;
+		}
+		else
+		{
+			//次のカットの前に少し止める
+			m_AnimCnt++;
+
+			if (m_AnimCnt >= CHANGE_CUT)
+			{
+				//カウントの初期化
+				m_AnimCnt = 0;
+				//カメラを動かす値の初期化
+				m_MoveCamPos.y = 0.0f;
+				m_MoveCamLook.y = 0.0f;
+				//次のカットへ
+				m_MoveSelectCut = 4;
+			}
+		}
+		break;
+	case 4:
+		m_pCamera->SetPos(INIT_CAMPOS.x, INIT_CAMPOS.y, m_MoveCamPos.z);
+		m_pCamera->SetLook(INIT_CAMLOOK);
+
+		//カメラをだんだん下げる
+		if (m_MoveCamPos.z >= INIT_CAMPOS.z)
+		{
+			m_MoveCamPos.z -= CAM_MOVESPEED;
+		}
+		else
+		{
+			//カメラを動かす値の初期化
+			m_MoveCamPos.z = 0;
+			m_MoveSelectCut = 0;
+		}
+		break;
 	default:
 		break;
 	}
@@ -618,7 +708,10 @@ void CBattleScene::HeroTurn()
 			m_pCamera->SetPos(ATTACK_CAMPOS);
 			m_pCamera->SetLook(ATTACK_CAMLOOK);
 		}
-		m_pHero->PowerAttackAnim(1.0f);
+
+		//自分の筋力攻撃のアニメーション
+		m_pHero->PowerAttackAnim(ANIM_VECTOR_VALUE);
+
 		if (m_pHero->GetAnimEndFlag()) //攻撃アニメーションが終わったら
 		{
 			m_pCamera->SetPos(ENEMY_ATTACK_CAMPOS);
@@ -627,18 +720,22 @@ void CBattleScene::HeroTurn()
 		}
 		break;
 	case CBattleScene::MagicAttack:  
+		
 		//攻撃アニメーションが終わっていなければ
 		if (!m_pHero->GetAnimEndFlag())
 		{
 			m_pCamera->SetPos(ATTACK_CAMPOS);
 			m_pCamera->SetLook(ATTACK_CAMLOOK);
 		}
-		m_pHero->MagicAttackAnim(1.0f);
+		
+		//自分の魔力攻撃のアニメーション
+		m_pHero->MagicAttackAnim(ANIM_VECTOR_VALUE);
+
 		if (m_pHero->GetAnimEndFlag()) //攻撃アニメーションが終わったら
 		{
 			m_pCamera->SetPos(ENEMY_ATTACK_CAMPOS);
 			m_pCamera->SetLook(ENEMY_ATTACK_CAMLOOK);
-			m_pEnemyHero->DamageAnim(1.0f);//敵のダメージアニメーション
+			m_pEnemyHero->DamageAnim(ANIM_VECTOR_VALUE); //敵のダメージアニメーション
 		}
 		break;
 	}
@@ -670,12 +767,12 @@ void CBattleScene::EnemyHeroTurn()
 			m_pCamera->SetLook(ENEMY_ATTACK_CAMLOOK);
 		}
 		//敵の攻撃アニメーション
-		m_pEnemyHero->PowerAttackAnim(-1.0f);
+		m_pEnemyHero->PowerAttackAnim(-ANIM_VECTOR_VALUE);
 		if (m_pEnemyHero->GetAnimEndFlag()) //攻撃アニメーションが終わったら
 		{
 			m_pCamera->SetPos(ATTACK_CAMPOS);
 			m_pCamera->SetLook(ATTACK_CAMLOOK);
-			m_pHero->DamageAnim(-1.0f); //敵のダメージアニメーション
+			m_pHero->DamageAnim(-ANIM_VECTOR_VALUE); //敵のダメージアニメーション
 		}
 		break;
 	case CBattleScene::MagicAttack: 
@@ -686,12 +783,12 @@ void CBattleScene::EnemyHeroTurn()
 			m_pCamera->SetLook(ENEMY_ATTACK_CAMLOOK);
 		}
 		//敵の攻撃アニメーション
-		m_pEnemyHero->MagicAttackAnim(-1.0f);
+		m_pEnemyHero->MagicAttackAnim(-ANIM_VECTOR_VALUE);
 		if (m_pEnemyHero->GetAnimEndFlag()) //攻撃アニメーションが終わったら
 		{
 			m_pCamera->SetPos(ATTACK_CAMPOS);
 			m_pCamera->SetLook(ATTACK_CAMLOOK);
-			m_pHero->DamageAnim(-1.0f); //敵のダメージアニメーション
+			m_pHero->DamageAnim(-ANIM_VECTOR_VALUE); //敵のダメージアニメーション
 		}
 		break;
 	}

@@ -44,13 +44,36 @@ class CEffect;
 namespace Constant_BattleScene 
 {
 	//----カメラ情報----
-	const D3DXVECTOR3 INIT_CAMPOS	= { -1.0f,2.0f,-7.0f };		  //初期座標
-	const D3DXVECTOR3 INIT_CAMLOOK  = { -1.0f,2.0f,0.0f };		  //初期注視点
-	const D3DXVECTOR3 ATTACK_CAMPOS = { -1.0f,2.0f,0.0f };		  //攻撃時座標(自分)
-	const D3DXVECTOR3 ATTACK_CAMLOOK	   = { -2.0f,2.0f,0.0f }; //攻撃時注視点(自分)
-	const D3DXVECTOR3 ENEMY_ATTACK_CAMPOS  = { -1.0f,2.0f,0.0f }; //攻撃時座標(敵)
-	const D3DXVECTOR3 ENEMY_ATTACK_CAMLOOK = { 2.0f,2.0f,0.0f };  //攻撃時注視点(敵)
+	const D3DXVECTOR3 INIT_CAMPOS	= { -1.5f,2.0f,-7.0f };		   //初期座標
+	const D3DXVECTOR3 INIT_CAMLOOK  = { -1.5f,2.0f,0.0f };		   //初期注視点
+	const D3DXVECTOR3 INIT_MOVE_CAMPOS  = { -8.0f, 0.0f, 0.0f };   //カメラを動かす値の初期座標
+	const D3DXVECTOR3 INIT_MOVE_CAMLOOK = { 0.0f, 0.0f, 0.0f };    //カメラを動かす値の初期注視点
+	//行動選択時
+	//2カット目(カット番号は1)
+	constexpr float   START_CAMPOS_FAST_Y    = 4.0f;				 //開始時座標
+	constexpr float   START_CAMPOS_FAST_Z    = -3.0f;				 //開始時座標
+	const D3DXVECTOR3 START_CAMLOOK_FAST     = { 0.0f, 2.0f, 0.0f }; //開始時注視点
+	constexpr float   MAX_MOVE_CAMPOS_FAST_X = 8.0f;			     //動かすカメラ座標のy軸最大値
+    //3カット目
+	constexpr float   SHIFT_CAMPOS_SECOND_Y    = 2.0f;			   //開始時座標をずらすy軸の値
+	constexpr float   SHIFT_CAMPOS_SECOND_Z    = 1.0f;			   //開始時座標をずらすz軸の値
+	constexpr float   MAX_MOVE_CAMPOS_SECOND_Y = 2.0f;			   //動かすカメラ座標のy軸最大値
+	//4カット目
+	constexpr float   SHIFT_CAMPOS_THIRD_Y    = 4.0f;			   //開始時座標をずらすy軸の値
+	constexpr float   SHIFT_CAMPOS_THIRD_Z    = -1.5f;			   //開始時座標をずらすz軸の値
+	constexpr float   MAX_MOVE_CAMPOS_THIRD_Y = 2.0f;			   //動かすカメラ座標のy軸最大値
+	//カット遷移の前に少し止める際に使うカウント
+	constexpr int     CHANGE_CUT = 60;							   
+
+	//攻撃時
+	const D3DXVECTOR3 ATTACK_CAMPOS  = { -1.0f,2.0f,0.0f };		  //座標(自分)
+	const D3DXVECTOR3 ATTACK_CAMLOOK = { -2.0f,2.0f,0.0f };       //注視点(自分)
+	const D3DXVECTOR3 ENEMY_ATTACK_CAMPOS  = { -1.0f,2.0f,0.0f }; //座標(敵)
+	const D3DXVECTOR3 ENEMY_ATTACK_CAMLOOK = { 2.0f,2.0f,0.0f };  //注視点(敵)
 	constexpr float   CAM_MOVESPEED = 0.03f;				      //カメラの移動速度
+	constexpr float   ANIM_VECTOR_VALUE = 1.0f;				      //役割に応じてアニメーションの向きを決める値
+	//------------------
+
 	//----ゲージ情報----
 	//HP
 	const D3DXVECTOR3 HPGAGE_POS = { 0.0f, 16.0f, 0.0f }; //座標
@@ -62,6 +85,8 @@ namespace Constant_BattleScene
 	const D3DXVECTOR3 ENEMY_HPGAGE_POS  = { 800.0f, 16.0f, 0.0f };  //座標
 	//敵のHPの枠
 	const D3DXVECTOR3 ENEMY_HPFRAME_POS = { 800.0f, 10.0f, 0.0f }; //座標
+	//-----------------
+	
 	//----行動選択----
 	//筋力攻撃アイコン
 	const D3DXVECTOR3 POWER_ATTACK_POS = { 420.0f, 540.0f, 0.0f }; //座標
@@ -73,9 +98,12 @@ namespace Constant_BattleScene
 	const float ATTACK_ALPHA = 1.0f;
 	//攻撃アイコンに被せる画像
 	constexpr float ATTACK_COVER_ALPHA = 0.8f;
-	//----ターン名----
+	//----------------
+	
+	//----ターン数----
 	const D3DXVECTOR2 HERO_TURNTEXT_POS  = { 450.0f, 50.0f };	//座標(自分)
 	const D3DXVECTOR2 ENEMY_TURNTEXT_POS = { 340.0f, 50.0f };	//座標(敵)
+	//----------------
 }
 
 //=====================================

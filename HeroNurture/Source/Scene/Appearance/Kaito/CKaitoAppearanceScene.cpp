@@ -193,12 +193,12 @@ void CKaitoAppearanceScene::KaitoAppearance()
 	static ::EsHandle hLaser       = 3;	    //光エフェクト
 	//----魔法陣エフェクトの設定----
 	Eff->Speed(hMagicSircle, 1.0f);
-	Eff->Scale(hMagicSircle, MAGICSIRCLE_SCALE.x, MAGICSIRCLE_SCALE.y, MAGICSIRCLE_SCALE.z);
-	Eff->Rotate(hMagicSircle, MAGICSIRCLE_ROTATE.x, MAGICSIRCLE_ROTATE.y, MAGICSIRCLE_ROTATE.z);
+	Eff->Scale(hMagicSircle,  MAGICSIRCLE_SCALE);
+	Eff->Rotate(hMagicSircle, MAGICSIRCLE_ROTATE);
 	//----光エフェクトの設定----
 	Eff->Speed(hLaser, 1.0f);
-	Eff->Scale(hLaser, 5.0f, 5.0f, 5.0f);
-	Eff->Rotate(hLaser, D3DXToRadian(270.0f), 1.0f, 1.0f);
+	Eff->Scale(hLaser,  LASER_SCALE);
+	Eff->Rotate(hLaser, LASER_ROTATE);
 
 	switch (m_Scene)
 	{

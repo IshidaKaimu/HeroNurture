@@ -101,9 +101,9 @@ void CBattleHeroSelectScene::Initialize()
 
 void CBattleHeroSelectScene::Update()
 {
-	CKeyManager* KeyMng     = &CKeyManager::GetInstance();
-	CHeroManager* HeroMng   = &CHeroManager::GetInstance();
-	CSceneManager* SceneMng = &CSceneManager::GetInstance();
+	CKeyManager*   KeyMng     = &CKeyManager::GetInstance();
+	CHeroManager*  HeroMng    = &CHeroManager::GetInstance();
+	CSceneManager* SceneMng   = &CSceneManager::GetInstance();
 
 	//フェードイン処理
 	if (!FadeIn()) { return; }

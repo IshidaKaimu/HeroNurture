@@ -17,10 +17,21 @@ namespace Constant_Kaito
 {
 	//バトル開始時登場シーン
 	const D3DXVECTOR3 APPEALANCE_POS = { 0.0f, 2.0f, -5.0f }; //初期座標
-	constexpr float AFTER_POS_Y = 2.0f;                       //移動後座標
+	constexpr float AFTER_POS_Y  = 2.0f;                      //移動後座標
 	const float APPEALANCE_SPEED = 0.05f;				      //移動速度
 	//バトルシーン
-	const D3DXVECTOR3 BATTLE_SCALE = { 0.3f,0.3f,0.3f };//拡縮
+	const D3DXVECTOR3 BATTLE_SCALE = { 0.3f,0.3f,0.3f }; //拡縮
+	//----エフェクト----
+	//斬撃
+	const D3DXVECTOR3 SLASH_SCALE  = { 0.6f, 0.6f, 0.6f };				   //拡縮 
+	const D3DXVECTOR3 SLASH_ROTATE = { D3DXToRadian(-80.0f), 0.0f, 90.0f };//回転 
+	//光エフェクト
+	const D3DXVECTOR3 LIGHTMAGIC_SCALE  = { 0.2f, 0.2f, 0.2f };//拡縮 
+	//役割ごとのY軸の回転
+	constexpr float HERO_LIGHTMAGIC_ROTATE_Y      = 0.0f;	 //自分
+	constexpr float ENEMYHERO_LIGHTMAGIC_ROTATE_Y = -180.0f; //敵
+	//------------------
+	
 }
 
 //=====================================
