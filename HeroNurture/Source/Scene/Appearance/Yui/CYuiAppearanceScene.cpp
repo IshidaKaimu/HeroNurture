@@ -182,6 +182,10 @@ void CYuiAppearanceScene::Draw()
 	//’n–Ê‚Ì•`‰æ
 	m_pGround->Draw();
 
+	//‹ó‚Ì•`‰æ
+	DrawSky();
+
+
 	//ƒ†ƒC‚ÌƒAƒjƒ[ƒVƒ‡ƒ“’†
 	//ƒ^ƒkƒL‚Ì•`‰æ
 	if (!m_pRaccoonDog->GetHiddenFlag())

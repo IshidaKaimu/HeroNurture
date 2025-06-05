@@ -4,7 +4,7 @@
 CGround::CGround()
 	: m_pPlayer	( nullptr )
 {
-	SetScale(1.0f, 1.0f, 1.0);
+	SetScale(1.0f, 1.0f, 1.0f);
 	SetPosition(0.0f, 0.0f, 0.0f);
 }
 

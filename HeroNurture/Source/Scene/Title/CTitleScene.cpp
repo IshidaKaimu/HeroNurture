@@ -58,7 +58,6 @@ void CTitleScene::LoadData()
     CMeshManager* MeshMng = CMeshManager::GetInstance();
     CUIManager* UiMng = &CUIManager::GetInstance();
     //----スタティックメッシュ----
-    m_pSky->AttachMesh(MeshMng->GetMesh(CMeshManager::Sky));      //空
     m_pGround->AttachMesh(MeshMng->GetMesh(CMeshManager::Ground));//地面
 
     //----タイトル画面に表示するヒーローのメッシュ設定----
@@ -155,11 +154,9 @@ void CTitleScene::Draw()
     //カメラの動作
     m_pCamera->CameraUpdate();
 
-    //スカイボックスの描画
-    m_pSky->Draw();
-
     //地面の描画
     m_pGround->Draw();
+
 
     //表示を切り替える
     switch (m_HeroNo)
@@ -176,8 +173,12 @@ void CTitleScene::Draw()
         break;
     }
 
+    //空の描画
+    DrawSky();
+
     //UI
     DrawUI();
+
 }
 
 void CTitleScene::Debug()

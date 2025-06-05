@@ -13,26 +13,32 @@ CCamera::~CCamera()
 void CCamera::Update()
 {
 
-#if DEBUG
+#if _DEBUG
 	//カメラ座標のデバックコマンド.
 	float add_value = 0.1f;
 	if (GetAsyncKeyState('W') & 0x8000) {
 		m_Camera.Position.y += add_value;
+		m_Camera.Look.y += add_value;
 	}
 	if (GetAsyncKeyState('S') & 0x8000) {
 		m_Camera.Position.y -= add_value;
+		m_Camera.Look.y -= add_value;
 	}
 	if (GetAsyncKeyState('A') & 0x8000) {
 		m_Camera.Position.x -= add_value;
+		m_Camera.Look.x -= add_value;
 	}
 	if (GetAsyncKeyState('D') & 0x8000) {
 		m_Camera.Position.x += add_value;
+		m_Camera.Look.x += add_value;
 	}
 	if (GetAsyncKeyState('Q') & 0x8000) {
 		m_Camera.Position.z += add_value;
+		m_Camera.Look.z += add_value;
 	}
 	if (GetAsyncKeyState('E') & 0x8000) {
 		m_Camera.Position.z -= add_value;
+		m_Camera.Look.z -= add_value;
 	}
 #endif
 	//プロジェクションの計算

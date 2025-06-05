@@ -10,9 +10,15 @@
 //=====================================
 //----マネージャークラス----
 class CSprite3DManager;
+class CStaticMeshManager;
 class CUIManager;
 class CEffect;
 class WriteText;
+//--------------------------
+
+//----オブジェクトクラス----
+class CSky;
+//--------------------------
 
 //=====================================
 // 定数宣言
@@ -22,14 +28,14 @@ const D3DXVECTOR3 LIGHT_POS = { 0.0f, 1.0f, 0.0f };
 const D3DXVECTOR3 LIGHT_DIR = { 0.0f, 1.0f, 0.0f };
 
 //----UI----
-//----矢印----
+//矢印
 //左
 const D3DXVECTOR3 ARROW_LEFT_POS_NS    = { 300.0f, 490.0f, 0.0f };        //育成ヒーロー選択時座標
 const D3DXVECTOR3 ARROW_LEFT_POS_BS    = { 200.0f, 490.0f, 0.0f };        //座標
 const D3DXVECTOR3 ARROW_LEFT_ROTATE = { 0.0f, 0.0f, D3DXToRadian(180.0f)};//回転
 //右
-const D3DXVECTOR3 ARROW_RIGHT_POS_NS = { 1000.0f, 400.0f, 0.0f };//座標
-const D3DXVECTOR3 ARROW_RIGHT_POS_BS = { 1100.0f, 400.0f, 0.0f };//座標
+const D3DXVECTOR3 ARROW_RIGHT_POS_NS = { 1000.0f, 400.0f, 0.0f };//育成ヒーロー選択時座標
+const D3DXVECTOR3 ARROW_RIGHT_POS_BS = { 1100.0f, 400.0f, 0.0f };//バトルヒーロー選択時座標
 //矢印共通
 const D3DXVECTOR3 ARROW_SCALE = { 1.0f, 1.0f, 1.0f };//拡縮
 const D3DXVECTOR2 ARROW_DISP  = { 1.0f, 1.0f };		 //幅
@@ -43,7 +49,7 @@ constexpr float   CONTROLBAR_ALPHA = 1.0f;					 //α値
 const D3DXVECTOR2 ENTERTEXT_POS  = { 970.0f, 675.0f }; //座標
 //「Esc 戻る」テキスト
 const D3DXVECTOR2 ESCAPETEXT_POS = { 1150.0f, 675.0f }; //座標
-
+//-------
 
 //=====================================
 //シーン基底クラス
@@ -87,6 +93,8 @@ protected:
 	void DrawBasicBackGround();
 	//操作方法指示バーテンプレートの描画
 	void DrawControlBar( bool basictext);
+	//空の描画
+	void DrawSky();
 public:
 	//白フェード関連の初期化
 	void InitWhiteFade();
@@ -102,6 +110,7 @@ protected:
 	//----カメラを移動させる値----
 	D3DXVECTOR3 m_MoveCamPos; //座標
 	D3DXVECTOR3 m_MoveCamLook;//注視点
+	//----------------------------
 
 	//----デバッグ用情報----
 	//オブジェクト位置
@@ -114,21 +123,24 @@ protected:
 	D3DXVECTOR3 m_DebugCamPos;
 	//カメラ注視点
 	D3DXVECTOR3	m_DebugCamLook;
+	//-----------------------
 
 	//----フラグ----
 	//シーン遷移用
 	bool        m_IsScene;  
     //シーン遷移フラグ
     bool        m_SceneTransitionFlg;
-
-	//選択中番号
-    int         m_SelectNo;
-	//アニメーションカウント
-	float       m_AnimCnt;	
+	//--------------
 
 	//----イベントシーン----
 	//イベント中アニメーションのカット番号
 	int m_Scene;
+	//アニメーションカウント
+	float       m_AnimCnt;
+	//----------------------
+
+	//選択中番号
+	int         m_SelectNo;
 
 private:
 	//----フェード----
@@ -144,11 +156,15 @@ private:
 	int         m_WhiteFadeCnt;					//フェード回数のカウント
 	float       m_WhiteFadeAlpha;				//フェード画像のα値
 	bool        m_WhiteFadeNow;				    //白フェード中であるか
+	//----------------
 
-	//汎用背景
-	std::unique_ptr<CUIObject> m_pBasicBackGround;
+	//----UI-----
+	std::unique_ptr<CUIObject> m_pBasicBackGround; 	//汎用背景
+	std::unique_ptr <CUIObject> m_pControlBar;      //操作方法指示バー画像
+	//-----------
 
-	//操作方法指示バー
-	std::unique_ptr <CUIObject> m_pControlBar;  //操作方法指示バー画像
+	//----スタティックメッシュ----
+	std::unique_ptr<CSky> m_pSky; //空
+	//----------------------------
 };
 

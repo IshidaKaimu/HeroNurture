@@ -2,9 +2,10 @@
 #include "StaticMeshObject/CStaticMeshObject.h"
 #include "StaticMeshObject/Character/CCharacter.h"
 
-/**************************************************
-*	地面クラス.
-**/
+//=====================================
+// 地面クラス
+// 制作者:石田櫂夢
+//=====================================
 class CGround
 	: public CStaticMeshObject
 {

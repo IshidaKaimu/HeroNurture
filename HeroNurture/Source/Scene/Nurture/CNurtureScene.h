@@ -155,6 +155,7 @@ protected:
 		std::unique_ptr<CUIObject>& back, 
 		std::unique_ptr<CUIObject>& frame,
 		std::unique_ptr<CUIObject>& turnback);
+	//=========================
 
 public:
 	//各ヒーロー用ファイルの作成・読み込み
@@ -201,9 +202,8 @@ public:
 	//----スタティックメッシュ----
 	//地面
 	std::unique_ptr<CGround> m_pGround;
-	//空
-	std::unique_ptr<CSky>	 m_pSky;
-	
+	//----------------------------
+
 	//----UI----	
 	//パラメータ背景
 	std::unique_ptr<CUIObject>  m_pParamBack;
@@ -233,6 +233,9 @@ public:
 	std::unique_ptr<CUIObject> m_pAnxietyBack;
 	//失敗率背景(70%以上)
 	std::unique_ptr<CUIObject> m_pDangerBack;
+	//----------
+
+	//===================================
 
 	// =======================
 	// json関連

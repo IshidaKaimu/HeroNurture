@@ -1,5 +1,6 @@
 ﻿#pragma once
 #include "StaticMesh\CStaticMesh.h"
+#include "StaticMeshObject\Sky\SkyMesh\CSkyMesh.h"
 #include "Sprite3D\CSprite3D.h"
 #include "StaticMeshObject\Character\CCharacter.h"
 #include "SkinMeshObject\Hero\CHeroBase.h"
@@ -44,6 +45,9 @@ public:
 		return CMeshManager::GetInstance()->m_pStaticMesh[list]->GetMesh();
 	}
 
+public:
+	static CSkyMesh& GetSkyMesh() { return *CMeshManager::GetInstance()->m_pSkyMesh; }
+
 private:
 
 	//シングルトン化
@@ -57,7 +61,9 @@ private:
 	CDirectX9* m_pDx9;
 
 private:
-
 	CStaticMesh* m_pStaticMesh[MeshList::Max];
+
+	//他とシェーダーを変える空
+	std::unique_ptr<CSkyMesh> m_pSkyMesh;
 };
 

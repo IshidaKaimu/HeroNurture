@@ -230,6 +230,13 @@
       <ShaderType Condition="'$(Configuration)|$(Platform)'=='Release|x64'">Vertex</ShaderType>
       <ShaderModel Condition="'$(Configuration)|$(Platform)'=='Release|x64'">5.0</ShaderModel>
     </FxCompile>
+    <FxCompile Include="Data\Shader\Sky.hlsl">
+      <ShaderType Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">Vertex</ShaderType>
+      <ShaderType Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">Vertex</ShaderType>
+      <ShaderType Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">Vertex</ShaderType>
+      <ShaderType Condition="'$(Configuration)|$(Platform)'=='Release|x64'">Vertex</ShaderType>
+      <EntryPointName Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">VS_Main</EntryPointName>
+    </FxCompile>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="Source\BoundingSphere\CBoundingSphere.cpp" />
@@ -237,6 +244,7 @@
     <ClCompile Include="Source\Camera\CCamera.cpp" />
     <ClCompile Include="Source\GameObject\SkinMeshObject\Hero\Enemy\CEnemyHeroManager.cpp" />
     <ClCompile Include="Source\GameObject\SkinMeshObject\Event\RaccoonDog\CRaccoonDog.cpp" />
+    <ClCompile Include="Source\GameObject\StaticMeshObject\Sky\SkyMesh\CSkyMesh.cpp" />
     <ClCompile Include="Source\Json\CJson.cpp" />
     <ClCompile Include="Source\GameObject\SkinMeshObject\Hero\CHeroManager.cpp" />
     <ClCompile Include="Source\GameObject\SkinMeshObject\Hero\Yui\CYui.cpp" />
@@ -313,6 +321,7 @@
     <ClInclude Include="Source\GameObject\SkinMeshObject\Hero\Enemy\CEnemyHeroManager.h" />
     <ClInclude Include="Source\GameObject\SkinMeshObject\Hero\Yui\CYui.h" />
     <ClInclude Include="Source\GameObject\SkinMeshObject\Event\RaccoonDog\CRaccoonDog.h" />
+    <ClInclude Include="Source\GameObject\StaticMeshObject\Sky\SkyMesh\CSkyMesh.h" />
     <ClInclude Include="Source\Light\LightManager\CLightManager.h" />
     <ClInclude Include="Source\ModeManager\Nurture\CNurtureManager.h" />
     <ClInclude Include="Source\Rank\CRank.h" />

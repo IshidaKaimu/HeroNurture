@@ -201,8 +201,8 @@ private:
 	//----スタティックメッシュ----
 	//地面
 	std::unique_ptr<CGround> m_pGround;
-	//空
-	std::unique_ptr<CSky> m_pSky;
+	//----------------------------
+	
 	//----UI----
 	//自分の体力ゲージ
 	std::unique_ptr<CUIObject> m_pHpGage;	   //ゲージ
@@ -218,6 +218,7 @@ private:
 	std::unique_ptr<CUIObject> m_pMagicAttack;
 	//選択されていない攻撃アイコンにかぶせる画像
 	std::unique_ptr<CUIObject> m_pAttackCover;
+	//----------
 
 	//jsonクラス
 	std::unique_ptr<CJson> m_pJson;
@@ -244,6 +245,7 @@ private:
 	bool m_CurrentTurn;
 	//行動を選択済みであるかの判断
 	bool m_SelectAttack;
+	//-------------
 
 	//----列挙型----
 	//自分が選択する攻撃のリスト
@@ -254,7 +256,7 @@ private:
 	int m_EnemyAttackNo;
 	//バトルのフェーズ
 	enBattlePhase m_BattlePhase;
-
+	//--------------
 
 
 };

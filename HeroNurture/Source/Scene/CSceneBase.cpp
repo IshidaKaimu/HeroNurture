@@ -1,7 +1,9 @@
 #include "CSceneBase.h"
 #include "Sprite3D\Sprite3DManager\CSprite3DManager.h"
+#include "StaticMesh\MeshManager\CMeshManager.h"
 #include "Sprite2D\UIManager\CUIManager.h"
 #include "WriteText\WriteText.h"
+#include "StaticMeshObject\Sky\CSky.h"
 
 CSceneBase::CSceneBase()
     : m_Light     ()
@@ -32,6 +34,9 @@ CSceneBase::CSceneBase()
     //操作方法指示バー
     m_pControlBar = std::make_unique<CUIObject>();
     m_pControlBar->AttachSprite(CUIManager::GetSprite(CUIManager::ControlBar));
+    //空
+    m_pSky = std::make_unique<CSky>();
+    m_pSky->LoadData();
 }
 
 CSceneBase::~CSceneBase()
@@ -148,6 +153,12 @@ void CSceneBase::DrawControlBar(bool basictext)
         //操作方法指示「Esc 戻る」テキストの描画
         Text->Draw_Text(L"Esc 戻る", WriteText::Control, ESCAPETEXT_POS);
     }
+}
+
+//空の描画
+void CSceneBase::DrawSky()
+{
+    m_pSky->Draw();
 }
 
 //白フェード関連の初期化

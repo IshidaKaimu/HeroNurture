@@ -162,6 +162,9 @@ void CKaitoAppearanceScene::Draw()
 	//地面の描画
 	m_pGround->Draw();
 
+	//空の描画
+	DrawSky();
+
 	//操作方法指示バーの描画
 	DrawControlBar(false);
 

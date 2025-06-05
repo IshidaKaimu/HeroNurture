@@ -168,6 +168,7 @@
     <FxCompile Include="Data\Shader\Ray.hlsl">
       <Filter>Shader</Filter>
     </FxCompile>
+    <FxCompile Include="Data\Shader\Sky.hlsl" />
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="Source\BoundingSphere\CBoundingSphere.h">
@@ -335,6 +336,7 @@
     <ClInclude Include="Source\Scene\NurtureHeroSelect\CNurtureHeroSelectScene.h" />
     <ClInclude Include="Source\Scene\NurtureResult\CNurtureResultScene.h" />
     <ClInclude Include="Source\Sprite3D\Sprite3DManager\CSprite3DManager.h" />
+    <ClInclude Include="Source\GameObject\StaticMeshObject\Sky\SkyMesh\CSkyMesh.h" />
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="Source\BoundingSphere\CBoundingSphere.cpp">
@@ -498,6 +500,7 @@
     <ClCompile Include="Source\Scene\NurtureHeroSelect\CNurtureHeroSelectScene.cpp" />
     <ClCompile Include="Source\Scene\NurtureResult\CNurtureResultScene.cpp" />
     <ClCompile Include="Source\Sprite3D\Sprite3DManager\CSprite3DManager.cpp" />
+    <ClCompile Include="Source\GameObject\StaticMeshObject\Sky\SkyMesh\CSkyMesh.cpp" />
   </ItemGroup>
   <ItemGroup>
     <None Include="Source\ImGui\.editorconfig">

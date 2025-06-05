@@ -19,7 +19,6 @@ CBattleScene::CBattleScene()
 	, m_pEnemyHero		  (&CEnemyHeroManager::GetInstance())
 	, m_pCamera			  (&CCameraManager::GetInstance())
 	, m_pGround			  ()
-	, m_pSky			  ()
 	, m_pHpGage			  ()
 	, m_pHpGageBack       ()
 	, m_pHpGageFrame      ()
@@ -69,8 +68,6 @@ void CBattleScene::Create()
 	//----スタティックメッシュオブジェクト----
 	//地面
 	m_pGround = std::make_unique<CGround>();
-	//空
-	m_pSky = std::make_unique<CSky>();
 	//----UIオブジェクト----
 	//Hpゲージ
 	m_pHpGage      = std::make_unique<CUIObject>();
@@ -116,8 +113,6 @@ void CBattleScene::LoadData()
 	//----スタティックメッシュオブジェクトのメッシュデータ設定----
 	//地面
 	m_pGround->LoadData();
-	//空
-	m_pSky->LoadData();
 
 	//----UIオブジェクトのスプライト設定----
 	//Hpゲージ
@@ -230,11 +225,10 @@ void CBattleScene::Draw()
 	//敵のヒーローの描画
 	m_pEnemyHero->Draw();
 
-	//----スタティックメッシュオブジェクトの描画----
-	//地面
+	//地面の描画
 	m_pGround->Draw();
-	//空
-	m_pSky->Draw();
+	//空の描画
+	DrawSky();
 
 	SceneMng->GetDx11()->SetDepth(false);
 	
@@ -254,6 +248,7 @@ void CBattleScene::Draw()
 	//選択によって位置を変えるための変数
 	D3DXVECTOR3 CoverPos;
 	if (m_SelectNo == 0) { CoverPos = MAGIC_ATTACK_POS; }
+
 	else{ CoverPos = POWER_ATTACK_POS; }
 	DrawAttack(m_pAttackCover, CoverPos, ATTACK_COVER_ALPHA);   //アイコンにかぶせる画像
 

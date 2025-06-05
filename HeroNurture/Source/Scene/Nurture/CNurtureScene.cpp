@@ -23,7 +23,6 @@ CNurtureScene::CNurtureScene()
     , m_pHero        ( &CHeroManager::GetInstance() )
     , m_Name         ()
     , m_pGround      ()
-    , m_pSky         ()
     , m_pParamBack   ()
     , m_pPowerTraning()
     , m_pMagicTraning()
@@ -72,8 +71,6 @@ void CNurtureScene::Create()
     //----スタティックメッシュオブジェクト----
     //地面
     m_pGround = std::make_unique<CGround>();
-    //スカイボックス
-    m_pSky    = std::make_unique<CSky>();
 
     //----UIオブジェクト----
     //パラメータの背景
@@ -282,6 +279,9 @@ void CNurtureScene::Draw()
 
     //地面クラスの描画
     m_pGround->Draw();
+
+    //空の描画
+    DrawSky();
 
     //深度を無視する
     SceneMng->GetDx11()->SetDepth(false);

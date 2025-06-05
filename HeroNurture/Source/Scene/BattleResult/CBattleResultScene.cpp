@@ -20,7 +20,6 @@ using namespace Constant_BattleResultScene;
 
 CBattleResultScene::CBattleResultScene()
     : m_pCamera(&CCameraManager::GetInstance())
-    , m_pSky()
     , m_pGround()
 {
     //ライト情報
@@ -34,8 +33,6 @@ CBattleResultScene::~CBattleResultScene()
 void CBattleResultScene::Create()
 {
     //----スタティックメッシュ----
-    //スカイボックス
-    m_pSky = std::make_unique<CSky>();
     //地面
     m_pGround = std::make_unique<CGround>();
 }
@@ -53,7 +50,6 @@ void CBattleResultScene::LoadData()
     CBattleManager*    BattleMng    = &CBattleManager::GetInstance();
 
     //----スタティックメッシュ----
-    m_pSky->AttachMesh(CMeshManager::GetMesh(CMeshManager::Sky));      //空
     m_pGround->AttachMesh(CMeshManager::GetMesh(CMeshManager::Ground));//地面
 
     //----スキンメッシュ----
@@ -154,11 +150,11 @@ void CBattleResultScene::Draw()
     //カメラの動作
     m_pCamera->CameraUpdate();
 
-    //スカイボックスの描画
-    m_pSky->Draw();
-
     //地面の描画
     m_pGround->Draw();
+
+    //空の描画
+    DrawSky();
 
     switch (BattleMng->GetBattleResult())
     {

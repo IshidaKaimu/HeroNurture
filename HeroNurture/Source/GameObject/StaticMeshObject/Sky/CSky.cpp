@@ -3,8 +3,9 @@
 
 CSky::CSky()
 {
-	SetScale(100.0f, 100.0f, 100.0f);
+	SetScale(1.7f, 1.7f, 1.7f);
 	SetPosition(0.0f, 0.0f, 0.0f);
+	SetRotation(D3DXToRadian(180), D3DXToRadian(90), 0.0f);
 }
 
 CSky::~CSky()
@@ -14,18 +15,30 @@ CSky::~CSky()
 //メッシュデータ設定関数
 void CSky::LoadData()
 {
-	AttachMesh(CMeshManager::GetMesh(CMeshManager::Sky));
+	AttachMesh(CMeshManager::GetSkyMesh());
 }
 
 //更新関数
 void CSky::Update()
 {
-	CStaticMeshObject::Update();
+
 }
 
 //描画
 void CSky::Draw()
 {
-	CStaticMeshObject::Draw();
+	if (m_pSkyMesh == nullptr) {
+		return;
+	}
+
+	m_vRotation.y += 0.0005f;
+
+	//描画直前で座標や回転情報などを更新.
+	m_pSkyMesh->SetPosition(m_vPosition);
+	m_pSkyMesh->SetRotation(m_vRotation);
+	m_pSkyMesh->SetScale(m_vScale);
+
+	//レンダリング.
+	m_pSkyMesh->Render();
 }
 

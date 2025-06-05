@@ -1,12 +1,14 @@
 #pragma once
-#include "StaticMeshObject/CStaticMeshObject.h"
-#include "StaticMeshObject/Character/CCharacter.h"
+#include "StaticMeshObject\CStaticMeshObject.h"
+#include "StaticMeshObject\Character\CCharacter.h"
+#include "StaticMeshObject\Sky\SkyMesh\CSkyMesh.h"
 
-/**************************************************
-*	地面クラス.
-**/
+//=====================================
+// 空クラス
+// 制作者:石田櫂夢
+//=====================================
 class CSky
-	: public CStaticMeshObject
+	: public CGameObject
 {
 public:
 	CSky();
@@ -19,6 +21,19 @@ public:
 	//描画関数
 	virtual void Draw() override;
 
+private:
+	
+	//メッシュを接続する.
+	void AttachMesh(CSkyMesh& pskymesh) {
+		m_pSkyMesh = &pskymesh;
+	}
+	//メッシュを切り離す.
+	void DetachMesh() {
+		m_pSkyMesh = nullptr;
+	}
+
 protected:
+	CSkyMesh* m_pSkyMesh;
+
 };
 
