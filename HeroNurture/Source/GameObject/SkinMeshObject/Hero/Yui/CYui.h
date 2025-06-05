@@ -46,7 +46,7 @@ namespace Constant_Yui
     
 	//----攻撃2----
 	//アニメーション終了タイミング
-	constexpr int SECONDATTACK_ANIM_END = 300;
+	constexpr int SECONDATTACK_ANIM_END = 200;
 	//-------------
 	
 	//----エフェクト----

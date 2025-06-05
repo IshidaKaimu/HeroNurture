@@ -57,6 +57,7 @@ HRESULT CUIManager::Load(CDirectX11* dx11)
 		{UIList::StaminaFrame,	 _T("Data\\Texture\\StaminaFrame.png")     ,{ 700.0f, 72.0f,  700.0f, 72.0f,  700.0f, 72.0f}},
 		{UIList::TurnBack,	     _T("Data\\Texture\\TurnFrame.png")        ,{ 421.0f, 121.0f, 421.0f, 121.0f, 421.0f, 121.0f}},
 		{UIList::HpGage,	     _T("Data\\Texture\\HpGage.png")		   ,{ 602.0f, 54.0f,  602.0f, 54.0f,  602.0f, 54.0f,}},
+		{UIList::EnemyHpGage,	 _T("Data\\Texture\\EnemyHpGage.png")	   ,{ 602.0f, 54.0f,  602.0f, 54.0f,  602.0f, 54.0f,}},
 		{UIList::HpGageBack,	 _T("Data\\Texture\\HpGageBack.png")       ,{ 602.0f, 54.0f,  602.0f, 54.0f,  602.0f, 54.0f}},
 		{UIList::GageFrame,	     _T("Data\\Texture\\GageFrame.png")        ,{ 602.0f, 70.0f,  602.0f, 70.0f,  602.0f, 70.0f}},
 		{UIList::PowerAttack,	 _T("Data\\Texture\\PowerAttack.png")      ,{ 341.0f, 300.0f, 341.0f, 300.0f, 341.0f, 300.0f}},

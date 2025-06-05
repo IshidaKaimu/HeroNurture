@@ -76,15 +76,15 @@ namespace Constant_BattleScene
 
 	//----ゲージ情報----
 	//HP
-	const D3DXVECTOR3 HPGAGE_POS = { 0.0f, 16.0f, 0.0f }; //座標
+	const D3DXVECTOR3 HPGAGE_POS = { 0.0f, 30.0f, 0.0f }; //座標
 	const D3DXVECTOR3 HPGAGE_SCALE = { 0.8f, 0.8f, 0.8f };//拡縮
 	const D3DXVECTOR2 HPGAGE_DISPLAY = { 1.0f, 1.0f };	  //幅
 	//HPの枠
-	const D3DXVECTOR3 HPFRAME_POS = { 0.0f, 10.0f, 0.0f };
+	const D3DXVECTOR3 HPFRAME_POS = { 0.0f, 40.0f, 0.0f };
 	//敵のHP
-	const D3DXVECTOR3 ENEMY_HPGAGE_POS  = { 800.0f, 16.0f, 0.0f };  //座標
+	const D3DXVECTOR3 ENEMY_HPGAGE_POS  = { 800.0f, 30.0f, 0.0f };  //座標
 	//敵のHPの枠
-	const D3DXVECTOR3 ENEMY_HPFRAME_POS = { 800.0f, 10.0f, 0.0f }; //座標
+	const D3DXVECTOR3 ENEMY_HPFRAME_POS = { 800.0f, 40.0f, 0.0f }; //座標
 	//-----------------
 	
 	//----行動選択----
@@ -104,6 +104,11 @@ namespace Constant_BattleScene
 	const D3DXVECTOR2 HERO_TURNTEXT_POS  = { 450.0f, 50.0f };	//座標(自分)
 	const D3DXVECTOR2 ENEMY_TURNTEXT_POS = { 340.0f, 50.0f };	//座標(敵)
 	//----------------
+
+	//----役割名----
+	const D3DXVECTOR2 HERO_TEXT_POS      = { 0.0f, 16.0f };	    //座標(自分)
+	const D3DXVECTOR2 ENEMYHERO_TEXT_POS = { 800.0f, 16.0f };	//座標(敵)
+	//--------------
 }
 
 //=====================================

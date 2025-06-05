@@ -120,7 +120,7 @@ void CBattleScene::LoadData()
 	m_pHpGageBack->AttachSprite(CUIManager::GetSprite(CUIManager::HpGageBack));
 	m_pHpGageFrame->AttachSprite(CUIManager::GetSprite(CUIManager::GageFrame));
 	//敵のHpゲージ
-	m_pEnemyHpGage->AttachSprite(CUIManager::GetSprite(CUIManager::HpGage));
+	m_pEnemyHpGage->AttachSprite(CUIManager::GetSprite(CUIManager::EnemyHpGage));
 	m_pEnemyHpGageBack->AttachSprite(CUIManager::GetSprite(CUIManager::HpGageBack));
 	m_pEnemyHpGageFrame->AttachSprite(CUIManager::GetSprite(CUIManager::GageFrame));
 	//攻撃アイコン
@@ -214,7 +214,7 @@ void CBattleScene::Update()
 
 void CBattleScene::Draw()
 {
-	WriteText* Text = WriteText::GetInstance();
+	WriteText*     Text     = WriteText::GetInstance();
 	CSceneManager* SceneMng = &CSceneManager::GetInstance();
 
 	//カメラの動作
@@ -234,6 +234,10 @@ void CBattleScene::Draw()
 	
 	//各Hpゲージの描画
 	DrawHpGage();
+
+	//自分、敵それぞれの役割名のテキスト
+	Text->Draw_Text(L"HERO", WriteText::Hero, HERO_TEXT_POS);				  //自分
+	Text->Draw_Text(L"ENEMY HERO", WriteText::EnemyHero, ENEMYHERO_TEXT_POS); //敵
 
 	//自分、敵それぞれのターンの描画処理
 	if (m_SelectAttack)
@@ -408,13 +412,11 @@ void CBattleScene::MoveSelect()
 	//キーマネージャーの動作
 	KeyMng->Update();
 
-	m_pHero->MoveSelectAnim();
-	m_pEnemyHero->MoveSelectAnim();
+	//行動選択中のアニメーション
+	m_pHero->MoveSelectAnim();		//自分
+	m_pEnemyHero->MoveSelectAnim(); //敵
 
-	//カメラ情報の初期化
-	//m_pCamera->SetPos(INIT_CAMPOS);
-	//m_pCamera->SetLook(INIT_CAMLOOK);
-
+	//カメラの演出
 	MoveSelectCamera();
 
 	//速度による行動順の判断
@@ -557,8 +559,12 @@ void CBattleScene::Attack()
 		m_pHero->SetAnimEndFlag(false);
 		m_pEnemyHero->SetAnimEndFlag(false);
 
+		//行動選択中のカメラ演出を初めからにする
+		m_MoveSelectCut = 0;
+
 		//バトルのフェーズを行動選択に戻す
 		m_BattlePhase = enBattlePhase::MoveSelectPhase;
+
 	}
 }
 
@@ -584,6 +590,9 @@ void CBattleScene::MoveSelectCamera()
 	switch (m_MoveSelectCut)
 	{
 	case 0:
+		m_pCamera->SetPos(INIT_CAMPOS);
+		m_pCamera->SetLook(INIT_CAMLOOK);
+
 		m_AnimCnt++;
 
 		if (m_AnimCnt >= CHANGE_CUT * 3)
@@ -740,9 +749,7 @@ void CBattleScene::HeroTurn()
 void CBattleScene::DrawHeroTurn()
 {
 	WriteText* Text = WriteText::GetInstance();
-
-	Text->Draw_Text(L"HERO TURN", WriteText::D_Small,HERO_TURNTEXT_POS);
-
+	Text->Draw_Text(L"HERO TURN", WriteText::Hero,HERO_TURNTEXT_POS);
 }
 
 //敵のターンに行う処理
@@ -795,7 +802,7 @@ void CBattleScene::DrawEnemyHeroTurn()
 {
 	WriteText* Text = WriteText::GetInstance();
 
-	Text->Draw_Text(L"ENEMYHERO TURN", WriteText::B_Small, ENEMY_TURNTEXT_POS);
+	Text->Draw_Text(L"ENEMYHERO TURN", WriteText::EnemyHero, ENEMY_TURNTEXT_POS);
 }
 
 //ターンごとの攻撃の設定

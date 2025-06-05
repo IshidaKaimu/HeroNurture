@@ -39,6 +39,7 @@ public:
 		StaminaBack,        //スタミナゲージ背景
 		StaminaFrame,       //スタミナゲージ背景
 		HpGage,			    //体力ゲージ
+		EnemyHpGage,	    //敵の体力ゲージ
 		HpGageBack,         //体力ゲージ背景
 		GageFrame,          //ゲージ枠
 		TurnBack,			//ターン数背景

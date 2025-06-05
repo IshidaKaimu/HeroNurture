@@ -17,6 +17,8 @@ public:
         Control,        //操作方法
         NameInfo,       //名前入力前指示
         InputName,      //名前(入力時)
+        Hero,           //"HERO"テキスト
+        EnemyHero,      //"EnemyHERO"テキスト
         SceneName,      //シーン名
         Turn,           //ターン数
         TurnText,       //ターン数関連テキスト
@@ -93,6 +95,8 @@ private:
         { 30, DWRITE_FONT_WEIGHT_NORMAL, D2D1::ColorF(D2D1::ColorF::Black), 0 },         //操作方法
         { 60, DWRITE_FONT_WEIGHT_NORMAL, D2D1::ColorF(D2D1::ColorF::Gray), 0 },          //名前入力前指示
         { 70, DWRITE_FONT_WEIGHT_NORMAL, D2D1::ColorF(D2D1::ColorF::Black), 0 },         //名前入力時
+        { 70, DWRITE_FONT_WEIGHT_NORMAL, D2D1::ColorF(D2D1::ColorF::DarkBlue), 0 },      //"HERO"テキスト
+        { 70, DWRITE_FONT_WEIGHT_NORMAL, D2D1::ColorF(D2D1::ColorF::DarkRed), 0 },      //"ENEMYHERO"テキスト
         { 70, DWRITE_FONT_WEIGHT_NORMAL, D2D1::ColorF(D2D1::ColorF::White), 0 },         //シーン名
         { 85, DWRITE_FONT_WEIGHT_NORMAL, D2D1::ColorF(D2D1::ColorF::DarkBlue), 0 },      //ターン数
         { 80, DWRITE_FONT_WEIGHT_NORMAL, D2D1::ColorF(D2D1::ColorF::Black), 0 },         //ターン数関連
