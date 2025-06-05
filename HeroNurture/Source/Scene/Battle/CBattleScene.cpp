@@ -158,8 +158,8 @@ void CBattleScene::Initialize()
 
 void CBattleScene::Update()
 {
-	CSceneManager* SceneMng   = &CSceneManager::GetInstance();
-	CBattleManager* BattleMng = &CBattleManager::GetInstance();
+	CSceneManager*  SceneMng   = &CSceneManager::GetInstance();
+	CBattleManager* BattleMng  = &CBattleManager::GetInstance();
 
 	//バトルヒーロー選択BGMを停止
 	CSoundManager::GetInstance()->Stop(CSoundManager::BGM_BattleHeroSelect);
@@ -216,6 +216,7 @@ void CBattleScene::Draw()
 {
 	WriteText*     Text     = WriteText::GetInstance();
 	CSceneManager* SceneMng = &CSceneManager::GetInstance();
+	CUtility*      Utility  = &CUtility::GetInstance();
 
 	//カメラの動作
 	CCameraManager::GetInstance().CameraUpdate();
@@ -235,10 +236,17 @@ void CBattleScene::Draw()
 	//各Hpゲージの描画
 	DrawHpGage();
 
-	//自分、敵それぞれの役割名のテキスト
-	Text->Draw_Text(L"HERO", WriteText::Hero, HERO_TEXT_POS);				  //自分
-	Text->Draw_Text(L"ENEMY HERO", WriteText::EnemyHero, ENEMYHERO_TEXT_POS); //敵
-
+	//自分、敵それぞれのヒーロー名
+	Text->Draw_Text(Utility->StringToWstring(m_pHero->GetBattleHeroName()), WriteText::Hero, HERO_TEXT_POS); //自分
+	//自分がユイを選択していれば
+	if (m_pHero->GetBattleHeroName() == "Yui") 
+	{
+		Text->Draw_Text(L"KAITO", WriteText::EnemyHero, ENEMYHERO_TEXT_POS);           //敵
+	}
+	else
+	{
+		Text->Draw_Text(L"YUI", WriteText::EnemyHero,   ENEMYHERO_TEXT_POS);           //敵
+	}
 	//自分、敵それぞれのターンの描画処理
 	if (m_SelectAttack)
 	{
@@ -749,7 +757,7 @@ void CBattleScene::HeroTurn()
 void CBattleScene::DrawHeroTurn()
 {
 	WriteText* Text = WriteText::GetInstance();
-	Text->Draw_Text(L"HERO TURN", WriteText::Hero,HERO_TURNTEXT_POS);
+	Text->Draw_Text(L"HERO TURN", WriteText::HeroTurnText,HERO_TURNTEXT_POS);
 }
 
 //敵のターンに行う処理
@@ -802,7 +810,7 @@ void CBattleScene::DrawEnemyHeroTurn()
 {
 	WriteText* Text = WriteText::GetInstance();
 
-	Text->Draw_Text(L"ENEMYHERO TURN", WriteText::EnemyHero, ENEMY_TURNTEXT_POS);
+	Text->Draw_Text(L"ENEMYHERO TURN", WriteText::EnemyHeroTurnText, ENEMY_TURNTEXT_POS);
 }
 
 //ターンごとの攻撃の設定

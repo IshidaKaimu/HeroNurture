@@ -7,8 +7,8 @@
 #include "Sprite2D\UIManager\CUIManager.h"
 #include "SkinMesh\SkinMeshManager\CSkinMeshManager.h"
 #include "Effect\CEffect.h"	
-#ifdef DEBUG
-#include "ImGui/ImGuiManager/ImGuiManager.h"
+#ifdef _DEBUG
+#include "ImGui\ImGuiManager\ImGuiManager.h"
 #endif // DEBUG
 
 
@@ -59,7 +59,7 @@ void CMain::Init()
 //更新処理.
 void CMain::Update()
 {
-#ifdef DEBUG
+#ifdef _DEBUG
 	//ImGuiの更新
 	CImGuiManager::ImGui_NewFrame();
 #endif // DEBUG
@@ -78,7 +78,7 @@ void CMain::Update()
 	//エフェクトの描画
 	CEffect::GetInstance()->Draw();
 
-#ifdef DEBUG
+#ifdef _DEBUG
 	//ImGuiの描画
 	CImGuiManager::Render();
 #endif // DEBUG
@@ -105,7 +105,7 @@ HRESULT CMain::Create()
 		return E_FAIL;
 	}
 
-#ifdef DEBUG
+#ifdef _DEBUG
 	//ImGuiの初期化
 	CImGuiManager::Init(m_hWnd, *m_pDx11);
 #endif // DEBUG

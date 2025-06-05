@@ -77,3 +77,26 @@ std::string CUtility::WstringToString(std::wstring owstring)
 
     return (oRet);
 }
+//stringをwstringに変換
+std::wstring CUtility::StringToWstring(std::string string)
+{
+    //変換するために必要なバッファサイズの取得
+    int Size_needed = MultiByteToWideChar(CP_UTF8, 0, string.c_str(), -1, nullptr, 0);
+
+    //バッファの確保
+    std::wstring Wstr(Size_needed, 0);
+
+    //変換
+    int Result = MultiByteToWideChar(CP_UTF8, 0, string.c_str(), -1, &Wstr[0], Size_needed);
+    //なければ空白を返す
+    if (Result == 0)
+    {
+        return std::wstring();
+    }
+
+    //末尾を削る
+    Wstr.pop_back();
+
+    return Wstr;
+}
+

@@ -4,6 +4,8 @@
 #include "KeyManager\CKeyManager.h"
 #include <random>
 #include <type_traits>
+#include <locale>
+#include <codecvt>
 
 //=====================================
 //”Ä—pƒNƒ‰ƒX
@@ -51,6 +53,9 @@ public:
 
 	//wstringŒ^‚ğstringŒ^‚É•ÏŠ·
 	std::string WstringToString(std::wstring owstring);
+
+	//stringŒ^‚ğwstringŒ^‚É•ÏŠ·
+	std::wstring StringToWstring(std::string string);
 
 private:
 	CUtility();
