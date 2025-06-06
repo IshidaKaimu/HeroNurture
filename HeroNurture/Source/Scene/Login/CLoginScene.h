@@ -25,14 +25,14 @@ namespace Constant_LoginScene
 	static D3DXVECTOR3 NAMESPACE_SCALE = { 0.5f, 0.5f, 1.0f };   //拡縮
 	static D3DXVECTOR2 NAMESPACE_DISP  = { 1.0f,1.0f };		     //幅
 	//背景
-	static D3DXVECTOR3 BACK_POS   = { 0.0f,0.0f,0.0f };  //座標
-	static D3DXVECTOR3 BACK_SCALE = { 1.0f, 1.0f, 1.0f };//拡縮
-	static D3DXVECTOR2 BACK_DISP  = { 1.0f,1.0f };		 //幅
-	//名前入力開始位置
-	static D3DXVECTOR3 NAME_STARTPOS   = { 320.0f, 320.0f, 0.0f };
+	static D3DXVECTOR3 BACK_POS   = { 0.0f,0.0f,0.0f };         //座標
+	static D3DXVECTOR3 BACK_SCALE = { 1.0f, 1.0f, 1.0f };       //拡縮
+	static D3DXVECTOR2 BACK_DISP  = { 1.0f,1.0f };		        //幅
+	//名前入力開始座標
+	static D3DXVECTOR3 NAME_STARTPOS   = { 320.0f, 320.0f, 0.0f }; 
 	//名前最大文字数
 	static const int NAME_MAXLENGTH    = 8;
-	//シーン名位置
+	//シーン名座標
 	static const D3DXVECTOR2 SCENENAME_POS = { 0.0f, -20.0f };
 }
 
@@ -73,6 +73,7 @@ private:
 	std::unique_ptr<CUIObject> m_pNameSpace;
 	//背景
 	std::unique_ptr<CUIObject> m_pBack;
+	//---------
 
 	//Jsonクラス
 	std::unique_ptr<CJson> m_pJson;

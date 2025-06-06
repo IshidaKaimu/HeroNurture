@@ -41,7 +41,7 @@ public:
 	void AppearanceInitialize()			{ m_pHero->AppearanceInitialize(); };
 
 	//データ読み込み関数
-	void LoadMeshData() { m_pHero->LoadMeshData(); }
+	void LoadMeshData()					{ m_pHero->LoadMeshData(); }
 
 	//パラメータ情報の読み込み
 	void LoadParamData(const json& jsondata) { m_pHero->LoadParamData(jsondata); }
@@ -97,16 +97,16 @@ public:
 	// 各バトルフェーズでのアニメーション
 	// =======================
 	// 行動選択フェーズ中のアニメーション
-	void MoveSelectAnim()  override { m_pHero->MoveSelectAnim(); }
+	void MoveSelectAnim()  override				{ m_pHero->MoveSelectAnim(); }
 	//----攻撃フェーズ----
 	//攻撃1中のアニメーション
 	void PowerAttackAnim(float vector) override { m_pHero->PowerAttackAnim(vector); }
 	//攻撃2中のアニメーション
 	void MagicAttackAnim(float vector) override { m_pHero->MagicAttackAnim(vector); }
 	//固有攻撃中のアニメーション
-	void UniqueAttackAnim()override { m_pHero->UniqueAttackAnim(); }
+	void UniqueAttackAnim()override			    { m_pHero->UniqueAttackAnim(); }
 	//ダメージを受けたときのアニメーション
-	void DamageAnim(float vector) override { m_pHero->DamageAnim(vector); }
+	void DamageAnim(float vector) override		{ m_pHero->DamageAnim(vector); }
 
 	// =======================
 	// スタミナゲージ関連関数

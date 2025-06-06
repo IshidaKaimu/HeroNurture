@@ -29,8 +29,10 @@ namespace Constant_BattleResultScene
 	const D3DXVECTOR3 WIN_CAM_LOOK   = { -5.0f, 2.0f, -1.0f }; //勝利時注視点
 	const D3DXVECTOR3 LOSE_CAM_POS   = { -0.3f, 1.8f, 1.8f };  //敗北時座標
 	const D3DXVECTOR3 LOSE_CAM_LOOK  = { 2.0f, 2.0f, 1.0f };   //敗北時注視点
-	//----勝敗テキストUI----
+	//----UI----
+	//勝敗テキスト
 	const D3DXVECTOR2 RESULTTEXT_POS = { 150.0f,220.0f };      //座標
+	//----------
 }
 
 //=====================================
@@ -74,5 +76,6 @@ private:
 	//----スタティックメッシュ----
 	std::unique_ptr<CSky> m_pSky;		//空
 	std::unique_ptr<CGround> m_pGround; //地面
+	//----------------------------
 };
 

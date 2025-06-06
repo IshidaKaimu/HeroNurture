@@ -30,6 +30,7 @@ void CLoginScene::Create()
     m_pNameSpace = std::make_unique<CUIObject>(); 
     //îwåi
     m_pBack = std::make_unique<CUIObject>();
+    //----------
 
 }
 
@@ -44,6 +45,7 @@ void CLoginScene::LoadData()
     m_pNameSpace->AttachSprite(CUIManager::GetSprite(CUIManager::NameSpace));
     //îwåi
     m_pBack->AttachSprite(CUIManager::GetSprite(CUIManager::BasicBack));
+    //----------
 }
 
 void CLoginScene::Initialize()

@@ -29,9 +29,10 @@ void CModeSelectScene::Create()
 {
     //----UI----
     m_pNurtureMode = std::make_unique<CUIObject>(); //育成モード
-    m_pBattleMode = std::make_unique<CUIObject>(); //バトルモード
-    m_pCover      = std::make_unique<CUIObject>(); //選択されていないモードにかぶせる画像
-    m_pControlBar = std::make_unique<CUIObject>(); //操作方法指示バー
+    m_pBattleMode = std::make_unique<CUIObject>();  //バトルモード
+    m_pCover      = std::make_unique<CUIObject>();  //選択されていないモードにかぶせる画像
+    m_pControlBar = std::make_unique<CUIObject>();  //操作方法指示バー
+    //----------
 }
 
 void CModeSelectScene::Releace()
@@ -41,10 +42,11 @@ void CModeSelectScene::Releace()
 void CModeSelectScene::LoadData()
 {   
     //----UI----
-    m_pNurtureMode->AttachSprite(CUIManager::GetSprite(CUIManager::ModeSelectLeft));
-    m_pBattleMode->AttachSprite(CUIManager::GetSprite(CUIManager::ModeSelectRight));
-    m_pCover->AttachSprite(CUIManager::GetSprite(CUIManager::ModeSelectCover));
-    m_pControlBar->AttachSprite(CUIManager::GetSprite(CUIManager::ControlBar));
+    m_pNurtureMode->AttachSprite(CUIManager::GetSprite(CUIManager::ModeSelectLeft)); //育成モード
+    m_pBattleMode->AttachSprite(CUIManager::GetSprite(CUIManager::ModeSelectRight)); //バトルモード
+    m_pCover->AttachSprite(CUIManager::GetSprite(CUIManager::ModeSelectCover));      //選択されていないモードにかぶせる画像
+    m_pControlBar->AttachSprite(CUIManager::GetSprite(CUIManager::ControlBar));      //操作方法指示バー
+    //----------
 }
 
 void CModeSelectScene::Initialize()
@@ -60,11 +62,11 @@ void CModeSelectScene::Update()
     //フェードイン処理
     if (!FadeIn()) { return; }
 
-    //タイトルBGM、戦闘結果BGMの停止
-    CSoundManager::GetInstance()->Stop(CSoundManager::BGM_Title);
-    CSoundManager::GetInstance()->Stop(CSoundManager::BGM_NurtureResult);
-    CSoundManager::GetInstance()->Stop(CSoundManager::BGM_Win);
-    CSoundManager::GetInstance()->Stop(CSoundManager::BGM_Lose);
+    //BGMの停止
+    CSoundManager::GetInstance()->Stop(CSoundManager::BGM_Title);         //タイトル
+    CSoundManager::GetInstance()->Stop(CSoundManager::BGM_NurtureResult); //育成結果
+    CSoundManager::GetInstance()->Stop(CSoundManager::BGM_Win);           //勝利
+    CSoundManager::GetInstance()->Stop(CSoundManager::BGM_Lose);          //敗北
 
     //モード選択BGMの再生
     CSoundManager::GetInstance()->PlayLoop(CSoundManager::BGM_ModeSelect);
@@ -77,9 +79,9 @@ void CModeSelectScene::Update()
     //カーソルの移動
     if (KeyMng->IsDown(VK_RIGHT))
     {
-        //選択SEの再生
-        CSoundManager::GetInstance()->PlaySE(CSoundManager::SE_Select);
-        CSoundManager::GetInstance()->Volume(CSoundManager::SE_Select, 40);
+        //選択SE
+        CSoundManager::GetInstance()->PlaySE(CSoundManager::SE_Select);     //再生
+        CSoundManager::GetInstance()->Volume(CSoundManager::SE_Select, 40); //音量
 
         //キー入力で選択を進める
         if (m_SelectNo < enModeList::Max-1) { m_SelectNo++; }
@@ -88,8 +90,8 @@ void CModeSelectScene::Update()
     else if (KeyMng->IsDown(VK_LEFT))
     {
         //選択SEの再生
-        CSoundManager::GetInstance()->PlaySE(CSoundManager::SE_Select);
-        CSoundManager::GetInstance()->Volume(CSoundManager::SE_Select, 40);
+        CSoundManager::GetInstance()->PlaySE(CSoundManager::SE_Select);     //再生
+        CSoundManager::GetInstance()->Volume(CSoundManager::SE_Select, 40); //音量
 
         if (m_SelectNo > 0) { m_SelectNo--; }
         else { m_SelectNo = enModeList::Max-1; }
@@ -150,7 +152,7 @@ void CModeSelectScene::DrawUI()
 
     //----各UIの設定----
     //育成モード
-    m_pNurtureMode->SetPosition(NurtureMODE_POS);         //位置
+    m_pNurtureMode->SetPosition(NURTURE_POS);         //位置
     m_pNurtureMode->SetScale(MODE_SCALE);                //拡縮
     m_pNurtureMode->SetDisplay(MODE_DISP.x,MODE_DISP.y); //幅
     m_pNurtureMode->SetAlpha(MODE_ALPHA);                //α値
@@ -174,7 +176,7 @@ void CModeSelectScene::DrawUI()
         m_pCover->SetPosition(BATTLEMODE_POS);
         break;
     case 1:
-        m_pCover->SetPosition(NurtureMODE_POS);
+        m_pCover->SetPosition(NURTURE_POS);
         break;
     default:
         break;

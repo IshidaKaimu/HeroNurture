@@ -45,7 +45,7 @@ namespace Constant_BattleHeroSelectScene
 	const D3DXVECTOR3 CAMPOS  = { 0.0f, 5.0f, -4.0f };			  //座標
 	const D3DXVECTOR3 CAMLOOK = { 2.0f, 5.0f, 3.0f };			  //注視点
 
-	//----UI情報----
+	//----UI----
 	//パラメータの背景
 	const D3DXVECTOR3 PARAMBACK_POS   = { 840.0f, 165.0f, 0.0f }; //座標
 	const D3DXVECTOR3 PARAMBACK_SCALE = { 1.1f, 1.1f, 1.1f };	  //注視点
@@ -69,6 +69,7 @@ namespace Constant_BattleHeroSelectScene
 	static D3DXVECTOR3 BACK_POS = { 0.0f,0.0f,0.0f };			  //座標
 	static D3DXVECTOR3 BACK_SCALE = { 1.0f, 1.0f, 1.0f };		  //拡縮
 	static D3DXVECTOR2 BACK_DISP = { 1.0f,1.0f };				  //幅
+	//----------
 }
 //==============================
 // バトルヒーロー選択クラス
@@ -76,7 +77,7 @@ namespace Constant_BattleHeroSelectScene
 class CBattleHeroSelectScene
 	:public CSceneBase
 {
-public:
+private:
 	//パラメータ表示更新用構造体
 	struct enParamWriter
 	{
@@ -89,6 +90,8 @@ public:
 		//体力
 		float Hp;
 	};
+
+public:
 
 	CBattleHeroSelectScene();
 	~CBattleHeroSelectScene();
