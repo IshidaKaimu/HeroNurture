@@ -33,8 +33,9 @@ namespace Constant_Yui
 	//--------------------
 
 	//----攻撃1-----
-	//T字に変更するタイミング
-	constexpr int CHANGE_TSHARP = 1;
+	//T字
+	constexpr int CHANGE_TSHARP  = 60;	//アニメーションを再生するタイミング
+	constexpr int PLAY_TSHARP_SE = 60;	//T字の際のSEを再生するタイミング
 	//回転
 	constexpr float ROTATE_ADDSPEED          = 0.05f;  //加速度
 	constexpr float ROTATE_ADDSPEED_MAX      = 8.0f;   //最大速度
@@ -53,6 +54,8 @@ namespace Constant_Yui
 	//傾ける最大値
 	constexpr float TILT_BACK_MAX      = 0.5f;   //後ろ
 	constexpr float TILT_FORWARD_MAX   = 0.35f;  //前
+	//-------------
+
 
 	//アニメーション終了タイミング
 	constexpr int FASTATTACK_ANIM_END = 300;
@@ -68,7 +71,6 @@ namespace Constant_Yui
 	const D3DXVECTOR3 TORNADE_POS      = { 0.3f, 0.3f, 0.3f };  //座標
 	const D3DXVECTOR3 TORNADE_SCALE    = { 0.3f, 0.3f, 0.3f };  //拡縮
 	constexpr int     TORNADE_PLAY     = 60;					//再生タイミング
-
 	//火の玉エフェクト
 	const D3DXVECTOR3 FIREBALL_SCALE    = { 0.3f, 0.3f, 0.3f }; //拡縮
 	constexpr float   FIREBALL_ROTATE_Y = 90.0f;				//役割によって変わるY軸の回転値
@@ -87,6 +89,10 @@ public:
 	CYui();
     ~CYui();
 private:
+
+	//==================
+    //構造体
+    //==================
 
 	//アニメーション番号
 	enum Anim_No 
@@ -169,6 +175,7 @@ private:
 	void SetAnimSpeed(double speed) { m_AnimSpeed = speed; }
 	//アニメーション切り替え関数
 	void AnimChange(int animno) override;
+	//-------------------------
 
 private:
 	//変動する回転軸

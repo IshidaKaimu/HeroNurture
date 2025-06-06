@@ -167,7 +167,7 @@ public:
 	//失敗率
 	int GetSuccessRate(float stamina) { return m_pHero->SuccessRate(stamina); }
 	//トレーニングに失敗したかのフラグ
-	bool GetFailure() { return m_pHero->GetFailure(); }
+	bool GetFailureFlag() { return m_pHero->GetFailureFlag(); }
 	//バトル中体力
 	float GetHp() { return m_pHero->GetHp(); }
 	void SetHp( float hp ) { m_pHero->SetHp(hp); }

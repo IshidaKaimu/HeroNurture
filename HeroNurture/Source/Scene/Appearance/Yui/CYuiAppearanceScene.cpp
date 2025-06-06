@@ -16,7 +16,7 @@
 #include "WriteText\WriteText.h"
 
 //’è”‚Ì–¼‘O‹óŠÔ
-using namespace Constant_AppearanceScene;
+using namespace Constant_YuiAppearanceScene;
 
 CYuiAppearanceScene::CYuiAppearanceScene()
 	:m_pCamera         (&CCameraManager::GetInstance())

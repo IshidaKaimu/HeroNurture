@@ -9,8 +9,10 @@
 //=====================================
 // 前方宣言
 //=====================================
-//----各ヒーローのクラス
+//----各ヒーローのクラス----
+//ユイ
 class CYui;
+//カイト
 class CKaito;
 //----マネージャークラス----
 //UI
@@ -35,12 +37,23 @@ namespace Constant_NurtureHeroSelectScene
 	static D3DXVECTOR3 BACK_POS = { 0.0f,0.0f,0.0f };    //座標
 	static D3DXVECTOR3 BACK_SCALE = { 1.0f, 1.0f, 1.0f };//拡縮
 	static D3DXVECTOR2 BACK_DISP = { 1.0f,1.0f };		 //幅
-
 }
 
 class CNurtureHeroSelectScene
 	:public CSceneBase
 {
+private:
+	// =======================
+	// 列挙型
+	// =======================	
+
+	//選択可能なヒーロー
+	enum enSelectHeroName
+	{
+		Yui,
+		Kaito
+	};
+
 public:
 	CNurtureHeroSelectScene();
 	~CNurtureHeroSelectScene();

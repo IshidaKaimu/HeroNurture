@@ -119,11 +119,16 @@ class CBattleScene
 	:public CSceneBase
 {
 private:
+
+  //=====================================
+  //—ñ‹“Œ^
+  //=====================================
+
 	//UŒ‚‚Ìí—Ş
 	enum enAttackList :char
 	{
-		PowerAttack,
-		MagicAttack,
+		PowerAttack,	//‹Ø—Í‚É‚æ‚éUŒ‚
+		MagicAttack,	//–‚—Í‚É‚æ‚éUŒ‚
 		Max,
 	};
 

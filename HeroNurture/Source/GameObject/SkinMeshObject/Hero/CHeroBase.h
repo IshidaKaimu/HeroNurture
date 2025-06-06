@@ -30,6 +30,11 @@ class CHeroBase
 	: public CSkinMeshObject
 {
 public :
+
+	//=====================================
+	// 列挙型
+	//=====================================
+
 	//ヒーロー名リスト
 	enum enHeroList :char
 	{
@@ -37,6 +42,10 @@ public :
 		Kaito,
 		Max,
 	};
+
+	//=====================================
+	// 構造体
+	//=====================================
 
 	//パラメータ構造体
 	struct enParam
@@ -174,8 +183,8 @@ public:
 	enParam GetBeforeParam() { return m_BeforeParam; }
 	void SetBeforeParam(enParam before) { m_BeforeParam = before; }
 	//トレーニング失敗フラグ
-	bool GetFailure() { return m_Failure; }
-	void SetFailure(bool failure) { m_Failure = failure; }
+	bool GetFailureFlag() { return m_Failure; }
+	void SetFailureFlag(bool failure) { m_Failure = failure; }
 	//バトルに使用するパラメータ情報の設定
 	void SetBattleParam(const json& jsondata);
 	//バトル中のHP

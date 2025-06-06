@@ -115,7 +115,7 @@ void CTraningScene::Update()
 
 
    //ステータス変化SEの再生
-   if (CHeroManager::GetInstance().GetFailure()) {
+   if (CHeroManager::GetInstance().GetFailureFlag()) {
        m_SECnt++;
        if (m_SECnt == PLAY_SE_CNT)
        {
@@ -266,10 +266,10 @@ void CTraningScene::DrawTraningText()
 
     //----テキストを変数に代入----
     //失敗したか同課によって返すテキストを変える
-    std::wstring ResultText = HeroMng->GetFailure() ? L"失敗..." : L"成功!!";
+    std::wstring ResultText = HeroMng->GetFailureFlag() ? L"失敗..." : L"成功!!";
 
     //トレーニングが失敗したかの条件文
-    bool Failure = HeroMng->GetFailure();
+    bool Failure = HeroMng->GetFailureFlag();
     //休息が選択されていたかの条件文
     bool Rest = NurtureMng->GetRestFlag();
 

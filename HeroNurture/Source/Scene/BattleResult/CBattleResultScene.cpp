@@ -35,6 +35,7 @@ void CBattleResultScene::Create()
     //----スタティックメッシュ----
     //地面
     m_pGround = std::make_unique<CGround>();
+    //----------------------------
 }
 
 void CBattleResultScene::Releace()
@@ -51,6 +52,7 @@ void CBattleResultScene::LoadData()
 
     //----スタティックメッシュ----
     m_pGround->AttachMesh(CMeshManager::GetMesh(CMeshManager::Ground));//地面
+    //----------------------------
 
     //----スキンメッシュ----
     switch (BattleMng->GetBattleResult())
@@ -64,6 +66,7 @@ void CBattleResultScene::LoadData()
     default:
         break;
     }
+    //---------------------
 }
 
 void CBattleResultScene::Initialize()
@@ -156,6 +159,7 @@ void CBattleResultScene::Draw()
     //空の描画
     DrawSky();
 
+    //勝敗に応じて描画を変える
     switch (BattleMng->GetBattleResult())
     {
     case BattleMng->Win:
@@ -199,10 +203,10 @@ void CBattleResultScene::DrawUI()
     switch (BattleMng->GetBattleResult())
     {
     case BattleMng->Win:
-        Text->Draw_Text(L"WIN", WriteText::Win, RESULTTEXT_POS);
+        Text->Draw_Text(L"WIN", WriteText::Win,RESULTTEXT_POS);
         break;
     case BattleMng->Lose:
-        Text->Draw_Text(L"LOSE", WriteText::Lose, RESULTTEXT_POS);
+        Text->Draw_Text(L"LOSE", WriteText::Lose,RESULTTEXT_POS);
         break;
     default:
         break;

@@ -39,16 +39,19 @@ void CBattleHeroSelectScene::Create()
 	m_pJson = std::make_unique<CJson>();
 	//パラメータ背景
 	m_pParamBack = std::make_unique<CUIObject>();
+	//------------------------
 
 	//----ヒーロークラス----
 	//カイトクラス
 	m_pKaito = std::make_unique<CKaito>();
 	//ユイクラス
 	m_pYui = std::make_unique<CYui>();
+	//----------------------
 
 	//----UI----
 	m_pLeftArrow  = make_unique<CUIObject>();
 	m_pRightArrow = make_unique<CUIObject>();
+	//----------
 }
 
 void CBattleHeroSelectScene::Releace()
@@ -72,6 +75,7 @@ void CBattleHeroSelectScene::LoadData()
 	m_pYui->AttachMesh(CSkinMeshManager::GetMesh(CSkinMeshManager::Yui));
 	//カイト
 	m_pKaito->AttachMesh(CSkinMeshManager::GetMesh(CSkinMeshManager::Kaito));
+	//--------------------------------------------
 
 	//----UI----
 	//矢印左
@@ -80,7 +84,7 @@ void CBattleHeroSelectScene::LoadData()
 	m_pRightArrow->AttachSprite(CUIManager::GetSprite(CUIManager::Arrow));         
 	//パラメータ背景
 	m_pParamBack->AttachSprite(CUIManager::GetSprite(CUIManager::ResultParamList));
-
+	//---------
 }
 
 void CBattleHeroSelectScene::Initialize()
@@ -93,6 +97,7 @@ void CBattleHeroSelectScene::Initialize()
 	m_pYui->Initialize();
 	//カイト
 	m_pKaito->Initialize();
+	//--------------------------------
 
 	//カメラ情報の設定
 	m_pCamera->SetPos(CAMPOS);
@@ -101,9 +106,9 @@ void CBattleHeroSelectScene::Initialize()
 
 void CBattleHeroSelectScene::Update()
 {
-	CKeyManager*   KeyMng     = &CKeyManager::GetInstance();
-	CHeroManager*  HeroMng    = &CHeroManager::GetInstance();
-	CSceneManager* SceneMng   = &CSceneManager::GetInstance();
+	CKeyManager*   KeyMng   = &CKeyManager::GetInstance();
+	CHeroManager*  HeroMng  = &CHeroManager::GetInstance();
+	CSceneManager* SceneMng = &CSceneManager::GetInstance();
 
 	//フェードイン処理
 	if (!FadeIn()) { return; }
@@ -222,8 +227,8 @@ void CBattleHeroSelectScene::Debug()
 
 void CBattleHeroSelectScene::DrawResultData()
 {
-	WriteText* Text = WriteText::GetInstance();
-	CUtility* Utility = &CUtility::GetInstance();
+	WriteText* Text    = WriteText::GetInstance();
+	CUtility*  Utility = &CUtility::GetInstance();
 
 	//保存されている育成データの数と現在の選択番号を描画
 	Text->Draw_Text(std::to_wstring(m_SelectNo) + L"/", WriteText::Normal, Utility->PosCorrection(m_SelectNo,2,SELECTNO_POS));
@@ -243,9 +248,9 @@ void CBattleHeroSelectScene::DrawResultData()
 //保存されているヒーローのパラメータを選択番号ごとに描画する
 void CBattleHeroSelectScene::DrawSaveParameter(const json& jsondata, int number)
 {
-	WriteText* Text = WriteText::GetInstance();
-	CHeroManager* HeroMng = &CHeroManager::GetInstance();
-	CRank* Rank = &CRank::GetInstance();
+	WriteText*    Text     = WriteText::GetInstance();
+	CHeroManager* HeroMng  = &CHeroManager::GetInstance();
+	CRank*        Rank     = &CRank::GetInstance();
 
 	//「育成ランク」テキストの描画
 	std::wstring ResultText = L"育成ランク";

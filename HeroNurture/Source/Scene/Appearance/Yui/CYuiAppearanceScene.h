@@ -4,7 +4,7 @@
 //=====================================
 // ’è”éŒ¾
 //=====================================
-namespace Constant_AppearanceScene
+namespace Constant_YuiAppearanceScene
 {
 	//----ƒJƒƒ‰î•ñ----
 	const D3DXVECTOR3 INIT_CAMPOS     = { 0.0f, 4.0f, -5.0f };  //‰ŠúÀ•W

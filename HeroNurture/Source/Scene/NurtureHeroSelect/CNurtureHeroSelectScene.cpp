@@ -74,12 +74,6 @@ void CNurtureHeroSelectScene::Initialize()
     //カメラの注視点の設定
     m_pCamera->SetLook(CAMLOOK_NS);
 
-    //ライト情報
-    m_Light.Position = D3DXVECTOR3(0.0f, 1.0f, 0.0f);
-
-    //方向選択
-    m_Light.vDirection = D3DXVECTOR3(0.0f, 1.0f, 0.0f); //ライト方向
-
     //----各ヒーロークラスの初期化----
     //ユイ
     m_pYui->Initialize();
@@ -175,10 +169,10 @@ void CNurtureHeroSelectScene::Update()
     {
         switch (m_SelectNo)
         {
-        case 0:
+        case Yui:
             HeroMng->SelectHero(CHeroManager::Yui);
             break;
-        case 1:
+        case Kaito:
             HeroMng->SelectHero(CHeroManager::Kaito);
             break;
         default:

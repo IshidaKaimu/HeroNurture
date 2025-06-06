@@ -256,7 +256,7 @@ void CYui::PowerAttackAnim(float vector)
 		{
 			m_EffCnt++;
 
-			if (m_EffCnt == CHANGE_TSHARP)
+			if (m_EffCnt == PLAY_TSHARP_SE)
 			{
 				//TŽšSE‚ÌÄ¶
 				CSoundManager::GetInstance()->PlaySE(CSoundManager::SE_TPose);
