@@ -256,14 +256,14 @@ void CYui::PowerAttackAnim(float vector)
 		{
 			m_EffCnt++;
 
-			if (m_EffCnt == 1)
+			if (m_EffCnt == CHANGE_TSHARP)
 			{
 				//T字SEの再生
 				CSoundManager::GetInstance()->PlaySE(CSoundManager::SE_TPose);
 				CSoundManager::GetInstance()->Volume(CSoundManager::SE_TPose, 80);
 			}
 
-			if (m_EffCnt  == 60) 
+			if (m_EffCnt  == TORNADE_PLAY) 
 			{
 				//竜巻SEの再生
 				CSoundManager::GetInstance()->PlaySE(CSoundManager::SE_Tornade);
@@ -272,32 +272,33 @@ void CYui::PowerAttackAnim(float vector)
 				hTornado = CEffect::Play(CEffect::Yui_Power, D3DXVECTOR3(m_vPosition.x, m_vPosition.y, m_vPosition.z));
 			}
 
-			if (m_AnimCnt >= ROTATE_ADDSPEED_FAST)
+			if (m_AnimCnt >= MOVECHANGE_FASTTIME)
 			{
-				if (m_AnimCnt % 30 == 0)
+				if (m_AnimCnt % ROTATE_ADDSPEED_INTERVAL == 0)
 				{
-					if (m_RotateSpeedY <= 8.0f) {
-						m_RotateSpeedY += 0.05f;
+					if (m_RotateSpeedY <= ROTATE_ADDSPEED_MAX) 
+					{
+						m_RotateSpeedY += ROTATE_ADDSPEED;
 					}
 				}
 				m_MoveRotateY += m_RotateSpeedY;
 
-				if (m_AnimCnt <= ROTATE_ADDSPEED_SECOND) {
-					m_MoveX -= 0.1f * vector;
-					if (m_MoveRotateZ <= 0.5f) {
-						m_MoveRotateZ += 0.005f;
+				if (m_AnimCnt <= MOVECHANGE_SECONDTIME) {
+					m_MoveX -= MOVESPEED_BACK * vector;
+					if (m_MoveRotateZ <= TILT_BACK_MAX) {
+						m_MoveRotateZ += TILT_BACK_SPEED;
 					}
 				}
-				if (m_AnimCnt >= ROTATE_ADDSPEED_THIRD)
+				if (m_AnimCnt >= MOVECHANGE_THIRDTIME)
 				{
-					if (m_MoveRotateZ >= -0.35f)
+					if (m_MoveRotateZ >= -TILT_FORWARD_MAX)
 					{
-						m_MoveRotateZ -= 0.01f;
+						m_MoveRotateZ -= TILT_FORWARD_SPEED;
 					}
 				}
-				if (m_AnimCnt >= ROTATE_ADDSPEED_FOURTH)
+				if (m_AnimCnt >= MOVECHANGE_FOURTHTIME)
 				{
-					m_MoveX += (0.2f * vector);
+					m_MoveX += (MOVESPEED_RUSH * vector);
 				}
 
 				SetRotation(BATTLE_ROTATE.x, m_MoveRotateY, m_MoveRotateZ * vector);
@@ -413,6 +414,13 @@ void CYui::MagicAttackAnim(float vector)
 			m_EffCnt = 0;
 		}
 	}
+
+	//アニメーションが終了した際アニメーションに戻す
+	if (m_AttackAnimEnd)
+	{
+		AnimChange(Wait);
+	}
+
 }
 
 void CYui::DamageAnim(float vector)

@@ -34,14 +34,28 @@ namespace Constant_Yui
 
 	//----攻撃1-----
 	//T字に変更するタイミング
-	constexpr int CHANGE_TSHARP = 60;
-	//回転速度の加速タイミング
-	constexpr int ROTATE_ADDSPEED_FAST    = 80;	 //1段階目
-	constexpr int ROTATE_ADDSPEED_SECOND  = 120; //2段階目
-	constexpr int ROTATE_ADDSPEED_THIRD   = 150; //3段階目
-	constexpr int ROTATE_ADDSPEED_FOURTH  = 240; //4段階目
+	constexpr int CHANGE_TSHARP = 1;
+	//回転
+	constexpr float ROTATE_ADDSPEED          = 0.05f;  //加速度
+	constexpr float ROTATE_ADDSPEED_MAX      = 8.0f;   //最大速度
+	constexpr int   ROTATE_ADDSPEED_INTERVAL = 30.0f;  //加速する間隔
+	//動きの変更タイミング
+	constexpr int	MOVECHANGE_FASTTIME    = 80;   //1段階目
+	constexpr int	MOVECHANGE_SECONDTIME  = 120;  //2段階目
+	constexpr int	MOVECHANGE_THIRDTIME   = 150;  //3段階目
+	constexpr int	MOVECHANGE_FOURTHTIME  = 240;  //4段階目
+	//動く速度
+	constexpr float MOVESPEED_BACK = 0.1f; //下がる時
+	constexpr float MOVESPEED_RUSH = 0.2f; //突進する時
+	//傾けるときの速度
+	constexpr float TILT_BACK_SPEED    = 0.005f; //後ろ
+	constexpr float TILT_FORWARD_SPEED = 0.01f;  //前
+	//傾ける最大値
+	constexpr float TILT_BACK_MAX      = 0.5f;   //後ろ
+	constexpr float TILT_FORWARD_MAX   = 0.35f;  //前
+
 	//アニメーション終了タイミング
-	constexpr int FASTATTACK_ANIM_END     = 300;
+	constexpr int FASTATTACK_ANIM_END = 300;
 	//--------------
     
 	//----攻撃2----
@@ -53,9 +67,12 @@ namespace Constant_Yui
 	//竜巻エフェクト
 	const D3DXVECTOR3 TORNADE_POS      = { 0.3f, 0.3f, 0.3f };  //座標
 	const D3DXVECTOR3 TORNADE_SCALE    = { 0.3f, 0.3f, 0.3f };  //拡縮
+	constexpr int     TORNADE_PLAY     = 60;					//再生タイミング
+
 	//火の玉エフェクト
 	const D3DXVECTOR3 FIREBALL_SCALE    = { 0.3f, 0.3f, 0.3f }; //拡縮
 	constexpr float   FIREBALL_ROTATE_Y = 90.0f;				//役割によって変わるY軸の回転値
+	constexpr int     FIREBALL_PLAY     = 60;					//再生タイミング
 	//------------------
 }
 
@@ -121,7 +138,6 @@ public:
 	void AppearanceAnimation() override;
 	//育成シーン		
 	void NurtureAnimation(int no) override;
-
 
 	// =======================
 	// 攻撃関数

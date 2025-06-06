@@ -20,7 +20,6 @@ using namespace Constant_NurtureScene;
 
 CNurtureScene::CNurtureScene()
     : m_pCamera      ( &CCameraManager::GetInstance() )
-    , m_pHero        ( &CHeroManager::GetInstance() )
     , m_Name         ()
     , m_pGround      ()
     , m_pParamBack   ()
@@ -49,18 +48,20 @@ CNurtureScene::~CNurtureScene()
 
 void CNurtureScene::Create()
 {
+    CHeroManager* HeroMng = &CHeroManager::GetInstance();
+
     //セットされたヒーローのクラスのインスタンス生成
-    switch (m_pHero->GetSelectHero())
+    switch (HeroMng->GetSelectHero())
     {
     case CHeroManager::Yui:
         //ユイ
-        m_pHero->CreateHero(CHeroManager::Yui);
+        HeroMng->CreateHero(CHeroManager::Yui);
         //ファイルの作成、読み込み
         LoadHeroData(m_Name.Yui);
         break;
     case CHeroManager::Kaito:
         //カイト
-        m_pHero->CreateHero(CHeroManager::Kaito);
+        HeroMng->CreateHero(CHeroManager::Kaito);
         //ファイルの作成、読み込み
         LoadHeroData(m_Name.Kaito);
         break;
@@ -95,8 +96,6 @@ void CNurtureScene::Releace()
     //----破棄----
     //カメラ
     m_pCamera = nullptr;
-    //ヒーローマネージャー
-    m_pHero   = nullptr;
 }
 
 void CNurtureScene::LoadData()
@@ -128,11 +127,13 @@ void CNurtureScene::LoadData()
 
 void CNurtureScene::Initialize()
 {
+    CHeroManager* HeroMng = &CHeroManager::GetInstance();
+
     //セットされたヒーローのクラスの初期化
-    m_pHero->Initialize();
+    HeroMng->Initialize();
 
     //各ヒーローのカメラ位置、カメラの注視点の設定
-    switch (m_pHero->GetSelectHero())
+    switch (HeroMng->GetSelectHero())
     {
     case CHeroManager::Yui:
         //ユイ
@@ -191,7 +192,7 @@ void CNurtureScene::Update()
     CSoundManager::GetInstance()->Volume(CSoundManager::BGM_Nurture, 40);
 
     //セットされたヒーローのクラスの更新
-    m_pHero->Update();
+    HeroMng->Update();
 
     //キーマネージャーの更新処理
     CKeyManager::GetInstance().Update();
@@ -218,7 +219,7 @@ void CNurtureScene::Update()
     }
 
     //セットされたヒーローのクラスのアニメーション
-    m_pHero->NurtureAnimation(m_SelectNo);
+    HeroMng->NurtureAnimation(m_SelectNo);
 
 
     //トレーニングの決定
@@ -233,11 +234,11 @@ void CNurtureScene::Update()
         //選択肢の位置に応じたトレーニングをセット
         switch (m_SelectNo)
         {
-        case 0:  m_pHero->SetTraning(CHeroManager::PowerTraining); break;
-        case 1:  m_pHero->SetTraning(CHeroManager::MagicTraining); break;
-        case 2:  m_pHero->SetTraning(CHeroManager::SpeedTraining); break;
-        case 3:  m_pHero->SetTraning(CHeroManager::HpTraining); break;
-        case 4:  m_pHero->SetTraning(CHeroManager::Rest); break;
+        case 0:  HeroMng->SetTraning(CHeroManager::PowerTraining); break;
+        case 1:  HeroMng->SetTraning(CHeroManager::MagicTraining); break;
+        case 2:  HeroMng->SetTraning(CHeroManager::SpeedTraining); break;
+        case 3:  HeroMng->SetTraning(CHeroManager::HpTraining); break;
+        case 4:  HeroMng->SetTraning(CHeroManager::Rest); break;
         }
 
     }
@@ -268,14 +269,15 @@ void CNurtureScene::Update()
 
 void CNurtureScene::Draw()
 {
+    CHeroManager*  HeroMng  = &CHeroManager::GetInstance();
     CSceneManager* SceneMng = &CSceneManager::GetInstance();
-    WriteText* Text = WriteText::GetInstance();
+    WriteText*     Text     = WriteText::GetInstance();
 
     //カメラの更新処理
     m_pCamera->CameraUpdate();
 
     //セットされたヒーローのクラスの描画
-    m_pHero->Draw();
+    HeroMng->Draw();
 
     //地面クラスの描画
     m_pGround->Draw();
@@ -296,7 +298,7 @@ void CNurtureScene::Draw()
     DrawParam();
 
     //失敗率の取得
-    int FailureRate = 100 - m_pHero->GetSuccessRate(m_pHero->GetStamina());
+    int FailureRate = 100 - HeroMng->GetSuccessRate(HeroMng->GetStamina());
     //失敗率に応じた背景の描画
     if (FailureRate <= SAFE) { m_pSafeBack->Draw(); }
     if (FailureRate > SAFE && FailureRate <= ANXIETY) { m_pAnxietyBack->Draw(); }
@@ -323,11 +325,11 @@ void CNurtureScene::Debug()
 
 #ifdef DEBUG 
     ImGui::Begin(JAPANESE("パラメータ"));
-    ImGui::Text(JAPANESE("筋力:%f"), m_pHero->GetParam().Power);
-    ImGui::Text(JAPANESE("魔力:%f"), m_pHero->GetParam().Magic);
-    ImGui::Text(JAPANESE("素早さ:%f"), m_pHero->GetParam().Speed);
-    ImGui::Text(JAPANESE("体力:%f"), m_pHero->GetParam().Hp);
-    ImGui::Text(JAPANESE("スタミナ:%f"), m_pHero->GetStamina());
+    ImGui::Text(JAPANESE("筋力:%f"), HeroMng->GetParam().Power);
+    ImGui::Text(JAPANESE("魔力:%f"), HeroMng->GetParam().Magic);
+    ImGui::Text(JAPANESE("素早さ:%f"), HeroMng->GetParam().Speed);
+    ImGui::Text(JAPANESE("体力:%f"), HeroMng->GetParam().Hp);
+    ImGui::Text(JAPANESE("スタミナ:%f"), HeroMng->GetStamina());
     ImGui::Text(JAPANESE("スタミナの幅:%f"), CSceneManager::GetInstance()->GetStaminaWidth());
     ImGui::End();
 
@@ -387,6 +389,7 @@ void CNurtureScene::InitNurtureUI(
 {
     CSceneManager*   SceneMng   = &CSceneManager::GetInstance();
     CNurtureManager* NurtureMng = &CNurtureManager::GetInstance();
+    CHeroManager*    HeroMng    = &CHeroManager::GetInstance();
 
     //読み込みが初回であるなら
     if (!NurtureMng->GetIsDataLoaded())
@@ -396,12 +399,12 @@ void CNurtureScene::InitNurtureUI(
         NurtureMng->InitTurn();
         gage->SetWidth(1.0f);
         //スタミナの初期化
-        m_pHero->InitStamina();
+        HeroMng->InitStamina();
     }
     else
     {
         //スタミナに減少後の値をセット
-        m_pHero->SetStamina(m_pHero->GetAfterStamina());
+        HeroMng->SetStamina(HeroMng->GetAfterStamina());
         //現在のスタミナ幅を取得し、設定する
         gage->SetWidth(NurtureMng->GetStaminaWidth());
     }
@@ -480,27 +483,28 @@ void CNurtureScene::SelectTraning()
 {
     CSceneManager*   SceneMng   = &CSceneManager::GetInstance();
     CNurtureManager* NurtureMng = &CNurtureManager::GetInstance();
+    CHeroManager*    HeroMng    = &CHeroManager::GetInstance();
 
 
     //更新前のパラメータを保存
-     m_pHero->SetBeforeParam(m_pHero->GetParam());
+     HeroMng->SetBeforeParam(HeroMng->GetParam());
     //更新前のスタミナを保存
-     m_pHero->SetBeforeStamina(m_pHero->GetStamina());
+     HeroMng->SetBeforeStamina(HeroMng->GetStamina());
 
     //それぞれのパラメータの増加
-    switch (m_pHero->GetTraining())
+    switch (HeroMng->GetTraining())
     {
-    case::CHeroManager::PowerTraining: m_pHero->PowerUp(m_pHero->GetStamina()); break; //筋力
-    case::CHeroManager::MagicTraining: m_pHero->MagicUp(m_pHero->GetStamina()); break; //魔力
-    case::CHeroManager::SpeedTraining: m_pHero->SpeedUp(m_pHero->GetStamina()); break; //素早さ
-    case::CHeroManager::HpTraining: m_pHero->HpUp(m_pHero->GetStamina()); break;       //体力
+    case::CHeroManager::PowerTraining: HeroMng->PowerUp(HeroMng->GetStamina()); break; //筋力
+    case::CHeroManager::MagicTraining: HeroMng->MagicUp(HeroMng->GetStamina()); break; //魔力
+    case::CHeroManager::SpeedTraining: HeroMng->SpeedUp(HeroMng->GetStamina()); break; //素早さ
+    case::CHeroManager::HpTraining: HeroMng->HpUp(HeroMng->GetStamina()); break;       //体力
     case::CHeroManager::Rest: NurtureMng->SetRestFlag(true); break;                      //休息
     }
 
     //スタミナの減少または回復
     //休息フラグが立っていなければ減少
-    if (!NurtureMng->GetRestFlag()) { m_pHero->ReduceStamina(); }
-    else { m_pHero->StaminaRecovery(); }
+    if (!NurtureMng->GetRestFlag()) { HeroMng->ReduceStamina(); }
+    else { HeroMng->StaminaRecovery(); }
 
     //更新後パラメータの保存
     SaveParam();
@@ -537,6 +541,7 @@ void CNurtureScene::FailureRateBackInit(std::unique_ptr<CUIObject>& back, D3DXVE
 void CNurtureScene::SaveParam()
 {
     CSceneManager* SceneMng = &CSceneManager::GetInstance();
+    CHeroManager*  HeroMng  = &CHeroManager::GetInstance();
 
     //設定されているユーザー名の取得
     std::string UserName = SceneMng->GetStringName();
@@ -544,30 +549,31 @@ void CNurtureScene::SaveParam()
     //トレーニング実行時にパラメータ情報を書き込むファイルの階層
     std::string ParamFileHierarchy = "Data\\Acount\\" + UserName + "\\Parameter\\";
     //セットされたヒーローのパラメータ情報の書き込み
-    m_pJson->SaveNurtureData(m_pHero->GetSelectHeroName(), m_ParamWriter, ParamFileHierarchy);
+    m_pJson->SaveNurtureData(HeroMng->GetSelectHeroName(), m_ParamWriter, ParamFileHierarchy);
 }
 
 //各種パラメータの描画
 void CNurtureScene::DrawParam()
 {
-    WriteText* Text = WriteText::GetInstance();
-    CUtility* Utility = &CUtility::GetInstance();
+    WriteText*    Text    = WriteText::GetInstance();
+    CUtility*     Utility = &CUtility::GetInstance();
+    CHeroManager* HeroMng = &CHeroManager::GetInstance();
 
     //----各種パラメータのUI描画(背景,値,ランク)----
     //背景
     m_pParamBack->Draw();
     //筋力
-    Text->Draw_Text(std::to_wstring(static_cast<int>(m_pHero->GetParam().Power)), WriteText::Normal, Utility->PosCorrection(m_pHero->GetParam().Power,CORRECTION_DIGIT,PARAMVALUE_POS));
-    CRank::GetInstance().DrawRank(m_pHero->GetParam().Power, 2, RANK_POS);
+    Text->Draw_Text(std::to_wstring(static_cast<int>(HeroMng->GetParam().Power)), WriteText::Normal, Utility->PosCorrection(HeroMng->GetParam().Power,CORRECTION_DIGIT,PARAMVALUE_POS));
+    CRank::GetInstance().DrawRank(HeroMng->GetParam().Power, 2, RANK_POS);
     //魔力
-    Text->Draw_Text(std::to_wstring(static_cast<int>(m_pHero->GetParam().Magic)), WriteText::Normal, Utility->PosCorrection(m_pHero->GetParam().Magic, CORRECTION_DIGIT, D3DXVECTOR2(PARAMVALUE_POS.x + PARAMVALUE_INTERVAL, PARAMVALUE_POS.y)));
-    CRank::GetInstance().DrawRank(m_pHero->GetParam().Magic, 2, D3DXVECTOR2(RANK_POS.x + RANK_INTERVAL, RANK_POS.y));
+    Text->Draw_Text(std::to_wstring(static_cast<int>(HeroMng->GetParam().Magic)), WriteText::Normal, Utility->PosCorrection(HeroMng->GetParam().Magic, CORRECTION_DIGIT, D3DXVECTOR2(PARAMVALUE_POS.x + PARAMVALUE_INTERVAL, PARAMVALUE_POS.y)));
+    CRank::GetInstance().DrawRank(HeroMng->GetParam().Magic, 2, D3DXVECTOR2(RANK_POS.x + RANK_INTERVAL, RANK_POS.y));
     //素早さ
-    Text->Draw_Text(std::to_wstring(static_cast<int>(m_pHero->GetParam().Speed)), WriteText::Normal, Utility->PosCorrection(m_pHero->GetParam().Speed, CORRECTION_DIGIT, D3DXVECTOR2(PARAMVALUE_POS.x + (PARAMVALUE_INTERVAL * 2), PARAMVALUE_POS.y)));
-    CRank::GetInstance().DrawRank(m_pHero->GetParam().Speed, 2, D3DXVECTOR2(RANK_POS.x + (RANK_INTERVAL * 2), RANK_POS.y));
+    Text->Draw_Text(std::to_wstring(static_cast<int>(HeroMng->GetParam().Speed)), WriteText::Normal, Utility->PosCorrection(HeroMng->GetParam().Speed, CORRECTION_DIGIT, D3DXVECTOR2(PARAMVALUE_POS.x + (PARAMVALUE_INTERVAL * 2), PARAMVALUE_POS.y)));
+    CRank::GetInstance().DrawRank(HeroMng->GetParam().Speed, 2, D3DXVECTOR2(RANK_POS.x + (RANK_INTERVAL * 2), RANK_POS.y));
     //体力
-    Text->Draw_Text(std::to_wstring(static_cast<int>(m_pHero->GetParam().Hp)), WriteText::Normal, Utility->PosCorrection(m_pHero->GetParam().Hp, CORRECTION_DIGIT, D3DXVECTOR2(PARAMVALUE_POS.x + (PARAMVALUE_INTERVAL * 3), PARAMVALUE_POS.y)));
-    CRank::GetInstance().DrawRank(m_pHero->GetParam().Hp, 2, D3DXVECTOR2(RANK_POS.x + (RANK_INTERVAL * 3), RANK_POS.y));
+    Text->Draw_Text(std::to_wstring(static_cast<int>(HeroMng->GetParam().Hp)), WriteText::Normal, Utility->PosCorrection(HeroMng->GetParam().Hp, CORRECTION_DIGIT, D3DXVECTOR2(PARAMVALUE_POS.x + (PARAMVALUE_INTERVAL * 3), PARAMVALUE_POS.y)));
+    CRank::GetInstance().DrawRank(HeroMng->GetParam().Hp, 2, D3DXVECTOR2(RANK_POS.x + (RANK_INTERVAL * 3), RANK_POS.y));
 }
 
 //各種トレーニングの描画
@@ -622,10 +628,11 @@ void CNurtureScene::StaminaGageAnim()
 {
     CSceneManager*   SceneMng   = &CSceneManager::GetInstance();
     CNurtureManager* NurtureMng = &CNurtureManager::GetInstance();
+    CHeroManager*    HeroMng    = &CHeroManager::GetInstance();
 
 
     //ゲージ幅の確認
-    float GageScale = 1.0f * m_pHero->GetStamina() / STAMINA_MAX;
+    float GageScale = 1.0f * HeroMng->GetStamina() / STAMINA_MAX;
 
     //高ければ
     if (GageScale < m_GageWidth) { m_GageWidth -= 0.01f; }

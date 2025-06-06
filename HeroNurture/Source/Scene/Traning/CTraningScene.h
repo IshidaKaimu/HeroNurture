@@ -35,6 +35,7 @@ namespace Constant_TraningScene
 	const D3DXVECTOR2 RESULTTEXT_OFFSET = { 500.0f,100.0f };
 	//SEの再生タイミング
 	const int PLAY_SE_CNT = 1;
+	//-----------------------
 }
 
 //========================

@@ -192,11 +192,6 @@ private:
 	void SettingAttack(int no , enAttackList& attacklist);
 
 private:
-	//自分が使うヒーロー
-	CHeroManager* m_pHero;
-	//敵のヒーロー
-	CEnemyHeroManager* m_pEnemyHero;
-
 	//カメラマネージャー
 	CCameraManager* m_pCamera;
 

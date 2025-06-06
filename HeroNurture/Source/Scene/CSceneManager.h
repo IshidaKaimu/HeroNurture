@@ -81,10 +81,10 @@ private:
 
 public:
 	//白フェード関連の初期化
-	void InitWhiteFade() { m_Scene->InitWhiteFade(); }
+	void InitWhiteFade() { m_pScene->InitWhiteFade(); }
 
 	//白フェードの再生
-	void PlayWhiteFade(int max, float speed, float alpha) { m_Scene->PlayWhiteFade(max, speed, alpha); }
+	void PlayWhiteFade(int max, float speed, float alpha) { m_pScene->PlayWhiteFade(max, speed, alpha); }
 
 	//---ゲッター・セッター---
     //DirectX9
@@ -104,7 +104,7 @@ public:
 
 private:
 	//ユニークポインタ
-	std::unique_ptr<CSceneBase> m_Scene;
+	std::unique_ptr<CSceneBase> m_pScene;
 	//ウィンドウハンドル
     HWND        m_hWnd;
 	//DirectX9

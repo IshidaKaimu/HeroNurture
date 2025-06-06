@@ -15,9 +15,7 @@
 using namespace Constant_BattleScene;
 
 CBattleScene::CBattleScene()
-	: m_pHero			  (&CHeroManager::GetInstance())
-	, m_pEnemyHero		  (&CEnemyHeroManager::GetInstance())
-	, m_pCamera			  (&CCameraManager::GetInstance())
+	: m_pCamera			  (&CCameraManager::GetInstance())
 	, m_pGround			  ()
 	, m_pHpGage			  ()
 	, m_pHpGageBack       ()
@@ -51,18 +49,21 @@ CBattleScene::~CBattleScene()
 
 void CBattleScene::Create()
 {
+	CHeroManager*      HeroMng      = &CHeroManager::GetInstance();
+	CEnemyHeroManager* EnemyHeroMng = &CEnemyHeroManager::GetInstance();
+
 	//選択されたヒーローのインスタンス生成
-	if (m_pHero->GetBattleHeroName() == "Yui")
+	if (HeroMng->GetBattleHeroName() == "Yui")
 	{
-		m_pHero->CreateHero(CHeroManager::Yui);
+		HeroMng->CreateHero(CHeroManager::Yui);
 		//選択されなかったヒーローを敵として生成
-		m_pEnemyHero->CreateEnemyHero(CHeroManager::Kaito);
+		EnemyHeroMng->CreateEnemyHero(CHeroManager::Kaito);
 	}
-	else if (m_pHero->GetBattleHeroName() == "Kaito")
+	else if (HeroMng->GetBattleHeroName() == "Kaito")
 	{
-		m_pHero->CreateHero(CHeroManager::Kaito);
+		HeroMng->CreateHero(CHeroManager::Kaito);
 		//選択されなかったヒーローを敵として生成
-		m_pEnemyHero->CreateEnemyHero(CHeroManager::Yui);
+		EnemyHeroMng->CreateEnemyHero(CHeroManager::Yui);
 	}
 
 	//----スタティックメッシュオブジェクト----
@@ -85,28 +86,29 @@ void CBattleScene::Create()
 
 void CBattleScene::Releace()
 {
-	m_pHero = nullptr;
-	m_pEnemyHero = nullptr;
 }
 
 void CBattleScene::LoadData()
 {
+	CHeroManager*      HeroMng      = &CHeroManager::GetInstance();
+	CEnemyHeroManager* EnemyHeroMng = &CEnemyHeroManager::GetInstance();
+
 	//選択されているヒーローのメッシュデータ設定
-	m_pHero->LoadMeshData();
+	HeroMng->LoadMeshData();
 	//敵のヒーローのメッシュデータ設定
-	m_pEnemyHero->LoadMeshData();
+	EnemyHeroMng->LoadMeshData();
 
 	//ファイルからバトルに使用するデータを読み込む
 	LoadBattleData();
 	//バトルに使用するデータをヒーローに渡す
-	m_pHero->SetBattleParamData(m_BattleData);
+	HeroMng->SetBattleParamData(m_BattleData);
 	//敵のパラメータを敵のヒーローに渡す
 	for (const auto& enemy : m_EnemyHeroData)
 	{
 		//敵になっているヒーローのもののみ渡す
-		if (m_pEnemyHero->GetEnemyHeroName() == enemy["HeroName"].get<std::string>())
+		if (EnemyHeroMng->GetEnemyHeroName() == enemy["HeroName"].get<std::string>())
 		{
-			m_pEnemyHero->SetBattleParamData(enemy);
+			EnemyHeroMng->SetBattleParamData(enemy);
 		}
 	}
 
@@ -132,10 +134,14 @@ void CBattleScene::LoadData()
 
 void CBattleScene::Initialize()
 {
+	CHeroManager* HeroMng = &CHeroManager::GetInstance();
+	CEnemyHeroManager* EnemyHeroMng = &CEnemyHeroManager::GetInstance();
+
+
 	//選択したヒーローの初期化
-	m_pHero->BattleInitialize();
+	HeroMng->BattleInitialize();
 	//敵のヒーローの初期化
-	m_pEnemyHero->Initialize();
+	EnemyHeroMng->Initialize();
 	//カメラ情報の初期化
 	m_pCamera->SetPos(INIT_CAMPOS);
 	m_pCamera->SetLook(INIT_CAMLOOK);
@@ -144,8 +150,8 @@ void CBattleScene::Initialize()
 	m_SelectAttack = false;
 	
 	//体力の初期化
-	m_pHero->SetHp(m_pHero->GetBattleParamData().Hp * 10.0f);
-	m_pEnemyHero->SetHp(m_pEnemyHero->GetBattleParamData().Hp * 10.0f);
+	HeroMng->SetHp(HeroMng->GetBattleParamData().Hp * 10.0f);
+	EnemyHeroMng->SetHp(EnemyHeroMng->GetBattleParamData().Hp * 10.0f);
 
 	//Hpゲージの表示幅以外の設定
 	InitHpGage();
@@ -158,8 +164,10 @@ void CBattleScene::Initialize()
 
 void CBattleScene::Update()
 {
-	CSceneManager*  SceneMng   = &CSceneManager::GetInstance();
-	CBattleManager* BattleMng  = &CBattleManager::GetInstance();
+	CSceneManager*       SceneMng     = &CSceneManager::GetInstance();
+	CBattleManager*      BattleMng    = &CBattleManager::GetInstance();
+	CHeroManager*        HeroMng      = &CHeroManager::GetInstance();
+	CEnemyHeroManager*   EnemyHeroMng = &CEnemyHeroManager::GetInstance();
 
 	//バトルヒーロー選択BGMを停止
 	CSoundManager::GetInstance()->Stop(CSoundManager::BGM_BattleHeroSelect);
@@ -185,7 +193,7 @@ void CBattleScene::Update()
 
 	//死亡時処理
     //自分
-	if (m_pHero->Death())
+	if (HeroMng->Death())
 	{
 		//勝敗の設定
 		BattleMng->SetBattleResult(BattleMng->Lose);
@@ -193,7 +201,7 @@ void CBattleScene::Update()
 		m_SceneTransitionFlg = true;
 	}
 	//敵
-	if (m_pEnemyHero->Death())
+	if (EnemyHeroMng->Death())
 	{
 		//勝敗の設定
 		BattleMng->SetBattleResult(BattleMng->Win);
@@ -214,17 +222,19 @@ void CBattleScene::Update()
 
 void CBattleScene::Draw()
 {
-	WriteText*     Text     = WriteText::GetInstance();
-	CSceneManager* SceneMng = &CSceneManager::GetInstance();
-	CUtility*      Utility  = &CUtility::GetInstance();
+	WriteText*         Text         = WriteText::GetInstance();
+	CSceneManager*     SceneMng     = &CSceneManager::GetInstance();
+	CUtility*          Utility      = &CUtility::GetInstance();
+	CHeroManager*      HeroMng      = &CHeroManager::GetInstance();
+	CEnemyHeroManager* EnemyHeroMng = &CEnemyHeroManager::GetInstance();
 
 	//カメラの動作
 	CCameraManager::GetInstance().CameraUpdate();
 
 	//選択したヒーローの描画
-	m_pHero->Draw();
+	HeroMng->Draw();
 	//敵のヒーローの描画
-	m_pEnemyHero->Draw();
+	EnemyHeroMng->Draw();
 
 	//地面の描画
 	m_pGround->Draw();
@@ -236,17 +246,12 @@ void CBattleScene::Draw()
 	//各Hpゲージの描画
 	DrawHpGage();
 
+	std::string debug = HeroMng->GetBattleHeroName();
+
 	//自分、敵それぞれのヒーロー名
-	Text->Draw_Text(Utility->StringToWstring(m_pHero->GetBattleHeroName()), WriteText::Hero, HERO_TEXT_POS); //自分
-	//自分がユイを選択していれば
-	if (m_pHero->GetBattleHeroName() == "Yui") 
-	{
-		Text->Draw_Text(L"KAITO", WriteText::EnemyHero, ENEMYHERO_TEXT_POS);           //敵
-	}
-	else
-	{
-		Text->Draw_Text(L"YUI", WriteText::EnemyHero,   ENEMYHERO_TEXT_POS);           //敵
-	}
+	Text->Draw_Text(Utility->StringToWstring(HeroMng->GetBattleHeroName()), WriteText::Hero, HERO_TEXT_POS);			    //自分
+	Text->Draw_Text(Utility->StringToWstring(EnemyHeroMng->GetBattleHeroName()), WriteText::EnemyHero, ENEMYHERO_TEXT_POS); //敵
+
 	//自分、敵それぞれのターンの描画処理
 	if (m_SelectAttack)
 	{
@@ -272,17 +277,17 @@ void CBattleScene::Debug()
 #if DEBUG
 	ImGui::Begin(JAPANESE("パラメータ"));
 	ImGui::Text(JAPANESE("プレイヤー"));
-	ImGui::Text(JAPANESE("筋力:%f"), m_pHero->GetBattleParamData().Power);
-	ImGui::Text(JAPANESE("魔力:%f"), m_pHero->GetBattleParamData().Magic);
-	ImGui::Text(JAPANESE("素早さ:%f"), m_pHero->GetBattleParamData().Speed);
-	ImGui::Text(JAPANESE("体力:%f"), m_pHero->GetBattleParamData().Hp);
+	ImGui::Text(JAPANESE("筋力:%f"), HeroMng->GetBattleParamData().Power);
+	ImGui::Text(JAPANESE("魔力:%f"), HeroMng->GetBattleParamData().Magic);
+	ImGui::Text(JAPANESE("素早さ:%f"), HeroMng->GetBattleParamData().Speed);
+	ImGui::Text(JAPANESE("体力:%f"), HeroMng->GetBattleParamData().Hp);
 	ImGui::Text(JAPANESE("敵"));
-	ImGui::Text(JAPANESE("筋力:%f"), m_pEnemyHero->GetBattleParamData().Power);
-	ImGui::Text(JAPANESE("魔力:%f"), m_pEnemyHero->GetBattleParamData().Magic);
-	ImGui::Text(JAPANESE("素早さ:%f"), m_pEnemyHero->GetBattleParamData().Speed);
-	ImGui::Text(JAPANESE("体力:%f"), m_pEnemyHero->GetBattleParamData().Hp);
-	ImGui::Text(JAPANESE("HP%f"), m_pHero->GetHp());
-	ImGui::Text(JAPANESE("敵HP%f"), m_pEnemyHero->GetHp());
+	ImGui::Text(JAPANESE("筋力:%f"), EnemyHeroMng->GetBattleParamData().Power);
+	ImGui::Text(JAPANESE("魔力:%f"), EnemyHeroMng->GetBattleParamData().Magic);
+	ImGui::Text(JAPANESE("素早さ:%f"), EnemyHeroMng->GetBattleParamData().Speed);
+	ImGui::Text(JAPANESE("体力:%f"), EnemyHeroMng->GetBattleParamData().Hp);
+	ImGui::Text(JAPANESE("HP%f"), HeroMng->GetHp());
+	ImGui::Text(JAPANESE("敵HP%f"), EnemyHeroMng->GetHp());
 	ImGui::End();
 
 	ImGui::Begin(JAPANESE("カメラ"));
@@ -306,8 +311,8 @@ void CBattleScene::Debug()
 	ImGui::End();
 #endif
 #if DEBUG
-	m_pHero->Debug();
-	m_pEnemyHero->Debug();
+	HeroMng->Debug();
+	EnemyHeroMng->Debug();
 #endif
 
 
@@ -322,8 +327,8 @@ void CBattleScene::LoadBattleData()
 	std::string UserName = SceneMng->GetStringName();
 
 	//読み込むファイルのパス
-	std::string BattleParamFilePath = "Data\\Acount\\"+ UserName +"\\BattleData\\BattleParam";  //バトルに使用するパラメータ
-	std::string EnemyParamFilePath = "Data\\Acount\\" + UserName + "\\BattleData\\EnemyParam";  //敵のパラメータ
+	std::string BattleParamFilePath = "Data\\Acount\\"+ UserName +"\\BattleData\\BattleParam";   //バトルに使用するパラメータ
+	std::string EnemyParamFilePath  = "Data\\Acount\\" + UserName + "\\BattleData\\EnemyParam";  //敵のパラメータ
 
 	//バトルに使用するデータのファイルを読み込み
 	if (!m_pJson->Load(m_BattleData, BattleParamFilePath)) { return; }
@@ -349,14 +354,17 @@ void CBattleScene::DrawAttack(std::unique_ptr<CUIObject>& icon, D3DXVECTOR3 pos,
 //それぞれの体力ゲージの描画
 void CBattleScene::DrawHpGage()
 {
+	CHeroManager*      HeroMng      = &CHeroManager::GetInstance();
+	CEnemyHeroManager* EnemyHeroMng = &CEnemyHeroManager::GetInstance();
+
 	//----UIオブジェクトの描画----
     //自分のHpゲージ
-	HpGageAnim(m_pHpGage,m_pHero->GetHp(), m_pHero->GetBattleParamData().Hp * 10.0f, m_HpWidth);
+	HpGageAnim(m_pHpGage, HeroMng->GetHp(), HeroMng->GetBattleParamData().Hp * 10.0f, m_HpWidth);
 	m_pHpGageBack->Draw();
 	m_pHpGage->Draw();
 	m_pHpGageFrame->Draw();
 	//敵のHpゲージ
-	HpGageAnim(m_pEnemyHpGage, m_pEnemyHero->GetHp(), m_pEnemyHero->GetBattleParamData().Hp * 10.0f, m_EnemyHpWidth);
+	HpGageAnim(m_pEnemyHpGage, EnemyHeroMng->GetHp(), EnemyHeroMng->GetBattleParamData().Hp * 10.0f, m_EnemyHpWidth);
 	m_pEnemyHpGageBack->Draw();
 	m_pEnemyHpGage->Draw();
 	m_pEnemyHpGageFrame->Draw();
@@ -415,14 +423,16 @@ void CBattleScene::HpGageAnim(std::unique_ptr<CUIObject>& gage, float hp, float 
 //行動選択フェーズ中の処理
 void CBattleScene::MoveSelect()
 {
-	CKeyManager* KeyMng = &CKeyManager::GetInstance();
+	CKeyManager*       KeyMng       = &CKeyManager::GetInstance();
+	CHeroManager*      HeroMng      = &CHeroManager::GetInstance();
+	CEnemyHeroManager* EnemyHeroMng = &CEnemyHeroManager::GetInstance();
 
 	//キーマネージャーの動作
 	KeyMng->Update();
 
 	//行動選択中のアニメーション
-	m_pHero->MoveSelectAnim();		//自分
-	m_pEnemyHero->MoveSelectAnim(); //敵
+	HeroMng->MoveSelectAnim();		//自分
+	EnemyHeroMng->MoveSelectAnim(); //敵
 
 	//カメラの演出
 	MoveSelectCamera();
@@ -476,39 +486,42 @@ void CBattleScene::MoveSelect()
 
 void CBattleScene::Attack()
 {
+	CHeroManager*      HeroMng      = &CHeroManager::GetInstance();
+	CEnemyHeroManager* EnemyHeroMng = &CEnemyHeroManager::GetInstance();
+
 	if (m_IsHeroTurn)
 	{
 		//自分が先行の場合
-		if (!m_pEnemyHero->GetDamageFlag()) 
+		if (!EnemyHeroMng->GetDamageFlag()) 
 		{
 			HeroTurn();
-			if (m_pEnemyHero->GetHp() > 0.0f && m_pEnemyHero->GetDamageAnimEndFlag()) {
+			if (EnemyHeroMng->GetHp() > 0.0f && EnemyHeroMng->GetDamageAnimEndFlag()) {
 				//敵へのダメージ処理
 				switch (m_Attack)
 				{
 				case CBattleScene::PowerAttack:
-					m_pEnemyHero->Damage(m_pHero->PowerAttack());
+					EnemyHeroMng->Damage(HeroMng->PowerAttack());
 					break;
 				case CBattleScene::MagicAttack:
-					m_pEnemyHero->Damage(m_pHero->MagicAttack());
+					EnemyHeroMng->Damage(HeroMng->MagicAttack());
 					break;
 				case CBattleScene::Max:
 					break;
 				}
 			}
 		}
-		else if(!m_pEnemyHero->Death())
+		else if(!EnemyHeroMng->Death())
 		{
 			EnemyHeroTurn();
-			if (m_pHero->GetHp() > 0.0f && m_pHero->GetDamageAnimEndFlag()) {
+			if (HeroMng->GetHp() > 0.0f && HeroMng->GetDamageAnimEndFlag()) {
 				//自分へのダメージ処理
 				switch (m_EnemyAttack)
 				{
 				case CBattleScene::PowerAttack:
-					m_pHero->Damage(m_pEnemyHero->PowerAttack());
+					HeroMng->Damage(EnemyHeroMng->PowerAttack());
 					break;
 				case CBattleScene::MagicAttack:
-					m_pHero->Damage(m_pEnemyHero->MagicAttack());
+					HeroMng->Damage(EnemyHeroMng->MagicAttack());
 					break;
 				case CBattleScene::Max:
 					break;
@@ -516,21 +529,21 @@ void CBattleScene::Attack()
 			}
 		}
 	}
-	else if(!m_pHero->Death())
+	else if(!HeroMng->Death())
 	{
 		//敵が先行の場合
-		if (!m_pHero->GetDamageFlag())
+		if (!HeroMng->GetDamageFlag())
 		{
 			EnemyHeroTurn();
-			if (m_pEnemyHero->GetHp() > 0.0f && m_pHero->GetDamageAnimEndFlag()) {
+			if (EnemyHeroMng->GetHp() > 0.0f && HeroMng->GetDamageAnimEndFlag()) {
 				//自分へのダメージ処理
 				switch (m_EnemyAttack)
 				{
 				case CBattleScene::PowerAttack:
-					m_pHero->Damage(m_pEnemyHero->PowerAttack());
+					HeroMng->Damage(EnemyHeroMng->PowerAttack());
 					break;
 				case CBattleScene::MagicAttack:
-					m_pHero->Damage(m_pEnemyHero->MagicAttack());
+					HeroMng->Damage(EnemyHeroMng->MagicAttack());
 					break;
 				}
 			}
@@ -538,15 +551,15 @@ void CBattleScene::Attack()
 		else
 		{
 			HeroTurn();
-			if (m_pHero->GetHp() > 0.0f && m_pEnemyHero->GetDamageAnimEndFlag()) {
+			if (HeroMng->GetHp() > 0.0f && EnemyHeroMng->GetDamageAnimEndFlag()) {
 				//敵へのダメージ処理
 				switch (m_Attack)
 				{
 				case CBattleScene::PowerAttack:
-					m_pEnemyHero->Damage(m_pHero->PowerAttack());
+					EnemyHeroMng->Damage(HeroMng->PowerAttack());
 					break;
 				case CBattleScene::MagicAttack:
-					m_pEnemyHero->Damage(m_pHero->MagicAttack());
+					EnemyHeroMng->Damage(HeroMng->MagicAttack());
 					break;
 				}
 			}
@@ -554,18 +567,18 @@ void CBattleScene::Attack()
 	}
 
 	//準備フェーズへ移動
-	if (m_pHero->GetDamageAnimEndFlag() && m_pEnemyHero->GetDamageAnimEndFlag())
+	if (HeroMng->GetDamageAnimEndFlag() && EnemyHeroMng->GetDamageAnimEndFlag())
 	{
 		//自分、敵の初期化
-		m_pHero->BattleInitialize();
-		m_pEnemyHero->Initialize();
+		HeroMng->BattleInitialize();
+		EnemyHeroMng->Initialize();
 
 		//行動を未選択とする
 		m_SelectAttack = false;
 
 		//自分、敵のアニメーション終了フラグを下す
-		m_pHero->SetAnimEndFlag(false);
-		m_pEnemyHero->SetAnimEndFlag(false);
+		HeroMng->SetAnimEndFlag(false);
+		EnemyHeroMng->SetAnimEndFlag(false);
 
 		//行動選択中のカメラ演出を初めからにする
 		m_MoveSelectCut = 0;
@@ -579,8 +592,11 @@ void CBattleScene::Attack()
 //次のターンの準備中の処理
 void CBattleScene::SetUpToNextTurn()
 {
+	CHeroManager*      HeroMng      = &CHeroManager::GetInstance();
+	CEnemyHeroManager* EnemyHeroMng = &CEnemyHeroManager::GetInstance();
+
 	//自分と敵のスピードを比較
-	if (m_pHero->GetBattleParamData().Speed > m_pEnemyHero->GetBattleParamData().Speed)
+	if (HeroMng->GetBattleParamData().Speed > EnemyHeroMng->GetBattleParamData().Speed)
 	{
 		//自分のスピードが高ければ自分のターン
 		m_IsHeroTurn = true;
@@ -595,6 +611,9 @@ void CBattleScene::SetUpToNextTurn()
 //行動選択中のカメラワーク
 void CBattleScene::MoveSelectCamera()
 {
+	CHeroManager*      HeroMng      = &CHeroManager::GetInstance();
+	CEnemyHeroManager* EnemyHeroMng = &CEnemyHeroManager::GetInstance();
+
 	switch (m_MoveSelectCut)
 	{
 	case 0:
@@ -633,8 +652,8 @@ void CBattleScene::MoveSelectCamera()
 		}
 	    break;
 	case 2:
-		m_pCamera->SetPos(m_pHero->GetPosition().x + SHIFT_CAMPOS_SECOND_Y, m_MoveCamPos.y, m_pHero->GetPosition().z - SHIFT_CAMPOS_SECOND_Z);
-		m_pCamera->SetLook(m_pHero->GetPosition().x, m_MoveCamLook.y, m_pHero->GetPosition().z);
+		m_pCamera->SetPos(HeroMng->GetPosition().x + SHIFT_CAMPOS_SECOND_Y, m_MoveCamPos.y, HeroMng->GetPosition().z - SHIFT_CAMPOS_SECOND_Z);
+		m_pCamera->SetLook(HeroMng->GetPosition().x, m_MoveCamLook.y, HeroMng->GetPosition().z);
 
 		if (m_MoveCamPos.y <= MAX_MOVE_CAMPOS_SECOND_Y)
 		{
@@ -658,8 +677,8 @@ void CBattleScene::MoveSelectCamera()
 		}
 		break;
 	case 3:
-		m_pCamera->SetPos(m_pHero->GetPosition().x + SHIFT_CAMPOS_THIRD_Y, m_MoveCamPos.y, m_pHero->GetPosition().z + SHIFT_CAMPOS_THIRD_Z);
-		m_pCamera->SetLook(m_pEnemyHero->GetPosition().x, m_MoveCamLook.y, m_pEnemyHero->GetPosition().z);
+		m_pCamera->SetPos(HeroMng->GetPosition().x + SHIFT_CAMPOS_THIRD_Y, m_MoveCamPos.y, HeroMng->GetPosition().z + SHIFT_CAMPOS_THIRD_Z);
+		m_pCamera->SetLook(EnemyHeroMng->GetPosition().x, m_MoveCamLook.y, EnemyHeroMng->GetPosition().z);
 
 		if (m_MoveCamPos.y <= MAX_MOVE_CAMPOS_THIRD_Y)
 		{
@@ -706,7 +725,11 @@ void CBattleScene::MoveSelectCamera()
 
 //自分のターンに行う処理
 void CBattleScene::HeroTurn()
-{
+{	
+	CHeroManager*      HeroMng      = &CHeroManager::GetInstance();
+	CEnemyHeroManager* EnemyHeroMng = &CEnemyHeroManager::GetInstance();
+
+
 	//現在どちらのターンか
 	m_CurrentTurn = false;
 
@@ -715,39 +738,39 @@ void CBattleScene::HeroTurn()
 	{
 	case CBattleScene::PowerAttack:
 		//攻撃アニメーションが終わっていなければ
-		if (!m_pHero->GetAnimEndFlag()) 
+		if (!HeroMng->GetAnimEndFlag()) 
 		{
 			m_pCamera->SetPos(ATTACK_CAMPOS);
 			m_pCamera->SetLook(ATTACK_CAMLOOK);
 		}
 
 		//自分の筋力攻撃のアニメーション
-		m_pHero->PowerAttackAnim(ANIM_VECTOR_VALUE);
+		HeroMng->PowerAttackAnim(ANIM_VECTOR_VALUE);
 
-		if (m_pHero->GetAnimEndFlag()) //攻撃アニメーションが終わったら
+		if (HeroMng->GetAnimEndFlag()) //攻撃アニメーションが終わったら
 		{
 			m_pCamera->SetPos(ENEMY_ATTACK_CAMPOS);
 			m_pCamera->SetLook(ENEMY_ATTACK_CAMLOOK);
-			m_pEnemyHero->DamageAnim(1.0f);//敵のダメージアニメーション
+			EnemyHeroMng->DamageAnim(1.0f);//敵のダメージアニメーション
 		}
 		break;
 	case CBattleScene::MagicAttack:  
 		
 		//攻撃アニメーションが終わっていなければ
-		if (!m_pHero->GetAnimEndFlag())
+		if (!HeroMng->GetAnimEndFlag())
 		{
 			m_pCamera->SetPos(ATTACK_CAMPOS);
 			m_pCamera->SetLook(ATTACK_CAMLOOK);
 		}
 		
 		//自分の魔力攻撃のアニメーション
-		m_pHero->MagicAttackAnim(ANIM_VECTOR_VALUE);
+		HeroMng->MagicAttackAnim(ANIM_VECTOR_VALUE);
 
-		if (m_pHero->GetAnimEndFlag()) //攻撃アニメーションが終わったら
+		if (HeroMng->GetAnimEndFlag()) //攻撃アニメーションが終わったら
 		{
 			m_pCamera->SetPos(ENEMY_ATTACK_CAMPOS);
 			m_pCamera->SetLook(ENEMY_ATTACK_CAMLOOK);
-			m_pEnemyHero->DamageAnim(ANIM_VECTOR_VALUE); //敵のダメージアニメーション
+			EnemyHeroMng->DamageAnim(ANIM_VECTOR_VALUE); //敵のダメージアニメーション
 		}
 		break;
 	}
@@ -763,6 +786,9 @@ void CBattleScene::DrawHeroTurn()
 //敵のターンに行う処理
 void CBattleScene::EnemyHeroTurn()
 {
+	CHeroManager*      HeroMng      = &CHeroManager::GetInstance();
+	CEnemyHeroManager* EnemyHeroMng = &CEnemyHeroManager::GetInstance();
+
 	//現在どちらのターンか
 	m_CurrentTurn = true;
 
@@ -771,34 +797,34 @@ void CBattleScene::EnemyHeroTurn()
 	{
 	case CBattleScene::PowerAttack:
 		//攻撃アニメーションが終わっていなければ
-		if (!m_pEnemyHero->GetAnimEndFlag())
+		if (!EnemyHeroMng->GetAnimEndFlag())
 		{
 			m_pCamera->SetPos(ENEMY_ATTACK_CAMPOS);
 			m_pCamera->SetLook(ENEMY_ATTACK_CAMLOOK);
 		}
 		//敵の攻撃アニメーション
-		m_pEnemyHero->PowerAttackAnim(-ANIM_VECTOR_VALUE);
-		if (m_pEnemyHero->GetAnimEndFlag()) //攻撃アニメーションが終わったら
+		EnemyHeroMng->PowerAttackAnim(-ANIM_VECTOR_VALUE);
+		if (EnemyHeroMng->GetAnimEndFlag()) //攻撃アニメーションが終わったら
 		{
 			m_pCamera->SetPos(ATTACK_CAMPOS);
 			m_pCamera->SetLook(ATTACK_CAMLOOK);
-			m_pHero->DamageAnim(-ANIM_VECTOR_VALUE); //敵のダメージアニメーション
+			HeroMng->DamageAnim(-ANIM_VECTOR_VALUE); //敵のダメージアニメーション
 		}
 		break;
 	case CBattleScene::MagicAttack: 
 		//攻撃アニメーションが終わっていなければ
-		if (!m_pEnemyHero->GetAnimEndFlag())
+		if (!EnemyHeroMng->GetAnimEndFlag())
 		{
 			m_pCamera->SetPos(ENEMY_ATTACK_CAMPOS);
 			m_pCamera->SetLook(ENEMY_ATTACK_CAMLOOK);
 		}
 		//敵の攻撃アニメーション
-		m_pEnemyHero->MagicAttackAnim(-ANIM_VECTOR_VALUE);
-		if (m_pEnemyHero->GetAnimEndFlag()) //攻撃アニメーションが終わったら
+		EnemyHeroMng->MagicAttackAnim(-ANIM_VECTOR_VALUE);
+		if (EnemyHeroMng->GetAnimEndFlag()) //攻撃アニメーションが終わったら
 		{
 			m_pCamera->SetPos(ATTACK_CAMPOS);
 			m_pCamera->SetLook(ATTACK_CAMLOOK);
-			m_pHero->DamageAnim(-ANIM_VECTOR_VALUE); //敵のダメージアニメーション
+			HeroMng->DamageAnim(-ANIM_VECTOR_VALUE); //敵のダメージアニメーション
 		}
 		break;
 	}

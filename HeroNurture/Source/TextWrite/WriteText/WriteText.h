@@ -18,7 +18,7 @@ public:
         NameInfo,           //名前入力前指示
         InputName,          //名前(入力時)
         Hero,               //"HERO"テキスト
-        EnemyHero,          //"EnemyHERO"テキスト
+        EnemyHero,          //"ENEMYHERO"テキスト
         SceneName,          //シーン名
         Turn,               //ターン数
         TurnText,           //ターン関連テキスト

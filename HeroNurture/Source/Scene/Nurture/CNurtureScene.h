@@ -155,7 +155,6 @@ protected:
 		std::unique_ptr<CUIObject>& back, 
 		std::unique_ptr<CUIObject>& frame,
 		std::unique_ptr<CUIObject>& turnback);
-	//=========================
 
 public:
 	//各ヒーロー用ファイルの作成・読み込み
@@ -189,9 +188,6 @@ public:
 public:
 	//カメラマネージャクラス
 	CCameraManager* m_pCamera;
-
-	//ヒーローマネージャクラス
-	CHeroManager* m_pHero;
 
 	//名前構造体
 	HeroName m_Name;
@@ -235,7 +231,6 @@ public:
 	std::unique_ptr<CUIObject> m_pDangerBack;
 	//----------
 
-	//===================================
 
 	// =======================
 	// json関連

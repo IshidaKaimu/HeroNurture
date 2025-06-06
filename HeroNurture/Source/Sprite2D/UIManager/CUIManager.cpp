@@ -63,17 +63,12 @@ HRESULT CUIManager::Load(CDirectX11* dx11)
 		{UIList::PowerAttack,	 _T("Data\\Texture\\PowerAttack.png")      ,{ 341.0f, 300.0f, 341.0f, 300.0f, 341.0f, 300.0f}},
 		{UIList::MagicAttack,	 _T("Data\\Texture\\MagicAttack.png")      ,{ 340.0f, 300.0f, 340.0f, 300.0f, 340.0f, 300.0f}},
 		{UIList::AttackCover,	 _T("Data\\Texture\\AttackCover.png")      ,{ 341.0f, 300.0f, 341.0f, 300.0f, 341.0f, 300.0f}},
-		{UIList::UniqueGage,	 _T("Data\\Texture\\UniqueGage.png")       ,{ 80.0f,  70.0f,  80.0f, 70.0f,   80.0f,70.0f}},
 		{UIList::Arrow,	         _T("Data\\Texture\\Arrow.png")            ,{ 137.0f, 93.0f,  137.0f, 93.0f,  137.0f, 93.0f}},
 		{UIList::SelectArrow,	 _T("Data\\Texture\\SelectArrow.png")      ,{ 125.0f, 111.0f, 125.0f, 111.0f, 125.0f, 111.0f}},
 		{UIList::NameSpace,	     _T("Data\\Texture\\NameSpace.png")        ,{ 1347.0f, 336.0f, 1347.0f, 336.0f, 1347.0f, 336.0f}},
 		{UIList::Safe,			 _T("Data\\Texture\\Safe.png")             ,{ 314.0f, 299.0f, 314.0f, 299.0f, 314.0f, 299.0f}},
 		{UIList::Anxiety,	     _T("Data\\Texture\\Anxiety.png")          ,{ 314.0f, 299.0f, 314.0f, 299.0f, 314.0f, 299.0f}},
 		{UIList::Danger,	     _T("Data\\Texture\\Danger.png")           ,{ 316.0f, 301.0f, 316.0f, 301.0f, 316.0f, 301.0f}},
-		{UIList::Yui_Name,	     _T("Data\\Texture\\YuiName.png")          ,{ 134.0f, 78.0f, 134.0f, 78.0f, 134.0f, 78.0f}},
-		{UIList::Kaito_Name,	 _T("Data\\Texture\\KaitoName.png")        ,{ 227.0f, 72.0f, 227.0f, 72.0f, 227.0f, 72.0f}},
-		{UIList::HeroText,	     _T("Data\\Texture\\HeroText.png")         ,{ 227.0f, 72.0f, 227.0f, 72.0f, 227.0f, 72.0f}},
-		{UIList::EnemyHeroText,	 _T("Data\\Texture\\EnemyText.png")        ,{ 412.0f, 51.0f, 412.0f, 51.0f, 412.0f, 51.0f}},
 	};
 
 	int list_max = sizeof(SList) / sizeof(SList[0]);

@@ -15,13 +15,13 @@
 #include "ImGui\ImGuiManager\ImGuiManager.h"
 
 CSceneManager::CSceneManager()
-    : m_Scene       ()
+    : m_pScene       ()
     , m_hWnd        ()
     , m_pDx9        ( nullptr )
     , m_pDx11       ( nullptr )
     , m_UserName    ()
 {
-    m_Scene = std::make_unique<CTitleScene>();   //make_unique:インスタンスを生成して、使わなくなったら勝手に破棄してくれる
+    m_pScene = std::make_unique<CTitleScene>();   //make_unique:インスタンスを生成して、使わなくなったら勝手に破棄してくれる
 }
 
 
@@ -40,20 +40,20 @@ void CSceneManager::Create(CDirectX9& pDx9, CDirectX11& pDx11, HWND hwnd)
     WriteText::GetInstance()->SetDx11(*m_pDx11);
     WriteText::GetInstance()->Init();
 
-    m_Scene->Create();
-    m_Scene->LoadData();
+    m_pScene->Create();
+    m_pScene->LoadData();
 }
 
 //破棄関数
 void CSceneManager::Release()
 {
-    m_Scene->Releace();
+    m_pScene->Releace();
 }
 
 //初期化関数
 void CSceneManager::Initialize()
 {
-    m_Scene->Initialize();
+    m_pScene->Initialize();
 }
 
 //更新関数
@@ -76,13 +76,13 @@ void CSceneManager::Update()
     if (ImGui::Button(JAPANESE("バトル結果")))         { LoadCreate(enSceneList::BattleResult); }
     ImGui::End();
 #endif
-    m_Scene->Update();  //入ってるシーンの動作を行う   
+    m_pScene->Update();  //入ってるシーンの動作を行う   
 }
 
 //描画関数
 void CSceneManager::Draw()
 {
-    m_Scene->Draw();       //入ってるシーンの描画を行う
+    m_pScene->Draw();       //入ってるシーンの描画を行う
 
     m_pDx11->SetDepth(false);
     CSceneBase::Draw();    //シーンベース
@@ -93,15 +93,15 @@ void CSceneManager::Draw()
 void CSceneManager::LoadCreate(enSceneList List)
 {
     //一度破棄
-    m_Scene.release();
+    m_pScene.release();
     //シーンマネージャーでの構築
-    m_Scene = Create(List);
+    m_pScene = Create(List);
     //各シーンの構築
-    m_Scene->Create();
+    m_pScene->Create();
     //各シーンのデータ読み込み
-    m_Scene->LoadData();
+    m_pScene->LoadData();
     //各シーンの初期化
-    m_Scene->Initialize();
+    m_pScene->Initialize();
 }
 
 //構築関数

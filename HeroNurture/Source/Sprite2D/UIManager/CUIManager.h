@@ -46,17 +46,12 @@ public:
 		PowerAttack,	    //筋力攻撃アイコン
 		MagicAttack,		//魔法攻撃アイコン
 		AttackCover,        //攻撃アイコンに被せる画像
-		UniqueGage,		    //ユニークゲージ
 		Arrow,              //矢印
 		SelectArrow,		//選択肢矢印
 		NameSpace,			//名前入力スペース
 		Safe,				//失敗率アイコン(30%以下)
 		Anxiety,			//失敗率アイコン(30%以上70%以下)
 		Danger,				//失敗率アイコン(70%以上)
-		Yui_Name,           //ユイの名前
-		Kaito_Name,         //カイトの名前
-		HeroText,			//"HERO"テキスト
-		EnemyHeroText,		//"ENEMYHERO"テキスト
 		Max,
 	};
 

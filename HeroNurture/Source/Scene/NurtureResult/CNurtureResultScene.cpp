@@ -57,10 +57,10 @@ void CNurtureResultScene::Releace()
 //初期化関数
 void CNurtureResultScene::Initialize()
 {
-    CHeroManager* Hero = &CHeroManager::GetInstance();
+    CHeroManager* HeroMng = &CHeroManager::GetInstance();
 
     //セットされているヒーローの初期化
-    Hero->Initialize();
+    HeroMng->Initialize();
 
     //パラメータ背景UI情報の初期化
     m_pParamList->SetPosition(PARAMBACK_POS);
