@@ -259,6 +259,7 @@ void CBattleScene::Draw()
 		if (!m_CurrentTurn) { DrawHeroTurn(); }
 		else { DrawEnemyHeroTurn(); }
 	}
+
 	//攻撃アイコンの描画
 	DrawAttack(m_pPowerAttack, POWER_ATTACK_POS, ATTACK_ALPHA); //筋力攻撃
 	DrawAttack(m_pMagicAttack, MAGIC_ATTACK_POS, ATTACK_ALPHA); //魔力攻撃
@@ -495,7 +496,7 @@ void CBattleScene::Attack()
 		if (!EnemyHeroMng->GetDamageFlag()) 
 		{
 			HeroTurn();
-			if (EnemyHeroMng->GetHp() > 0.0f && EnemyHeroMng->GetDamageAnimEndFlag()) {
+			if (EnemyHeroMng->GetHp() > 0.0 && HeroMng->GetAttackAnimEndFlag()) {
 				//敵へのダメージ処理
 				switch (m_Attack)
 				{
@@ -513,7 +514,7 @@ void CBattleScene::Attack()
 		else if(!EnemyHeroMng->Death())
 		{
 			EnemyHeroTurn();
-			if (HeroMng->GetHp() > 0.0f && HeroMng->GetDamageAnimEndFlag()) {
+			if (HeroMng->GetHp() > 0.0f) {
 				//自分へのダメージ処理
 				switch (m_EnemyAttack)
 				{
@@ -535,7 +536,7 @@ void CBattleScene::Attack()
 		if (!HeroMng->GetDamageFlag())
 		{
 			EnemyHeroTurn();
-			if (EnemyHeroMng->GetHp() > 0.0f && HeroMng->GetDamageAnimEndFlag()) {
+			if (EnemyHeroMng->GetHp() > 0.0f && EnemyHeroMng->GetAttackAnimEndFlag()) {
 				//自分へのダメージ処理
 				switch (m_EnemyAttack)
 				{
@@ -551,7 +552,7 @@ void CBattleScene::Attack()
 		else
 		{
 			HeroTurn();
-			if (HeroMng->GetHp() > 0.0f && EnemyHeroMng->GetDamageAnimEndFlag()) {
+			if (HeroMng->GetHp() > 0.0f && HeroMng->GetAttackAnimEndFlag()) {
 				//敵へのダメージ処理
 				switch (m_Attack)
 				{
@@ -577,8 +578,8 @@ void CBattleScene::Attack()
 		m_SelectAttack = false;
 
 		//自分、敵のアニメーション終了フラグを下す
-		HeroMng->SetAnimEndFlag(false);
-		EnemyHeroMng->SetAnimEndFlag(false);
+		HeroMng->SetAttackAnimEndFlag(false);
+		EnemyHeroMng->SetAttackAnimEndFlag(false);
 
 		//行動選択中のカメラ演出を初めからにする
 		m_MoveSelectCut = 0;
@@ -738,7 +739,7 @@ void CBattleScene::HeroTurn()
 	{
 	case CBattleScene::PowerAttack:
 		//攻撃アニメーションが終わっていなければ
-		if (!HeroMng->GetAnimEndFlag()) 
+		if (!HeroMng->GetAttackAnimEndFlag()) 
 		{
 			m_pCamera->SetPos(ATTACK_CAMPOS);
 			m_pCamera->SetLook(ATTACK_CAMLOOK);
@@ -747,17 +748,18 @@ void CBattleScene::HeroTurn()
 		//自分の筋力攻撃のアニメーション
 		HeroMng->PowerAttackAnim(ANIM_VECTOR_VALUE);
 
-		if (HeroMng->GetAnimEndFlag()) //攻撃アニメーションが終わったら
+		if (HeroMng->GetAttackAnimEndFlag()) //攻撃アニメーションが終わったら
 		{
 			m_pCamera->SetPos(ENEMY_ATTACK_CAMPOS);
 			m_pCamera->SetLook(ENEMY_ATTACK_CAMLOOK);
 			EnemyHeroMng->DamageAnim(1.0f);//敵のダメージアニメーション
 		}
+
 		break;
 	case CBattleScene::MagicAttack:  
 		
 		//攻撃アニメーションが終わっていなければ
-		if (!HeroMng->GetAnimEndFlag())
+		if (!HeroMng->GetAttackAnimEndFlag())
 		{
 			m_pCamera->SetPos(ATTACK_CAMPOS);
 			m_pCamera->SetLook(ATTACK_CAMLOOK);
@@ -766,7 +768,7 @@ void CBattleScene::HeroTurn()
 		//自分の魔力攻撃のアニメーション
 		HeroMng->MagicAttackAnim(ANIM_VECTOR_VALUE);
 
-		if (HeroMng->GetAnimEndFlag()) //攻撃アニメーションが終わったら
+		if (HeroMng->GetAttackAnimEndFlag()) //攻撃アニメーションが終わったら
 		{
 			m_pCamera->SetPos(ENEMY_ATTACK_CAMPOS);
 			m_pCamera->SetLook(ENEMY_ATTACK_CAMLOOK);
@@ -797,14 +799,14 @@ void CBattleScene::EnemyHeroTurn()
 	{
 	case CBattleScene::PowerAttack:
 		//攻撃アニメーションが終わっていなければ
-		if (!EnemyHeroMng->GetAnimEndFlag())
+		if (!EnemyHeroMng->GetAttackAnimEndFlag())
 		{
 			m_pCamera->SetPos(ENEMY_ATTACK_CAMPOS);
 			m_pCamera->SetLook(ENEMY_ATTACK_CAMLOOK);
 		}
 		//敵の攻撃アニメーション
 		EnemyHeroMng->PowerAttackAnim(-ANIM_VECTOR_VALUE);
-		if (EnemyHeroMng->GetAnimEndFlag()) //攻撃アニメーションが終わったら
+		if (EnemyHeroMng->GetAttackAnimEndFlag())	 //攻撃アニメーションが終わったら
 		{
 			m_pCamera->SetPos(ATTACK_CAMPOS);
 			m_pCamera->SetLook(ATTACK_CAMLOOK);
@@ -813,14 +815,14 @@ void CBattleScene::EnemyHeroTurn()
 		break;
 	case CBattleScene::MagicAttack: 
 		//攻撃アニメーションが終わっていなければ
-		if (!EnemyHeroMng->GetAnimEndFlag())
+		if (!EnemyHeroMng->GetAttackAnimEndFlag())
 		{
 			m_pCamera->SetPos(ENEMY_ATTACK_CAMPOS);
 			m_pCamera->SetLook(ENEMY_ATTACK_CAMLOOK);
 		}
 		//敵の攻撃アニメーション
 		EnemyHeroMng->MagicAttackAnim(-ANIM_VECTOR_VALUE);
-		if (EnemyHeroMng->GetAnimEndFlag()) //攻撃アニメーションが終わったら
+		if (EnemyHeroMng->GetAttackAnimEndFlag()) //攻撃アニメーションが終わったら
 		{
 			m_pCamera->SetPos(ATTACK_CAMPOS);
 			m_pCamera->SetLook(ATTACK_CAMLOOK);

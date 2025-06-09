@@ -119,7 +119,7 @@
       <ConformanceMode>true</ConformanceMode>
       <PrecompiledHeader>Use</PrecompiledHeader>
       <ForcedIncludeFiles>stdafx.h</ForcedIncludeFiles>
-      <AdditionalIncludeDirectories>Source;Source\Effekseer\include;Source\GameObject;Source\DirectX;Source\TextWrite;Global\Global.h;MyMacro\MyMacro.h;stdafx\stdafx.h</AdditionalIncludeDirectories>
+      <AdditionalIncludeDirectories>Source;Source\Effekseer\include;Source\GameObject;Source\DirectX;Source\TextWrite;Source\Global\Global.h;Source\MyMacro\MyMacro.h;Source\stdafx\stdafx.h</AdditionalIncludeDirectories>
       <RuntimeLibrary>MultiThreadedDebug</RuntimeLibrary>
       <LanguageStandard>stdcpp20</LanguageStandard>
     </ClCompile>

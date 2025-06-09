@@ -1,5 +1,7 @@
 #include "CUIManager.h"
 #include "Windows.h"
+#include "stdafx\stdafx.h"
+
 CUIManager::CUIManager()
 	: m_pSprite2D()
 {
