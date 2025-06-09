@@ -493,21 +493,25 @@ void CBattleScene::Attack()
 	if (m_IsHeroTurn)
 	{
 		//自分が先行の場合
-		if (!EnemyHeroMng->GetDamageFlag()) 
+		if (!EnemyHeroMng->GetDamageAnimEndFlag()) 
 		{
 			HeroTurn();
 			if (EnemyHeroMng->GetHp() > 0.0 && HeroMng->GetAttackAnimEndFlag()) {
+				
 				//敵へのダメージ処理
-				switch (m_Attack)
+				if (!EnemyHeroMng->GetDamageFlag()) 
 				{
-				case CBattleScene::PowerAttack:
-					EnemyHeroMng->Damage(HeroMng->PowerAttack());
-					break;
-				case CBattleScene::MagicAttack:
-					EnemyHeroMng->Damage(HeroMng->MagicAttack());
-					break;
-				case CBattleScene::Max:
-					break;
+					switch (m_Attack)
+					{
+					case CBattleScene::PowerAttack:
+						EnemyHeroMng->Damage(HeroMng->PowerAttack());
+						break;
+					case CBattleScene::MagicAttack:
+						EnemyHeroMng->Damage(HeroMng->MagicAttack());
+						break;
+					case CBattleScene::Max:
+						break;
+					}
 				}
 			}
 		}
@@ -516,16 +520,19 @@ void CBattleScene::Attack()
 			EnemyHeroTurn();
 			if (HeroMng->GetHp() > 0.0f) {
 				//自分へのダメージ処理
-				switch (m_EnemyAttack)
+				if (!HeroMng->GetDamageFlag())
 				{
-				case CBattleScene::PowerAttack:
-					HeroMng->Damage(EnemyHeroMng->PowerAttack());
-					break;
-				case CBattleScene::MagicAttack:
-					HeroMng->Damage(EnemyHeroMng->MagicAttack());
-					break;
-				case CBattleScene::Max:
-					break;
+					switch (m_EnemyAttack)
+					{
+					case CBattleScene::PowerAttack:
+						HeroMng->Damage(EnemyHeroMng->PowerAttack());
+						break;
+					case CBattleScene::MagicAttack:
+						HeroMng->Damage(EnemyHeroMng->MagicAttack());
+						break;
+					case CBattleScene::Max:
+						break;
+					}
 				}
 			}
 		}
@@ -533,19 +540,22 @@ void CBattleScene::Attack()
 	else if(!HeroMng->Death())
 	{
 		//敵が先行の場合
-		if (!HeroMng->GetDamageFlag())
+		if (!HeroMng->GetDamageAnimEndFlag())
 		{
 			EnemyHeroTurn();
 			if (EnemyHeroMng->GetHp() > 0.0f && EnemyHeroMng->GetAttackAnimEndFlag()) {
 				//自分へのダメージ処理
-				switch (m_EnemyAttack)
+				if (!HeroMng->GetDamageFlag())
 				{
-				case CBattleScene::PowerAttack:
-					HeroMng->Damage(EnemyHeroMng->PowerAttack());
-					break;
-				case CBattleScene::MagicAttack:
-					HeroMng->Damage(EnemyHeroMng->MagicAttack());
-					break;
+					switch (m_EnemyAttack)
+					{
+					case CBattleScene::PowerAttack:
+						HeroMng->Damage(EnemyHeroMng->PowerAttack());
+						break;
+					case CBattleScene::MagicAttack:
+						HeroMng->Damage(EnemyHeroMng->MagicAttack());
+						break;
+					}
 				}
 			}
 		}
@@ -554,14 +564,17 @@ void CBattleScene::Attack()
 			HeroTurn();
 			if (HeroMng->GetHp() > 0.0f && HeroMng->GetAttackAnimEndFlag()) {
 				//敵へのダメージ処理
-				switch (m_Attack)
+				if (!EnemyHeroMng->GetDamageFlag())
 				{
-				case CBattleScene::PowerAttack:
-					EnemyHeroMng->Damage(HeroMng->PowerAttack());
-					break;
-				case CBattleScene::MagicAttack:
-					EnemyHeroMng->Damage(HeroMng->MagicAttack());
-					break;
+					switch (m_Attack)
+					{
+					case CBattleScene::PowerAttack:
+						EnemyHeroMng->Damage(HeroMng->PowerAttack());
+						break;
+					case CBattleScene::MagicAttack:
+						EnemyHeroMng->Damage(HeroMng->MagicAttack());
+						break;
+					}
 				}
 			}
 		}
