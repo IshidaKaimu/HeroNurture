@@ -97,9 +97,6 @@ void CModeSelectScene::Update()
         else { m_SelectNo = enModeList::Max-1; }
     }
 
-
-
-
     //ƒ‚[ƒhŒˆ’è
     if (KeyMng->IsDown(VK_RETURN))
     {
