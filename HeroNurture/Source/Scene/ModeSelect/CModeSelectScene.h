@@ -40,7 +40,7 @@ namespace Constant_ModeSelectScene
 	//シーン名												 
 	const D3DXVECTOR2 SCENENAME_POS  = { 430.0f,0.0f };		 //座標
 	//「←→ 選択」テキスト
-	const D3DXVECTOR2 SELECTTEXT_POS  = { 800.0f, 675.0f }; //座標
+	const D3DXVECTOR2 SELECTTEXT_POS  = { 800.0f, 675.0f };  //座標
 	//---------
 }
 

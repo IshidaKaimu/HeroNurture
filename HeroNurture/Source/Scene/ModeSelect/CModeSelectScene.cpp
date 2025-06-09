@@ -72,7 +72,6 @@ void CModeSelectScene::Update()
     CSoundManager::GetInstance()->PlayLoop(CSoundManager::BGM_ModeSelect);
     CSoundManager::GetInstance()->Volume(CSoundManager::BGM_ModeSelect, 40);
 
-
     //キーマネージャーの更新
     KeyMng->Update();
 
@@ -127,10 +126,10 @@ void CModeSelectScene::Update()
             SceneMng->LoadCreate(CSceneManager::NurtureHeroSelect); //育成ヒーロー選択画面へ
             break;
         case 1:
-            SceneMng->LoadCreate(CSceneManager::BattleHeroSelect); //バトルヒーロー選択画面へ
+            SceneMng->LoadCreate(CSceneManager::BattleHeroSelect);  //バトルヒーロー選択画面へ
             break;
         case 2:
-            SceneMng->LoadCreate(CSceneManager::Login); //ログイン画面へ
+            SceneMng->LoadCreate(CSceneManager::Login);             //ログイン画面へ
             break;
         }
     }
@@ -149,7 +148,7 @@ void CModeSelectScene::DrawUI()
 
     //----各UIの設定----
     //育成モード
-    m_pNurtureMode->SetPosition(NURTURE_POS);         //位置
+    m_pNurtureMode->SetPosition(NURTURE_POS);            //位置
     m_pNurtureMode->SetScale(MODE_SCALE);                //拡縮
     m_pNurtureMode->SetDisplay(MODE_DISP.x,MODE_DISP.y); //幅
     m_pNurtureMode->SetAlpha(MODE_ALPHA);                //α値
