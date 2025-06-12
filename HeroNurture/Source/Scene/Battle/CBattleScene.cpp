@@ -15,31 +15,34 @@
 using namespace Constant_BattleScene;
 
 CBattleScene::CBattleScene()
-	: m_pCamera			  (&CCameraManager::GetInstance())
-	, m_pGround			  ()
-	, m_pHpGage			  ()
-	, m_pHpGageBack       ()
-	, m_pHpGageFrame      ()
-	, m_pEnemyHpGage      ()
-	, m_pEnemyHpGageBack  ()
-	, m_pEnemyHpGageFrame ()
-	, m_pPowerAttack	  ()
-	, m_pMagicAttack	  ()
-	, m_pAttackCover	  ()
-	, m_pJson			  ()
-	, m_BattleData		  ()
-	, m_EnemyHeroData     ()
-	, m_HpWidth			  (1.0f)
-	, m_EnemyHpWidth      (1.0f)
-	, m_BattleTurn        ()
-	, m_MoveSelectCut	  ()
-	, m_IsHeroTurn        ()
-	, m_CurrentTurn		  ()
-	, m_SelectAttack      ()
-	, m_Attack            ()
-	, m_EnemyAttack		  ()
-	, m_EnemyAttackNo     ()
-	, m_BattlePhase		  ()
+	: m_pCamera				(&CCameraManager::GetInstance())
+	, m_pGround				()
+	, m_pHpGauge			()
+	, m_pHpGaugeBack		()
+	, m_pHpGaugeFrame		()
+	, m_pHpDecrease			()
+	, m_pEnemyHpGauge		()
+	, m_pEnemyHpGaugeBack	()
+	, m_pEnemyHpGaugeFrame	()
+	, m_pPowerAttack		()
+	, m_pMagicAttack		()
+	, m_pAttackCover		()
+	, m_pJson				()
+	, m_BattleData			()
+	, m_EnemyHeroData		()
+	, m_HpWidth				(1.0f)
+	, m_HpDecreaseWidth		(1.0f)
+	, m_EnemyHpWidth		(1.0f)
+	, m_EnemyHpDecreaseWidth(1.0f)
+	, m_BattleTurn			()
+	, m_MoveSelectCut		()
+	, m_IsHeroTurn			()
+	, m_CurrentTurn			()
+	, m_SelectAttack		()
+	, m_Attack				()
+	, m_EnemyAttack			()
+	, m_EnemyAttackNo		()
+	, m_BattlePhase			()
 {
 }
 
@@ -55,33 +58,48 @@ void CBattleScene::Create()
 	//選択されたヒーローのインスタンス生成
 	if (HeroMng->GetBattleHeroName() == "Yui")
 	{
+		//選択されたヒーローの設定
 		HeroMng->CreateHero(CHeroManager::Yui);
+
 		//選択されなかったヒーローを敵として生成
 		EnemyHeroMng->CreateEnemyHero(CHeroManager::Kaito);
 	}
 	else if (HeroMng->GetBattleHeroName() == "Kaito")
 	{
+		//選択されたヒーローの設定
 		HeroMng->CreateHero(CHeroManager::Kaito);
+
 		//選択されなかったヒーローを敵として生成
 		EnemyHeroMng->CreateEnemyHero(CHeroManager::Yui);
 	}
 
 	//----スタティックメッシュオブジェクト----
+	
 	//地面
 	m_pGround = std::make_unique<CGround>();
+
+	//----------------------------------------
+	
 	//----UIオブジェクト----
+	
 	//Hpゲージ
-	m_pHpGage      = std::make_unique<CUIObject>();
-	m_pHpGageBack  = std::make_unique<CUIObject>();
-	m_pHpGageFrame = std::make_unique<CUIObject>();
+	m_pHpGauge		= std::make_unique<CUIObject>(); //ゲージ
+	m_pHpGaugeBack	= std::make_unique<CUIObject>(); //枠
+	m_pHpGaugeFrame	= std::make_unique<CUIObject>(); //背景
+	m_pHpDecrease	= std::make_unique<CUIObject>(); //減少時に見える画像
+	
 	//敵のHpゲージ
-	m_pEnemyHpGage      = std::make_unique<CUIObject>();
-	m_pEnemyHpGageBack  = std::make_unique<CUIObject>();
-	m_pEnemyHpGageFrame = std::make_unique<CUIObject>();
+	m_pEnemyHpGauge      = std::make_unique<CUIObject>(); //ゲージ
+	m_pEnemyHpGaugeBack  = std::make_unique<CUIObject>(); //枠
+	m_pEnemyHpGaugeFrame = std::make_unique<CUIObject>(); //背景
+	m_pEnemyHpDecrease	= std::make_unique<CUIObject>(); //減少時に見える画像
+	
 	//攻撃アイコン
 	m_pPowerAttack = std::make_unique<CUIObject>(); //筋力
 	m_pMagicAttack = std::make_unique<CUIObject>(); //魔力
 	m_pAttackCover = std::make_unique<CUIObject>(); //被せる画像
+	
+	//---------------------
 }
 
 void CBattleScene::Releace()
@@ -100,8 +118,10 @@ void CBattleScene::LoadData()
 
 	//ファイルからバトルに使用するデータを読み込む
 	LoadBattleData();
+	
 	//バトルに使用するデータをヒーローに渡す
 	HeroMng->SetBattleParamData(m_BattleData);
+	
 	//敵のパラメータを敵のヒーローに渡す
 	for (const auto& enemy : m_EnemyHeroData)
 	{
@@ -113,28 +133,36 @@ void CBattleScene::LoadData()
 	}
 
 	//----スタティックメッシュオブジェクトのメッシュデータ設定----
+	
 	//地面
 	m_pGround->LoadData();
 
 	//----UIオブジェクトのスプライト設定----
+	
 	//Hpゲージ
-	m_pHpGage->AttachSprite(CUIManager::GetSprite(CUIManager::HpGage));
-	m_pHpGageBack->AttachSprite(CUIManager::GetSprite(CUIManager::HpGageBack));
-	m_pHpGageFrame->AttachSprite(CUIManager::GetSprite(CUIManager::GageFrame));
+	m_pHpGauge->AttachSprite(CUIManager::GetSprite(CUIManager::HpGauge));			//ゲージ
+	m_pHpGaugeBack->AttachSprite(CUIManager::GetSprite(CUIManager::HpGaugeBack));	//枠
+	m_pHpGaugeFrame->AttachSprite(CUIManager::GetSprite(CUIManager::GaugeFrame));	//背景
+	m_pHpDecrease->AttachSprite(CUIManager::GetSprite(CUIManager::GaugeDecrease));  //減少時に見える画像
+	
 	//敵のHpゲージ
-	m_pEnemyHpGage->AttachSprite(CUIManager::GetSprite(CUIManager::EnemyHpGage));
-	m_pEnemyHpGageBack->AttachSprite(CUIManager::GetSprite(CUIManager::HpGageBack));
-	m_pEnemyHpGageFrame->AttachSprite(CUIManager::GetSprite(CUIManager::GageFrame));
+	m_pEnemyHpGauge->AttachSprite(CUIManager::GetSprite(CUIManager::EnemyHpGauge));	   //ゲージ
+	m_pEnemyHpGaugeBack->AttachSprite(CUIManager::GetSprite(CUIManager::HpGaugeBack)); //枠
+	m_pEnemyHpGaugeFrame->AttachSprite(CUIManager::GetSprite(CUIManager::GaugeFrame)); //背景
+	m_pEnemyHpDecrease->AttachSprite(CUIManager::GetSprite(CUIManager::GaugeDecrease));//減少時に見える画像
+
 	//攻撃アイコン
 	m_pPowerAttack->AttachSprite(CUIManager::GetSprite(CUIManager::PowerAttack)); //筋力
 	m_pMagicAttack->AttachSprite(CUIManager::GetSprite(CUIManager::MagicAttack)); //魔力
 	m_pAttackCover->AttachSprite(CUIManager::GetSprite(CUIManager::AttackCover)); //被せる画像
 
+	//--------------------------------------
+
 }
 
 void CBattleScene::Initialize()
 {
-	CHeroManager* HeroMng = &CHeroManager::GetInstance();
+	CHeroManager*	   HeroMng		= &CHeroManager::GetInstance();
 	CEnemyHeroManager* EnemyHeroMng = &CEnemyHeroManager::GetInstance();
 
 
@@ -154,7 +182,7 @@ void CBattleScene::Initialize()
 	EnemyHeroMng->SetHp(EnemyHeroMng->GetBattleParamData().Hp * 10.0f);
 
 	//Hpゲージの表示幅以外の設定
-	InitHpGage();
+	InitHpGauge();
 
 	//行動選択時カメラを移動させる値の初期化
 	m_MoveCamPos  = INIT_MOVE_CAMPOS;
@@ -244,30 +272,58 @@ void CBattleScene::Draw()
 	SceneMng->GetDx11()->SetDepth(false);
 	
 	//各Hpゲージの描画
-	DrawHpGage();
+	DrawHpGauge();
 
-	std::string debug = HeroMng->GetBattleHeroName();
+	//ヒーローの名前の座標
+	D3DXVECTOR2 HeroNamePos;	  //自分
+	D3DXVECTOR2 EnemyHeroNamePos; //敵
+
+
+	//選択したヒーローと敵のヒーローの名前の座標の設定
+	if (HeroMng->GetSelectHeroName() == "Yui")
+	{
+		
+		HeroNamePos      = YUI_TEXT_POS;
+		EnemyHeroNamePos = ENEMY_KAITO_TEXT_POS;
+	}
+	else
+	{
+		HeroNamePos      = KAITO_TEXT_POS;
+		EnemyHeroNamePos = ENEMY_YUI_TEXT_POS;
+	}
 
 	//自分、敵それぞれのヒーロー名
-	Text->Draw_Text(Utility->StringToWstring(HeroMng->GetBattleHeroName()), WriteText::Hero, HERO_TEXT_POS);			    //自分
-	Text->Draw_Text(Utility->StringToWstring(EnemyHeroMng->GetBattleHeroName()), WriteText::EnemyHero, ENEMYHERO_TEXT_POS); //敵
+	Text->Draw_Text(Utility->StringToWstring(HeroMng->GetSelectHeroName()), WriteText::Hero, HeroNamePos);			     //自分
+	Text->Draw_Text(Utility->StringToWstring(EnemyHeroMng->GetEnemyHeroName()), WriteText::EnemyHero, EnemyHeroNamePos); //敵
 
 	//自分、敵それぞれのターンの描画処理
 	if (m_SelectAttack)
 	{
 		//敵のターンでなければ
-		if (!m_CurrentTurn) { DrawHeroTurn(); }
-		else { DrawEnemyHeroTurn(); }
+		if (!m_CurrentTurn) 
+		{ 
+			DrawHeroTurn();
+		}
+		else 
+		{
+			DrawEnemyHeroTurn(); 
+		}
 	}
 
 	//攻撃アイコンの描画
 	DrawAttack(m_pPowerAttack, POWER_ATTACK_POS, ATTACK_ALPHA); //筋力攻撃
 	DrawAttack(m_pMagicAttack, MAGIC_ATTACK_POS, ATTACK_ALPHA); //魔力攻撃
+	
 	//選択によって位置を変えるための変数
 	D3DXVECTOR3 CoverPos;
-	if (m_SelectNo == 0) { CoverPos = MAGIC_ATTACK_POS; }
+	if (m_SelectNo == 0)
+	{ 
+		CoverPos = MAGIC_ATTACK_POS; 
+	}else
+	{ 
+		CoverPos = POWER_ATTACK_POS;
+	}
 
-	else{ CoverPos = POWER_ATTACK_POS; }
 	DrawAttack(m_pAttackCover, CoverPos, ATTACK_COVER_ALPHA);   //アイコンにかぶせる画像
 
 	SceneMng->GetDx11()->SetDepth(true);
@@ -353,72 +409,98 @@ void CBattleScene::DrawAttack(std::unique_ptr<CUIObject>& icon, D3DXVECTOR3 pos,
 }
 
 //それぞれの体力ゲージの描画
-void CBattleScene::DrawHpGage()
+void CBattleScene::DrawHpGauge()
 {
 	CHeroManager*      HeroMng      = &CHeroManager::GetInstance();
 	CEnemyHeroManager* EnemyHeroMng = &CEnemyHeroManager::GetInstance();
 
 	//----UIオブジェクトの描画----
-    //自分のHpゲージ
-	HpGageAnim(m_pHpGage, HeroMng->GetHp(), HeroMng->GetBattleParamData().Hp * 10.0f, m_HpWidth);
-	m_pHpGageBack->Draw();
-	m_pHpGage->Draw();
-	m_pHpGageFrame->Draw();
+    
+	//自分のHpゲージ
+	m_pHpGaugeBack->Draw();	 //背景
+	m_pHpGaugeFrame->Draw(); //枠
+	m_pHpDecrease->Draw();	 //減少時に見える画像
+	m_pHpGauge->Draw();		 //ゲージ
+	HpGaugeAnim(m_pHpGauge,	  HeroMng->GetHp(),  HeroMng->GetBattleParamData().Hp * 10.0f, 0.1f,  m_HpWidth);		  //ゲージ本体のアニメーション
+	HpGaugeAnim(m_pHpDecrease, HeroMng->GetHp(), HeroMng->GetBattleParamData().Hp * 10.0f, 0.01f, m_HpDecreaseWidth); //減少時に見える画像のアニメーション
+
 	//敵のHpゲージ
-	HpGageAnim(m_pEnemyHpGage, EnemyHeroMng->GetHp(), EnemyHeroMng->GetBattleParamData().Hp * 10.0f, m_EnemyHpWidth);
-	m_pEnemyHpGageBack->Draw();
-	m_pEnemyHpGage->Draw();
-	m_pEnemyHpGageFrame->Draw();
+	m_pEnemyHpGaugeBack->Draw();   //背景
+	m_pEnemyHpGaugeFrame->Draw();  //枠
+	m_pEnemyHpDecrease->Draw();    //減少時に見える画像
+	m_pEnemyHpGauge->Draw();	   //ゲージ
+	HpGaugeAnim(m_pEnemyHpGauge,	EnemyHeroMng->GetHp(), EnemyHeroMng->GetBattleParamData().Hp * 10.0f, 0.1f,  m_EnemyHpWidth);		  //ゲージ本体のアニメーション
+	HpGaugeAnim(m_pEnemyHpDecrease, EnemyHeroMng->GetHp(), EnemyHeroMng->GetBattleParamData().Hp * 10.0f, 0.01f, m_EnemyHpDecreaseWidth); //減少時に見える画像のアニメーション
+
+	//----------------------------
 }
 
 //体力ゲージの各種初期設定
-void CBattleScene::InitHpGage()
+void CBattleScene::InitHpGauge()
 {
 	//----設定----
+	
 	//Hpゲージ
-	m_pHpGage->SetPosition(HPGAGE_POS);
-	m_pHpGage->SetScale(HPGAGE_SCALE);
-	m_pHpGage->SetDisplay(HPGAGE_DISPLAY.x, HPGAGE_DISPLAY.y);
+	m_pHpGauge->SetPosition(HPGAUGE_POS);
+	m_pHpGauge->SetScale(HPGAUGE_SCALE);
+	m_pHpGauge->SetDisplay(HPGAUGE_DISPLAY.x, HPGAUGE_DISPLAY.y);
+	
 	//Hpゲージ背景
-	m_pHpGageBack->SetPosition(HPGAGE_POS);
-	m_pHpGageBack->SetScale(HPGAGE_SCALE);
-	m_pHpGageBack->SetDisplay(HPGAGE_DISPLAY.x, HPGAGE_DISPLAY.y);
+	m_pHpGaugeBack->SetPosition(HPGAUGE_POS);
+	m_pHpGaugeBack->SetScale(HPGAUGE_SCALE);
+	m_pHpGaugeBack->SetDisplay(HPGAUGE_DISPLAY.x, HPGAUGE_DISPLAY.y);
+	
+	//Hp減少時の画像
+	m_pHpDecrease->SetPosition(HPGAUGE_POS);
+	m_pHpDecrease->SetScale(HPGAUGE_SCALE);
+	m_pHpDecrease->SetDisplay(HPGAUGE_DISPLAY.x, HPGAUGE_DISPLAY.y);
+
 	//Hpゲージ枠
-	m_pHpGageFrame->SetPosition(HPFRAME_POS);
-	m_pHpGageFrame->SetScale(HPGAGE_SCALE);
-	m_pHpGageFrame->SetDisplay(HPGAGE_DISPLAY.x, HPGAGE_DISPLAY.y);
+	m_pHpGaugeFrame->SetPosition(HPFRAME_POS);
+	m_pHpGaugeFrame->SetScale(HPGAUGE_SCALE);
+	m_pHpGaugeFrame->SetDisplay(HPGAUGE_DISPLAY.x, HPGAUGE_DISPLAY.y);
+	
 	//敵のHpゲージ
-	m_pEnemyHpGage->SetPosition(ENEMY_HPGAGE_POS);
-	m_pEnemyHpGage->SetScale(HPGAGE_SCALE);
-	m_pEnemyHpGage->SetDisplay(HPGAGE_DISPLAY.x, HPGAGE_DISPLAY.y);
+	m_pEnemyHpGauge->SetPosition(ENEMY_HPGAUGE_POS);
+	m_pEnemyHpGauge->SetScale(HPGAUGE_SCALE);
+	m_pEnemyHpGauge->SetDisplay(HPGAUGE_DISPLAY.x, HPGAUGE_DISPLAY.y);
+	
 	//敵のHpゲージ背景
-	m_pEnemyHpGageBack->SetPosition(ENEMY_HPGAGE_POS);
-	m_pEnemyHpGageBack->SetScale(HPGAGE_SCALE);
-	m_pEnemyHpGageBack->SetDisplay(HPGAGE_DISPLAY.x, HPGAGE_DISPLAY.y);
+	m_pEnemyHpGaugeBack->SetPosition(ENEMY_HPGAUGE_POS);
+	m_pEnemyHpGaugeBack->SetScale(HPGAUGE_SCALE);
+	m_pEnemyHpGaugeBack->SetDisplay(HPGAUGE_DISPLAY.x, HPGAUGE_DISPLAY.y);
+	
+	//敵のHp減少時の画像
+	m_pEnemyHpDecrease->SetPosition(ENEMY_HPGAUGE_POS);
+	m_pEnemyHpDecrease->SetScale(HPGAUGE_SCALE);
+	m_pEnemyHpDecrease->SetDisplay(HPGAUGE_DISPLAY.x, HPGAUGE_DISPLAY.y);
+
 	//敵のHpゲージ枠
-	m_pEnemyHpGageFrame->SetPosition(ENEMY_HPFRAME_POS);
-	m_pEnemyHpGageFrame->SetScale(HPGAGE_SCALE);
-	m_pEnemyHpGageFrame->SetDisplay(HPGAGE_DISPLAY.x, HPGAGE_DISPLAY.y);
+	m_pEnemyHpGaugeFrame->SetPosition(ENEMY_HPFRAME_POS);
+	m_pEnemyHpGaugeFrame->SetScale(HPGAUGE_SCALE);
+	m_pEnemyHpGaugeFrame->SetDisplay(HPGAUGE_DISPLAY.x, HPGAUGE_DISPLAY.y);
+	
+	//------------
 }
 
 //体力ゲージのアニメーション
-void CBattleScene::HpGageAnim(std::unique_ptr<CUIObject>& gage, float hp, float maxhp, float& width)
+void CBattleScene::HpGaugeAnim(std::unique_ptr<CUIObject>& Gauge, float hp, float maxhp, float speed, float& width)
 {
 	//ゲージ幅の確認
-	float GageScale = 1.0f * hp / maxhp;
+	float GaugeScale = 1.0f * hp / maxhp;
 
 	// 幅を徐々に目標値に近づける
-	if (std::fabs(GageScale - width) < 0.01f) {
+	if (std::fabs(GaugeScale - width) < 0.01f) {
 		// 目標値と十分近い場合、直接スナップ
-		width = GageScale;
+		width = GaugeScale;
 	}
 	else {
 		// 緩やかに目標値に近づける
-		width += (GageScale - width) * 0.1f;
+		width += (GaugeScale - width) * speed;
 	}
 
 	//ゲージ幅を設定
-	gage->SetDisplay(width, 1.0f);
+	Gauge->SetDisplay(width, 1.0f);
 }
 
 //行動選択フェーズ中の処理
@@ -504,9 +586,11 @@ void CBattleScene::Attack()
 					switch (m_Attack)
 					{
 					case CBattleScene::PowerAttack:
+						//筋力攻撃のダメージ
 						EnemyHeroMng->Damage(HeroMng->PowerAttack());
 						break;
 					case CBattleScene::MagicAttack:
+						//魔力攻撃のダメージ
 						EnemyHeroMng->Damage(HeroMng->MagicAttack());
 						break;
 					case CBattleScene::Max:
@@ -525,9 +609,11 @@ void CBattleScene::Attack()
 					switch (m_EnemyAttack)
 					{
 					case CBattleScene::PowerAttack:
+						//筋力攻撃のダメージ
 						HeroMng->Damage(EnemyHeroMng->PowerAttack());
 						break;
 					case CBattleScene::MagicAttack:
+						//魔力攻撃のダメージ
 						HeroMng->Damage(EnemyHeroMng->MagicAttack());
 						break;
 					case CBattleScene::Max:
@@ -550,9 +636,11 @@ void CBattleScene::Attack()
 					switch (m_EnemyAttack)
 					{
 					case CBattleScene::PowerAttack:
+						//筋力攻撃のダメージ
 						HeroMng->Damage(EnemyHeroMng->PowerAttack());
 						break;
 					case CBattleScene::MagicAttack:
+						//魔力攻撃のダメージ
 						HeroMng->Damage(EnemyHeroMng->MagicAttack());
 						break;
 					}
@@ -599,7 +687,6 @@ void CBattleScene::Attack()
 
 		//バトルのフェーズを行動選択に戻す
 		m_BattlePhase = enBattlePhase::MoveSelectPhase;
-
 	}
 }
 
@@ -666,7 +753,7 @@ void CBattleScene::MoveSelectCamera()
 		}
 	    break;
 	case 2:
-		m_pCamera->SetPos(HeroMng->GetPosition().x + SHIFT_CAMPOS_SECOND_Y, m_MoveCamPos.y, HeroMng->GetPosition().z - SHIFT_CAMPOS_SECOND_Z);
+		m_pCamera->SetPos(HeroMng->GetPosition().x + SHIFT_CAMPOS_SECOND_X, m_MoveCamPos.y, HeroMng->GetPosition().z - SHIFT_CAMPOS_SECOND_Z);
 		m_pCamera->SetLook(HeroMng->GetPosition().x, m_MoveCamLook.y, HeroMng->GetPosition().z);
 
 		if (m_MoveCamPos.y <= MAX_MOVE_CAMPOS_SECOND_Y)
@@ -683,15 +770,15 @@ void CBattleScene::MoveSelectCamera()
 				//カウントの初期化
 				m_AnimCnt = 0;
 				//カメラを動かす値の初期化
-				m_MoveCamPos.y  = 0.0f;
-				m_MoveCamLook.y = 0.0f;
+				m_MoveCamPos.y  = INIT_MOVE_CAMPOS.y;
+				m_MoveCamLook.y = INIT_MOVE_CAMLOOK.y;
 				//次のカットへ
 				m_MoveSelectCut = 3;
 			}
 		}
 		break;
 	case 3:
-		m_pCamera->SetPos(HeroMng->GetPosition().x + SHIFT_CAMPOS_THIRD_Y, m_MoveCamPos.y, HeroMng->GetPosition().z + SHIFT_CAMPOS_THIRD_Z);
+		m_pCamera->SetPos(HeroMng->GetPosition().x + SHIFT_CAMPOS_THIRD_X, m_MoveCamPos.y, HeroMng->GetPosition().z + SHIFT_CAMPOS_THIRD_Z);
 		m_pCamera->SetLook(EnemyHeroMng->GetPosition().x, m_MoveCamLook.y, EnemyHeroMng->GetPosition().z);
 
 		if (m_MoveCamPos.y <= MAX_MOVE_CAMPOS_THIRD_Y)
@@ -811,19 +898,23 @@ void CBattleScene::EnemyHeroTurn()
 	switch (m_EnemyAttack)
 	{
 	case CBattleScene::PowerAttack:
+		
 		//攻撃アニメーションが終わっていなければ
 		if (!EnemyHeroMng->GetAttackAnimEndFlag())
 		{
 			m_pCamera->SetPos(ENEMY_ATTACK_CAMPOS);
 			m_pCamera->SetLook(ENEMY_ATTACK_CAMLOOK);
 		}
+		
 		//敵の攻撃アニメーション
 		EnemyHeroMng->PowerAttackAnim(-ANIM_VECTOR_VALUE);
+		
 		if (EnemyHeroMng->GetAttackAnimEndFlag())	 //攻撃アニメーションが終わったら
 		{
 			m_pCamera->SetPos(ATTACK_CAMPOS);
 			m_pCamera->SetLook(ATTACK_CAMLOOK);
 			HeroMng->DamageAnim(-ANIM_VECTOR_VALUE); //敵のダメージアニメーション
+		
 		}
 		break;
 	case CBattleScene::MagicAttack: 
@@ -833,14 +924,17 @@ void CBattleScene::EnemyHeroTurn()
 			m_pCamera->SetPos(ENEMY_ATTACK_CAMPOS);
 			m_pCamera->SetLook(ENEMY_ATTACK_CAMLOOK);
 		}
+		
 		//敵の攻撃アニメーション
 		EnemyHeroMng->MagicAttackAnim(-ANIM_VECTOR_VALUE);
-		if (EnemyHeroMng->GetAttackAnimEndFlag()) //攻撃アニメーションが終わったら
+		
+		if (EnemyHeroMng->GetAttackAnimEndFlag())	 //攻撃アニメーションが終わったら
 		{
 			m_pCamera->SetPos(ATTACK_CAMPOS);
 			m_pCamera->SetLook(ATTACK_CAMLOOK);
 			HeroMng->DamageAnim(-ANIM_VECTOR_VALUE); //敵のダメージアニメーション
 		}
+
 		break;
 	}
 

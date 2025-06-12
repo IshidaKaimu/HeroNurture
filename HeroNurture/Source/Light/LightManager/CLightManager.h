@@ -40,7 +40,6 @@ public:
 	//ライトのデバッグ処理
 	void Debug();
 
-
 private:
 	//他からアクセスされることがないように
 	CLightManager();

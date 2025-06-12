@@ -28,14 +28,14 @@ CNurtureScene::CNurtureScene()
     , m_pSpeedTraning()
     , m_pHpTraning   ()
     , m_pRest        ()
-    , m_pStaminaGage ()
+    , m_pStaminaGauge ()
     , m_pStaminaBack ()
     , m_pStaminaFrame()
     , m_pTurnBack    ()
     , m_pSafeBack    ()
     , m_pAnxietyBack ()
     , m_pDangerBack  ()
-    , m_GageWidth    ( CNurtureManager::GetInstance().GetStaminaWidth() )
+    , m_GaugeWidth    ( CNurtureManager::GetInstance().GetStaminaWidth() )
     , m_pJson        ()
     , m_ParamWriter  ()
     , m_ParamData    ()
@@ -74,21 +74,26 @@ void CNurtureScene::Create()
     m_pGround = std::make_unique<CGround>();
 
     //----UIオブジェクト----
+    
     //パラメータの背景
     m_pParamBack = std::make_unique<CUIObject>();
+    
     //各種トレーニングUI
     m_pPowerTraning = std::make_unique<CUIObject>();
     m_pMagicTraning = std::make_unique<CUIObject>();
     m_pSpeedTraning = std::make_unique<CUIObject>();
     m_pHpTraning    = std::make_unique<CUIObject>();
     m_pRest         = std::make_unique<CUIObject>();
+   
     //失敗率背景
     m_pSafeBack     = std::make_unique<CUIObject>();
     m_pAnxietyBack  = std::make_unique<CUIObject>();
     m_pDangerBack   = std::make_unique<CUIObject>();
+   
+    //---------------------
 
     //育成関連のシーンで共通して表示するUIのインスタンス生成
-    CreateNurtureUI(m_pStaminaGage,m_pStaminaBack,m_pStaminaFrame,m_pTurnBack);
+    CreateNurtureUI(m_pStaminaGauge,m_pStaminaBack,m_pStaminaFrame,m_pTurnBack);
 }
 
 void CNurtureScene::Releace()
@@ -122,7 +127,7 @@ void CNurtureScene::LoadData()
     m_pDangerBack->AttachSprite(CUIManager::GetSprite(CUIManager::Danger));
 
     //スタミナゲージのUIのスプライト設定
-    LoadNurtureUI(m_pStaminaGage, m_pStaminaBack,m_pStaminaFrame, m_pTurnBack);
+    LoadNurtureUI(m_pStaminaGauge, m_pStaminaBack,m_pStaminaFrame, m_pTurnBack);
 }
 
 void CNurtureScene::Initialize()
@@ -171,7 +176,7 @@ void CNurtureScene::Initialize()
 
 
     //育成関連のシーンで共通のUIの初期化
-    InitNurtureUI(m_pStaminaGage,m_pStaminaBack,m_pStaminaFrame, m_pTurnBack);
+    InitNurtureUI(m_pStaminaGauge,m_pStaminaBack,m_pStaminaFrame, m_pTurnBack);
 }
 
 void CNurtureScene::Update()
@@ -289,7 +294,7 @@ void CNurtureScene::Draw()
     SceneMng->GetDx11()->SetDepth(false);
 
     //育成関連シーンで共通のUIの描画
-    DrawNurtureUI(m_pStaminaGage, m_pStaminaBack, m_pStaminaFrame,m_pTurnBack);
+    DrawNurtureUI(m_pStaminaGauge, m_pStaminaBack, m_pStaminaFrame,m_pTurnBack);
 
     //各トレーニングの描画
     DrawTraning();
@@ -299,10 +304,26 @@ void CNurtureScene::Draw()
 
     //失敗率の取得
     int FailureRate = 100 - HeroMng->GetSuccessRate(HeroMng->GetStamina());
+   
     //失敗率に応じた背景の描画
-    if (FailureRate <= SAFE) { m_pSafeBack->Draw(); }
-    if (FailureRate > SAFE && FailureRate <= ANXIETY) { m_pAnxietyBack->Draw(); }
-    if (FailureRate > ANXIETY) { m_pDangerBack->Draw(); }
+    
+    //30%以下
+    if (FailureRate <= SAFE) {
+        m_pSafeBack->Draw(); 
+    }
+   
+    //30%以上70%以下
+    if (FailureRate > SAFE && FailureRate <= ANXIETY) 
+    { 
+        m_pAnxietyBack->Draw();
+    }
+
+    //70%以上
+    if (FailureRate > ANXIETY) {
+
+        m_pDangerBack->Draw();
+    }
+
     //「失敗率」テキスト描画
     Text->Draw_Text(L"失敗率", WriteText::Select, D3DXVECTOR2(FAILURETEXT_POS));
     //失敗率の描画
@@ -343,20 +364,20 @@ void CNurtureScene::Debug()
 #endif
 
     //ライトマネージャー
-#ifdef DEBUG 
+#ifdef _DEBUG 
     CLightManager::GetInstance().Debug();
 #endif
 }
 
 //育成関連UIのインスタンス生成
 void CNurtureScene::CreateNurtureUI(
-    std::unique_ptr<CUIObject>& gage, 
+    std::unique_ptr<CUIObject>& gauge, 
     std::unique_ptr<CUIObject>& back, 
     std::unique_ptr<CUIObject>& frame,
     std::unique_ptr<CUIObject>& turnback)
 {
     //スタミナゲージ
-    gage = std::make_unique<CUIObject>();
+    gauge = std::make_unique<CUIObject>();
     //ゲージ背景
     back = std::make_unique<CUIObject>();
     //ゲージ枠
@@ -366,13 +387,13 @@ void CNurtureScene::CreateNurtureUI(
 }
 //育成関連UIのスプライトデータの読み込み
 void CNurtureScene::LoadNurtureUI(
-    std::unique_ptr<CUIObject>& gage, 
+    std::unique_ptr<CUIObject>& gauge, 
     std::unique_ptr<CUIObject>& back, 
     std::unique_ptr<CUIObject>& frame,
     std::unique_ptr<CUIObject>& turnback)
 {
     //スタミナゲージ
-    gage->AttachSprite(CUIManager::GetSprite(CUIManager::StaminaGage));
+    gauge->AttachSprite(CUIManager::GetSprite(CUIManager::StaminaGauge));
     //ゲージ背景
     back->AttachSprite(CUIManager::GetSprite(CUIManager::StaminaBack));
     //ゲージ枠
@@ -382,7 +403,7 @@ void CNurtureScene::LoadNurtureUI(
 }
 //育成関連UIの初期化
 void CNurtureScene::InitNurtureUI(
-    std::unique_ptr<CUIObject>& gage,
+    std::unique_ptr<CUIObject>& gauge,
     std::unique_ptr<CUIObject>& back,
     std::unique_ptr<CUIObject>& frame,
     std::unique_ptr<CUIObject>& turnback)
@@ -397,7 +418,7 @@ void CNurtureScene::InitNurtureUI(
         //ターン数・HPの値の初期化
         //ターン数
         NurtureMng->InitTurn();
-        gage->SetWidth(1.0f);
+        gauge->SetWidth(1.0f);
         //スタミナの初期化
         HeroMng->InitStamina();
     }
@@ -406,12 +427,12 @@ void CNurtureScene::InitNurtureUI(
         //スタミナに減少後の値をセット
         HeroMng->SetStamina(HeroMng->GetAfterStamina());
         //現在のスタミナ幅を取得し、設定する
-        gage->SetWidth(NurtureMng->GetStaminaWidth());
+        gauge->SetWidth(NurtureMng->GetStaminaWidth());
     }
 
     //スタミナゲージ
-    gage->SetScale(BASIC_SCALE);            
-    gage->SetPosition(STAMINA_POS);  
+    gauge->SetScale(BASIC_SCALE);            
+    gauge->SetPosition(STAMINA_POS);  
 
     //スタミナゲージ背景
     back->SetScale(BASIC_SCALE);              
@@ -430,13 +451,13 @@ void CNurtureScene::InitNurtureUI(
 }
 //描画
 void CNurtureScene::DrawNurtureUI(
-    std::unique_ptr<CUIObject>& gage,
+    std::unique_ptr<CUIObject>& gauge,
     std::unique_ptr<CUIObject>& back,
     std::unique_ptr<CUIObject>& frame,
     std::unique_ptr<CUIObject>& turnback)
 {
     //スタミナゲージのアニメーション
-    StaminaGageAnim();
+    StaminaGaugeAnim();
     //ターン数背景
     turnback->Draw();
     //ゲージ枠
@@ -444,7 +465,7 @@ void CNurtureScene::DrawNurtureUI(
     //ゲージ背景
     back->Draw();
     //スタミナゲージ
-    gage->Draw();
+    gauge->Draw();
     //残りターン数の描画
     DrawRemainingTurn();
 }
@@ -498,7 +519,7 @@ void CNurtureScene::SelectTraning()
     case::CHeroManager::MagicTraining: HeroMng->MagicUp(HeroMng->GetStamina()); break; //魔力
     case::CHeroManager::SpeedTraining: HeroMng->SpeedUp(HeroMng->GetStamina()); break; //素早さ
     case::CHeroManager::HpTraining: HeroMng->HpUp(HeroMng->GetStamina()); break;       //体力
-    case::CHeroManager::Rest: NurtureMng->SetRestFlag(true); break;                      //休息
+    case::CHeroManager::Rest: NurtureMng->SetRestFlag(true); break;                    //休息
     }
 
     //スタミナの減少または回復
@@ -624,7 +645,7 @@ void CNurtureScene::DrawRemainingTurn()
 
 
 //スタミナゲージのアニメーション
-void CNurtureScene::StaminaGageAnim()
+void CNurtureScene::StaminaGaugeAnim()
 {
     CSceneManager*   SceneMng   = &CSceneManager::GetInstance();
     CNurtureManager* NurtureMng = &CNurtureManager::GetInstance();
@@ -632,23 +653,23 @@ void CNurtureScene::StaminaGageAnim()
 
 
     //ゲージ幅の確認
-    float GageScale = 1.0f * HeroMng->GetStamina() / STAMINA_MAX;
+    float GaugeScale = 1.0f * HeroMng->GetStamina() / STAMINA_MAX;
 
     //高ければ
-    if (GageScale < m_GageWidth) { m_GageWidth -= 0.01f; }
+    if (GaugeScale < m_GaugeWidth) { m_GaugeWidth -= 0.01f; }
     //低ければ
-    if (GageScale > m_GageWidth){ m_GageWidth += 0.01f; }
+    if (GaugeScale > m_GaugeWidth){ m_GaugeWidth += 0.01f; }
 
     //現在のゲージ幅をシーンマネージャの変数に代入
-    NurtureMng->SetStaminaWidth(m_GageWidth);
+    NurtureMng->SetStaminaWidth(m_GaugeWidth);
 
     //スタミナゲージの幅高さを設定
     if (NurtureMng->GetIsDataLoaded()) {
-        m_pStaminaGage->SetDisplay(m_GageWidth, 1.0f);
+        m_pStaminaGauge->SetDisplay(m_GaugeWidth, 1.0f);
     }
     else
     {
         //不自然なゲージの動きをなくす
-        m_pStaminaGage->SetDisplay(1.0f, 1.0f);
+        m_pStaminaGauge->SetDisplay(1.0f, 1.0f);
     }
 }

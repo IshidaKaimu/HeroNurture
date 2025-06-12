@@ -212,13 +212,13 @@ void CNurtureHeroSelectScene::Draw()
         //ユイ
         m_pYui->NurtureHeroSelectAnimation();
         m_pYui->Draw();
-        Text->Draw_Text(L"YUI", WriteText::B_Big, HERONAME_POS_NS);
+        Text->Draw_Text(L"Yui", WriteText::B_Big, HERONAME_POS_NS);
         break;
     case 1:
         //カイト
         m_pKaito->NurtureHeroSelectAnimation();
         m_pKaito->Draw();
-        Text->Draw_Text(L"KAITO", WriteText::D_Big, HERONAME_POS_NS);
+        Text->Draw_Text(L"Kaito", WriteText::D_Big, HERONAME_POS_NS);
         break;
     default:
         break;

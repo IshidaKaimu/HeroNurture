@@ -37,7 +37,7 @@ public:
 	void InitTurn() { m_Turn = MAX_TURN; }
 
 	//スタミナゲージの幅の初期化
-	void InitStaminaWidth() { m_GageWidth = 1.0f; }
+	void InitStaminaWidth() { m_GaugeWidth = 1.0f; }
 
 	//----ゲッター・セッター----
 	//読み込み回数制限フラグ
@@ -45,8 +45,8 @@ public:
 	//ターン数
 	int GetRemainingTurn() { return m_Turn; }
 	//スタミナゲージの幅
-	float GetStaminaWidth() { return m_GageWidth; }
-	void  SetStaminaWidth(float width) { m_GageWidth = width; }
+	float GetStaminaWidth() { return m_GaugeWidth; }
+	void  SetStaminaWidth(float width) { m_GaugeWidth = width; }
 	//休息フラグ
 	bool GetRestFlag() { return m_Rest; }
 	void SetRestFlag(bool rest) { m_Rest = rest; }
@@ -56,7 +56,7 @@ private:
 	int         m_Turn;
 
 	//スタミナゲージの幅
-	float m_GageWidth;
+	float m_GaugeWidth;
 
 	//----フラグ----
 	//休息を選択したかのフラグ

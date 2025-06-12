@@ -1,11 +1,11 @@
 #pragma once
-#include "Scene\CSceneBase.h"					//シーンベースクラス
-#include "Camera\CameraManager\CCameraManager.h"//カメラマネージャクラス
-#include "StaticMeshObject\Sky\CSky.h"			//スカイボックスクラス
-#include "WriteText\WriteText.h"				//テキスト描画クラス
-#include "StaticMeshObject\Ground\CGround.h"	//地面クラス
-#include "SkinMeshObject\Hero\Yui\CYui.h"       //ユイクラス
-#include "SkinMeshObject\Hero\Kaito\CKaito.h"   //カイトクラス
+#include "Scene\CSceneBase.h"					
+#include "Camera\CameraManager\CCameraManager.h"
+#include "StaticMeshObject\Sky\CSky.h"			
+#include "WriteText\WriteText.h"				
+#include "StaticMeshObject\Ground\CGround.h"	
+#include "SkinMeshObject\Hero\Yui\CYui.h"       
+#include "SkinMeshObject\Hero\Kaito\CKaito.h"   
 #include <memory>
 #include <Windows.h>
 

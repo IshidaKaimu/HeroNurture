@@ -236,8 +236,14 @@ void CYui::PowerAttackAnim(float vector)
 	static ::EsHandle hTornado = 2;	//竜巻エフェクト
 
 	//敵側か自分かで戻す初期位置を決める
-	if (vector == 1.0f) { InitPos = BATTLEINIT_POS; }
-	else { InitPos = ENEMYINIT_POS; }
+	if (vector == 1.0f)
+	{
+		InitPos = BATTLEINIT_POS; 
+	}
+	else 
+	{ 
+		InitPos = ENEMYINIT_POS; 
+	}
 
 	if (!m_AttackAnimEnd) 
 	{
@@ -478,8 +484,8 @@ void CYui::DamageAnim(float vector)
 		//アニメーションの経過時間を加算
 		m_AnimTime += m_pMesh->GetAnimSpeed();
 
-		bool Return = m_MoveX <= BATTLEINIT_POS.x;     //自分側の場合
-		bool EnemyReturn = m_MoveX >= ENEMYINIT_POS.x; //敵側の場合
+		bool Return      = m_MoveX <= BATTLEINIT_POS.x; //自分側の場合
+		bool EnemyReturn = m_MoveX >= ENEMYINIT_POS.x;	//敵側の場合
 
 		//最初の位置に戻る
 		if (Return || EnemyReturn)

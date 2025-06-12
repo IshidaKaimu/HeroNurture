@@ -44,7 +44,7 @@ void CTraningScene::Create()
     m_pTextBox = make_unique<CUIObject>();
 
     //育成関連のシーンで共通するUIのインスタンス生成
-    CNurtureScene::CreateNurtureUI(m_pStaminaGage,m_pStaminaBack,m_pStaminaFrame, m_pTurnBack);
+    CNurtureScene::CreateNurtureUI(m_pStaminaGauge,m_pStaminaBack,m_pStaminaFrame, m_pTurnBack);
 }
 //破棄関数
 void CTraningScene::Releace()
@@ -61,7 +61,7 @@ void CTraningScene::LoadData()
     m_pGround->LoadData();
 
     //育成関連のシーンで共通するUIのスプライトデータ設定
-    CNurtureScene::LoadNurtureUI(m_pStaminaGage,m_pStaminaBack,m_pStaminaFrame, m_pTurnBack);
+    CNurtureScene::LoadNurtureUI(m_pStaminaGauge,m_pStaminaBack,m_pStaminaFrame, m_pTurnBack);
 
     //トレーニングごとの背景UIのスプライトデータ設定
     switch (HeroMng->GetTraining())
@@ -84,7 +84,7 @@ void CTraningScene::Initialize()
     CSceneManager::GetInstance().InitWhiteFade();
 
     //育成関連のシーンで共通するUI
-    CNurtureScene::InitNurtureUI(m_pStaminaGage,m_pStaminaBack,m_pStaminaFrame, m_pTurnBack);
+    CNurtureScene::InitNurtureUI(m_pStaminaGauge,m_pStaminaBack,m_pStaminaFrame, m_pTurnBack);
 
     //背景画像の設定
     m_pBack->SetPosition(0.0f, 0.0f, 0.0f);
@@ -198,7 +198,7 @@ void CTraningScene::Draw()
     DrawTraningText();
 
     //育成関連のシーンで共通して表示するUI
-    CNurtureScene::DrawNurtureUI(m_pStaminaGage,m_pStaminaBack,m_pStaminaFrame,m_pTurnBack);
+    CNurtureScene::DrawNurtureUI(m_pStaminaGauge,m_pStaminaBack,m_pStaminaFrame,m_pTurnBack);
 
     //深度を戻す
     SceneMng->GetDx11()->SetDepth(true);

@@ -35,13 +35,14 @@ public:
 		HpBack,		        //体力トレーニング背景
 		RestBack,		    //休息背景
 		TextBox,		    //テキストボックス
-		StaminaGage,        //スタミナゲージ
+		StaminaGauge,        //スタミナゲージ
 		StaminaBack,        //スタミナゲージ背景
 		StaminaFrame,       //スタミナゲージ背景
-		HpGage,			    //体力ゲージ
-		EnemyHpGage,	    //敵の体力ゲージ
-		HpGageBack,         //体力ゲージ背景
-		GageFrame,          //ゲージ枠
+		HpGauge,			    //体力ゲージ
+		EnemyHpGauge,	    //敵の体力ゲージ
+		HpGaugeBack,         //体力ゲージ背景
+		GaugeFrame,          //ゲージ枠
+		GaugeDecrease,       //減少時に見える画像
 		TurnBack,			//ターン数背景
 		PowerAttack,	    //筋力攻撃アイコン
 		MagicAttack,		//魔法攻撃アイコン

@@ -15,6 +15,7 @@ CEnemyHeroManager::~CEnemyHeroManager()
 //ì¬‚·‚éƒq[ƒ[‚Ìİ’è
 void CEnemyHeroManager::CreateEnemyHero(enHeroList list)
 {
+    //“G‚É‚È‚Á‚½ƒq[ƒ[‚Ì¶¬
     m_pEnemyHero = Create(list);
     m_SelectEnemyHero = list;
 }

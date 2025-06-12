@@ -100,5 +100,22 @@
             "Power": 178.0,
             "Speed": 109.19999694824219
         }
+    },
+    {
+        "Appropriate": {
+            "Hp": 0.0,
+            "Magic": 10.0,
+            "Power": 20.0,
+            "Speed": 0.0
+        },
+        "HeroName": "Kaito",
+        "Name": "Result",
+        "Number": 7,
+        "Parameter": {
+            "Hp": 332.0,
+            "Magic": 40.0,
+            "Power": 411.6000061035156,
+            "Speed": 60.0
+        }
     }
 ]

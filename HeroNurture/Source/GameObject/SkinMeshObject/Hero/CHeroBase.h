@@ -17,10 +17,10 @@ using json = nlohmann::json;
  constexpr float REDUSE_STAMINA = 25.0f;  //減少量
  constexpr float RECOVERY_STAMINA = 25.0f;  //回復量
  //----バトルシーン----
- const D3DXVECTOR3 BATTLEINIT_POS = { -4.5f,0.0f,0.0f }; //初期座標(自分)
- const D3DXVECTOR3 ENEMYINIT_POS = { 2.5f,0.0f,0.0f };	//初期座標(敵)
- const D3DXVECTOR3 BATTLE_ROTATE = { 0.0f,D3DXToRadian(-90.0f),0.0f };//回転(自分)
- const D3DXVECTOR3 ENEMY_ROTATE = { 0.0f,D3DXToRadian(90.0f),0.0f }; //回転(敵)
+ const D3DXVECTOR3 BATTLEINIT_POS = { -5.5f,0.0f,0.0f }; //初期座標(自分)
+ const D3DXVECTOR3 ENEMYINIT_POS  = { 2.5f,0.0f,0.0f };	//初期座標(敵)
+ const D3DXVECTOR3 BATTLE_ROTATE  = { 0.0f,D3DXToRadian(-90.0f),0.0f };//回転(自分)
+ const D3DXVECTOR3 ENEMY_ROTATE   = { 0.0f,D3DXToRadian(90.0f),0.0f }; //回転(敵)
 
 //=====================================
 // ヒーロー基底クラス

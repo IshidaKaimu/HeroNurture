@@ -21,7 +21,12 @@ CHeroManager::~CHeroManager()
 //ヒーロー構築関数
 void CHeroManager::CreateHero(enHeroList list)
 {
+    //選択されたヒーローのクラスを生成
     m_pHero = Create(list);
+
+    //選択されたヒーローの名前を保存
+    m_SelectHero = list;
+    
 }
 
 //各ヒーロークラスのインスタンス生成
@@ -60,6 +65,7 @@ void CHeroManager::StaminaRecovery()
     {
         m_Stamina += 0.0f;
     }
+    
     //回復後のスタミナを保存
     m_AfterStamina = m_Stamina;
 

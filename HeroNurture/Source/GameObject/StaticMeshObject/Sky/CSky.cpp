@@ -4,8 +4,8 @@
 CSky::CSky()
 {
 	SetScale(1.7f, 1.7f, 1.7f);
-	SetPosition(0.0f, 0.0f, 0.0f);
-	SetRotation(D3DXToRadian(180), D3DXToRadian(90), 0.0f);
+	SetPosition(0.0f, -30.0f, 0.0f);
+	SetRotation(D3DXToRadian(0), D3DXToRadian(90), 0.0f);
 }
 
 CSky::~CSky()
@@ -31,7 +31,7 @@ void CSky::Draw()
 		return;
 	}
 
-	m_vRotation.y += 0.0005f;
+	m_vRotation.y += 0.005f;
 
 	//•`‰æ’¼‘O‚ÅÀ•W‚â‰ñ“]î•ñ‚È‚Ç‚ðXV.
 	m_pSkyMesh->SetPosition(m_vPosition);

@@ -77,10 +77,10 @@ void CKaitoAppearanceScene::Initialize()
 
 void CKaitoAppearanceScene::Update()
 {
-	CHeroManager* HeroMng = &CHeroManager::GetInstance();
-	CKeyManager* KeyMng = &CKeyManager::GetInstance();
+	CHeroManager* HeroMng	= &CHeroManager::GetInstance();
+	CKeyManager* KeyMng		= &CKeyManager::GetInstance();
 	CSceneManager* SceneMng = &CSceneManager::GetInstance();
-	CEffect* Eff = CEffect::GetInstance();
+	CEffect* Eff			= CEffect::GetInstance();
 
 	//バトルヒーロー選択BGMを停止
 	CSoundManager::GetInstance()->Stop(CSoundManager::BGM_BattleHeroSelect);
@@ -194,14 +194,18 @@ void CKaitoAppearanceScene::KaitoAppearance()
 	//エフェクトハンドルの用意
 	static ::EsHandle hMagicSircle = -1;	//魔法陣エフェクト
 	static ::EsHandle hLaser       = 3;	    //光エフェクト
+
 	//----魔法陣エフェクトの設定----
 	Eff->Speed(hMagicSircle, 1.0f);
 	Eff->Scale(hMagicSircle,  MAGICSIRCLE_SCALE);
 	Eff->Rotate(hMagicSircle, MAGICSIRCLE_ROTATE);
+	//------------------------------
+	
 	//----光エフェクトの設定----
 	Eff->Speed(hLaser, 1.0f);
 	Eff->Scale(hLaser,  LASER_SCALE);
 	Eff->Rotate(hLaser, LASER_ROTATE);
+	//--------------------------
 
 	switch (m_Scene)
 	{
@@ -240,6 +244,7 @@ void CKaitoAppearanceScene::KaitoAppearance()
 		//カメラの設定
 		SetCamera(D3DXVECTOR3(MAGICSIRCLE_CAMPOS.x - m_MoveCamPos.x, MAGICSIRCLE_CAMPOS.y + m_MoveCamPos.y, MAGICSIRCLE_CAMPOS.z - m_MoveCamPos.z),
 			      D3DXVECTOR3(MAGICSIRCLE_POS.x, MAGICSIRCLE_POS.y + m_MoveCamLook.y, MAGICSIRCLE_POS.z));
+		
 		//カメラをz軸方向に移動
 		if (m_MoveCamPos.z <= MOVE_CAMPOS_MAX.z)
 		{
@@ -324,8 +329,6 @@ void CKaitoAppearanceScene::KaitoAppearance()
 			}
 		}
 
-		break;
-	default:
 		break;
 	}
 }

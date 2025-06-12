@@ -7,7 +7,8 @@
 #include "ImGui\ImGuiManager\ImGuiManager.h"
 #include "Json\CJson.h"
 #include "Utility\CUtility.h"
-#include "Sprite2D\UIManager\CUIManager.h" 
+#include "Sprite2D\UIManager\CUIManager.h"
+#include "Light\LightManager\CLightManager.h"
 #include <cmath>
 
 //定数の名前空間
@@ -21,8 +22,6 @@ CTitleScene::CTitleScene()
     , m_pGround ()
     , m_HeroNo  ()
 {
-    //ライト情報
-    m_Light.vDirection = D3DXVECTOR3(0.0f, 1.0f, 0.0f); //ライト方向
 }
 
 CTitleScene::~CTitleScene()
@@ -32,20 +31,32 @@ CTitleScene::~CTitleScene()
 void CTitleScene::Create()
 {
     //----スタティックメッシュ----
+
     //スカイボックス
     m_pSky = std::make_unique<CSky>();
+
     //地面
     m_pGround = std::make_unique<CGround>();
+
+    //---------------------------
+
     
     //----スキンメッシュ----
+    
     //ユイ
     m_pYui = std::make_unique<CYui>();
+   
     //カイト
     m_pKaito = std::make_unique<CKaito>();
+    
+    //----------------------
 
     //----UI----
+   
     //選択矢印
     m_pSelectArrow = std::make_unique<CUIObject>();
+
+    //----------
 }
 
 void CTitleScene::Releace()
@@ -58,14 +69,28 @@ void CTitleScene::LoadData()
     CMeshManager* MeshMng = CMeshManager::GetInstance();
     CUIManager* UiMng = &CUIManager::GetInstance();
     //----スタティックメッシュ----
-    m_pGround->AttachMesh(MeshMng->GetMesh(CMeshManager::Ground));//地面
+  
+    //地面
+    m_pGround->AttachMesh(MeshMng->GetMesh(CMeshManager::Ground));
+   
+    //----------------------------
 
     //----タイトル画面に表示するヒーローのメッシュ設定----
-    m_pYui->LoadMeshData();  //ユイ
-    m_pKaito->LoadMeshData();//カイト
+    
+     //ユイ
+    m_pYui->LoadMeshData();  
+
+    //カイト
+    m_pKaito->LoadMeshData();    
+    
+    //----------------------------------------------------
 
     //----UI----
-    m_pSelectArrow->AttachSprite(UiMng->GetSprite(CUIManager::SelectArrow)); //選択肢矢印
+
+    //選択肢矢印
+    m_pSelectArrow->AttachSprite(UiMng->GetSprite(CUIManager::SelectArrow)); 
+
+    //----------
 }
 
 void CTitleScene::Initialize()
@@ -158,18 +183,18 @@ void CTitleScene::Draw()
     m_pGround->Draw();
 
 
-    //表示を切り替える
+    //各ヒーローの描画,アニメーション
     switch (m_HeroNo)
     {
     case 0:
+        //ユイ
         m_pYui->MoveSelectAnim();
         m_pYui->Draw();
         break;
     case 1:
+        //カイト
         m_pKaito->MoveSelectAnim();
         m_pKaito->Draw();
-        break;
-    default:
         break;
     }
 
@@ -183,6 +208,9 @@ void CTitleScene::Draw()
 
 void CTitleScene::Debug()
 {
+    CLightManager::GetInstance().Debug();
+
+
 #ifdef DEBUG
     ImGui::Begin(JAPANESE("カメラ"));
     ImGui::InputFloat3(JAPANESE("カメラ座標"), m_CamPos);

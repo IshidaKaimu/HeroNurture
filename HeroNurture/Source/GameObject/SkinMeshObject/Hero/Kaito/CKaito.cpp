@@ -89,9 +89,10 @@ void CKaito::EnemyInitialize()
 
 void CKaito::AppearanceInitialize()
 {
-	//座標の設定
-	SetPosition(APPEALANCE_POS);
-
+	//初期設定
+	SetPosition(APPEALANCE_POS);	//座標
+	SetScale(APPEALANCE_SCALE);		//拡縮
+	
 	//アニメーション関連の初期化
 	AnimInit();
 }

@@ -133,25 +133,25 @@ protected:
     // =======================		
     //インスタンス生成
 	void CreateNurtureUI(
-		std::unique_ptr<CUIObject>& gage, 
+		std::unique_ptr<CUIObject>& gauge, 
 		std::unique_ptr<CUIObject>& back,
 		std::unique_ptr<CUIObject>& frame,
 		std::unique_ptr<CUIObject>& turnback);
 	//データのロード
 	void LoadNurtureUI(
-		std::unique_ptr<CUIObject>& gage,
+		std::unique_ptr<CUIObject>& gauge,
 		std::unique_ptr<CUIObject>& back,
 		std::unique_ptr<CUIObject>& frame,
 		std::unique_ptr<CUIObject>& turnback);
 	//初期化
 	void InitNurtureUI(
-		std::unique_ptr<CUIObject>& gage, 
+		std::unique_ptr<CUIObject>& gauge, 
 		std::unique_ptr<CUIObject>& back, 
 		std::unique_ptr<CUIObject>& frame,
 		std::unique_ptr<CUIObject>& turnback);
 	//描画
 	void DrawNurtureUI(
-		std::unique_ptr<CUIObject>& gage, 
+		std::unique_ptr<CUIObject>& gauge, 
 		std::unique_ptr<CUIObject>& back, 
 		std::unique_ptr<CUIObject>& frame,
 		std::unique_ptr<CUIObject>& turnback);
@@ -184,7 +184,7 @@ public:
 	void DrawRemainingTurn();
 
 	//ゲージアニメーション
-	void StaminaGageAnim();
+	void StaminaGaugeAnim();
 public:
 	//カメラマネージャクラス
 	CCameraManager* m_pCamera;
@@ -214,13 +214,13 @@ public:
 	//休息UI
 	std::unique_ptr<CUIObject> m_pRest;
 	//スタミナゲージ
-	std::unique_ptr<CUIObject> m_pStaminaGage;
+	std::unique_ptr<CUIObject> m_pStaminaGauge;
 	//スタミナゲージ背景
 	std::unique_ptr<CUIObject> m_pStaminaBack;
 	//スタミナゲージ枠
 	std::unique_ptr<CUIObject> m_pStaminaFrame;
 	//スタミナゲージの幅
-	float m_GageWidth;
+	float m_GaugeWidth;
 	//ターン数の背景
 	std::unique_ptr<CUIObject> m_pTurnBack;
 	//失敗率背景(30%以下)

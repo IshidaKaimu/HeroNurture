@@ -13,6 +13,11 @@ class CHeroManager
 {
 
 public:
+
+	// =======================
+	// 列挙型
+	// =======================
+
 	//トレーニングリスト
 	enum enTraningList : char
 	{
@@ -24,6 +29,8 @@ public:
 		Max_T,
 	};
 
+	// =======================
+
 public:
 	//フレンド宣言でアクセス権を与える.
 	friend class CSingleton<CHeroManager>;
@@ -33,12 +40,17 @@ public:
 	// =======================
 	// 各シーンごとの初期化
 	// =======================
+	
 	//主に使用する初期化
 	void Initialize()					{ m_pHero->Initialize(); }
+	
 	//バトルシーンで使用する初期化
 	void BattleInitialize()				{ m_pHero->BattleInitialize(); }
+	
 	//バトル開始時登場シーンでの初期化
 	void AppearanceInitialize()			{ m_pHero->AppearanceInitialize(); };
+	
+	//=========================
 
 	//データ読み込み関数
 	void LoadMeshData()					{ m_pHero->LoadMeshData(); }
@@ -62,14 +74,19 @@ public:
 	static std::unique_ptr<CHeroBase>Create(enHeroList list);
 
 	// =======================
+
+	// =======================
 	// 各シーンごとのアニメーション
 	// =======================
-    //ヒーロー選択シーン 
+
+	//ヒーロー選択シーン 
 	void NurtureHeroSelectAnimation() { m_pHero->NurtureHeroSelectAnimation(); } 
 	//育成シーン
 	void NurtureAnimation(int no)	  { m_pHero->NurtureAnimation(no); }
 	//バトル開始時登場シーン
 	void AppearanceAnimation()		  { m_pHero->AppearanceAnimation(); };
+
+	// =======================
 
 	// =======================
 	// 各パラメータ上昇関数
@@ -86,6 +103,7 @@ public:
 	// =======================
 	// 各ヒーローの攻撃関数
 	// =======================
+
 	//攻撃1(筋力による攻撃)
 	float PowerAttack()  override {  return m_pHero->PowerAttack(); }
 	//攻撃2(魔力による攻撃)
@@ -94,8 +112,11 @@ public:
 	float UniqueAttack() override {  return m_pHero->UniqueAttack(); }
 
 	// =======================
+
+	// =======================
 	// 各バトルフェーズでのアニメーション
 	// =======================
+	
 	// 行動選択フェーズ中のアニメーション
 	void MoveSelectAnim()  override				{ m_pHero->MoveSelectAnim(); }
 	//----攻撃フェーズ----
@@ -108,9 +129,13 @@ public:
 	//ダメージを受けたときのアニメーション
 	void DamageAnim(float vector) override		{ m_pHero->DamageAnim(vector); }
 
+	//========================
+
+
 	// =======================
 	// スタミナゲージ関連関数
 	// =======================	
+	
 	//スタミナの初期化
 	void InitStamina() { m_Stamina = MAX_STAMINA; }
 	//スタミナの減少
@@ -118,9 +143,11 @@ public:
 	//スタミナの回復
 	void StaminaRecovery();
 
+	//========================
+
+
 	//ダメージ関数
 	void Damage(float damage) { m_pHero->Damage(damage); }
-
 	//死亡関数
 	bool Death() { return m_pHero->GetHp() <= 0.0f; }
 
@@ -129,12 +156,13 @@ public:
 
 	//選択しているヒーローを文字列で返す関数
 	std::string GetSelectHeroName();
-	//選択されているバトルに使用されるヒーローを文字列で返す
-	std::string GetSelectBattleHeroName();
+
+	//========================
 
 	// =======================
 	// ゲッター・セッター関数
 	// =======================
+	
 	// 座標の取得
 	D3DXVECTOR3 GetPosition() { return m_pHero->GetPosition(); }	
 	//選択したヒーロー
@@ -181,6 +209,9 @@ public:
 	void SetDamageAnimEndFlag(bool damageanimend) { m_pHero->SetDamageAnimEndFlag(damageanimend); }
 	//登場アニメーション終了フラグ
 	bool GetAppealanceAnimEndFlag() { return m_pHero->GetAppealanceAnimEndFlag(); }
+
+	// =======================
+
 
 private:
 	//他からアクセスすることがないように

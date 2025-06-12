@@ -46,8 +46,8 @@ namespace Constant_BattleScene
 	//----カメラ情報----
 	const D3DXVECTOR3 INIT_CAMPOS	= { -1.5f,2.0f,-7.0f };		   //初期座標
 	const D3DXVECTOR3 INIT_CAMLOOK  = { -1.5f,2.0f,0.0f };		   //初期注視点
-	const D3DXVECTOR3 INIT_MOVE_CAMPOS  = { -8.0f, 0.0f, 0.0f };   //カメラを動かす値の初期座標
-	const D3DXVECTOR3 INIT_MOVE_CAMLOOK = { 0.0f, 0.0f, 0.0f };    //カメラを動かす値の初期注視点
+	const D3DXVECTOR3 INIT_MOVE_CAMPOS  = { -8.0f, 1.0f, 0.0f };   //カメラを動かす値の初期座標
+	const D3DXVECTOR3 INIT_MOVE_CAMLOOK = { 0.0f, 1.0f, 0.0f };    //カメラを動かす値の初期注視点
 	//行動選択時
 	//2カット目(カット番号は1)
 	constexpr float   START_CAMPOS_FAST_Y    = 4.0f;				 //開始時座標
@@ -55,11 +55,11 @@ namespace Constant_BattleScene
 	const D3DXVECTOR3 START_CAMLOOK_FAST     = { 0.0f, 2.0f, 0.0f }; //開始時注視点
 	constexpr float   MAX_MOVE_CAMPOS_FAST_X = 8.0f;			     //動かすカメラ座標のy軸最大値
     //3カット目
-	constexpr float   SHIFT_CAMPOS_SECOND_Y    = 2.0f;			   //開始時座標をずらすy軸の値
+	constexpr float   SHIFT_CAMPOS_SECOND_X    = 2.0f;			   //開始時座標をずらすx軸の値
 	constexpr float   SHIFT_CAMPOS_SECOND_Z    = 1.0f;			   //開始時座標をずらすz軸の値
 	constexpr float   MAX_MOVE_CAMPOS_SECOND_Y = 2.0f;			   //動かすカメラ座標のy軸最大値
 	//4カット目
-	constexpr float   SHIFT_CAMPOS_THIRD_Y    = 4.0f;			   //開始時座標をずらすy軸の値
+	constexpr float   SHIFT_CAMPOS_THIRD_X    = 4.0f;			   //開始時座標をずらすx軸の値
 	constexpr float   SHIFT_CAMPOS_THIRD_Z    = -1.5f;			   //開始時座標をずらすz軸の値
 	constexpr float   MAX_MOVE_CAMPOS_THIRD_Y = 2.0f;			   //動かすカメラ座標のy軸最大値
 	//カット遷移の前に少し止める際に使うカウント
@@ -76,13 +76,13 @@ namespace Constant_BattleScene
 
 	//----ゲージ情報----
 	//HP
-	const D3DXVECTOR3 HPGAGE_POS     = { 0.0f, 80.0f, 0.0f }; //座標
-	const D3DXVECTOR3 HPGAGE_SCALE   = { 0.8f, 0.8f, 0.8f };//拡縮
-	const D3DXVECTOR2 HPGAGE_DISPLAY = { 1.0f, 1.0f };	  //幅
+	const D3DXVECTOR3 HPGAUGE_POS     = { 0.0f, 80.0f, 0.0f }; //座標
+	const D3DXVECTOR3 HPGAUGE_SCALE   = { 0.8f, 0.8f, 0.8f };//拡縮
+	const D3DXVECTOR2 HPGAUGE_DISPLAY = { 1.0f, 1.0f };	  //幅
 	//HPの枠
 	const D3DXVECTOR3 HPFRAME_POS = { 0.0f, 74.0f, 0.0f };
 	//敵のHP
-	const D3DXVECTOR3 ENEMY_HPGAGE_POS  = { 800.0f, 80.0f, 0.0f };  //座標
+	const D3DXVECTOR3 ENEMY_HPGAUGE_POS  = { 800.0f, 80.0f, 0.0f }; //座標
 	//敵のHPの枠
 	const D3DXVECTOR3 ENEMY_HPFRAME_POS = { 800.0f, 74.0f, 0.0f }; //座標
 	//-----------------
@@ -99,16 +99,23 @@ namespace Constant_BattleScene
 	//攻撃アイコンに被せる画像
 	constexpr float ATTACK_COVER_ALPHA = 0.8f;
 	//----------------
+
 	
 	//----ターン数----
 	const D3DXVECTOR2 HERO_TURNTEXT_POS  = { 450.0f, -30.0f };	//座標(自分)
 	const D3DXVECTOR2 ENEMY_TURNTEXT_POS = { 340.0f, -30.0f };	//座標(敵)
 	//----------------
 
-	//----役割名----
-	const D3DXVECTOR2 HERO_TEXT_POS      = { 0.0f, -30.0f };	//座標(自分)
-	const D3DXVECTOR2 ENEMYHERO_TEXT_POS = { 1050.0f, -30.0f };	//座標(敵)
-	//--------------
+	//----役割ごとの名前----
+	//ユイ
+	const D3DXVECTOR2 YUI_TEXT_POS		 = { 0.0f, -30.0f };	//座標(自分)
+	const D3DXVECTOR2 ENEMY_YUI_TEXT_POS = { 1150.0f, -30.0f }; //座標(敵)
+
+	//カイト
+	const D3DXVECTOR2 KAITO_TEXT_POS	   = { 0.0f, -30.0f };	  //座標(自分)
+	const D3DXVECTOR2 ENEMY_KAITO_TEXT_POS = { 1100.0f, -30.0f }; //座標(敵)
+
+	//----------------------
 }
 
 //=====================================
@@ -165,36 +172,48 @@ private:
 	void LoadBattleData();
 
 	//攻撃アイコンの描画
-	void DrawAttack(std::unique_ptr<CUIObject>& icon,D3DXVECTOR3 pos,float alpha);
-
+	void DrawAttack(std::unique_ptr<CUIObject>& icon, D3DXVECTOR3 pos, float alpha);
+	 
 	//----体力ゲージ関連----
+	
 	//それぞれの体力ゲージの描画
-	void DrawHpGage();
+	void DrawHpGauge();
+	
 	//体力ゲージ/背景の初期設定
-	void InitHpGage();
+	void InitHpGauge();
+	
 	//体力ゲージのアニメーション
-	void HpGageAnim(std::unique_ptr<CUIObject>& gage, float hp, float maxhp, float& width);
+	void HpGaugeAnim(std::unique_ptr<CUIObject>& Gauge, float hp, float maxhp, float speed, float& width);
+	
+	//----------------------
 
 	//----各フェーズで行う処理----
-	//行動選択フェーズ中の処理
-	void MoveSelect();
-	//攻撃フェーズ中の処理
-	void Attack();
-	//次のターン準備中の処理
-	void SetUpToNextTurn();
-
-	//行動選択フェーズ中のカメラの動き
-	void MoveSelectCamera();
+	
+	//行動選択フェーズ
+	void MoveSelect();		 //主な処理
+	void MoveSelectCamera(); //カメラの動き
+	
+	//攻撃フェーズ
+	void Attack();			 //主な処理
+	
+	//次のターンの準備フェーズ
+	void SetUpToNextTurn();	 //主な処理
+	
+	//----------------------------
 
 	//----それぞれのターンに行う処理----
+	
 	//自分
 	void HeroTurn();     //行動処理
 	void DrawHeroTurn(); //UI等描画処理
+	
 	//敵
 	void EnemyHeroTurn();     //行動処理
 	void DrawEnemyHeroTurn(); //UI等描画処理
 	//ターンごとの攻撃の設定
 	void SettingAttack(int no , enAttackList& attacklist);
+	
+	//----------------------------------
 
 private:
 	//カメラマネージャー
@@ -204,26 +223,39 @@ private:
 	// オブジェクトクラス
 	// =======================		
 	//----スタティックメッシュ----
+	
 	//地面
 	std::unique_ptr<CGround> m_pGround;
+	
 	//----------------------------
 	
 	//----UI----
+	
 	//自分の体力ゲージ
-	std::unique_ptr<CUIObject> m_pHpGage;	   //ゲージ
-	std::unique_ptr<CUIObject> m_pHpGageBack;  //背景
-	std::unique_ptr<CUIObject> m_pHpGageFrame; //枠
+	std::unique_ptr<CUIObject> m_pHpGauge;		//ゲージ
+	std::unique_ptr<CUIObject> m_pHpGaugeBack;	//背景
+	std::unique_ptr<CUIObject> m_pHpGaugeFrame;	//枠
+	std::unique_ptr<CUIObject> m_pHpDecrease;	//減少時に見える画像	
+
+	
 	//敵の体力ゲージ
-	std::unique_ptr<CUIObject> m_pEnemyHpGage;	  //ゲージ
-	std::unique_ptr<CUIObject> m_pEnemyHpGageBack;//背景
-	std::unique_ptr<CUIObject> m_pEnemyHpGageFrame;//枠
+	std::unique_ptr<CUIObject> m_pEnemyHpGauge;		//ゲージ
+	std::unique_ptr<CUIObject> m_pEnemyHpGaugeBack;	//背景
+	std::unique_ptr<CUIObject> m_pEnemyHpGaugeFrame;	//枠
+	std::unique_ptr<CUIObject> m_pEnemyHpDecrease;	//減少時に見える画像	
+
 	//筋力攻撃アイコン
 	std::unique_ptr<CUIObject> m_pPowerAttack;
+	
 	//魔力攻撃アイコン
 	std::unique_ptr<CUIObject> m_pMagicAttack;
+	
 	//選択されていない攻撃アイコンにかぶせる画像
 	std::unique_ptr<CUIObject> m_pAttackCover;
+	
 	//----------
+
+	//========================
 
 	//jsonクラス
 	std::unique_ptr<CJson> m_pJson;
@@ -233,9 +265,17 @@ private:
 	//敵のパラメータのデータ
 	json m_EnemyHeroData;
 
-	//体力ゲージの変動する幅
-	float m_HpWidth;    //自分
-	float m_EnemyHpWidth;//敵
+	//----体力ゲージの変動する幅----
+	
+	//自分
+	float m_HpWidth;		 //ゲージ本体
+	float m_HpDecreaseWidth; //減少時に見える画像
+
+	//敵
+	float m_EnemyHpWidth;		  //ゲージ本体
+	float m_EnemyHpDecreaseWidth; //減少時に見える画像
+
+	//------------------------------
 
 	//経過ターン数
 	int m_BattleTurn;
@@ -244,23 +284,32 @@ private:
 	int m_MoveSelectCut;
 
 	//----フラグ----
+	
 	//ターンの順を決めるフラグ
 	bool m_IsHeroTurn;
+	
 	//現在どちらのターンかを判断するフラグ
 	bool m_CurrentTurn;
+	
 	//行動を選択済みであるかの判断
 	bool m_SelectAttack;
+	
 	//-------------
 
 	//----列挙型----
+	
 	//自分が選択する攻撃のリスト
 	enAttackList m_Attack;
+	
 	//敵の選択する攻撃のリスト
 	enAttackList m_EnemyAttack;
+	
 	//敵の攻撃を決める番号
 	int m_EnemyAttackNo;
+	
 	//バトルのフェーズ
 	enBattlePhase m_BattlePhase;
+	
 	//--------------
 
 

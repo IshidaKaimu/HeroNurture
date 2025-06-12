@@ -10,6 +10,8 @@ namespace Constant_KaitoAppearanceScene
 	//カイト
 	const D3DXVECTOR3 INIT_CAMPOS  = { 1.0f, 0.5f, -5.0f };  //初期座標
 	const D3DXVECTOR3 INIT_CAMLOOK = { 0.0f, 0.0f,  -5.0f }; //初期注視点
+	//------------------
+	
 	//----イベント演出----
 	//カメラ
 	constexpr float CAM_MOVE_SPEED = 0.03f; //カメラの動く速度
@@ -22,25 +24,32 @@ namespace Constant_KaitoAppearanceScene
 	const D3DXVECTOR3 LASER_POS      = { 0.0f, 0.5f, -5.0f };				 //座標
 	const D3DXVECTOR3 LASER_SCALE    = { 5.0f, 5.0f, 5.0f  };				 //拡縮
 	const D3DXVECTOR3 LASER_ROTATE   = { D3DXToRadian(270.0f), 1.0f, 1.0f }; //回転
+	//-------------------
+
 	//イベント演出用数値
 	//----シーン0----
 	//移動させるカメラのy軸の値
 	constexpr float ANIMCHANGE_CAMPOS_Y = 10.0f;
 	//シーンを0から1に遷移させるためのカウント
 	constexpr int   ANIMCHANGE_CNT      = 60;  
+	//---------------
+	
 	//----シーン1----
 	//カメラを移動させる値の最大値
-	const D3DXVECTOR3 MOVE_CAMPOS_MAX         = { 1.0f, 6.0f, 12.0f }; //座標
+	const D3DXVECTOR3 MOVE_CAMPOS_MAX         = { 1.0f, 6.0f, 10.0f }; //座標
 	constexpr float   MOVE_CAMLOOK_MAX_Y      = 4.0f;				   //注視点y軸
 	//次のシーンでの初期座標
 	const D3DXVECTOR3 MOVE_CAMPOS_INIT	  = {  0.0f, 1.0f, 5.0f }; //座標
 	//シーン1から2へ遷移するために用いるカウント
 	constexpr int     SCENECHANGE_CNT_FAST	= 240;
+	//---------------
+
 	//----シーン2----
 	//カメラを移動させる値の最大値
-	constexpr float   MOVE_CAMPOS_MAX_Y         = 6.5f; //座標y軸
+	constexpr float   MOVE_CAMPOS_MAX_Y    = 4.5f; //座標y軸
 	//シーン2から終了するために用いるカウント
 	constexpr int     SCENECEND_CNT_SECOND = 120;
+	//---------------
 }
 
 //=====================================
@@ -71,11 +80,14 @@ class CKeyManager;
 class CEffect;
 //テキスト
 class WriteText;
+//-------------------------
+
 //----オブジェクトクラス----
 //カイト
 class CKaito;
 //地面
 class CGround;
+//--------------------------
 
 //=====================================
 // カイト登場シーンクラス
@@ -106,9 +118,11 @@ public:
 
 private:
 	//登場シーンのアニメーション関数
+	
 	//カイト
 	void KaitoAppearance();
-	//----各ヒーローの登場シーンのカメラ設定関数----
+	
+	//登場シーンのカメラ設定関数
 	void SetCamera(D3DXVECTOR3 pos, D3DXVECTOR3 look);
 
 private:
@@ -121,6 +135,7 @@ private:
 	//----スタティックメッシュ----
 	//地面
 	std::unique_ptr<CGround> m_pGround;
+	//----------------------------
 
 	//----フラグ----
 	//非表示フラグ
@@ -129,6 +144,7 @@ private:
 	bool m_AnimEndFlag;
 	//演出スキップフラグ
 	bool m_SkipFlag;
+	//--------------
 
 };
 

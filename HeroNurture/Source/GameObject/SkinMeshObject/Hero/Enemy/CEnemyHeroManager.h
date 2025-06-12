@@ -47,21 +47,29 @@ public:
 	// =======================
 	// 各ヒーローの攻撃関数
 	// =======================
+	
 	//攻撃1(筋力による攻撃)
 	float PowerAttack()  override {  return m_pEnemyHero->PowerAttack(); }
+	
 	//攻撃2(魔力による攻撃)
 	float MagicAttack()  override {  return m_pEnemyHero->MagicAttack(); }
+	
 	//固有攻撃(各ヒーローの一番高いステータスを反映した攻撃)
 	float UniqueAttack() override {  return m_pEnemyHero->UniqueAttack(); }
+	
+	//=========================
+
+
+    // =======================
+	// アニメーション
+	// =======================
 
 	//バトル開始時登場シーンのアニメーション
 	void AppearanceAnimation() { m_pEnemyHero->AppearanceAnimation(); };
 
-	// =======================
-	// 各バトルフェーズでのアニメーション
-	// =======================
 	// 行動選択中のアニメーション
 	void MoveSelectAnim()  override { m_pEnemyHero->MoveSelectAnim(); }
+	
 	//----攻撃フェーズ----
 	//攻撃1中のアニメーション
 	void PowerAttackAnim(float vector) override { m_pEnemyHero->PowerAttackAnim(vector); }
@@ -71,6 +79,10 @@ public:
 	void UniqueAttackAnim()override { m_pEnemyHero->UniqueAttackAnim(); }
 	//ダメージを受けるときのアニメーション
 	void DamageAnim(float vector)override { m_pEnemyHero->DamageAnim(vector); }
+	//--------------------
+
+	//========================
+
 
 	//バトル中の位置の初期化
 	void BattleInitPos() { m_pEnemyHero->SetPosition(ENEMYINIT_POS); }
@@ -78,26 +90,35 @@ public:
 	// =======================
 	// ゲッター・セッター関数
 	// =======================	
+	
 	// 座標の取得
 	D3DXVECTOR3 GetPosition() { return m_pEnemyHero->GetPosition(); }
+	
 	//バトルに使用するパラメータ情報
 	void SetBattleParamData(const json& jsondata) { m_pEnemyHero->SetBattleParamData(jsondata); };
 	enParam GetBattleParamData() { return m_pEnemyHero->GetBattleParamData(); };
 	//敵ヒーロー
 	enHeroList GetSelectEnemyHero() { return m_SelectEnemyHero; }
+	
 	//敵ヒーローの名前の文字列
 	std::string GetEnemyHeroName();
+	
 	//バトル中体力
 	float GetHp() { return m_pEnemyHero->GetHp(); }
 	void SetHp(float hp) { m_pEnemyHero->SetHp(hp); }
+	
 	//ダメージフラグ
 	bool GetDamageFlag() { return m_pEnemyHero->GetDamageFlag(); }
+	
 	//アニメーション終了フラグ
 	bool GetAttackAnimEndFlag() { return m_pEnemyHero->GetAttackAnimEndFlag(); }
 	void SetAttackAnimEndFlag(bool animend) { m_pEnemyHero->SetAttackAnimEndFlag(animend); }
+	
 	//ダメージアニメーション終了フラグ
 	bool GetDamageAnimEndFlag() { return m_pEnemyHero->GetDamageAnimEndFlag(); }
 	void SetDamageAnimEndFlag(bool damageanimend) { m_pEnemyHero->SetDamageAnimEndFlag(damageanimend); }
+	
+	//======================
 
 
 private:

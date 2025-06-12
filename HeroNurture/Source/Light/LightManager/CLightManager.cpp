@@ -5,11 +5,11 @@ CLightManager::CLightManager()
     : m_Light()
 {
     //ライト位置の設定
-    m_Light.Position   = D3DXVECTOR3(0.0f, 1.0f, 0.0f);
+    m_Light.Position   = D3DXVECTOR3(0.0f, 5.0f, 0.0f);
     //ライト方向
-    m_Light.vDirection = D3DXVECTOR3(0.0f, 5.0f, -10.0f);
+    m_Light.vDirection = D3DXVECTOR3(0.0f, 7.0f, -5.0f);
     //ライト強度
-    m_Light.Intensity  = 30.0f;
+    m_Light.Intensity  = 10.0f;
 }
 
 CLightManager::~CLightManager()
