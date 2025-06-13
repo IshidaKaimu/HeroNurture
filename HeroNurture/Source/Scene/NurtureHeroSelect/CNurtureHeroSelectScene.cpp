@@ -18,7 +18,7 @@
 using namespace Constant_NurtureHeroSelectScene;
 
 CNurtureHeroSelectScene::CNurtureHeroSelectScene()
-    : m_pCamera    (&CCameraManager::GetInstance())
+    : m_pCamera    ( &CCameraManager::GetInstance() )
     , m_pYui       ()
     , m_pKaito     ()
     , m_UserName   ()
@@ -209,16 +209,20 @@ void CNurtureHeroSelectScene::Draw()
     switch (m_SelectNo)
     {
     case 0:
+        
         //ユイ
-        m_pYui->NurtureHeroSelectAnimation();
-        m_pYui->Draw();
-        Text->Draw_Text(L"Yui", WriteText::B_Big, HERONAME_POS_NS);
+        m_pYui->NurtureHeroSelectAnimation();                       //ヒーロー選択中のアニメーション
+        m_pYui->Draw();                                             //描画
+        Text->Draw_Text(L"Yui", WriteText::B_Big, HERONAME_POS_NS); //名前の描画
+        
         break;
     case 1:
+        
         //カイト
-        m_pKaito->NurtureHeroSelectAnimation();
-        m_pKaito->Draw();
-        Text->Draw_Text(L"Kaito", WriteText::D_Big, HERONAME_POS_NS);
+        m_pKaito->NurtureHeroSelectAnimation();                       //ヒーロー選択中のアニメーション
+        m_pKaito->Draw();                                             //描画
+        Text->Draw_Text(L"Kaito", WriteText::D_Big, HERONAME_POS_NS); //名前の描画
+
         break;
     default:
         break;

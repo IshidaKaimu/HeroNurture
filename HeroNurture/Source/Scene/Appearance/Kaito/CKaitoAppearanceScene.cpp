@@ -37,10 +37,23 @@ void CKaitoAppearanceScene::Create()
 {
 	CHeroManager* HeroMng = &CHeroManager::GetInstance();
 
+	//====オブジェクトクラス====
+	
+	//----スキンメッシュ----
+	
 	//カイト
 	m_pKaito = make_unique<CKaito>();
+
+	//----------------------
+	
+	//----スタティックメッシュ----
+
 	//地面
 	m_pGround = make_unique<CGround>();
+
+	//----------------------------
+
+	//===========================
 }
 
 void CKaitoAppearanceScene::Releace()
@@ -326,6 +339,7 @@ void CKaitoAppearanceScene::KaitoAppearance()
 				m_AnimEndFlag = true;
 				//魔法陣エフェクトの停止
 				Eff->Stop(hMagicSircle);
+
 			}
 		}
 

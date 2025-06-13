@@ -519,18 +519,6 @@ void CYui::DamageAnim(float vector)
 
 }
 
-//攻撃1
-float CYui::PowerAttack()
-{
-	return CHeroBase::PowerAttack();
-}
-
-//攻撃2
-float CYui::MagicAttack()
-{
-	return CHeroBase::MagicAttack();
-}
-
 //アニメーションに関する初期化
 void CYui::AnimInit()
 {

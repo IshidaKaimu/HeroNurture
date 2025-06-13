@@ -16,8 +16,8 @@ CKaito::CKaito()
 	, m_EffPosZ		(1.0f)
 
 {
+	SetPosition(0.0f, 0.0f, -3.0f);
 	SetScale(0.75f, 0.75f, 0.75f);
-	SetPosition(0.0f, 0.0f, 1.2f);
 }
 
 CKaito::~CKaito()
@@ -129,21 +129,6 @@ void CKaito::SetBattleParamData(const json& jsondata)
 //更新関数
 void CKaito::Update()
 {
-	//--------------------------
-	//スキンメッシュ
-	//--------------------------
-	
-	//Kaito
-	//アニメーション番号メモ
-	//0:待機
-	//1:走り
-	//2:斬る(右上から右下)
-	//3:斬る(左下から右上に)
-	//4:振り下ろす
-	//5:回避
-	//6:手つき出す
-	//7:ダメージ
-	//8:死亡
 }
 
 //描画関数
@@ -213,17 +198,6 @@ void CKaito::MoveSelectAnim()
 	}
 }
 
-//攻撃1
-float CKaito::PowerAttack()
-{
-	return CHeroBase::PowerAttack();
-}
-
-//攻撃2
-float CKaito::MagicAttack()
-{
-	return CHeroBase::MagicAttack();
-}
 
 //攻撃1アニメーション
 void CKaito::PowerAttackAnim(float vector)

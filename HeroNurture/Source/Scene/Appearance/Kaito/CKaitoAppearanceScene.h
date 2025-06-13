@@ -16,9 +16,9 @@ namespace Constant_KaitoAppearanceScene
 	//カメラ
 	constexpr float CAM_MOVE_SPEED = 0.03f; //カメラの動く速度
 	//魔法陣エフェクト
-	const D3DXVECTOR3 MAGICSIRCLE_POS    = { 0.0f, 0.5f,  -5.0f }; //座標
-	const D3DXVECTOR3 MAGICSIRCLE_CAMPOS = { 1.0f, 1.5f,  -5.0f }; //魔法陣を映すカメラ初期座標
-	const D3DXVECTOR3 MAGICSIRCLE_SCALE  = { 4.0f, 4.0f, 4.0f };   //魔法陣の拡縮
+	const D3DXVECTOR3 MAGICSIRCLE_POS    = { 0.0f, 0.5f,  -5.0f };			     //座標
+	const D3DXVECTOR3 MAGICSIRCLE_CAMPOS = { 1.0f, 1.5f,  -5.0f };			     //魔法陣を映すカメラ初期座標
+	const D3DXVECTOR3 MAGICSIRCLE_SCALE  = { 5.0f, 5.0f, 5.0f };			     //魔法陣の拡縮
 	const D3DXVECTOR3 MAGICSIRCLE_ROTATE = { D3DXToRadian(90.0f), 1.0f, 1.0f };  //魔法陣の回転
 	//光エフェクト
 	const D3DXVECTOR3 LASER_POS      = { 0.0f, 0.5f, -5.0f };				 //座標

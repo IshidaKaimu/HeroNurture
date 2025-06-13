@@ -115,11 +115,15 @@ void CHeroBase::LoadParam( const json& jsondata, const std::string& heroname )
 			m_Param.Magic  = hero["Parameter"]["Magic"].get<float>();
 			m_Param.Speed  = hero["Parameter"]["Speed"].get<float>();
 			m_Param.Hp     = hero["Parameter"]["Hp"].get<float>();
+			//--------------------------
+
 			//----適正率の読み込み----
 			m_App.PowerApp = hero["Appropriate"]["Power"].get<float>();
 			m_App.MagicApp = hero["Appropriate"]["Magic"].get<float>();
 			m_App.SpeedApp = hero["Appropriate"]["Speed"].get<float>();
 			m_App.HpApp    = hero["Appropriate"]["Hp"].get<float>();
+			//------------------------
+
 			return;
 		}
 	}
@@ -133,6 +137,7 @@ void CHeroBase::SetBattleParam(const json& jsondata)
 	m_BattleParam.Magic = jsondata["Parameter"]["Magic"].get<float>();
 	m_BattleParam.Speed = jsondata["Parameter"]["Speed"].get<float>();
 	m_BattleParam.Hp = jsondata["Parameter"]["Hp"].get<float>();
+	//--------------------------
 }
 
 //各ヒーローのパラメータ更新
@@ -145,11 +150,15 @@ void CHeroBase::UpdateParam(const json& jsondata, const std::string& heroname)
 		m_Param.Magic = jsondata["Parameter"]["Magic"].get<float>();
 		m_Param.Speed = jsondata["Parameter"]["Speed"].get<float>();
 		m_Param.Hp    = jsondata["Parameter"]["Hp"].get<float>();
+		//--------------------------
+
 		//----適正率の読み込み----
 		m_App.PowerApp = jsondata["Appropriate"]["Power"].get<float>();
 		m_App.MagicApp = jsondata["Appropriate"]["Magic"].get<float>();
 		m_App.SpeedApp = jsondata["Appropriate"]["Speed"].get<float>();
 		m_App.HpApp = jsondata["Appropriate"]["Hp"].get<float>();
+		//------------------------
+
 		return;
 	}
 }

@@ -7,6 +7,7 @@
 // =======================
 // 前方宣言
 // =======================
+
 //----マネージャークラス----
 //シーン
 class CSceneManager; 
@@ -16,6 +17,10 @@ class CNurtureManager;
 class CSoundManager;
 //エフェクト
 class CEffect;
+//--------------------------
+
+// =======================
+
 
 // =======================
 // 定数宣言
@@ -56,7 +61,7 @@ namespace Constant_Yui
 	constexpr float TILT_FORWARD_MAX   = 0.35f;  //前
 	//-------------
 
-
+	//----攻撃1----
 	//アニメーション終了タイミング
 	constexpr int FASTATTACK_ANIM_END = 300;
 	//--------------
@@ -77,6 +82,7 @@ namespace Constant_Yui
 	constexpr int     FIREBALL_PLAY     = 60;					//再生タイミング
 	//------------------
 }
+// =======================
 
 //=====================================
 //ユイクラス
@@ -90,7 +96,7 @@ public:
     ~CYui();
 private:
 
-	//==================
+	//==================w
     //構造体
     //==================
 
@@ -109,6 +115,7 @@ public:
 	// =======================
 	// 各シーンごとの初期化
 	// =======================
+	
 	//主に使用する初期化
 	void Initialize() override;
 	//バトルシーンで使用する初期化
@@ -117,6 +124,9 @@ public:
     void EnemyInitialize()  override;
 	//登場シーンの初期化
 	void AppearanceInitialize() override;
+
+	// =======================
+
 
 	//データ読み込み関数
 	void LoadMeshData() override;
@@ -140,25 +150,33 @@ public:
 	// =======================
 	// 各シーンごとのアニメーション
 	// =======================
+	
 	//バトル開始時登場シーン
 	void AppearanceAnimation() override;
 	//育成シーン		
 	void NurtureAnimation(int no) override;
 
 	// =======================
+
+
+	// =======================
 	// 攻撃関数
 	// =======================
+	
 	//攻撃1
-	float PowerAttack() override;
+	float PowerAttack() override { return CHeroBase::PowerAttack(); }
 	//攻撃2
-	float MagicAttack() override;
+	float MagicAttack() override { return CHeroBase::MagicAttack(); };
 
+	// =======================
 
 	// =======================
 	// 各バトルフェーズでのアニメーション
 	// =======================
+	
 	// 行動選択中のアニメーション
 	void MoveSelectAnim() override;
+	
 	//----攻撃フェーズ----
 	//攻撃1中のアニメーション
 	void PowerAttackAnim(float vector) override;
@@ -166,6 +184,9 @@ public:
 	void MagicAttackAnim(float vector) override;
 	//ダメージ中のアニメーション
 	void DamageAnim(float vector) override;
+	//--------------------
+
+	//========================
 
 private:
 	//----アニメーション関連----
