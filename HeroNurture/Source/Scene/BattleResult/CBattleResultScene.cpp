@@ -5,7 +5,6 @@
 #include "KeyManager\CKeyManager.h"
 #include "Camera\CameraManager\CCameraManager.h"
 #include "StaticMesh\MeshManager\CMeshManager.h"
-#include "SkinMeshObject\Hero\CHeroManager.h"
 #include "SkinMeshObject\Hero\Enemy\CEnemyHeroManager.h"
 #include "Sound\CSoundManager.h"
 #include <cmath>
@@ -212,4 +211,3 @@ void CBattleResultScene::DrawUI()
         break;
     }  
 }
-

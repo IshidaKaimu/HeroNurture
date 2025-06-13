@@ -50,10 +50,10 @@ namespace Constant_BattleHeroSelectScene
 	const D3DXVECTOR3 PARAMBACK_POS   = { 840.0f, 165.0f, 0.0f }; //座標
 	const D3DXVECTOR3 PARAMBACK_SCALE = { 1.1f, 1.1f, 1.1f };	  //注視点
 	//パラメータの数値
-	const D3DXVECTOR2 PARAMVALUE_POS    = { 930.0f,185.0f };	  //座標
+	const D3DXVECTOR2 PARAMVALUE_POS    = { 955.0f,185.0f };	  //座標
 	constexpr float PARAMVALUE_INTERVAL = 130.0f;				  //配置間隔
 	//パラメータランク											  
-	const D3DXVECTOR2 PARAMRANK_POS    = { 885.0f, 185.0f };	  //座標
+	const D3DXVECTOR2 PARAMRANK_POS    = { 860.0f, 185.0f };	  //座標
 	constexpr float PARAMRANK_INTERVAL = 130.0f;				  //配置間隔
 	//育成ランク												  	 
 	const D3DXVECTOR2 RANK_POS = { 900.0f,-5.0f };				  //座標
@@ -124,6 +124,9 @@ private:
 
 	//矢印の描画
 	void DrawArrow();
+
+	//パラメータUIの描画
+	void DrawParamUI(float paramvalue, int no);
 
 private:
 	//経過ターン数

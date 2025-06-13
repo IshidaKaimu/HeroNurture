@@ -28,6 +28,8 @@ namespace Constant_NurtureHeroSelectScene
 	//----各ヒーローのカメラ配置・注視点----
 	static const D3DXVECTOR3 CAMPOS_NS = { 0.0f, 5.2f, -2.8f };
 	static const D3DXVECTOR3 CAMLOOK_NS = { 0.0f, 6.2f,  3.0f };
+	//--------------------------------------
+	
 	//----UI----
 	//シーン名表示位置
 	const D3DXVECTOR2 SCENENAME_POS_NS = { 350.0f, -10.0f };
@@ -37,6 +39,11 @@ namespace Constant_NurtureHeroSelectScene
 	static D3DXVECTOR3 BACK_POS = { 0.0f,0.0f,0.0f };    //座標
 	static D3DXVECTOR3 BACK_SCALE = { 1.0f, 1.0f, 1.0f };//拡縮
 	static D3DXVECTOR2 BACK_DISP = { 1.0f,1.0f };		 //幅
+	//---------
+
+	//「←→ 選択」テキスト
+	const D3DXVECTOR2 SELECTTEXT_POS = { 800.0f, 675.0f };  //座標
+
 }
 
 class CNurtureHeroSelectScene
@@ -92,12 +99,14 @@ private:
 	std::unique_ptr<CYui>	m_pYui;
 	//カイト
 	std::unique_ptr<CKaito> m_pKaito;
+	//----------------------
 
 	//----UI----
 	//矢印左
 	std::unique_ptr<CUIObject> m_pLeftArrow;
 	//矢印右
 	std::unique_ptr<CUIObject> m_pRightArrow;
+	//----------
 
 	//ユーザー名
 	std::wstring m_UserName;

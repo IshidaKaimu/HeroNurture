@@ -208,9 +208,6 @@ void CTitleScene::Draw()
 
 void CTitleScene::Debug()
 {
-    CLightManager::GetInstance().Debug();
-
-
 #ifdef DEBUG
     ImGui::Begin(JAPANESE("ƒJƒƒ‰"));
     ImGui::InputFloat3(JAPANESE("ƒJƒƒ‰À•W"), m_CamPos);

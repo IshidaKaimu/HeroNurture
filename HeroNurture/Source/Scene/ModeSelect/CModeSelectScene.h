@@ -81,9 +81,6 @@ public:
 	void Draw()		  override;
 
 private:
-	//UIの描画
-	void DrawUI();
-private:
 	// =======================
 	// オブジェクトクラス
 	// =======================		

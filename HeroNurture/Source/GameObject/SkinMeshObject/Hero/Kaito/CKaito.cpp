@@ -16,7 +16,7 @@ CKaito::CKaito()
 	, m_EffPosZ		(1.0f)
 
 {
-	SetPosition(0.0f, 0.0f, -3.0f);
+	SetPosition(0.0f, 0.0f, 1.2f);
 	SetScale(0.75f, 0.75f, 0.75f);
 }
 

@@ -220,7 +220,6 @@ void CBattleHeroSelectScene::Draw()
 	Text->Draw_Text(L"←→ 選択", WriteText::Control, SELECTTEXT_POS);
 }
 
-//デバッグ処理
 void CBattleHeroSelectScene::Debug()
 {
 }
@@ -245,7 +244,6 @@ void CBattleHeroSelectScene::DrawResultData()
 }
 
 
-//保存されているヒーローのパラメータを選択番号ごとに描画する
 void CBattleHeroSelectScene::DrawSaveParameter(const json& jsondata, int number)
 {
 	WriteText*    Text     = WriteText::GetInstance();
@@ -269,14 +267,10 @@ void CBattleHeroSelectScene::DrawSaveParameter(const json& jsondata, int number)
 			float ParamTotal = Power + Magic + Speed + Hp;
 
 			//各パラメータの描画
-			Text->Draw_Text(std::to_wstring(static_cast<int>(Power)), WriteText::Normal, PARAMVALUE_POS);
-			Rank->DrawRank(Power, 2,PARAMRANK_POS);
-			Text->Draw_Text(std::to_wstring(static_cast<int>(Magic)), WriteText::Normal, D3DXVECTOR2(PARAMVALUE_POS.x, PARAMVALUE_POS.y + PARAMVALUE_INTERVAL));
-			Rank->DrawRank(Magic, 2, D3DXVECTOR2(PARAMRANK_POS.x, PARAMRANK_POS.y + PARAMRANK_INTERVAL));
-			Text->Draw_Text(std::to_wstring(static_cast<int>(Speed)), WriteText::Normal, D3DXVECTOR2(PARAMVALUE_POS.x, PARAMVALUE_POS.y + (PARAMVALUE_INTERVAL * 2)));
-			Rank->DrawRank(Speed, 2, D3DXVECTOR2(PARAMRANK_POS.x, PARAMRANK_POS.y + (PARAMRANK_INTERVAL * 2)));
-			Text->Draw_Text(std::to_wstring(static_cast<int>(Hp)), WriteText::Normal, D3DXVECTOR2(PARAMVALUE_POS.x, PARAMVALUE_POS.y + (PARAMVALUE_INTERVAL * 3)));
-			Rank->DrawRank(Hp, 2, D3DXVECTOR2(PARAMRANK_POS.x, PARAMRANK_POS.y + (PARAMRANK_INTERVAL * 3)));
+			DrawParamUI(Power,0);
+			DrawParamUI(Magic,1);
+			DrawParamUI(Speed,2);
+			DrawParamUI(Hp,3);
 			
 			//育成ランクの描画
 			Rank->DrawRank(ParamTotal, 1, RANK_POS);
@@ -285,7 +279,6 @@ void CBattleHeroSelectScene::DrawSaveParameter(const json& jsondata, int number)
 
 }
 
-//名前ごとのヒーローの描画
 void CBattleHeroSelectScene::DrawHero()
 {
 	for (const auto& data : m_ResultData)
@@ -308,7 +301,6 @@ void CBattleHeroSelectScene::DrawHero()
 
 }
 
-//矢印の描画
 void CBattleHeroSelectScene::DrawArrow()
 {
 	//設定
@@ -329,4 +321,18 @@ void CBattleHeroSelectScene::DrawArrow()
     m_pRightArrow->Draw();
 
 }
+
+void CBattleHeroSelectScene::DrawParamUI(float paramvalue, int no)
+{
+	WriteText* Text = WriteText::GetInstance();
+	CRank* Rank = &CRank::GetInstance();
+	CUtility* Utility = &CUtility::GetInstance();
+
+	//-各パラメータのUIの描画
+	//値
+	Text->Draw_Text(std::to_wstring(static_cast<int>(paramvalue)), WriteText::Normal, Utility->PosCorrection(static_cast<int>(paramvalue), 3, D3DXVECTOR2(PARAMVALUE_POS.x, PARAMVALUE_POS.y + (PARAMVALUE_INTERVAL * no)))); 
+	//ランク
+	Rank->DrawRank(paramvalue, 2, D3DXVECTOR2(PARAMRANK_POS.x, PARAMRANK_POS.y + (PARAMRANK_INTERVAL * no)));
+}
+
 

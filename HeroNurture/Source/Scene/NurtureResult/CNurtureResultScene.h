@@ -5,6 +5,7 @@
 #include "WriteText\WriteText.h"
 #include "StaticMeshObject\Ground\CGround.h"
 #include "SkinMeshObject\Hero\CHeroBase.h"
+#include "Utility/CUtility.h"
 #include "json\CJson.h"
 
 //=====================================
@@ -27,6 +28,8 @@ class ImGuiManager;
 class CCameraManager;
 //ヒーロー
 class CHeroManager;
+//--------------------------
+
 
 //Json使用に必要な名前空間の格納
 using json = nlohmann::json;
@@ -38,26 +41,33 @@ namespace Constant_NurtureResultScene
 {
 	//-----カメラ情報----
 	//カメラ位置
-	const D3DXVECTOR3 CAMPOS = { 0.0f, 5.0f, -4.0f };
+	const D3DXVECTOR3 CAMPOS	= { 0.0f, 5.0f, -4.0f };
 	//カメラ注視点
-	const D3DXVECTOR3 CAMLOOK = { 2.0f, 5.0f, 3.0f };
+	const D3DXVECTOR3 CAMLOOK	= { 2.0f, 5.0f, 3.0f };
+	//-------------------
+
 	//----育成評価描画関連----
 	//最終ランク
-	const D3DXVECTOR2 RANK_POS = { 900.0f,30.0f };
-	//パラメータランク配置開始地点X座標
-	const D3DXVECTOR2 PARAMRANK_POS    = { 885.0f,225.0f };
-	//各パラメータランク配置間隔
-	constexpr float PARAMRANK_INTERVAL = 130.0f;
-	//パラメータ背景座標
-	const D3DXVECTOR3 PARAMBACK_POS   = { 840.0f, 205.0f, 0.0f };
-	//パラメータ背景拡縮
-	const D3DXVECTOR3 PARAMBACK_SCALE = { 1.1f, 1.1f , 1.1f };
-	//パラメータの値X座標
-	const D3DXVECTOR3 PARAMVALUE_POS  = { 930.0f,225.0f,0.0f };
-	//パラメータの値配置間隔
-	constexpr float PARAMVALUE_INTERVAL = 130.0f;
-	//「育成ランク」テキスト座標
-	const D3DXVECTOR2 RESULTTEXT_POS = { 895.0f,0.0f };
+	const D3DXVECTOR2 RANK_POS			  = { 900.0f,-5.0f };	//座標
+	//パラメータランク 
+	const D3DXVECTOR2 PARAMRANK_POS		  = { 860.0f, 185.0f };	//基準座標
+	constexpr float	  PARAMRANK_INTERVAL  = 130.0f;				//配置間隔
+	//パラメータ背景					 
+	const D3DXVECTOR3 PARAMBACK_POS		  = { 840.0f, 165.0f, 0.0f };	//座標
+	const D3DXVECTOR3 PARAMBACK_SCALE	  = { 1.1f, 1.1f , 1.1f };		//拡縮
+	//パラメータの値					 
+	const D3DXVECTOR3 PARAMVALUE_POS	  = { 955.0f,185.0f,0.0f };	//座標
+	constexpr float   PARAMVALUE_INTERVAL = 130.0f;					//配置間隔
+	//「育成ランク」テキスト
+	const D3DXVECTOR2 RESULTTEXT_POS	  = { 895.0f,-20.0f }; //座標
+	//-------------------------
+
+	//----操作指示----
+
+	//操作方法指示「Enter モード選択へ」テキストの描画
+	const D3DXVECTOR2 NEXTSCENE_TEXT_POS = { 800.0f, 675.0f };
+
+	//----------------
 }
 //=====================================
 // 育成結果シーンクラス
@@ -109,4 +119,5 @@ private:
 	std::unique_ptr<CJson> m_pJson;
 	//育成結果書き込み用
 	json m_ResultWriter;
+	//========================
 };

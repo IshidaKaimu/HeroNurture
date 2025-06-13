@@ -234,8 +234,11 @@ void CNurtureHeroSelectScene::Draw()
     //操作方法指示バーの描画
     DrawControlBar(true);
 
+    Text->Draw_Text(L"←→ 選択", WriteText::Control, SELECTTEXT_POS);
+
     //矢印の描画
     DrawArrow();
+
 }
 
 //矢印の描画

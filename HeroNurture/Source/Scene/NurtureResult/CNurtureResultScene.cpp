@@ -120,16 +120,30 @@ void CNurtureResultScene::Update()
 //描画関数
 void CNurtureResultScene::Draw()
 {
+    WriteText*    Text = WriteText::GetInstance();
     CHeroManager* Hero = &CHeroManager::GetInstance();
 
     //カメラの動作
     m_pCamera->CameraUpdate();
 
-    //セットされたヒーローの描画
-    Hero->Draw();
+
+    CSceneManager::GetInstance().GetDx11()->SetDepth(false);
+
+    //汎用背景の描画
+    DrawBasicBackGround();
 
     //育成結果の描画
     DrawResult();
+
+    CSceneManager::GetInstance().GetDx11()->SetDepth(true);
+
+    //セットされたヒーローの描画
+    Hero->Draw();
+
+    //操作方法指示バーの描画
+    DrawControlBar(false);
+    //操作方法指示「Enter モード選択へ」テキストの描画
+    Text->Draw_Text(L"Enter モード選択へ", WriteText::Control, ENTERTEXT_POS);
 
     //デバッグ処理
     Debug();
@@ -151,7 +165,7 @@ void CNurtureResultScene::Debug()
 //育成結果の描画
 void CNurtureResultScene::DrawResult()
 {
-    WriteText* Text = WriteText::GetInstance();
+    WriteText*    Text    = WriteText::GetInstance();
     CHeroManager* HeroMng = &CHeroManager::GetInstance();
 
     //「育成ランク」テキストの描画
@@ -186,10 +200,11 @@ float CNurtureResultScene::ParamTotal()
 //パラメータUIの描画
 void CNurtureResultScene::DrawParamUI(float paramvalue, int no)
 {
-    WriteText* Text = WriteText::GetInstance();
-    CRank* Rank = &CRank::GetInstance();
+    WriteText* Text    = WriteText::GetInstance();
+    CRank*     Rank    = &CRank::GetInstance();
+    CUtility*  Utility = &CUtility::GetInstance();
 
     //----各パラメータのUIの描画(背景,値,ランク)----
-    Text->Draw_Text(std::to_wstring(static_cast<int>(paramvalue)), WriteText::Normal, D3DXVECTOR2(PARAMVALUE_POS.x, PARAMVALUE_POS.y + (PARAMVALUE_INTERVAL* no)));
+    Text->Draw_Text(std::to_wstring(static_cast<int>(paramvalue)), WriteText::Normal, Utility->PosCorrection(static_cast<int>(paramvalue),3,D3DXVECTOR2(PARAMVALUE_POS.x, PARAMVALUE_POS.y + (PARAMVALUE_INTERVAL* no))));
     Rank->DrawRank(paramvalue, 2, D3DXVECTOR2(PARAMRANK_POS.x, PARAMRANK_POS.y + (PARAMRANK_INTERVAL * no)));
 }

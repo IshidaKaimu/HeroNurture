@@ -137,25 +137,18 @@ void CModeSelectScene::Update()
 
 void CModeSelectScene::Draw()
 {
-    //UIの描画
-    DrawUI();
-}
-
-//モード選択画面の描画
-void CModeSelectScene::DrawUI()
-{
     WriteText* Text = WriteText::GetInstance();
 
     //----各UIの設定----
     //育成モード
     m_pNurtureMode->SetPosition(NURTURE_POS);            //位置
     m_pNurtureMode->SetScale(MODE_SCALE);                //拡縮
-    m_pNurtureMode->SetDisplay(MODE_DISP.x,MODE_DISP.y); //幅
+    m_pNurtureMode->SetDisplay(MODE_DISP.x, MODE_DISP.y); //幅
     m_pNurtureMode->SetAlpha(MODE_ALPHA);                //α値
     //バトルモード
     m_pBattleMode->SetPosition(BATTLEMODE_POS);         //位置
     m_pBattleMode->SetScale(MODE_SCALE);                //拡縮
-    m_pBattleMode->SetDisplay(MODE_DISP.x,MODE_DISP.y); //幅
+    m_pBattleMode->SetDisplay(MODE_DISP.x, MODE_DISP.y); //幅
     m_pBattleMode->SetAlpha(MODE_ALPHA);                //α値
     //操作方法指示バー
     m_pControlBar->SetPosition(CONTROLBAR_POS);                     //座標
@@ -178,23 +171,31 @@ void CModeSelectScene::DrawUI()
         break;
     }
 
-    m_pCover->SetScale(MODE_SCALE);               //拡縮
-    m_pCover->SetDisplay(MODE_DISP.x,MODE_DISP.y);//幅
-    m_pCover->SetAlpha(COVER_ALPHA);              //α値
+    m_pCover->SetScale(MODE_SCALE);                //拡縮
+    m_pCover->SetDisplay(MODE_DISP.x, MODE_DISP.y);//幅
+    m_pCover->SetAlpha(COVER_ALPHA);               //α値
 
     CSceneManager::GetInstance().GetDx11()->SetDepth(false);
 
-    //育成モード描画
-    m_pNurtureMode->Draw();
-    //バトルモード描画
-    m_pBattleMode->Draw();
+    //----選択できるモードの描画----
+   
+    m_pNurtureMode->Draw();     //育成モード
+    m_pBattleMode->Draw();      //バトルモード描画
+   
+    //-----------------------------
+
     //選択されていない方に被せる画像
     m_pCover->Draw();
-    //操作方法指示バーテンプレートの描画
-    DrawControlBar(true);
-    //操作方法指示「←→ 選択」テキストの描画
-    Text->Draw_Text(L"←→ 選択", WriteText::Control, SELECTTEXT_POS);
+   
+    //----操作方法指示バーの描画----
+   
+    DrawControlBar(true);                                                   //操作方法指示バーテンプレートの描画
+    Text->Draw_Text(L"←→ 選択", WriteText::Control, SELECTTEXT_POS);      //操作方法指示「←→ 選択」テキストの描画
+    
+    //------------------------------
+
     //シーン名の描画
     Text->Draw_Text(L"MODE SELECT", WriteText::Normal, SCENENAME_POS);
     CSceneManager::GetInstance().GetDx11()->SetDepth(true);
 }
+

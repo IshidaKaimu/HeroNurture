@@ -364,7 +364,7 @@ void CNurtureScene::Debug()
 #endif
 
     //ライトマネージャー
-#ifdef _DEBUG 
+#ifdef DEBUG 
     CLightManager::GetInstance().Debug();
 #endif
 }

@@ -34,8 +34,8 @@ const D3DXVECTOR3 ARROW_LEFT_POS_NS    = { 300.0f, 490.0f, 0.0f };        //育成
 const D3DXVECTOR3 ARROW_LEFT_POS_BS    = { 200.0f, 490.0f, 0.0f };        //座標
 const D3DXVECTOR3 ARROW_LEFT_ROTATE = { 0.0f, 0.0f, D3DXToRadian(180.0f)};//回転
 //右
-const D3DXVECTOR3 ARROW_RIGHT_POS_NS = { 1000.0f, 400.0f, 0.0f };//育成ヒーロー選択時座標
-const D3DXVECTOR3 ARROW_RIGHT_POS_BS = { 1100.0f, 400.0f, 0.0f };//バトルヒーロー選択時座標
+const D3DXVECTOR3 ARROW_RIGHT_POS_NS = { 1000.0f, 400.0f, 0.0f };	//育成ヒーロー選択時座標
+const D3DXVECTOR3 ARROW_RIGHT_POS_BS = { 1100.0f, 400.0f, 0.0f };	//バトルヒーロー選択時座標
 //矢印共通
 const D3DXVECTOR3 ARROW_SCALE = { 1.0f, 1.0f, 1.0f };//拡縮
 const D3DXVECTOR2 ARROW_DISP  = { 1.0f, 1.0f };		 //幅
@@ -49,7 +49,7 @@ constexpr float   CONTROLBAR_ALPHA = 1.0f;					 //α値
 const D3DXVECTOR2 ENTERTEXT_POS  = { 970.0f, 675.0f }; //座標
 //「Esc 戻る」テキスト
 const D3DXVECTOR2 ESCAPETEXT_POS = { 1150.0f, 675.0f }; //座標
-//-------
+//----------
 
 //=====================================
 //シーン基底クラス

@@ -17,6 +17,10 @@ class CHeroManager;
 class CEnemyHeroManager;
 //カメラ
 class CCameraManager;
+//-------------------------
+
+//ランククラス
+class CRank;
 
 
 //=====================================
@@ -62,9 +66,9 @@ public:
 private:
 	//デバッグ
 	void Debug();
-
 	//UIの描画
 	void DrawUI();
+
 
 private:
 	//カメラクラス
