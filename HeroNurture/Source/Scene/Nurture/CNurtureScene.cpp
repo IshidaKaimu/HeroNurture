@@ -173,6 +173,7 @@ void CNurtureScene::Initialize()
     FailureRateBackInit(m_pSafeBack,D3DXVECTOR3(20.0f,400.0f,0.0f));
     FailureRateBackInit(m_pAnxietyBack,D3DXVECTOR3(20.0f,400.0f,0.0f));
     FailureRateBackInit(m_pDangerBack,D3DXVECTOR3(20.0f,400.0f,0.0f));
+    //----------------------------------------
 
 
     //育成関連のシーンで共通のUIの初期化
@@ -203,7 +204,7 @@ void CNurtureScene::Update()
     CKeyManager::GetInstance().Update();
 
     //カーソルの移動
-    if (KeyMng->IsDown(VK_RIGHT))
+    if (KeyMng->IsDown('D'))
     {
         //選択SEの再生
         CSoundManager::GetInstance()->PlaySE(CSoundManager::SE_Select);
@@ -213,7 +214,7 @@ void CNurtureScene::Update()
         if (m_SelectNo < CHeroManager::enTraningList::Max_T-1) { m_SelectNo++; }
         else { m_SelectNo = 0; }
     }
-    else if (KeyMng->IsDown(VK_LEFT))
+    else if (KeyMng->IsDown('A'))
     {
         //選択SEの再生
         CSoundManager::GetInstance()->PlaySE(CSoundManager::SE_Select);

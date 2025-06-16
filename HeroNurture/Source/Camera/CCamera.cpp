@@ -13,7 +13,7 @@ CCamera::~CCamera()
 void CCamera::Update()
 {
 
-#if _DEBUG
+#if DEBUG
 	//カメラ座標のデバックコマンド.
 	float add_value = 0.1f;
 	if (GetAsyncKeyState('W') & 0x8000) {

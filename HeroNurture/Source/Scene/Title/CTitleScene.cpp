@@ -253,7 +253,7 @@ void CTitleScene::MoveArrow()
 {
     CKeyManager* KeyMng = &CKeyManager::GetInstance();
     //‘I‘ðŽˆˆÚ“®
-    if (KeyMng->IsDown(VK_DOWN))
+    if (KeyMng->IsDown('S'))
     {
 
         if (m_SelectNo < 2)
@@ -270,7 +270,7 @@ void CTitleScene::MoveArrow()
         }
     }
 
-    if (KeyMng->IsDown(VK_UP))
+    if (KeyMng->IsDown('W'))
     {
 
         if (m_SelectNo > 0)

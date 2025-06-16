@@ -79,6 +79,7 @@ void CNurtureHeroSelectScene::Initialize()
     m_pYui->Initialize();
     //カイト
     m_pKaito->Initialize();
+    //--------------------------------
 
 }
 
@@ -104,7 +105,7 @@ void CNurtureHeroSelectScene::Update()
     CKeyManager::GetInstance().Update();
 
     //カーソルの移動
-    if (KeyMng->IsDown(VK_RIGHT))
+    if (KeyMng->IsDown('D'))
     {
         //選択SEの再生
         CSoundManager::GetInstance()->PlaySE(CSoundManager::SE_Select);
@@ -114,7 +115,7 @@ void CNurtureHeroSelectScene::Update()
         if (m_SelectNo < CHeroBase::enHeroList::Max-1) { m_SelectNo++; }
         else { m_SelectNo = 0; }
     }
-    else if (KeyMng->IsDown(VK_LEFT))
+    else if (KeyMng->IsDown('A'))
     {
         //選択SEの再生
         CSoundManager::GetInstance()->PlaySE(CSoundManager::SE_Select);
@@ -194,9 +195,9 @@ void CNurtureHeroSelectScene::Update()
 //描画関数
 void CNurtureHeroSelectScene::Draw()
 {  
-    CHeroManager* Hero = &CHeroManager::GetInstance();
-    CSceneManager* SceneMng = &CSceneManager::GetInstance();
-    WriteText* Text = WriteText::GetInstance();
+    CHeroManager*  Hero      = &CHeroManager::GetInstance();
+    CSceneManager* SceneMng  = &CSceneManager::GetInstance();
+    WriteText*     Text      = WriteText::GetInstance();
 
     //カメラの動作
     m_pCamera->CameraUpdate();
@@ -234,7 +235,7 @@ void CNurtureHeroSelectScene::Draw()
     //操作方法指示バーの描画
     DrawControlBar(true);
 
-    Text->Draw_Text(L"←→ 選択", WriteText::Control, SELECTTEXT_POS);
+    Text->Draw_Text(L"A・D 選択", WriteText::Control, SELECTTEXT_POS);
 
     //矢印の描画
     DrawArrow();

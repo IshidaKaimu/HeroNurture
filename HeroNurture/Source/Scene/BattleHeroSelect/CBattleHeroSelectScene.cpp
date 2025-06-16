@@ -124,7 +124,7 @@ void CBattleHeroSelectScene::Update()
 	KeyMng->Update();
 
 	//選択番号の遷移
-	if (KeyMng->IsDown(VK_RIGHT))
+	if (KeyMng->IsDown('D'))
 	{
 		//選択SEの再生
 		CSoundManager::GetInstance()->PlaySE(CSoundManager::SE_Select);
@@ -134,7 +134,7 @@ void CBattleHeroSelectScene::Update()
 		if (m_SelectNo < m_ResultData.size()) { m_SelectNo++; }
 		else { m_SelectNo = 1; }
 	}
-	else if (KeyMng->IsDown(VK_LEFT))
+	else if (KeyMng->IsDown('A'))
 	{
 		//選択SEの再生
 		CSoundManager::GetInstance()->PlaySE(CSoundManager::SE_Select);
@@ -216,8 +216,8 @@ void CBattleHeroSelectScene::Draw()
 
 	//操作方法指示バーの描画
 	DrawControlBar(true);
-	//操作方法指示「←→ 選択」テキストの描画
-	Text->Draw_Text(L"←→ 選択", WriteText::Control, SELECTTEXT_POS);
+	//操作方法指示「A・D 選択」テキストの描画
+	Text->Draw_Text(L"A・D 選択", WriteText::Control, SELECTTEXT_POS);
 }
 
 void CBattleHeroSelectScene::Debug()

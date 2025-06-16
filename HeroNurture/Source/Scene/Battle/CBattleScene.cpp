@@ -524,7 +524,7 @@ void CBattleScene::MoveSelect()
 	SetUpToNextTurn();
 
 	//カーソルの移動
-	if (KeyMng->IsDown(VK_RIGHT))
+	if (KeyMng->IsDown('D'))
 		{
 		    //選択SEの再生
 		    CSoundManager::GetInstance()->PlaySE(CSoundManager::SE_Select);
@@ -534,7 +534,7 @@ void CBattleScene::MoveSelect()
 			if (m_SelectNo < enAttackList::Max - 1) { m_SelectNo++; }
 			else { m_SelectNo = 0; }
 		}
-		else if (KeyMng->IsDown(VK_LEFT))
+		else if (KeyMng->IsDown('A'))
 		{
 			//選択SEの再生
 			CSoundManager::GetInstance()->PlaySE(CSoundManager::SE_Select);

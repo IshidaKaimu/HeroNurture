@@ -41,7 +41,7 @@ namespace Constant_NurtureHeroSelectScene
 	static D3DXVECTOR2 BACK_DISP = { 1.0f,1.0f };		 //幅
 	//---------
 
-	//「←→ 選択」テキスト
+	//「A・D 選択」テキスト
 	const D3DXVECTOR2 SELECTTEXT_POS = { 800.0f, 675.0f };  //座標
 
 }
