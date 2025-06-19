@@ -10,7 +10,6 @@ using json = nlohmann::json;
 // =======================
 // 定数宣言
 // =======================
-
 //----トレーニング関連----		
 constexpr float INCREASE_VALUE		     = 20.0f; //基本上昇値
 constexpr float MIN_FAILURE			     = 0.0f;  //失敗率の最低
@@ -31,7 +30,6 @@ const D3DXVECTOR3 ENEMYINIT_POS  = { 2.5f,0.0f,0.0f };	//初期座標(敵)
 const D3DXVECTOR3 BATTLE_ROTATE  = { 0.0f,D3DXToRadian(-90.0f),0.0f };//回転(自分)
 const D3DXVECTOR3 ENEMY_ROTATE   = { 0.0f,D3DXToRadian(90.0f),0.0f }; //回転(敵)
 //--------------------
-
 
 //=====================================
 // ヒーロー基底クラス
