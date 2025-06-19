@@ -137,7 +137,7 @@ public:
 	// =======================	
 	
 	//スタミナの初期化
-	void InitStamina() { m_Stamina = MAX_STAMINA; }
+	void InitStamina();
 	//スタミナの減少
 	void ReduceStamina();
 	//スタミナの回復
@@ -152,7 +152,7 @@ public:
 	bool Death() { return m_pHero->GetHp() <= 0.0f; }
 
 	//バトル中の位置の初期化
-	void BattleInitPos() { m_pHero->SetPosition(BATTLEINIT_POS); }
+	void BattleInitPos();
 
 	//選択しているヒーローを文字列で返す関数
 	std::string GetSelectHeroName();
@@ -193,9 +193,11 @@ public:
 	enTraningList GetTraining() { return m_Traning; }
 	void SetTraning(enTraningList traning) { m_Traning = traning; }
 	//失敗率
-	int GetSuccessRate(float stamina) { return m_pHero->SuccessRate(stamina); }
+	float GettFailureRate(float stamina) { return m_pHero->FailureRate(stamina); }
 	//トレーニングに失敗したかのフラグ
 	bool GetFailureFlag() { return m_pHero->GetFailureFlag(); }
+	//トレーニングに大成功したかのフラグ
+	bool GetGreatSuccessFlag() { return m_pHero->GetGreatSuccessFlag(); }
 	//バトル中体力
 	float GetHp() { return m_pHero->GetHp(); }
 	void SetHp( float hp ) { m_pHero->SetHp(hp); }

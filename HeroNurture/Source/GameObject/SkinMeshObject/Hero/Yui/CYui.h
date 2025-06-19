@@ -44,7 +44,7 @@ namespace Constant_Yui
 	//回転
 	constexpr float ROTATE_ADDSPEED          = 0.05f;  //加速度
 	constexpr float ROTATE_ADDSPEED_MAX      = 8.0f;   //最大速度
-	constexpr int   ROTATE_ADDSPEED_INTERVAL = 30.0f;  //加速する間隔
+	constexpr int   ROTATE_ADDSPEED_INTERVAL = 30;  //加速する間隔
 	//動きの変更タイミング
 	constexpr int	MOVECHANGE_FASTTIME    = 80;   //1段階目
 	constexpr int	MOVECHANGE_SECONDTIME  = 120;  //2段階目

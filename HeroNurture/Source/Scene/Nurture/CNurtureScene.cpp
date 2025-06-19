@@ -304,7 +304,7 @@ void CNurtureScene::Draw()
     DrawParam();
 
     //Ž¸”s—¦‚ÌŽæ“¾
-    int FailureRate = 100 - HeroMng->GetSuccessRate(HeroMng->GetStamina());
+    int FailureRate = HeroMng->GettFailureRate(HeroMng->GetStamina());
    
     //Ž¸”s—¦‚É‰ž‚¶‚½”wŒi‚Ì•`‰æ
     

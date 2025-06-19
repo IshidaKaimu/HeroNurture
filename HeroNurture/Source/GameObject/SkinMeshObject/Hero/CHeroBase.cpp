@@ -12,6 +12,7 @@ CHeroBase::CHeroBase()
 	, m_Hp               ()
 	, m_Correction	     (1.0f)
 	, m_Failure		     (false)
+	, m_GreatSuccess	 (false)
 	, m_MoveX		     ()
 	, m_MoveY		     ()
 	, m_MoveZ		     ()
@@ -156,7 +157,7 @@ void CHeroBase::UpdateParam(const json& jsondata, const std::string& heroname)
 		m_App.PowerApp = jsondata["Appropriate"]["Power"].get<float>();
 		m_App.MagicApp = jsondata["Appropriate"]["Magic"].get<float>();
 		m_App.SpeedApp = jsondata["Appropriate"]["Speed"].get<float>();
-		m_App.HpApp = jsondata["Appropriate"]["Hp"].get<float>();
+		m_App.HpApp    = jsondata["Appropriate"]["Hp"].get<float>();
 		//------------------------
 
 		return;
@@ -176,32 +177,50 @@ void CHeroBase::CorrectionByStamina(float stamina)
 	}
 }
 
-//成功率を返す関数
-int CHeroBase::SuccessRate(float stamina)
+//失敗率を返す関数
+float CHeroBase::FailureRate(float stamina)
 {
-	if (stamina <= 0.0f) return 1;
-	if (stamina <= 10.0f) return 25;
-	if (stamina <= 25.0f) return 50;
-	if (stamina <= 60.0f) return 65;
-	if (stamina <= 80.0f) return 80;
-	if (stamina <= 90.0f) return 90;
-	return 100;
+	//正規化した値が1.0を上回る,0.0を下回ることがないように
+	float Normalized = std::clamp(stamina / 100.0f, 0.0f, 1.0f);
+
+	//スタミナが多く残っている間の失敗率の上昇量を緩やかにする
+	float Rate = std::pow(1.0f - Normalized, 1.8);
+
+	return MIN_FAILURE + (MAX_FAILURE - MIN_FAILURE) * Rate;
+
 }
 
 //トレーニング結果
 void CHeroBase::TraningResult(float stamina, float app, float& param)
 {
 	//この乱数で成功するかを決める
-	int Succes = CUtility::GenerateRandomValue(0, 100);
+	float Succes	  = CUtility::GenerateRandomValue(0.0f, 1.0f); //成功
+	float GreatSucces = CUtility::GenerateRandomValue(0.0f, 1.0f); //大成功
 
-	if (Succes < SuccessRate(stamina)) {
-		float AppBonus = INCREASE_VALUE * ( 1.0f + ( app / 100.0f ) );
-		param += AppBonus * m_Correction;
-	}
-	else
+	//失敗率
+	float Failure = FailureRate(stamina) / 100.0f;
+
+	//上昇量
+	float AppBonus = INCREASE_VALUE * (1.0f + (app / 100.0f));
+
+
+	if (Succes < Failure) 
 	{
 		m_Failure = true;
 	}
+	else
+	{
+
+		if (GreatSucces <= GREAT_SUCCESS_RATE)
+		{
+			//大成功(2倍)
+			AppBonus *= GREAT_SUCCESS_MULTIPLIER;
+			m_GreatSuccess = true;
+		}
+
+		param += AppBonus * m_Correction;
+	}
+
 }
 
 
