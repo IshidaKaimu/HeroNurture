@@ -41,6 +41,11 @@ std::unique_ptr<CHeroBase> CHeroManager::Create(enHeroList list)
     }
 }
 
+void CHeroManager::InitStamina()
+{
+    m_Stamina = MAX_STAMINA;
+}
+
 //スタミナの減少関数
 void CHeroManager::ReduceStamina()
 {
@@ -69,6 +74,11 @@ void CHeroManager::StaminaRecovery()
     //回復後のスタミナを保存
     m_AfterStamina = m_Stamina;
 
+}
+
+void CHeroManager::BattleInitPos()
+{
+    m_pHero->SetPosition(BATTLEINIT_POS);
 }
 
 //ヒーロー名を文字列で返す関数

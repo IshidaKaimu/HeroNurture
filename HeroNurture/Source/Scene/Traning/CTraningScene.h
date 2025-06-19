@@ -20,6 +20,10 @@ class CNurtureManager;
 class CHeroManager;
 //UI
 class CUIManager;
+//--------------------------
+
+//========================
+
 
 //========================
 // 定数宣言
@@ -90,19 +94,23 @@ private:
 	//=====================================
 	// オブジェクトクラス
 	//=====================================
+	
 	//----スタティックメッシュ----
 	//スカイボックス
 	std::unique_ptr<CSky> m_pSky;
 	//地面
 	std::unique_ptr<CGround> m_pGround;
+	//----------------------------
 
 	//----UI----
 	//背景
 	std::unique_ptr<CUIObject> m_pBack;
 	//テキストボックス
 	std::unique_ptr<CUIObject> m_pTextBox;
+	//----------
 
-	//----vector配列----
+	//=====================================
+
 	//テキストの描画順処理に使う配列
 	std::vector<IncParam> m_ParamInc;
 

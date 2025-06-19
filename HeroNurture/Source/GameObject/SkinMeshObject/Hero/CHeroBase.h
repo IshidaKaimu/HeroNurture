@@ -10,22 +10,28 @@ using json = nlohmann::json;
 // =======================
 // 定数宣言
 // =======================
- //----トレーニング関連----		
- constexpr float INCREASE_VALUE = 20.0f; //基本上昇値
- //------------------------
 
- //----スタミナゲージ関連----
- constexpr float MAX_STAMINA = 100.0f; //最大値
- constexpr float REDUSE_STAMINA = 25.0f;  //減少量
- constexpr float RECOVERY_STAMINA = 25.0f;  //回復量
- //--------------------------
+//----トレーニング関連----		
+constexpr float INCREASE_VALUE		     = 20.0f; //基本上昇値
+constexpr float MIN_FAILURE			     = 0.0f;  //失敗率の最低
+constexpr float MAX_FAILURE			     = 99.0f; //失敗率の最高
+constexpr float GREAT_SUCCESS_RATE       = 0.2f;  //大成功の確率	
+constexpr float GREAT_SUCCESS_MULTIPLIER = 2.0f;  //大成功の倍率	
+//------------------------
 
- //----バトルシーン----
- const D3DXVECTOR3 BATTLEINIT_POS = { -5.5f,0.0f,0.0f }; //初期座標(自分)
- const D3DXVECTOR3 ENEMYINIT_POS  = { 2.5f,0.0f,0.0f };	//初期座標(敵)
- const D3DXVECTOR3 BATTLE_ROTATE  = { 0.0f,D3DXToRadian(-90.0f),0.0f };//回転(自分)
- const D3DXVECTOR3 ENEMY_ROTATE   = { 0.0f,D3DXToRadian(90.0f),0.0f }; //回転(敵)
- //--------------------
+//----スタミナゲージ関連----
+constexpr float MAX_STAMINA	     = 100.0f; //最大値
+constexpr float REDUSE_STAMINA   = 25.0f;  //減少量
+constexpr float RECOVERY_STAMINA = 25.0f;  //回復量
+//--------------------------
+
+//----バトルシーン----
+const D3DXVECTOR3 BATTLEINIT_POS = { -5.5f,0.0f,0.0f }; //初期座標(自分)
+const D3DXVECTOR3 ENEMYINIT_POS  = { 2.5f,0.0f,0.0f };	//初期座標(敵)
+const D3DXVECTOR3 BATTLE_ROTATE  = { 0.0f,D3DXToRadian(-90.0f),0.0f };//回転(自分)
+const D3DXVECTOR3 ENEMY_ROTATE   = { 0.0f,D3DXToRadian(90.0f),0.0f }; //回転(敵)
+//--------------------
+
 
 //=====================================
 // ヒーロー基底クラス
@@ -36,9 +42,9 @@ class CHeroBase
 {
 public :
 
-	//=====================================
+	//===============
 	// 列挙型
-	//=====================================
+	//===============
 
 	//ヒーロー名リスト
 	enum enHeroList :char
@@ -47,10 +53,13 @@ public :
 		Kaito,
 		Max,
 	};
+	
+	//===============
 
-	//=====================================
+
+	//===============
 	// 構造体
-	//=====================================
+	//===============
 
 	//パラメータ構造体
 	struct enParam
@@ -77,6 +86,9 @@ public :
 		//体力
 		float HpApp;
 	};
+	
+	//===============
+
 
 public:
 	CHeroBase();
@@ -85,6 +97,7 @@ public:
 	// =======================
 	// 各シーンごとの初期化
 	// =======================
+	
 	//主に使用する初期化関数
 	virtual void Initialize() {};
 	//バトルシーンで使用する初期化
@@ -93,6 +106,9 @@ public:
 	virtual void EnemyInitialize() {};
 	//バトル開始時登場シーンでの初期化
 	virtual void AppearanceInitialize() {};
+
+	// =======================
+
 
 	//データ読み込み関数
 	virtual void LoadMeshData() {};
@@ -111,11 +127,13 @@ public:
 
 	//デバッグ関数
 	virtual void Debug() {};
+	// =======================
+
 
 public:
 	
 	//トレーニングの失敗率を返す関数
-	int SuccessRate(float stamina);
+	float FailureRate(float stamina);
 
 	// =======================
 	// シーンごとのアニメーション関数
@@ -128,8 +146,9 @@ public:
 	virtual void AppearanceAnimation() {};
 	//育成シーン
 	virtual void NurtureAnimation(int no) {};
-
-    // =======================
+	// =======================
+	
+	// =======================
 	// 攻撃関数
 	// =======================
 	//攻撃1(筋力による攻撃)
@@ -138,6 +157,7 @@ public:
 	virtual float MagicAttack();
 	//固有攻撃(各ヒーローの一番高いステータスを反映した攻撃)
 	virtual float UniqueAttack() { return 0; }
+	// =======================
 
 	// =======================
 	// 各バトルフェーズでのアニメーション
@@ -153,6 +173,8 @@ public:
 	virtual void UniqueAttackAnim() {};
 	//ダメージアニメーション
 	virtual void DamageAnim(float vector) {};
+	// =======================
+
 
 	// =======================
 	// ステータス上昇関数
@@ -166,6 +188,8 @@ public:
 	void SpeedUp( float stamina );
 	//体力
 	void HpUp( float stamina );
+	// =======================
+
 
 	//ダメージ関数
 	void Damage(float damage);
@@ -190,6 +214,8 @@ public:
 	//トレーニング失敗フラグ
 	bool GetFailureFlag() { return m_Failure; }
 	void SetFailureFlag(bool failure) { m_Failure = failure; }
+	//トレーニング大成功フラグ
+	bool GetGreatSuccessFlag() { return m_GreatSuccess; }
 	//バトルに使用するパラメータ情報の設定
 	void SetBattleParam(const json& jsondata);
 	//バトル中のHP
@@ -206,6 +232,7 @@ public:
 	void SetDamageAnimEndFlag(bool damageanimend) { m_DamageAnimEnd = damageanimend; }
 	//登場アニメーション終了フラグ
 	bool GetAppealanceAnimEndFlag() { return m_AppealanceAnimEnd; }
+	// =======================
 
 	//アニメーション切り替え関数
 	virtual void AnimChange(int animno);
@@ -218,6 +245,7 @@ protected :
 	void LoadParam(const json& jsondata , const std::string& heroname);
 	//各ヒーローのパラメータ更新
 	void UpdateParam(const json& jsondata, const std::string& heroname);
+	//========================
 
 private:
 	//残りスタミナ量による補正関数
@@ -265,6 +293,7 @@ protected:
 	bool m_DamageAnimEnd;
 	//登場アニメーションが終了したら立てる
 	bool m_AppealanceAnimEnd;
+	//--------------
 
 private:
 	//パラメータ更新前のパラメータ情報
@@ -273,7 +302,13 @@ private:
 	//残りスタミナによる補正
 	float m_Correction;
 
-	//トレーニングが失敗した際に立てるフラグ
+	//----フラグ----
+	//トレーニングが失敗したら立てる
 	bool m_Failure;
+
+	//トレーニングが大成功したら立てる
+	bool m_GreatSuccess;
+
+	//--------------
 
 };

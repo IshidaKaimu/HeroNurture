@@ -45,6 +45,7 @@ void CTraningScene::Create()
 
     //育成関連のシーンで共通するUIのインスタンス生成
     CNurtureScene::CreateNurtureUI(m_pStaminaGauge,m_pStaminaBack,m_pStaminaFrame, m_pTurnBack);
+    //-------------------------
 }
 //破棄関数
 void CTraningScene::Releace()
@@ -263,15 +264,21 @@ void CTraningScene::DrawTraningText()
     CSceneManager*   SceneMng      = &CSceneManager::GetInstance();
     CNurtureManager* NurtureMng    = &CNurtureManager::GetInstance();
 
+    //失敗したかどうかによって返すテキストを変える
+    std::wstring ResultText = HeroMng->GetFailureFlag() ? L"失敗..." : L"成功!";
 
-    //----テキストを変数に代入----
-    //失敗したか同課によって返すテキストを変える
-    std::wstring ResultText = HeroMng->GetFailureFlag() ? L"失敗..." : L"成功!!";
+    //大成功時のテキスト
+    std::wstring GreatSuccessText = L"大成功!!";
 
-    //トレーニングが失敗したかの条件文
+    //失敗
     bool Failure = HeroMng->GetFailureFlag();
-    //休息が選択されていたかの条件文
+
+    //大成功
+    bool GreatSuccess = HeroMng->GetGreatSuccessFlag();
+
+    //休息
     bool Rest = NurtureMng->GetRestFlag();
+
 
     //テキストボックスの描画
     m_pTextBox->Draw();
@@ -282,8 +289,16 @@ void CTraningScene::DrawTraningText()
         //トレーニング成功
         if (!Failure)
         {
-            //「成功!!」のテキスト描画
-            Text->Draw_Text(ResultText, WriteText::Success, RESULTTEXT_OFFSET);
+            if (!GreatSuccess)
+            {
+                //「成功!」のテキスト描画
+                Text->Draw_Text(ResultText, WriteText::Success, RESULTTEXT_OFFSET);
+            }
+            else
+            {
+                //「大成功!!」のテキスト描画
+                Text->Draw_Text(GreatSuccessText, WriteText::GreatSuccess, RESULTTEXT_OFFSET);
+            }
         }
         else
         {
