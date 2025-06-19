@@ -40,6 +40,7 @@ public:
         E_Big,              //Eランク(大)
         Error,              //エラーメッセージ
         Success,            //トレーニング結果(成功)
+        GreatSuccess,       //トレーニング結果(大成功)
         Failure,            //トレーニング結果(失敗)
         Win,                //バトル勝敗(勝利)
         Lose,               //バトル勝敗(敗北)
@@ -120,6 +121,7 @@ private:
         { 120, DWRITE_FONT_WEIGHT_NORMAL, D2D1::ColorF(D2D1::ColorF::Gray), 0 },         //Eランク(大)
         { 50, DWRITE_FONT_WEIGHT_NORMAL, D2D1::ColorF(D2D1::ColorF::IndianRed), 0 },     //エラーメッセージ
         { 100, DWRITE_FONT_WEIGHT_NORMAL, D2D1::ColorF(D2D1::ColorF::Orange), 1 },       //トレーニング結果(成功)
+        { 100, DWRITE_FONT_WEIGHT_NORMAL, D2D1::ColorF(D2D1::ColorF::OrangeRed), 1 },    //トレーニング結果(大成功)
         { 100, DWRITE_FONT_WEIGHT_NORMAL, D2D1::ColorF(D2D1::ColorF::DarkBlue), 1 },     //トレーニング結果(失敗)
         { 200, DWRITE_FONT_WEIGHT_NORMAL, D2D1::ColorF(D2D1::ColorF::Orange), 1 },       //バトル勝敗(勝利)
         { 200, DWRITE_FONT_WEIGHT_NORMAL, D2D1::ColorF(D2D1::ColorF::DarkBlue), 1 },     //バトル勝敗(敗北)
