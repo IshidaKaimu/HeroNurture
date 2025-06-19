@@ -1,6 +1,6 @@
 #include "CHeroBase.h"
-#include "Sound/CSoundManager.h"
-#include "ImGui/ImGuiManager/ImGuiManager.h"
+#include "Sound\CSoundManager.h"
+#include "ImGui\ImGuiManager\ImGuiManager.h"
 #include <fstream>
 #include <codecvt>
 

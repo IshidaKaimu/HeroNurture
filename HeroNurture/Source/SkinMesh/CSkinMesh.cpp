@@ -5,9 +5,11 @@
 #include "CSkinMesh.h"
 #include "CDirectX9.h"
 #include "CDirectX11.h"
+#include "Global\Global.h"
 
 #include <stdlib.h>	//マルチバイト文字→Unicode文字変換で必要.
 #include <locale.h>
+#include <tchar.h>
 
 #include <crtdbg.h>
 
