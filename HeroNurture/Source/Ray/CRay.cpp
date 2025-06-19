@@ -1,5 +1,7 @@
 #include "CRay.h"
 #include "CDirectX11.h"
+#include "Global\Global.h"
+#include <tchar.h>
 
 //シェーダファイル名（ディレクトリも含む）.
 const TCHAR SHADER_NAME[] = _T( "Data\\Shader\\Ray.hlsl" );

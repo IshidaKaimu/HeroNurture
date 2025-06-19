@@ -1,5 +1,7 @@
 #include "MyMacro/MyMacro.h"
 #include "CDirectX11.h"
+#include "Global\Global.h"
+#include <tchar.h>
 
 //コンストラクタ.
 CDirectX11::CDirectX11()
@@ -400,7 +402,7 @@ HRESULT CDirectX11::CreateDepthStencilBackBufferRTV()
 
 	//デプス（深さor深度）ステンシルビュー用のテクスチャを作成.
 	D3D11_TEXTURE2D_DESC	descDepth;
-	descDepth.Width = WND_W;		//幅.
+	descDepth.Width  = WND_W;		//幅.
 	descDepth.Height = WND_H;		//高さ.
 	descDepth.MipLevels = 1;		//ミップマップレベル：1.
 	descDepth.ArraySize	= 1;		//配列数：1.

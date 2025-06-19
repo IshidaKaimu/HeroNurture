@@ -1,4 +1,6 @@
 #include "CDirectX9.h"
+#include "Global\Global.h"
+#include <tchar.h>
 
 CDirectX9::CDirectX9()
 	: m_pDevice9	( nullptr )

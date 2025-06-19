@@ -61,7 +61,7 @@ HRESULT CUIManager::Load(CDirectX11* dx11)
 		{UIList::HpGauge,	     _T("Data\\Texture\\HpGauge.png")		   ,{ 602.0f, 54.0f,  602.0f, 54.0f,  602.0f, 54.0f}},
 		{UIList::EnemyHpGauge,	 _T("Data\\Texture\\EnemyHpGauge.png")	   ,{ 602.0f, 54.0f,  602.0f, 54.0f,  602.0f, 54.0f}},
 		{UIList::HpGaugeBack,	 _T("Data\\Texture\\HpGaugeBack.png")      ,{ 602.0f, 54.0f,  602.0f, 54.0f,  602.0f, 54.0f}},
-		{UIList::GaugeFrame,	     _T("Data\\Texture\\GaugeFrame.png")   ,{ 602.0f, 70.0f,  602.0f, 70.0f,  602.0f, 70.0f}},
+		{UIList::GaugeFrame,	 _T("Data\\Texture\\GaugeFrame.png")       ,{ 602.0f, 70.0f,  602.0f, 70.0f,  602.0f, 70.0f}},
 		{UIList::GaugeDecrease,	 _T("Data\\Texture\\GaugeDecrease.png")    ,{ 602.0f, 54.0f,  602.0f, 54.0f,  602.0f, 54.0f}},
 		{UIList::PowerAttack,	 _T("Data\\Texture\\PowerAttack.png")      ,{ 341.0f, 300.0f, 341.0f, 300.0f, 341.0f, 300.0f}},
 		{UIList::MagicAttack,	 _T("Data\\Texture\\MagicAttack.png")      ,{ 340.0f, 300.0f, 340.0f, 300.0f, 340.0f, 300.0f}},

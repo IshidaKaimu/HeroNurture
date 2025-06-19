@@ -5,6 +5,7 @@
 #include "Light\LightManager\CLightManager.h"
 #include <stdlib.h>	//マルチバイト文字→Unicode文字変換で必要.
 #include <locale.h>
+#include <tchar.h>
 
 
 //シェーダファイル名(ディレクトリも含む).

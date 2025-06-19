@@ -1,5 +1,6 @@
 #include "CSoundManager.h"
-#include "MyMacro/MyMacro.h"
+#include <tchar.h>
+#include "MyMacro\MyMacro.h"
 
 CSoundManager::CSoundManager()
 	: m_pSound	()
