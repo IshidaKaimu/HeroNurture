@@ -202,5 +202,22 @@
             "Power": 30.0,
             "Speed": 186.0
         }
+    },
+    {
+        "Appropriate": {
+            "Hp": 0.0,
+            "Magic": 10.0,
+            "Power": 0.0,
+            "Speed": 20.0
+        },
+        "HeroName": "Yui",
+        "Name": "Result",
+        "Number": 13,
+        "Parameter": {
+            "Hp": 382.0,
+            "Magic": 473.6000061035156,
+            "Power": 30.0,
+            "Speed": 90.0
+        }
     }
 ]
