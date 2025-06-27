@@ -144,6 +144,9 @@ void CYuiAppearanceScene::Update()
 		//オープニングシーンへ
 		m_SceneTransitionFlg = true;
 	}
+
+
+
 	//フェードアウト処理
 	if (m_SceneTransitionFlg && FadeOut())
 	{
@@ -184,6 +187,16 @@ void CYuiAppearanceScene::Draw()
 
 	//空の描画
 	DrawSky();
+
+	//ヒーロー名の描画
+	if (HeroMng->GetBattleHeroName() == "Yui")
+	{
+		Text->Draw_Text(L"Yui", WriteText::Hero, D3DXVECTOR2(0.0f,0.0f));
+	}
+	else
+	{
+		Text->Draw_Text(L"Yui", WriteText::EnemyHero, D3DXVECTOR2(0.0f, 0.0f));
+	}
 
 
 	//ユイのアニメーション中

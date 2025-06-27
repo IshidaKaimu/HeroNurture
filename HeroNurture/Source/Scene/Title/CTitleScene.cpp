@@ -129,7 +129,7 @@ void CTitleScene::Initialize()
 void CTitleScene::Update()
 {   
     CSceneManager* SceneMng = &CSceneManager::GetInstance();
-    CKeyManager* KeyMng     = &CKeyManager::GetInstance();
+    CKeyManager*   KeyMng   = &CKeyManager::GetInstance();
 
     KeyMng->Update();
 
@@ -138,7 +138,7 @@ void CTitleScene::Update()
 
     //タイトルBGMの再生
     CSoundManager::GetInstance()->PlayLoop(CSoundManager::BGM_Title);
-    CSoundManager::GetInstance()->Volume(CSoundManager::BGM_Title, 40);
+    CSoundManager::GetInstance()->Volume(CSoundManager::BGM_Title, BGM_VOLUME);
 
     //フェードイン処理
     if (!FadeIn()) { return; }
@@ -151,7 +151,7 @@ void CTitleScene::Update()
     {
         //スタートSEの再生
         CSoundManager::GetInstance()->PlaySE(CSoundManager::SE_Start);
-        CSoundManager::GetInstance()->Volume(CSoundManager::SE_Start,40);
+        CSoundManager::GetInstance()->Volume(CSoundManager::SE_Start,ENTER_VOLUME);
 
         //オープニングシーンへ
         m_SceneTransitionFlg = true;
@@ -260,7 +260,7 @@ void CTitleScene::MoveArrow()
         {
             //選択SEの再生
             CSoundManager::GetInstance()->PlaySE(CSoundManager::SE_Select);
-            CSoundManager::GetInstance()->Volume(CSoundManager::SE_Select, 40);
+            CSoundManager::GetInstance()->Volume(CSoundManager::SE_Select, SELECT_VOLUME);
 
             m_SelectNo++;
         }
@@ -277,7 +277,7 @@ void CTitleScene::MoveArrow()
         {
             //選択SEの再生
             CSoundManager::GetInstance()->PlaySE(CSoundManager::SE_Select);
-            CSoundManager::GetInstance()->Volume(CSoundManager::SE_Select, 40);
+            CSoundManager::GetInstance()->Volume(CSoundManager::SE_Select, SELECT_VOLUME);
 
             m_SelectNo--;
         }

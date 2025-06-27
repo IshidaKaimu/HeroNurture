@@ -67,7 +67,7 @@ void CLoginScene::Update()
 
     //タイトルBGMの再生
     CSoundManager::GetInstance()->PlayLoop(CSoundManager::BGM_Title);
-    CSoundManager::GetInstance()->Volume(CSoundManager::BGM_Title, 40);
+    CSoundManager::GetInstance()->Volume(CSoundManager::BGM_Title, BGM_VOLUME);
 
 
     //フェードイン処理
@@ -86,7 +86,7 @@ void CLoginScene::Update()
     {
         //スタートSEの再生
         CSoundManager::GetInstance()->PlaySE(CSoundManager::SE_Start);
-        CSoundManager::GetInstance()->Volume(CSoundManager::SE_Start, 40);
+        CSoundManager::GetInstance()->Volume(CSoundManager::SE_Start, SELECT_VOLUME);
 
         //string型に変換　
         std::string UserName = Utility->WstringToString(m_UserName);
@@ -110,9 +110,9 @@ void CLoginScene::Update()
     //前の画面に戻る
     if (KeyMng->IsDown(VK_ESCAPE))
     {
-        //スタートSEの再生
+        //決定SEの再生
         CSoundManager::GetInstance()->PlaySE(CSoundManager::SE_Start);
-        CSoundManager::GetInstance()->Volume(CSoundManager::SE_Start, 40);
+        CSoundManager::GetInstance()->Volume(CSoundManager::SE_Start, SELECT_VOLUME);
 
         //選択番号を変更する
         m_SelectNo = 1;

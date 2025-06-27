@@ -221,12 +221,16 @@ void CBattleScene::Update()
 
 	//死亡時処理
     //自分
+
 	if (HeroMng->Death())
 	{
 		//勝敗の設定
 		BattleMng->SetBattleResult(BattleMng->Lose);
 
-		m_SceneTransitionFlg = true;
+		if (HeroMng->GetDamageAnimEndFlag())
+		{
+			m_SceneTransitionFlg = true;
+		}
 	}
 	//敵
 	if (EnemyHeroMng->Death())
@@ -234,7 +238,10 @@ void CBattleScene::Update()
 		//勝敗の設定
 		BattleMng->SetBattleResult(BattleMng->Win);
 
-		m_SceneTransitionFlg = true;
+		if (EnemyHeroMng->GetDamageAnimEndFlag())
+		{
+			m_SceneTransitionFlg = true;
+		}
 	}
 
 	//フェードアウト処理
@@ -418,19 +425,20 @@ void CBattleScene::DrawHpGauge()
     
 	//自分のHpゲージ
 	m_pHpGaugeBack->Draw();	 //背景
-	m_pHpGaugeFrame->Draw(); //枠
 	m_pHpDecrease->Draw();	 //減少時に見える画像
 	m_pHpGauge->Draw();		 //ゲージ
-	HpGaugeAnim(m_pHpGauge,	  HeroMng->GetHp(),  HeroMng->GetBattleParamData().Hp * 10.0f, 0.1f,  m_HpWidth);		  //ゲージ本体のアニメーション
-	HpGaugeAnim(m_pHpDecrease, HeroMng->GetHp(), HeroMng->GetBattleParamData().Hp * 10.0f, 0.01f, m_HpDecreaseWidth); //減少時に見える画像のアニメーション
+	m_pHpGaugeFrame->Draw(); //枠
+
+	HpGaugeAnim(m_pHpGauge,	   HeroMng->GetHp(), HeroMng->GetBattleParamData().Hp * 10.0f, 0.1f,  m_HpWidth);		     //ゲージ本体のアニメーション
+	HpDecreaseAnim(m_pHpDecrease, HeroMng->GetHp(), HeroMng->GetBattleParamData().Hp * 10.0f, 0.1f,  m_HpDecreaseWidth); //減少時に見える画像のアニメーション
 
 	//敵のHpゲージ
 	m_pEnemyHpGaugeBack->Draw();   //背景
-	m_pEnemyHpGaugeFrame->Draw();  //枠
 	m_pEnemyHpDecrease->Draw();    //減少時に見える画像
 	m_pEnemyHpGauge->Draw();	   //ゲージ
-	HpGaugeAnim(m_pEnemyHpGauge,	EnemyHeroMng->GetHp(), EnemyHeroMng->GetBattleParamData().Hp * 10.0f, 0.1f,  m_EnemyHpWidth);		  //ゲージ本体のアニメーション
-	HpGaugeAnim(m_pEnemyHpDecrease, EnemyHeroMng->GetHp(), EnemyHeroMng->GetBattleParamData().Hp * 10.0f, 0.01f, m_EnemyHpDecreaseWidth); //減少時に見える画像のアニメーション
+	m_pEnemyHpGaugeFrame->Draw();  //枠
+	HpGaugeAnim(m_pEnemyHpGauge,	EnemyHeroMng->GetHp(), EnemyHeroMng->GetBattleParamData().Hp * 10.0f, 0.1f,  m_EnemyHpWidth);		     //ゲージ本体のアニメーション
+	HpDecreaseAnim(m_pEnemyHpDecrease, EnemyHeroMng->GetHp(), EnemyHeroMng->GetBattleParamData().Hp * 10.0f, 0.1f,  m_EnemyHpDecreaseWidth); //減少時に見える画像のアニメーション
 
 	//----------------------------
 }
@@ -484,7 +492,7 @@ void CBattleScene::InitHpGauge()
 }
 
 //体力ゲージのアニメーション
-void CBattleScene::HpGaugeAnim(std::unique_ptr<CUIObject>& Gauge, float hp, float maxhp, float speed, float& width)
+void CBattleScene::HpGaugeAnim(std::unique_ptr<CUIObject>& gauge, float hp, float maxhp, float speed, float& width)
 {
 	//ゲージ幅の確認
 	float GaugeScale = 1.0f * hp / maxhp;
@@ -493,14 +501,47 @@ void CBattleScene::HpGaugeAnim(std::unique_ptr<CUIObject>& Gauge, float hp, floa
 	if (std::fabs(GaugeScale - width) < 0.01f) {
 		// 目標値と十分近い場合、直接スナップ
 		width = GaugeScale;
+
+		m_HpGageAnim = false;
 	}
 	else {
 		// 緩やかに目標値に近づける
 		width += (GaugeScale - width) * speed;
+
+		m_HpGageAnim = true;
 	}
 
 	//ゲージ幅を設定
-	Gauge->SetDisplay(width, 1.0f);
+	gauge->SetDisplay(width, 1.0f);
+}
+
+void CBattleScene::HpDecreaseAnim(std::unique_ptr<CUIObject>& gauge, float hp, float maxhp, float speed, float& width)
+{
+	if (!m_CurrentTurn && m_HpGageAnim)
+	{
+		m_EnemyHpDecreaseAnimStartCount = 0;
+
+		m_HpDecreaseAnimStartCount++;
+		
+		if (m_HpDecreaseAnimStartCount >= HP_DECREASE_ANIM_START)
+		{
+			HpGaugeAnim(gauge, hp, maxhp, speed, width);
+		}
+	}
+	else 
+	{
+		if (!m_HpGageAnim) 
+		{
+			m_HpDecreaseAnimStartCount = 0;
+
+			m_EnemyHpDecreaseAnimStartCount++;
+
+			if (m_EnemyHpDecreaseAnimStartCount >= HP_DECREASE_ANIM_START)
+			{
+				HpGaugeAnim(gauge, hp, maxhp, speed, width);
+			}
+		}
+	}
 }
 
 //行動選択フェーズ中の処理
@@ -544,7 +585,7 @@ void CBattleScene::MoveSelect()
 			else { m_SelectNo = enAttackList::Max - 1; }
 		}
 
-		if (KeyMng->IsDown(VK_RETURN))
+	if (KeyMng->IsDown(VK_RETURN))
 		{
 			//決定SEの再生
 			CSoundManager::GetInstance()->PlaySE(CSoundManager::SE_Enter);
@@ -578,8 +619,8 @@ void CBattleScene::Attack()
 		if (!EnemyHeroMng->GetDamageAnimEndFlag()) 
 		{
 			HeroTurn();
-			if (EnemyHeroMng->GetHp() > 0.0 && HeroMng->GetAttackAnimEndFlag()) {
-				
+			if (EnemyHeroMng->GetHp() > 0.0f && HeroMng->GetAttackAnimEndFlag()) 
+			{		
 				//敵へのダメージ処理
 				if (!EnemyHeroMng->GetDamageFlag()) 
 				{
@@ -602,10 +643,12 @@ void CBattleScene::Attack()
 		else if(!EnemyHeroMng->Death())
 		{
 			EnemyHeroTurn();
-			if (HeroMng->GetHp() > 0.0f) {
-				//自分へのダメージ処理
+			//自分へのダメージ処理
+			if (HeroMng->GetHp() > 0.0f && EnemyHeroMng->GetAttackAnimEndFlag())
+			{
 				if (!HeroMng->GetDamageFlag())
 				{
+					//敵の攻撃の種類によってダメージを与える
 					switch (m_EnemyAttack)
 					{
 					case CBattleScene::PowerAttack:
@@ -623,7 +666,7 @@ void CBattleScene::Attack()
 			}
 		}
 	}
-	else if(!HeroMng->Death())
+	else
 	{
 		//敵が先行の場合
 		if (!HeroMng->GetDamageAnimEndFlag())

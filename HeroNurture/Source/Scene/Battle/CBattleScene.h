@@ -76,15 +76,18 @@ namespace Constant_BattleScene
 
 	//----ゲージ情報----
 	//HP
-	const D3DXVECTOR3 HPGAUGE_POS     = { 0.0f, 80.0f, 0.0f }; //座標
-	const D3DXVECTOR3 HPGAUGE_SCALE   = { 0.8f, 0.8f, 0.8f };//拡縮
-	const D3DXVECTOR2 HPGAUGE_DISPLAY = { 1.0f, 1.0f };	  //幅
+	const D3DXVECTOR3 HPGAUGE_POS     = { 0.0f, 80.0f, 0.0f };	//座標
+	const D3DXVECTOR3 HPGAUGE_SCALE   = { 0.8f, 0.8f, 0.8f };	//拡縮
+	const D3DXVECTOR2 HPGAUGE_DISPLAY = { 1.0f, 1.2f };			//幅
 	//HPの枠
-	const D3DXVECTOR3 HPFRAME_POS = { 0.0f, 74.0f, 0.0f };
+	const D3DXVECTOR3 HPFRAME_POS = { 0.0f, 74.0f, 0.0f };		//座標
 	//敵のHP
-	const D3DXVECTOR3 ENEMY_HPGAUGE_POS  = { 800.0f, 80.0f, 0.0f }; //座標
+	const D3DXVECTOR3 ENEMY_HPGAUGE_POS  = { 800.0f, 80.2f, 0.0f }; //座標
 	//敵のHPの枠
-	const D3DXVECTOR3 ENEMY_HPFRAME_POS = { 800.0f, 74.0f, 0.0f }; //座標
+	const D3DXVECTOR3 ENEMY_HPFRAME_POS = { 800.0f, 74.0f, 0.0f };	//座標
+
+	//減少幅アニメーションの開始カウント
+	constexpr int HP_DECREASE_ANIM_START = 60; 
 	//-----------------
 	
 	//----行動選択----
@@ -114,7 +117,6 @@ namespace Constant_BattleScene
 	//カイト
 	const D3DXVECTOR2 KAITO_TEXT_POS	   = { 0.0f, -30.0f };	  //座標(自分)
 	const D3DXVECTOR2 ENEMY_KAITO_TEXT_POS = { 1100.0f, -30.0f }; //座標(敵)
-
 	//----------------------
 }
 
@@ -134,8 +136,8 @@ private:
 	//攻撃の種類
 	enum enAttackList :char
 	{
-		PowerAttack,	//筋力による攻撃
-		MagicAttack,	//魔力による攻撃
+		PowerAttack, //筋力による攻撃
+		MagicAttack, //魔力による攻撃
 		Max,
 	};
 
@@ -183,7 +185,10 @@ private:
 	void InitHpGauge();
 	
 	//体力ゲージのアニメーション
-	void HpGaugeAnim(std::unique_ptr<CUIObject>& Gauge, float hp, float maxhp, float speed, float& width);
+	void HpGaugeAnim(std::unique_ptr<CUIObject>& gauge, float hp, float maxhp, float speed, float& width);
+
+	//体力ゲージ減少幅のアニメーション
+	void HpDecreaseAnim(std::unique_ptr<CUIObject>& gauge, float hp, float maxhp, float speed, float& width);
 	
 	//----------------------
 
@@ -235,14 +240,14 @@ private:
 	std::unique_ptr<CUIObject> m_pHpGauge;		//ゲージ
 	std::unique_ptr<CUIObject> m_pHpGaugeBack;	//背景
 	std::unique_ptr<CUIObject> m_pHpGaugeFrame;	//枠
-	std::unique_ptr<CUIObject> m_pHpDecrease;	//減少時に見える画像	
+	std::unique_ptr<CUIObject> m_pHpDecrease;	//減少幅	
 
 	
 	//敵の体力ゲージ
-	std::unique_ptr<CUIObject> m_pEnemyHpGauge;		//ゲージ
-	std::unique_ptr<CUIObject> m_pEnemyHpGaugeBack;	//背景
-	std::unique_ptr<CUIObject> m_pEnemyHpGaugeFrame;	//枠
-	std::unique_ptr<CUIObject> m_pEnemyHpDecrease;	//減少時に見える画像	
+	std::unique_ptr<CUIObject> m_pEnemyHpGauge;		 //ゲージ
+	std::unique_ptr<CUIObject> m_pEnemyHpGaugeBack;	 //背景
+	std::unique_ptr<CUIObject> m_pEnemyHpGaugeFrame; //枠
+	std::unique_ptr<CUIObject> m_pEnemyHpDecrease;	 //減少幅	
 
 	//筋力攻撃アイコン
 	std::unique_ptr<CUIObject> m_pPowerAttack;
@@ -283,17 +288,27 @@ private:
 	//行動選択中のカメラに用いるカット番号
 	int m_MoveSelectCut;
 
+	//----体力ゲージ減少幅のアニメーションの開始カウント----
+	
+	int m_HpDecreaseAnimStartCount;			//自分
+	int m_EnemyHpDecreaseAnimStartCount;	//敵
+
+	//------------------------------------------------------
+
 	//----フラグ----
 	
-	//ターンの順を決めるフラグ
+	//ターンの順
 	bool m_IsHeroTurn;
 	
-	//現在どちらのターンかを判断するフラグ
+	//現在どちらのターンか
 	bool m_CurrentTurn;
 	
-	//行動を選択済みであるかの判断
+	//行動を選択済みであるか
 	bool m_SelectAttack;
-	
+
+	//体力の減少中か
+	bool m_HpGageAnim;
+
 	//-------------
 
 	//----列挙型----

@@ -100,10 +100,9 @@ public:
 	void Debug();
 
 private:
-	//----各ヒーローの登場シーンのアニメーション関数----
-	//ユイ
+	//登場シーンのアニメーション関数
 	void YuiAppearance();
-	//----各ヒーローの登場シーンのカメラ設定関数----
+	//登場シーンのカメラ設定関数
 	void SetCamera(D3DXVECTOR3 pos, D3DXVECTOR3 look);
 
 private:
@@ -112,13 +111,18 @@ private:
 
 	//----ヒーローのスキンメッシュ----
 	std::unique_ptr<CYui>   m_pYui;  //ユイ
+	//--------------------------------
+
 
 	//----登場に使用するヒーロー以外のスキンメッシュ----
 	//タヌキ
 	std::unique_ptr<CRaccoonDog> m_pRaccoonDog;
+	//--------------------------------------------------
+	
 	//----スタティックメッシュ----
 	//地面
 	std::unique_ptr<CGround> m_pGround;
+	//----------------------------
 
 	//----フラグ----
 	//非表示フラグ
@@ -127,6 +131,6 @@ private:
 	bool m_AnimEndFlag;   
 	//演出スキップフラグ
 	bool m_SkipFlag;
-
+	//---------------
 };
 

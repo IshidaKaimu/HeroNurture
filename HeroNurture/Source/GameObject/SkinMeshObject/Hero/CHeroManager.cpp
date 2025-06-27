@@ -76,6 +76,17 @@ void CHeroManager::StaminaRecovery()
 
 }
 
+bool CHeroManager::Death()
+{
+    //体力が0以下で、ダメージアニメーションが終了している場合
+    if (m_pHero->GetHp() <= 0.0f)
+    {
+       return true;
+    }
+
+    return false;
+}
+
 void CHeroManager::BattleInitPos()
 {
     m_pHero->SetPosition(BATTLEINIT_POS);

@@ -70,7 +70,7 @@ void CModeSelectScene::Update()
 
     //モード選択BGMの再生
     CSoundManager::GetInstance()->PlayLoop(CSoundManager::BGM_ModeSelect);
-    CSoundManager::GetInstance()->Volume(CSoundManager::BGM_ModeSelect, 40);
+    CSoundManager::GetInstance()->Volume(CSoundManager::BGM_ModeSelect, BGM_VOLUME);
 
     //キーマネージャーの更新
     KeyMng->Update();
@@ -80,7 +80,7 @@ void CModeSelectScene::Update()
     {
         //選択SE
         CSoundManager::GetInstance()->PlaySE(CSoundManager::SE_Select);     //再生
-        CSoundManager::GetInstance()->Volume(CSoundManager::SE_Select, 40); //音量
+        CSoundManager::GetInstance()->Volume(CSoundManager::SE_Select, SELECT_VOLUME); //音量
 
         //キー入力で選択を進める
         if (m_SelectNo < enModeList::Max-1) { m_SelectNo++; }
@@ -90,7 +90,7 @@ void CModeSelectScene::Update()
     {
         //選択SEの再生
         CSoundManager::GetInstance()->PlaySE(CSoundManager::SE_Select);     //再生
-        CSoundManager::GetInstance()->Volume(CSoundManager::SE_Select, 40); //音量
+        CSoundManager::GetInstance()->Volume(CSoundManager::SE_Select, SELECT_VOLUME); //音量
 
         if (m_SelectNo > 0) { m_SelectNo--; }
         else { m_SelectNo = enModeList::Max-1; }
@@ -101,7 +101,7 @@ void CModeSelectScene::Update()
     {
         //決定SEの再生
         CSoundManager::GetInstance()->PlaySE(CSoundManager::SE_Enter);
-        CSoundManager::GetInstance()->Volume(CSoundManager::SE_Enter, 40);
+        CSoundManager::GetInstance()->Volume(CSoundManager::SE_Enter, ENTER_VOLUME);
 
         //選択したモードのシーンへ
         m_SceneTransitionFlg = true;

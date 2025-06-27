@@ -35,7 +35,7 @@ public:
 	static std::unique_ptr<CHeroBase>Create(enHeroList list);
 
 	//Ž€–SŠÖ”
-	bool Death() { return m_pEnemyHero->GetHp() <= 0.0f; }
+	bool Death();
 
 	//ƒ_ƒ[ƒWŠÖ”
 	void Damage(float damage) { m_pEnemyHero->Damage(damage); }

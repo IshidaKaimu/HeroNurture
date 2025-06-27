@@ -330,6 +330,7 @@ void CYui::PowerAttackAnim(float vector)
 		m_MoveX = InitPos.x; //X座標
 		m_MoveY = InitPos.y; //Y座標
 		m_MoveZ = InitPos.z; //Z座標
+
 		//回転値を戻す
 		SetRotation(BATTLE_ROTATE.x, BATTLE_ROTATE.y, BATTLE_ROTATE.z * vector);
 		
@@ -345,11 +346,11 @@ void CYui::PowerAttackAnim(float vector)
 void CYui::MagicAttackAnim(float vector)
 {
 	//エフェクトハンドルの用意
-	static ::EsHandle hFireBall = -1;	//火球エフェクト
+	static ::EsHandle hAttackTornade = -1;	//火球エフェクト
 	//エフェクトの軸回転
 	float EffRoteZ;
-	if (vector == 1) { EffRoteZ = -FIREBALL_ROTATE_Y; }
-	else { EffRoteZ = FIREBALL_ROTATE_Y; }
+	if (vector == 1) { EffRoteZ = -ATTACKTORNADE_ROTATE_Y; }
+	else { EffRoteZ = ATTACKTORNADE_ROTATE_Y; }
 
 	//アニメーション終了後に戻す初期位置
 	D3DXVECTOR3 InitPos;
@@ -385,17 +386,17 @@ void CYui::MagicAttackAnim(float vector)
 				m_EffCnt++;
 
 				CEffect* Eff = CEffect::GetInstance();
-				Eff->Speed(hFireBall, 2.0f);
-				Eff->Scale(hFireBall, FIREBALL_SCALE);
-				Eff->Rotate(hFireBall, D3DXVECTOR3(0.0f, 0.0f, D3DXToRadian(EffRoteZ)));
+				Eff->Speed(hAttackTornade, 2.0f);
+				Eff->Scale(hAttackTornade, ATTACKTORNADE_SCALE);
+				Eff->Rotate(hAttackTornade, D3DXVECTOR3(0.0f, 0.0f, D3DXToRadian(EffRoteZ)));
 
 				if (m_EffCnt == 1)
 				{
-					//火球SEの再生
-					CSoundManager::GetInstance()->PlaySE(CSoundManager::SE_FireBall);
-					CSoundManager::GetInstance()->Volume(CSoundManager::SE_FireBall, 100);
+					//攻撃用竜巻SEの再生
+					CSoundManager::GetInstance()->PlaySE(CSoundManager::SE_AttackTornade);
+					CSoundManager::GetInstance()->Volume(CSoundManager::SE_AttackTornade, 300);
 
-					hFireBall = CEffect::Play(CEffect::Yui_Magic, D3DXVECTOR3(m_vPosition.x - (5.0f * vector), m_vPosition.y + 0.4f, m_vPosition.z));
+					hAttackTornade = CEffect::Play(CEffect::Yui_Magic, D3DXVECTOR3(m_vPosition.x - (5.0f * vector), m_vPosition.y + 0.4f, m_vPosition.z));
 				}
 			}
 		}

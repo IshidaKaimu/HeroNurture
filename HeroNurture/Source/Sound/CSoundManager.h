@@ -14,11 +14,11 @@ public:
 	{
 		BGM_Title,	          //タイトル
 		BGM_ModeSelect,       //モード選択
-		BGM_NurtureHeroSelect, //育成ヒーロー選択
-		BGM_Nurture,			  //育成
+		BGM_NurtureHeroSelect,//育成ヒーロー選択
+		BGM_Nurture,		  //育成
 		BGM_BattleHeroSelect, //戦闘ヒーロー選択
 		BGM_Battle,			  //戦闘
-		BGM_NurtureResult,     //育成結果
+		BGM_NurtureResult,    //育成結果
 		BGM_Win,	          //戦闘結果(勝利)
 		BGM_Lose,			  //戦闘結果(敗北)
 		
@@ -26,9 +26,9 @@ public:
 		SE_Damage,			  //ダメージ		
 		SE_Select,			  //選択.		
 		SE_Enter,			  //決定.		
-		SE_Tornade,			  //竜巻.		
+		SE_Tornade,			  //竜巻(回転).		
 		SE_Start,			  //スタート.		
-		SE_FireBall,		  //火球.
+		SE_AttackTornade,	  //竜巻(攻撃).
 		SE_Thunder,           //電気
 		SE_TPose,             //T字ポーズ
 		SE_Up,                //ステータス(上昇)

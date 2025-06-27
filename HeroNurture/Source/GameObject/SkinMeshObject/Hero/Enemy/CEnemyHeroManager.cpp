@@ -31,6 +31,17 @@ std::unique_ptr<CHeroBase> CEnemyHeroManager::Create(enHeroList list)
     }
 }
 
+bool CEnemyHeroManager::Death()
+{
+    //体力が0以下で、ダメージアニメーションが終了している場合
+    if (m_pEnemyHero->GetHp() <= 0.0f)
+    {
+       return true;
+    }
+
+    return false;
+}
+
 //敵に設定されているヒーローの名前を文字列で返す
 std::string CEnemyHeroManager::GetEnemyHeroName()
 {

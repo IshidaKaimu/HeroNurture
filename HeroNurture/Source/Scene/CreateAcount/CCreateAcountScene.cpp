@@ -63,7 +63,7 @@ void CCreateAcountScene::Update()
 {
     //タイトルBGMの再生
     CSoundManager::GetInstance()->PlayLoop(CSoundManager::BGM_Title);
-    CSoundManager::GetInstance()->Volume(CSoundManager::BGM_Title, 40);
+    CSoundManager::GetInstance()->Volume(CSoundManager::BGM_Title, BGM_VOLUME);
 
     CKeyManager* KeyMng = &CKeyManager::GetInstance();
     CSceneManager* SceneMng = &CSceneManager::GetInstance();
@@ -85,7 +85,7 @@ void CCreateAcountScene::Update()
     {
         //スタートSEの再生
         CSoundManager::GetInstance()->PlaySE(CSoundManager::SE_Start);
-        CSoundManager::GetInstance()->Volume(CSoundManager::SE_Start, 40);
+        CSoundManager::GetInstance()->Volume(CSoundManager::SE_Start, ENTER_VOLUME);
 
         if (!m_UserName.empty()) {
 

@@ -72,14 +72,14 @@ namespace Constant_Yui
 	//-------------
 	
 	//----エフェクト----
-	//竜巻エフェクト
+	//回転に使う竜巻エフェクト
 	const D3DXVECTOR3 TORNADE_POS      = { 0.3f, 0.3f, 0.3f };  //座標
 	const D3DXVECTOR3 TORNADE_SCALE    = { 0.3f, 0.3f, 0.3f };  //拡縮
 	constexpr int     TORNADE_PLAY     = 60;					//再生タイミング
-	//火の玉エフェクト
-	const D3DXVECTOR3 FIREBALL_SCALE    = { 0.3f, 0.3f, 0.3f }; //拡縮
-	constexpr float   FIREBALL_ROTATE_Y = 90.0f;				//役割によって変わるY軸の回転値
-	constexpr int     FIREBALL_PLAY     = 60;					//再生タイミング
+	///攻撃に使う竜巻エフェクト
+	const D3DXVECTOR3 ATTACKTORNADE_SCALE    = { 0.5f, 0.5f, 0.5f }; //拡縮
+	constexpr float   ATTACKTORNADE_ROTATE_Y = 90.0f;				 //役割によって変わるY軸の回転値
+	constexpr int     ATTACKTORNADE_PLAY     = 60;					 //再生タイミング
 	//------------------
 }
 // =======================

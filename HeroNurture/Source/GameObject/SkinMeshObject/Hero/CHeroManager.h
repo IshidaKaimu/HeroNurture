@@ -149,7 +149,7 @@ public:
 	//ダメージ関数
 	void Damage(float damage) { m_pHero->Damage(damage); }
 	//死亡関数
-	bool Death() { return m_pHero->GetHp() <= 0.0f; }
+	bool Death();
 
 	//バトル中の位置の初期化
 	void BattleInitPos();

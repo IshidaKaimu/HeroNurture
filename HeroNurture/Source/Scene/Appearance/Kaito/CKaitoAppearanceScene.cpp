@@ -160,8 +160,8 @@ void CKaitoAppearanceScene::Update()
 void CKaitoAppearanceScene::Draw()
 {
 	CHeroManager* HeroMng   = &CHeroManager::GetInstance();
-	WriteText* Text	        = WriteText::GetInstance();
-	CSceneManager* SceneMng = &CSceneManager::GetInstance();
+	WriteText*    Text	    = WriteText::GetInstance();
+	CSceneManager*SceneMng  = &CSceneManager::GetInstance();
 
 	//カメラの動作
 	m_pCamera->CameraUpdate();
@@ -180,6 +180,18 @@ void CKaitoAppearanceScene::Draw()
 
 	//操作方法指示バーの描画
 	DrawControlBar(false);
+
+	SceneMng->GetDx11()->SetDepth(false);
+	//ヒーロー名の描画
+	if (HeroMng->GetBattleHeroName() == "Kaito")
+	{
+		Text->Draw_Text(L"Kaito", WriteText::Hero, D3DXVECTOR2(0.0f, 0.0f));
+	}
+	else
+	{
+		Text->Draw_Text(L"Kaito", WriteText::EnemyHero, D3DXVECTOR2(0.0f, 0.0f));
+	}
+	SceneMng->GetDx11()->SetDepth(true);
 
 	//演出スキップ指示の描画
 	Text->Draw_Text(L"Enter 演出スキップ", WriteText::Control, ENTERTEXT_POS);
