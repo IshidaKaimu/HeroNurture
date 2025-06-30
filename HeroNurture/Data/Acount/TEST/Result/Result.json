@@ -10,10 +10,10 @@
         "Name": "Result",
         "Number": 1,
         "Parameter": {
-            "Hp": 150.0,
+            "Hp": 10.0,
             "Magic": 60.0,
             "Power": 50.0,
-            "Speed": 90.0
+            "Speed": 10.0
         }
     },
     {
@@ -27,7 +27,7 @@
         "Name": "Result",
         "Number": 2,
         "Parameter": {
-            "Hp": 200.0,
+            "Hp": 10.0,
             "Magic": 40.0,
             "Power": 90.0,
             "Speed": 40.0
@@ -46,7 +46,7 @@
         "Parameter": {
             "Hp": 350.0,
             "Magic": 400.0,
-            "Power": 450.0,
+            "Power": 2000.0,
             "Speed": 250.0
         }
     },

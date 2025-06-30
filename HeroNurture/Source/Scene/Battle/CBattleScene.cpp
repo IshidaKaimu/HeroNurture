@@ -193,7 +193,6 @@ void CBattleScene::Initialize()
 void CBattleScene::Update()
 {
 	CSceneManager*       SceneMng     = &CSceneManager::GetInstance();
-	CBattleManager*      BattleMng    = &CBattleManager::GetInstance();
 	CHeroManager*        HeroMng      = &CHeroManager::GetInstance();
 	CEnemyHeroManager*   EnemyHeroMng = &CEnemyHeroManager::GetInstance();
 
@@ -217,31 +216,6 @@ void CBattleScene::Update()
 		break;
 	case CBattleScene::Max:
 		break;
-	}
-
-	//死亡時処理
-    //自分
-
-	if (HeroMng->Death())
-	{
-		//勝敗の設定
-		BattleMng->SetBattleResult(BattleMng->Lose);
-
-		if (HeroMng->GetDamageAnimEndFlag())
-		{
-			m_SceneTransitionFlg = true;
-		}
-	}
-	//敵
-	if (EnemyHeroMng->Death())
-	{
-		//勝敗の設定
-		BattleMng->SetBattleResult(BattleMng->Win);
-
-		if (EnemyHeroMng->GetDamageAnimEndFlag())
-		{
-			m_SceneTransitionFlg = true;
-		}
 	}
 
 	//フェードアウト処理
@@ -634,36 +608,35 @@ void CBattleScene::Attack()
 						//魔力攻撃のダメージ
 						EnemyHeroMng->Damage(HeroMng->MagicAttack());
 						break;
-					case CBattleScene::Max:
-						break;
 					}
 				}
 			}
 		}
-		else if(!EnemyHeroMng->Death())
+		else
 		{
-			EnemyHeroTurn();
-			//自分へのダメージ処理
-			if (HeroMng->GetHp() > 0.0f && EnemyHeroMng->GetAttackAnimEndFlag())
-			{
-				if (!HeroMng->GetDamageFlag())
-				{
-					//敵の攻撃の種類によってダメージを与える
-					switch (m_EnemyAttack)
-					{
-					case CBattleScene::PowerAttack:
-						//筋力攻撃のダメージ
-						HeroMng->Damage(EnemyHeroMng->PowerAttack());
-						break;
-					case CBattleScene::MagicAttack:
-						//魔力攻撃のダメージ
-						HeroMng->Damage(EnemyHeroMng->MagicAttack());
-						break;
-					case CBattleScene::Max:
-						break;
+		  if (!EnemyHeroMng->Death()) 
+		  {
+			  EnemyHeroTurn();
+			 //自分へのダメージ処理
+			 if (HeroMng->GetHp() > 0.0f && EnemyHeroMng->GetAttackAnimEndFlag())
+			 {
+				 if (!HeroMng->GetDamageFlag())
+				 {
+					 //敵の攻撃の種類によってダメージを与える
+					 switch (m_EnemyAttack)
+					 {
+					 case CBattleScene::PowerAttack:
+						 //筋力攻撃のダメージ
+						 HeroMng->Damage(EnemyHeroMng->PowerAttack());
+						 break;
+					 case CBattleScene::MagicAttack:
+						 //魔力攻撃のダメージ
+						 HeroMng->Damage(EnemyHeroMng->MagicAttack());
+						 break;
 					}
 				}
 			}
+		  }
 		}
 	}
 	else
@@ -690,21 +663,24 @@ void CBattleScene::Attack()
 				}
 			}
 		}
-		else
+		else 
 		{
-			HeroTurn();
-			if (HeroMng->GetHp() > 0.0f && HeroMng->GetAttackAnimEndFlag()) {
-				//敵へのダメージ処理
-				if (!EnemyHeroMng->GetDamageFlag())
-				{
-					switch (m_Attack)
+			if (!HeroMng->Death()) 
+			{
+				HeroTurn();
+				if (HeroMng->GetHp() > 0.0f && HeroMng->GetAttackAnimEndFlag()) {
+					//敵へのダメージ処理
+					if (!EnemyHeroMng->GetDamageFlag())
 					{
-					case CBattleScene::PowerAttack:
-						EnemyHeroMng->Damage(HeroMng->PowerAttack());
-						break;
-					case CBattleScene::MagicAttack:
-						EnemyHeroMng->Damage(HeroMng->MagicAttack());
-						break;
+						switch (m_Attack)
+						{
+						case CBattleScene::PowerAttack:
+							EnemyHeroMng->Damage(HeroMng->PowerAttack());
+							break;
+						case CBattleScene::MagicAttack:
+							EnemyHeroMng->Damage(HeroMng->MagicAttack());
+							break;
+						}
 					}
 				}
 			}
@@ -714,22 +690,57 @@ void CBattleScene::Attack()
 	//準備フェーズへ移動
 	if (HeroMng->GetDamageAnimEndFlag() && EnemyHeroMng->GetDamageAnimEndFlag())
 	{
-		//自分、敵の初期化
-		HeroMng->BattleInitialize();
-		EnemyHeroMng->Initialize();
 
-		//行動を未選択とする
-		m_SelectAttack = false;
+		CBattleManager* BattleMng = &CBattleManager::GetInstance();
 
-		//自分、敵のアニメーション終了フラグを下す
-		HeroMng->SetAttackAnimEndFlag(false);
-		EnemyHeroMng->SetAttackAnimEndFlag(false);
+		if (!HeroMng->Death() && !EnemyHeroMng->Death())
+		{
 
-		//行動選択中のカメラ演出を初めからにする
-		m_MoveSelectCut = 0;
+		    //自分、敵の初期化
+		    HeroMng->BattleInitialize();
+		    EnemyHeroMng->Initialize();
+		    
+		    
+		    //行動を未選択とする
+		    m_SelectAttack = false;
+		    
+		    //自分、敵のアニメーション終了フラグを下す
+		    
+		    //攻撃アニメーション
+		    HeroMng->SetAttackAnimEndFlag(false);		//自分
+		    EnemyHeroMng->SetAttackAnimEndFlag(false);  //敵
+		    
+		    //ダメージアニメーション
+		    HeroMng->SetDamageAnimEndFlag(false);		//自分
+		    EnemyHeroMng->SetDamageAnimEndFlag(false);  //敵
+		    
+		    //行動選択中のカメラ演出を初めからにする
+		    m_MoveSelectCut = 0;
+		    
+		    //バトルのフェーズを行動選択に戻す
+		    m_BattlePhase = enBattlePhase::MoveSelectPhase;
+		 }
 
-		//バトルのフェーズを行動選択に戻す
-		m_BattlePhase = enBattlePhase::MoveSelectPhase;
+		//死亡時処理
+		//自分
+		if (HeroMng->Death())
+		{
+			//勝敗の設定
+			BattleMng->SetBattleResult(BattleMng->Lose);
+
+			m_SceneTransitionFlg = true;
+		}
+
+		//敵
+		if (EnemyHeroMng->Death())
+		{
+			//勝敗の設定
+			BattleMng->SetBattleResult(BattleMng->Win);
+
+			m_SceneTransitionFlg = true;
+		}
+
+
 	}
 }
 

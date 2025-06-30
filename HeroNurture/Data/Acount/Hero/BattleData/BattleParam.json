@@ -1,9 +1,0 @@
-{
- "Name": "BattleParam",
- "Parameter": {
-  "Hp": 350.0,
-  "Magic": 400.0,
-  "Power": 450.0,
-  "Speed": 250.0
- }
-}
