@@ -51,6 +51,14 @@ const D3DXVECTOR2 ENTERTEXT_POS  = { 970.0f, 675.0f }; //座標
 const D3DXVECTOR2 ESCAPETEXT_POS = { 1150.0f, 675.0f }; //座標
 //----------
 
+//----BGM/SEの音量----
+//BGM
+constexpr int BGM_VOLUME = 200;
+//SE
+constexpr int SE_VOLUME  = 200;
+//--------------------
+
+
 //=====================================
 //シーン基底クラス
 //制作者：石田櫂夢

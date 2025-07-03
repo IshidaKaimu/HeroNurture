@@ -243,7 +243,7 @@ void CKaito::PowerAttackAnim(float vector)
 			if (m_EffCnt == 1) {
 				//斬撃SEの再生
 				CSoundManager::GetInstance()->PlaySE(CSoundManager::SE_Slash);
-				CSoundManager::GetInstance()->Volume(CSoundManager::SE_Slash, 80);
+				CSoundManager::GetInstance()->Volume(CSoundManager::SE_Slash, SE_VOLUME);
 				hSlash = CEffect::Play(CEffect::Kaito_Power, D3DXVECTOR3(m_vPosition.x - (-1.0f * vector), m_vPosition.y + 1.5f, m_vPosition.z));
 			}
 
@@ -320,7 +320,7 @@ void CKaito::MagicAttackAnim(float vector)
 				if (m_EffCnt == 1) {
 					//ダメージSEの再生
 					CSoundManager::GetInstance()->PlaySE(CSoundManager::SE_Thunder);
-					CSoundManager::GetInstance()->Volume(CSoundManager::SE_Thunder, 80);
+					CSoundManager::GetInstance()->Volume(CSoundManager::SE_Thunder, SE_VOLUME);
 
 					hMagicLight = CEffect::Play(CEffect::Kaito_Magic, D3DXVECTOR3(m_vPosition.x - (-2.0f * vector), m_vPosition.y + 1.8f, m_vPosition.z + (0.2f * vector)));
 				}
@@ -355,7 +355,7 @@ void CKaito::DamageAnim(float vector)
 	{
 		//ダメージSEの再生
 		CSoundManager::GetInstance()->PlaySE(CSoundManager::SE_Damage);
-		CSoundManager::GetInstance()->Volume(CSoundManager::SE_Damage, 80);
+		CSoundManager::GetInstance()->Volume(CSoundManager::SE_Damage, SE_VOLUME);
 
 		AnimChange(Damage);
 	}

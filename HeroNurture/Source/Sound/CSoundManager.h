@@ -27,7 +27,6 @@ public:
 		SE_Select,			  //選択.		
 		SE_Enter,			  //決定.		
 		SE_Tornade,			  //竜巻(回転).		
-		SE_Start,			  //スタート.		
 		SE_AttackTornade,	  //竜巻(攻撃).
 		SE_Thunder,           //電気
 		SE_TPose,             //T字ポーズ

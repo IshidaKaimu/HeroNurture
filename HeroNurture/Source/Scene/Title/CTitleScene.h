@@ -56,14 +56,6 @@ namespace Constant_TitleScene
 	const float		  SELECTARROW_RANGE = 3.0f;						//ˆÚ“®”ÍˆÍ	
 	//----------
 
-	//----BGM/SE‚Ì‰¹—Ê----
-	//BGM
-	constexpr int BGM_VOLUME = 200;
-	//SE
-	constexpr int SELECT_VOLUME = 200; //‘I‘ð
-	constexpr int ENTER_VOLUME  = 200; //Œˆ’è
-	//--------------------
-
 }
 //========================
 

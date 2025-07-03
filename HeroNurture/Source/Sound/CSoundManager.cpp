@@ -48,7 +48,6 @@ bool CSoundManager::Load( HWND hWnd )
 		{ enList::SE_Select,		    _T( "Data\\Sound\\SE\\Select.mp3" ),				_T( "SE_Select" )			 },
 		{ enList::SE_Enter,			    _T( "Data\\Sound\\SE\\Enter.mp3" ),				    _T( "SE_Enter" )			 },
 		{ enList::SE_Tornade,		    _T( "Data\\Sound\\SE\\Tornade.mp3" ),			    _T( "SE_Tornde" )			 },
-		{ enList::SE_Start,				_T( "Data\\Sound\\SE\\Start.mp3" ),				    _T( "SE_Start" )			 },
 		{ enList::SE_AttackTornade,		_T( "Data\\Sound\\SE\\FireBall.mp3" ),			    _T( "SE_AttackTornade" )	 },
 		{ enList::SE_Thunder,			_T( "Data\\Sound\\SE\\Thunder.mp3" ),			    _T( "SE_Thunder" )		     },
 		{ enList::SE_TPose,			    _T( "Data\\Sound\\SE\\TPose.mp3" ),			        _T( "SE_TPose" )		     },

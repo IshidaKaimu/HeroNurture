@@ -84,8 +84,8 @@ void CCreateAcountScene::Update()
     if (KeyMng->IsDown(VK_RETURN))
     {
         //スタートSEの再生
-        CSoundManager::GetInstance()->PlaySE(CSoundManager::SE_Start);
-        CSoundManager::GetInstance()->Volume(CSoundManager::SE_Start, ENTER_VOLUME);
+        CSoundManager::GetInstance()->PlaySE(CSoundManager::SE_Enter);
+        CSoundManager::GetInstance()->Volume(CSoundManager::SE_Enter, SE_VOLUME);
 
         if (!m_UserName.empty()) {
 

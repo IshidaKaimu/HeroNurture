@@ -96,7 +96,7 @@ void CNurtureHeroSelectScene::Update()
 
     //育成ヒーローBGMの再生
     CSoundManager::GetInstance()->PlayLoop(CSoundManager::BGM_NurtureHeroSelect);
-    CSoundManager::GetInstance()->Volume(CSoundManager::BGM_NurtureHeroSelect, 40);
+    CSoundManager::GetInstance()->Volume(CSoundManager::BGM_NurtureHeroSelect, BGM_VOLUME);
 
     CKeyManager* KeyMng = &CKeyManager::GetInstance();
     CHeroManager* HeroMng = &CHeroManager::GetInstance();
@@ -109,7 +109,7 @@ void CNurtureHeroSelectScene::Update()
     {
         //選択SEの再生
         CSoundManager::GetInstance()->PlaySE(CSoundManager::SE_Select);
-        CSoundManager::GetInstance()->Volume(CSoundManager::SE_Select, 40);
+        CSoundManager::GetInstance()->Volume(CSoundManager::SE_Select, SE_VOLUME);
 
         //キー入力で選択を進める
         if (m_SelectNo < CHeroBase::enHeroList::Max-1) { m_SelectNo++; }
@@ -119,7 +119,7 @@ void CNurtureHeroSelectScene::Update()
     {
         //選択SEの再生
         CSoundManager::GetInstance()->PlaySE(CSoundManager::SE_Select);
-        CSoundManager::GetInstance()->Volume(CSoundManager::SE_Select, 40);
+        CSoundManager::GetInstance()->Volume(CSoundManager::SE_Select, SE_VOLUME);
 
         if (m_SelectNo > 0) { m_SelectNo--; }
         else { m_SelectNo = 1; }
@@ -145,7 +145,7 @@ void CNurtureHeroSelectScene::Update()
     {
         //決定SEの再生
         CSoundManager::GetInstance()->PlaySE(CSoundManager::SE_Enter);
-        CSoundManager::GetInstance()->Volume(CSoundManager::SE_Enter, 40);
+        CSoundManager::GetInstance()->Volume(CSoundManager::SE_Enter, SE_VOLUME);
 
         //オープニングシーンへ
         m_SceneTransitionFlg = true;
@@ -156,7 +156,7 @@ void CNurtureHeroSelectScene::Update()
     {
         //決定SEの再生
         CSoundManager::GetInstance()->PlaySE(CSoundManager::SE_Enter);
-        CSoundManager::GetInstance()->Volume(CSoundManager::SE_Enter, 40);
+        CSoundManager::GetInstance()->Volume(CSoundManager::SE_Enter, SE_VOLUME);
 
         //選択番号を2にする
         m_SelectNo = 2;

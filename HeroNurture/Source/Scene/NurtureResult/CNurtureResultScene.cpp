@@ -91,7 +91,7 @@ void CNurtureResultScene::Update()
 
     //育成結果BGMの再生
     CSoundManager::GetInstance()->PlayLoop(CSoundManager::BGM_NurtureResult);
-    CSoundManager::GetInstance()->Volume(CSoundManager::BGM_NurtureResult, 40);
+    CSoundManager::GetInstance()->Volume(CSoundManager::BGM_NurtureResult, BGM_VOLUME);
 
 
     //キーマネージャの動作処理
@@ -102,7 +102,7 @@ void CNurtureResultScene::Update()
     {
         //決定SEの再生
         CSoundManager::GetInstance()->PlaySE(CSoundManager::SE_Enter);
-        CSoundManager::GetInstance()->Volume(CSoundManager::SE_Enter, 40);
+        CSoundManager::GetInstance()->Volume(CSoundManager::SE_Enter, SE_VOLUME);
 
         //オープニングシーンへ
         m_SceneTransitionFlg = true;

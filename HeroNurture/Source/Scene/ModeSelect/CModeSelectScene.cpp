@@ -63,10 +63,12 @@ void CModeSelectScene::Update()
     if (!FadeIn()) { return; }
 
     //BGMの停止
-    CSoundManager::GetInstance()->Stop(CSoundManager::BGM_Title);         //タイトル
-    CSoundManager::GetInstance()->Stop(CSoundManager::BGM_NurtureResult); //育成結果
-    CSoundManager::GetInstance()->Stop(CSoundManager::BGM_Win);           //勝利
-    CSoundManager::GetInstance()->Stop(CSoundManager::BGM_Lose);          //敗北
+    CSoundManager::GetInstance()->Stop(CSoundManager::BGM_Title);            //タイトル
+    CSoundManager::GetInstance()->Stop(CSoundManager::BGM_NurtureHeroSelect);//ヒーロー選択(育成)
+    CSoundManager::GetInstance()->Stop(CSoundManager::BGM_BattleHeroSelect); //ヒーロー選択(バトル)
+    CSoundManager::GetInstance()->Stop(CSoundManager::BGM_NurtureResult);    //育成結果
+    CSoundManager::GetInstance()->Stop(CSoundManager::BGM_Win);              //勝利
+    CSoundManager::GetInstance()->Stop(CSoundManager::BGM_Lose);             //敗北
 
     //モード選択BGMの再生
     CSoundManager::GetInstance()->PlayLoop(CSoundManager::BGM_ModeSelect);
@@ -79,8 +81,8 @@ void CModeSelectScene::Update()
     if (KeyMng->IsDown('D'))
     {
         //選択SE
-        CSoundManager::GetInstance()->PlaySE(CSoundManager::SE_Select);     //再生
-        CSoundManager::GetInstance()->Volume(CSoundManager::SE_Select, SELECT_VOLUME); //音量
+        CSoundManager::GetInstance()->PlaySE(CSoundManager::SE_Select);            //再生
+        CSoundManager::GetInstance()->Volume(CSoundManager::SE_Select, SE_VOLUME); //音量
 
         //キー入力で選択を進める
         if (m_SelectNo < enModeList::Max-1) { m_SelectNo++; }
@@ -89,8 +91,8 @@ void CModeSelectScene::Update()
     else if (KeyMng->IsDown('A'))
     {
         //選択SEの再生
-        CSoundManager::GetInstance()->PlaySE(CSoundManager::SE_Select);     //再生
-        CSoundManager::GetInstance()->Volume(CSoundManager::SE_Select, SELECT_VOLUME); //音量
+        CSoundManager::GetInstance()->PlaySE(CSoundManager::SE_Select);            //再生
+        CSoundManager::GetInstance()->Volume(CSoundManager::SE_Select, SE_VOLUME); //音量
 
         if (m_SelectNo > 0) { m_SelectNo--; }
         else { m_SelectNo = enModeList::Max-1; }
@@ -101,7 +103,7 @@ void CModeSelectScene::Update()
     {
         //決定SEの再生
         CSoundManager::GetInstance()->PlaySE(CSoundManager::SE_Enter);
-        CSoundManager::GetInstance()->Volume(CSoundManager::SE_Enter, ENTER_VOLUME);
+        CSoundManager::GetInstance()->Volume(CSoundManager::SE_Enter, SE_VOLUME);
 
         //選択したモードのシーンへ
         m_SceneTransitionFlg = true;

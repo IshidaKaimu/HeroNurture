@@ -262,18 +262,11 @@ void CYui::PowerAttackAnim(float vector)
 		{
 			m_EffCnt++;
 
-			if (m_EffCnt == PLAY_TSHARP_SE)
-			{
-				//T字SEの再生
-				CSoundManager::GetInstance()->PlaySE(CSoundManager::SE_TPose);
-				CSoundManager::GetInstance()->Volume(CSoundManager::SE_TPose, 80);
-			}
-
 			if (m_EffCnt  == TORNADE_PLAY) 
 			{
 				//竜巻SEの再生
 				CSoundManager::GetInstance()->PlaySE(CSoundManager::SE_Tornade);
-				CSoundManager::GetInstance()->Volume(CSoundManager::SE_Tornade, 80);
+				CSoundManager::GetInstance()->Volume(CSoundManager::SE_Tornade, SE_VOLUME);
 
 				hTornado = CEffect::Play(CEffect::Yui_Power, D3DXVECTOR3(m_vPosition.x, m_vPosition.y, m_vPosition.z));
 			}
@@ -394,7 +387,7 @@ void CYui::MagicAttackAnim(float vector)
 				{
 					//攻撃用竜巻SEの再生
 					CSoundManager::GetInstance()->PlaySE(CSoundManager::SE_AttackTornade);
-					CSoundManager::GetInstance()->Volume(CSoundManager::SE_AttackTornade, 300);
+					CSoundManager::GetInstance()->Volume(CSoundManager::SE_AttackTornade, SE_VOLUME);
 
 					hAttackTornade = CEffect::Play(CEffect::Yui_Magic, D3DXVECTOR3(m_vPosition.x - (5.0f * vector), m_vPosition.y + 0.4f, m_vPosition.z));
 				}
@@ -453,7 +446,7 @@ void CYui::DamageAnim(float vector)
 	{
 		//ダメージSEの再生
 		CSoundManager::GetInstance()->PlaySE(CSoundManager::SE_Damage);
-		CSoundManager::GetInstance()->Volume(CSoundManager::SE_Damage, 80);
+		CSoundManager::GetInstance()->Volume(CSoundManager::SE_Damage, SE_VOLUME);
 	}
 	//待機アニメーション時
 	if (NotUseAnim && !m_AnimChange) {

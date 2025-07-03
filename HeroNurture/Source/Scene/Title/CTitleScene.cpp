@@ -150,8 +150,8 @@ void CTitleScene::Update()
     if (KeyMng->IsDown(VK_RETURN))
     {
         //スタートSEの再生
-        CSoundManager::GetInstance()->PlaySE(CSoundManager::SE_Start);
-        CSoundManager::GetInstance()->Volume(CSoundManager::SE_Start,ENTER_VOLUME);
+        CSoundManager::GetInstance()->PlaySE(CSoundManager::SE_Enter);
+        CSoundManager::GetInstance()->Volume(CSoundManager::SE_Enter,SE_VOLUME);
 
         //オープニングシーンへ
         m_SceneTransitionFlg = true;
@@ -260,7 +260,7 @@ void CTitleScene::MoveArrow()
         {
             //選択SEの再生
             CSoundManager::GetInstance()->PlaySE(CSoundManager::SE_Select);
-            CSoundManager::GetInstance()->Volume(CSoundManager::SE_Select, SELECT_VOLUME);
+            CSoundManager::GetInstance()->Volume(CSoundManager::SE_Select, SE_VOLUME);
 
             m_SelectNo++;
         }
@@ -277,7 +277,7 @@ void CTitleScene::MoveArrow()
         {
             //選択SEの再生
             CSoundManager::GetInstance()->PlaySE(CSoundManager::SE_Select);
-            CSoundManager::GetInstance()->Volume(CSoundManager::SE_Select, SELECT_VOLUME);
+            CSoundManager::GetInstance()->Volume(CSoundManager::SE_Select, SE_VOLUME);
 
             m_SelectNo--;
         }
