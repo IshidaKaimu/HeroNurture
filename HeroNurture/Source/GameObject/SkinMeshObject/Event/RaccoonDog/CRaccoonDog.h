@@ -32,6 +32,11 @@ namespace Constant_RaccoonDog
 	constexpr float STEAM_DELAY= 5.0f; //タヌキからずらす値
 }
 
+//=====================================
+// タヌキクラス
+// 制作者:石田櫂夢
+//=====================================
+
 
 class CRaccoonDog
 	: public CHeroBase
