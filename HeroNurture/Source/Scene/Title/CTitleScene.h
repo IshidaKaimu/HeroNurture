@@ -56,19 +56,12 @@ namespace Constant_TitleScene
 	const float		  SELECTARROW_RANGE = 3.0f;						//移動範囲	
 	//----------
 
-	//----BGM/SEの音量----
-	//BGM
-	constexpr int BGM_VOLUME = 200;
-	//SE
-	constexpr int SELECT_VOLUME = 200; //選択
-	constexpr int ENTER_VOLUME  = 200; //決定
-	//--------------------
-
 }
 //========================
 
 //=====================================
 // タイトルシーンクラス
+// 制作者:石田櫂夢
 //=====================================
 class CTitleScene
 	:public CSceneBase

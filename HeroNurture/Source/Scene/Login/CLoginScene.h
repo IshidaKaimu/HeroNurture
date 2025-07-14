@@ -35,20 +35,11 @@ namespace Constant_LoginScene
 	//シーン名座標
 	static const D3DXVECTOR2 SCENENAME_POS = { 0.0f, -20.0f };
 	//-----------
-
-	//----BGM/SEの音量----
-	//BGM
-	constexpr int BGM_VOLUME = 200;
-	//SE
-	constexpr int SELECT_VOLUME = 200; //選択
-	constexpr int ENTER_VOLUME  = 200; //決定
-	//--------------------
-
-
 }
 
 //=====================================
 // ログインシーンクラス
+// 制作者:石田櫂夢
 //=====================================
 class CLoginScene
 	:public CSceneBase

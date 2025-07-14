@@ -201,7 +201,7 @@ void CBattleScene::Update()
 
 	//バトルBGMの再生
 	CSoundManager::GetInstance()->PlayLoop(CSoundManager::BGM_Battle);
-	CSoundManager::GetInstance()->Volume(CSoundManager::BGM_Battle, 40);
+	CSoundManager::GetInstance()->Volume(CSoundManager::BGM_Battle, BGM_VOLUME);
 
 	//フェードイン処理
 	if (!FadeIn()) { return; }
@@ -543,7 +543,7 @@ void CBattleScene::MoveSelect()
 		{
 		    //選択SEの再生
 		    CSoundManager::GetInstance()->PlaySE(CSoundManager::SE_Select);
-		    CSoundManager::GetInstance()->Volume(CSoundManager::SE_Select, 40);
+		    CSoundManager::GetInstance()->Volume(CSoundManager::SE_Select, SE_VOLUME);
 
 			//キー入力で選択を進める
 			if (m_SelectNo < enAttackList::Max - 1) { m_SelectNo++; }
@@ -553,7 +553,7 @@ void CBattleScene::MoveSelect()
 		{
 			//選択SEの再生
 			CSoundManager::GetInstance()->PlaySE(CSoundManager::SE_Select);
-			CSoundManager::GetInstance()->Volume(CSoundManager::SE_Select, 40);
+			CSoundManager::GetInstance()->Volume(CSoundManager::SE_Select, SE_VOLUME);
 
 			if (m_SelectNo > 0) { m_SelectNo--; }
 			else { m_SelectNo = enAttackList::Max - 1; }
@@ -563,7 +563,7 @@ void CBattleScene::MoveSelect()
 		{
 			//決定SEの再生
 			CSoundManager::GetInstance()->PlaySE(CSoundManager::SE_Enter);
-			CSoundManager::GetInstance()->Volume(CSoundManager::SE_Enter, 40);
+			CSoundManager::GetInstance()->Volume(CSoundManager::SE_Enter, SE_VOLUME);
 
 			//自分の攻撃の設定
 			SettingAttack(m_SelectNo, m_Attack);
@@ -688,60 +688,65 @@ void CBattleScene::Attack()
 	}
 
 	//準備フェーズへ移動
-	if (HeroMng->GetDamageAnimEndFlag() && EnemyHeroMng->GetDamageAnimEndFlag())
+
+	CBattleManager* BattleMng = &CBattleManager::GetInstance();
+
+	if (!HeroMng->Death() && !EnemyHeroMng->Death())
 	{
-
-		CBattleManager* BattleMng = &CBattleManager::GetInstance();
-
-		if (!HeroMng->Death() && !EnemyHeroMng->Death())
+		if (HeroMng->GetDamageAnimEndFlag() && EnemyHeroMng->GetDamageAnimEndFlag())
 		{
 
-		    //自分、敵の初期化
-		    HeroMng->BattleInitialize();
-		    EnemyHeroMng->Initialize();
-		    
-		    
-		    //行動を未選択とする
-		    m_SelectAttack = false;
-		    
-		    //自分、敵のアニメーション終了フラグを下す
-		    
-		    //攻撃アニメーション
-		    HeroMng->SetAttackAnimEndFlag(false);		//自分
-		    EnemyHeroMng->SetAttackAnimEndFlag(false);  //敵
-		    
-		    //ダメージアニメーション
-		    HeroMng->SetDamageAnimEndFlag(false);		//自分
-		    EnemyHeroMng->SetDamageAnimEndFlag(false);  //敵
-		    
-		    //行動選択中のカメラ演出を初めからにする
-		    m_MoveSelectCut = 0;
-		    
-		    //バトルのフェーズを行動選択に戻す
-		    m_BattlePhase = enBattlePhase::MoveSelectPhase;
-		 }
+			//自分、敵の初期化
+			HeroMng->BattleInitialize();
+			EnemyHeroMng->Initialize();
 
-		//死亡時処理
-		//自分
-		if (HeroMng->Death())
-		{
-			//勝敗の設定
-			BattleMng->SetBattleResult(BattleMng->Lose);
 
-			m_SceneTransitionFlg = true;
+			//行動を未選択とする
+			m_SelectAttack = false;
+
+			//自分、敵のアニメーション終了フラグを下す
+
+			//攻撃アニメーション
+			HeroMng->SetAttackAnimEndFlag(false);		//自分
+			EnemyHeroMng->SetAttackAnimEndFlag(false);  //敵
+
+			//ダメージアニメーション
+			HeroMng->SetDamageAnimEndFlag(false);		//自分
+			EnemyHeroMng->SetDamageAnimEndFlag(false);  //敵
+
+			//行動選択中のカメラ演出を初めからにする
+			m_MoveSelectCut = 0;
+
+			//バトルのフェーズを行動選択に戻す
+			m_BattlePhase = enBattlePhase::MoveSelectPhase;
 		}
-
-		//敵
-		if (EnemyHeroMng->Death())
-		{
-			//勝敗の設定
-			BattleMng->SetBattleResult(BattleMng->Win);
-
-			m_SceneTransitionFlg = true;
-		}
-
-
 	}
+
+	//死亡時処理
+	//自分
+	if (HeroMng->Death())
+	{
+		//勝敗の設定
+		BattleMng->SetBattleResult(BattleMng->Lose);
+
+		if (HeroMng->GetDamageAnimEndFlag())
+		{
+			m_SceneTransitionFlg = true;
+		}
+	}
+
+	//敵
+	if (EnemyHeroMng->Death())
+	{
+		//勝敗の設定
+		BattleMng->SetBattleResult(BattleMng->Win);
+
+		if (EnemyHeroMng->GetDamageAnimEndFlag())
+		{
+			m_SceneTransitionFlg = true;
+		}
+	}
+
 }
 
 //次のターンの準備中の処理
@@ -906,7 +911,11 @@ void CBattleScene::HeroTurn()
 		{
 			m_pCamera->SetPos(ENEMY_ATTACK_CAMPOS);
 			m_pCamera->SetLook(ENEMY_ATTACK_CAMLOOK);
-			EnemyHeroMng->DamageAnim(1.0f);//敵のダメージアニメーション
+
+			if (!EnemyHeroMng->GetDamageAnimEndFlag())
+			{
+				EnemyHeroMng->DamageAnim(ANIM_VECTOR_VALUE);//敵のダメージアニメーション
+			}
 		}
 
 		break;
@@ -926,7 +935,11 @@ void CBattleScene::HeroTurn()
 		{
 			m_pCamera->SetPos(ENEMY_ATTACK_CAMPOS);
 			m_pCamera->SetLook(ENEMY_ATTACK_CAMLOOK);
-			EnemyHeroMng->DamageAnim(ANIM_VECTOR_VALUE); //敵のダメージアニメーション
+			
+			if (!EnemyHeroMng->GetDamageAnimEndFlag())
+			{
+				EnemyHeroMng->DamageAnim(ANIM_VECTOR_VALUE);//敵のダメージアニメーション
+			}
 		}
 		break;
 	}
@@ -967,8 +980,11 @@ void CBattleScene::EnemyHeroTurn()
 		{
 			m_pCamera->SetPos(ATTACK_CAMPOS);
 			m_pCamera->SetLook(ATTACK_CAMLOOK);
-			HeroMng->DamageAnim(-ANIM_VECTOR_VALUE); //敵のダメージアニメーション
-		
+
+			if (!HeroMng->GetDamageAnimEndFlag())
+			{
+				HeroMng->DamageAnim(-ANIM_VECTOR_VALUE); //自分のダメージアニメーション
+			}
 		}
 		break;
 	case CBattleScene::MagicAttack: 
@@ -986,7 +1002,11 @@ void CBattleScene::EnemyHeroTurn()
 		{
 			m_pCamera->SetPos(ATTACK_CAMPOS);
 			m_pCamera->SetLook(ATTACK_CAMLOOK);
-			HeroMng->DamageAnim(-ANIM_VECTOR_VALUE); //敵のダメージアニメーション
+
+			if (!HeroMng->GetDamageAnimEndFlag())
+			{
+				HeroMng->DamageAnim(-ANIM_VECTOR_VALUE); //自分のダメージアニメーション
+			}
 		}
 
 		break;

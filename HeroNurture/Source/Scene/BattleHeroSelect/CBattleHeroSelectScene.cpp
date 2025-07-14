@@ -118,7 +118,7 @@ void CBattleHeroSelectScene::Update()
 
 	//モード選択BGMの再生
 	CSoundManager::GetInstance()->PlayLoop(CSoundManager::BGM_BattleHeroSelect);
-	CSoundManager::GetInstance()->Volume(CSoundManager::BGM_BattleHeroSelect, 40);
+	CSoundManager::GetInstance()->Volume(CSoundManager::BGM_BattleHeroSelect, BGM_VOLUME);
 
 
 	KeyMng->Update();
@@ -128,7 +128,7 @@ void CBattleHeroSelectScene::Update()
 	{
 		//選択SEの再生
 		CSoundManager::GetInstance()->PlaySE(CSoundManager::SE_Select);
-		CSoundManager::GetInstance()->Volume(CSoundManager::SE_Select, 40);
+		CSoundManager::GetInstance()->Volume(CSoundManager::SE_Select, SE_VOLUME);
 
 		//キー入力で選択を進める
 		if (m_SelectNo < m_ResultData.size()) { m_SelectNo++; }
@@ -138,7 +138,7 @@ void CBattleHeroSelectScene::Update()
 	{
 		//選択SEの再生
 		CSoundManager::GetInstance()->PlaySE(CSoundManager::SE_Select);
-		CSoundManager::GetInstance()->Volume(CSoundManager::SE_Select, 40);
+		CSoundManager::GetInstance()->Volume(CSoundManager::SE_Select, SE_VOLUME);
 
 		if (m_SelectNo > 1) { m_SelectNo--; }
 		else { m_SelectNo = m_ResultData.size(); }
@@ -149,7 +149,7 @@ void CBattleHeroSelectScene::Update()
 	{
 		//決定SEの再生
 		CSoundManager::GetInstance()->PlaySE(CSoundManager::SE_Enter);
-		CSoundManager::GetInstance()->Volume(CSoundManager::SE_Enter, 40);
+		CSoundManager::GetInstance()->Volume(CSoundManager::SE_Enter, SE_VOLUME);
 		//フェード開始
 		m_SceneTransitionFlg = true;
 	}
@@ -159,7 +159,7 @@ void CBattleHeroSelectScene::Update()
 	{
 		//決定SEの再生
 		CSoundManager::GetInstance()->PlaySE(CSoundManager::SE_Enter);
-		CSoundManager::GetInstance()->Volume(CSoundManager::SE_Enter, 40);	
+		CSoundManager::GetInstance()->Volume(CSoundManager::SE_Enter, SE_VOLUME);	
 		//前のシーンに戻すフラグを立てる
 		m_BackSceneFlag = true;
 		//フェード開始

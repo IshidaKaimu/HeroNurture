@@ -42,16 +42,6 @@ namespace Constant_ModeSelectScene
 	//「A・D 選択」テキスト
 	const D3DXVECTOR2 SELECTTEXT_POS  = { 800.0f, 675.0f };  //座標
 	//---------
-
-	//----BGM/SEの音量----
-	//BGM
-	constexpr int BGM_VOLUME = 200;
-	//SE
-	constexpr int SELECT_VOLUME = 200; //選択
-	constexpr int ENTER_VOLUME  = 200; //決定
-	//--------------------
-
-
 }
 
 //=====================================

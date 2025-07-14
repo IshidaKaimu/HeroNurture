@@ -85,8 +85,8 @@ void CLoginScene::Update()
     if (KeyMng->IsDown(VK_RETURN))
     {
         //スタートSEの再生
-        CSoundManager::GetInstance()->PlaySE(CSoundManager::SE_Start);
-        CSoundManager::GetInstance()->Volume(CSoundManager::SE_Start, SELECT_VOLUME);
+        CSoundManager::GetInstance()->PlaySE(CSoundManager::SE_Enter);
+        CSoundManager::GetInstance()->Volume(CSoundManager::SE_Enter, SE_VOLUME);
 
         //string型に変換　
         std::string UserName = Utility->WstringToString(m_UserName);
@@ -111,8 +111,8 @@ void CLoginScene::Update()
     if (KeyMng->IsDown(VK_ESCAPE))
     {
         //決定SEの再生
-        CSoundManager::GetInstance()->PlaySE(CSoundManager::SE_Start);
-        CSoundManager::GetInstance()->Volume(CSoundManager::SE_Start, SELECT_VOLUME);
+        CSoundManager::GetInstance()->PlaySE(CSoundManager::SE_Enter);
+        CSoundManager::GetInstance()->Volume(CSoundManager::SE_Enter, SE_VOLUME);
 
         //選択番号を変更する
         m_SelectNo = 1;

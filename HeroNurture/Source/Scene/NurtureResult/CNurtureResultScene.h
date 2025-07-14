@@ -71,6 +71,7 @@ namespace Constant_NurtureResultScene
 }
 //=====================================
 // 育成結果シーンクラス
+// 制作者:石田櫂夢
 //=====================================
 class CNurtureResultScene
 	:public CSceneBase

@@ -100,7 +100,7 @@ void CKaitoAppearanceScene::Update()
 
 	//バトルBGMの再生
 	CSoundManager::GetInstance()->PlayLoop(CSoundManager::BGM_Battle);
-	CSoundManager::GetInstance()->Volume(CSoundManager::BGM_Battle, 40);
+	CSoundManager::GetInstance()->Volume(CSoundManager::BGM_Battle, BGM_VOLUME);
 
 	//キーマネージャの動作
 	KeyMng->Update();
@@ -254,7 +254,7 @@ void CKaitoAppearanceScene::KaitoAppearance()
 				hMagicSircle = Eff->Play(CEffect::enList::MagicSircle, MAGICSIRCLE_POS);
 				//魔法陣SEの再生
 				CSoundManager::GetInstance()->PlaySE(CSoundManager::SE_MagicSircle);
-				CSoundManager::GetInstance()->Volume(CSoundManager::SE_MagicSircle, 40);
+				CSoundManager::GetInstance()->Volume(CSoundManager::SE_MagicSircle, SE_VOLUME);
 			}
 			//カウントが一定値を超えたら魔法陣エフェクトの再生
 			if (m_AnimCnt >= ANIMCHANGE_CNT) 
@@ -308,7 +308,7 @@ void CKaitoAppearanceScene::KaitoAppearance()
 		{
 			//光SEの再生
 			CSoundManager::GetInstance()->PlaySE(CSoundManager::SE_Laser);
-			CSoundManager::GetInstance()->Volume(CSoundManager::SE_Laser, 40);
+			CSoundManager::GetInstance()->Volume(CSoundManager::SE_Laser, SE_VOLUME);
 		}
 
 		//シーンを進める

@@ -1,9 +1,11 @@
 #pragma once
 #include "StaticMeshObject/CStaticMeshObject.h"
 
-/**************************************************
-*	キャラクタークラス.
-**/
+//=====================================
+//　キャラクタークラス
+//  授業内で制作
+//=====================================
+
 class CCharacter
 	: public CStaticMeshObject
 {

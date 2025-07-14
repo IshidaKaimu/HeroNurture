@@ -1,12 +1,13 @@
 #pragma once
 #include "CGameObject.h"
-#include "StaticMesh/CStaticMesh.h"
-#include "BoundingSphere/CBoundingSphere.h"
+#include "StaticMesh\CStaticMesh.h"
+#include "BoundingSphere\CBoundingSphere.h"
 #include "Ray/CRay.h"
 
-/************************************************************
-*	スタティックメッシュオブジェクトクラス.
-**/
+//=====================================
+//　スタティックメッシュオブジェクトクラス
+//  制作者：石田櫂夢
+//=====================================
 class CStaticMeshObject
 	: public CGameObject
 {

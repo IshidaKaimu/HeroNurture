@@ -114,12 +114,12 @@ void CBattleResultScene::Update()
     case BattleMng->Win:
         //勝利時BGMの再生
         CSoundManager::GetInstance()->PlayLoop(CSoundManager::BGM_Win);
-        CSoundManager::GetInstance()->Volume(CSoundManager::BGM_Win, 40);
+        CSoundManager::GetInstance()->Volume(CSoundManager::BGM_Win, BGM_VOLUME);
         break;
     case BattleMng->Lose:
         //敗北時BGMの再生
         CSoundManager::GetInstance()->PlayLoop(CSoundManager::BGM_Lose);
-        CSoundManager::GetInstance()->Volume(CSoundManager::BGM_Lose, 40);
+        CSoundManager::GetInstance()->Volume(CSoundManager::BGM_Lose, BGM_VOLUME);
         break;
     default:
         break;
@@ -130,7 +130,7 @@ void CBattleResultScene::Update()
     {
         //決定SEの再生
         CSoundManager::GetInstance()->PlaySE(CSoundManager::SE_Enter);
-        CSoundManager::GetInstance()->Volume(CSoundManager::SE_Enter, 40);
+        CSoundManager::GetInstance()->Volume(CSoundManager::SE_Enter, SE_VOLUME);
 
         //オープニングシーンへ
         m_SceneTransitionFlg = true;

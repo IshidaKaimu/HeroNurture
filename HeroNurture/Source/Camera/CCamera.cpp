@@ -61,39 +61,6 @@ void CCamera::Camera()
 
 }
 
-//3人称カメラ
-void CCamera::ThirdPersonCamera(CAMERA* pCamera, const D3DXVECTOR3& TargetPos, float TargetRotY)
-{
-	//Z軸ベクトル
-	D3DXVECTOR3 vecAxisZ(0.0f, 0.0f, 1.0f);
-
-	//Y方向の回転行列
-	D3DXMATRIX mRotationY;
-	//Y軸回転行列を作成
-	D3DXMatrixRotationY(
-		&mRotationY,	//(out行列)
-		TargetRotY); //対象のY方向の回転値
-
-	//Y軸回転行列を使ってZ軸ベクトルを座標変換している
-	D3DXVec3TransformCoord(
-		&vecAxisZ,		//(out)Z軸ベクトル
-		&vecAxisZ,		//(in)Z軸ベクトル
-		&mRotationY);	//Y軸回転行列
-
-	//カメラの位置、注視点を対象にそろえる
-	pCamera->Position = TargetPos;
-	pCamera->Look = TargetPos;
-
-	//カメラの位置、注視点をZ軸ベクトルを用いて調整
-	pCamera->Position -= vecAxisZ * 4.0f;//対象の背中側
-	pCamera->Look += vecAxisZ * 3.0f;//対象を挟んで向こう側
-
-	//カメラの位置、注視点の高さをそれぞれ微調整
-	pCamera->Position.y += 2.0f;
-	pCamera->Look.y += 0.5f;
-
-}
-
 void CCamera::Projection()
 {
 	//y方向の視野角。数値を大きくしたら視野が狭くなる.

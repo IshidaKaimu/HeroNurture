@@ -121,7 +121,7 @@ void CTraningScene::Update()
        if (m_SECnt == PLAY_SE_CNT)
        {
            CSoundManager::GetInstance()->PlaySE(CSoundManager::SE_Miss);
-           CSoundManager::GetInstance()->Volume(CSoundManager::SE_Miss, 80);
+           CSoundManager::GetInstance()->Volume(CSoundManager::SE_Miss, SE_VOLUME);
        }
    }
    else
@@ -130,7 +130,7 @@ void CTraningScene::Update()
        if (m_SECnt == PLAY_SE_CNT)
        {
            CSoundManager::GetInstance()->PlaySE(CSoundManager::SE_Up);
-           CSoundManager::GetInstance()->Volume(CSoundManager::SE_Up, 80);
+           CSoundManager::GetInstance()->Volume(CSoundManager::SE_Up, SE_VOLUME);
        }
    }
 
@@ -140,7 +140,7 @@ void CTraningScene::Update()
    {
        //Œˆ’èSE‚ÌÄ¶
        CSoundManager::GetInstance()->PlaySE(CSoundManager::SE_Enter);
-       CSoundManager::GetInstance()->Volume(CSoundManager::SE_Enter, 80);
+       CSoundManager::GetInstance()->Volume(CSoundManager::SE_Enter, SE_VOLUME);
 
        if (m_TextNo < m_ParamInc.size() - 1)
        {

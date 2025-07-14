@@ -95,7 +95,7 @@ void CYuiAppearanceScene::Update()
 
 	//バトルBGMの再生
 	CSoundManager::GetInstance()->PlayLoop(CSoundManager::BGM_Battle);
-	CSoundManager::GetInstance()->Volume(CSoundManager::BGM_Battle, 40);
+	CSoundManager::GetInstance()->Volume(CSoundManager::BGM_Battle, BGM_VOLUME);
 
 	//キーマネージャの動作
 	KeyMng->Update();
@@ -253,7 +253,7 @@ void CYuiAppearanceScene::YuiAppearance()
 			{
 				//衝突SEの再生
 				CSoundManager::GetInstance()->PlaySE(CSoundManager::SE_RaccoonCollision);
-				CSoundManager::GetInstance()->Volume(CSoundManager::SE_RaccoonCollision, 60);
+				CSoundManager::GetInstance()->Volume(CSoundManager::SE_RaccoonCollision, SE_VOLUME);
 			}
 		}
 
