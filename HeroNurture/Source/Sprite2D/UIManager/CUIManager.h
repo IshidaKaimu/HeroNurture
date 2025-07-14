@@ -3,6 +3,12 @@
 #include "CDirectX11.h"
 #include "Singleton\CSingleton.h"
 
+
+//=====================================
+// UIマネージャークラス
+// 制作者:石田櫂夢
+//=====================================
+
 class CUIManager
 	:public CSingleton<CUIManager>
 {

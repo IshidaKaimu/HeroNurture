@@ -39,6 +39,7 @@ namespace Constant_LoginScene
 
 //=====================================
 // ログインシーンクラス
+// 制作者:石田櫂夢
 //=====================================
 class CLoginScene
 	:public CSceneBase

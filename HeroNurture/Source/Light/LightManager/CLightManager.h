@@ -1,6 +1,12 @@
 #pragma once
 #include "Global\Global.h"
 #include "Singleton\CSingleton.h"
+
+//=====================================
+// ライトマネージャークラス
+// 制作者:石田櫂夢
+//=====================================
+
 class CLightManager
 	: public CSingleton<CLightManager>
 {

@@ -46,6 +46,11 @@ namespace Constant_NurtureHeroSelectScene
 
 }
 
+//=====================================
+// 育成ヒーロー選択シーンクラス
+// 制作者:石田櫂夢
+//=====================================
+
 class CNurtureHeroSelectScene
 	:public CSceneBase
 {

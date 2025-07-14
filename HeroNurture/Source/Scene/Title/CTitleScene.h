@@ -61,6 +61,7 @@ namespace Constant_TitleScene
 
 //=====================================
 // タイトルシーンクラス
+// 制作者:石田櫂夢
 //=====================================
 class CTitleScene
 	:public CSceneBase

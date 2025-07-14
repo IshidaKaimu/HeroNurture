@@ -40,6 +40,7 @@ namespace Constant_CreateAcountScene
 
 //=====================================
 // アカウント作成シーンクラス
+// 制作者:石田櫂夢
 //=====================================
 class CCreateAcountScene
 	:public CSceneBase
@@ -75,6 +76,7 @@ private:
 	// =======================
 	// オブジェクトクラス
 	// =======================		
+	
 	//----UI----
 	//ユーザー名入力
 	std::wstring m_UserName;
@@ -82,6 +84,7 @@ private:
 	std::unique_ptr<CUIObject> m_pNameSpace;
 	//背景
 	std::unique_ptr<CUIObject> m_pBack;
+	//----------
 
 	//Jsonクラス
 	std::unique_ptr<CJson> m_pJson;

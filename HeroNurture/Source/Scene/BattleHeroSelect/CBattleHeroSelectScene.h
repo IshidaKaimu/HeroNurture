@@ -72,7 +72,8 @@ namespace Constant_BattleHeroSelectScene
 	//----------
 }
 //==============================
-// バトルヒーロー選択クラス
+// バトルヒーロー選択シーンクラス
+// 制作者:石田櫂夢
 //==============================
 class CBattleHeroSelectScene
 	:public CSceneBase

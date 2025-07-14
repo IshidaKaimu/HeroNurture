@@ -2,9 +2,10 @@
 #include "StaticMeshObject/CStaticMeshObject.h"
 
 //=====================================
-//　スタティックメッシュオブジェクトクラス
+//　キャラクタークラス
 //  授業内で制作
 //=====================================
+
 class CCharacter
 	: public CStaticMeshObject
 {
