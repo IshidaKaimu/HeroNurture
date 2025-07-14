@@ -37,7 +37,6 @@ namespace Constant_RaccoonDog
 // §ìÒ:Î“cŸD–²
 //=====================================
 
-
 class CRaccoonDog
 	: public CHeroBase
 {
